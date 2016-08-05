@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.0\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -41,6 +45,8 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,11 +54,503 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Edmx\Administrativecode.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\AssetBaseType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\AssetMaintenance.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\AssetUse.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Authorization.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\BussnessVer.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\CustomCategory.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\CustomerGoup.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\CustomGeographicType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\CustomTabData.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\CustomTable.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DBPlaceFinal.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBPlaceFinal.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DBPlaceFinal.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DBPlaceFinal.Designer.cs">
+      <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Edmx\DesktopGeoManage.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DllFileStream.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocCheckState.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocComent.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocLocation.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocManageState.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocReader.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocSender.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocumentContent.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocumentManage.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\DocumentType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Employee.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\EventTime.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\GroupName.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\IndustryCode.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\IndustrySolution.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\IPCode.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\JobChange.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\LandState.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\LoginLog.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\MessageGroupMessager.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\ModulProperty.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OrganicInvestor.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Organization.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OrganizationAssetType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OrganizationCustomType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OrganizationEvent.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OrganizationOtherName.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OrganizationTransition.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Organization_ContacTable.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Organization_Type.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OrganizBasic.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OrgaRegisterDocment.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\physicalAsset.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Position.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Post.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\PostRequire.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Product.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\ProductComposition.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\ProductCustomCategory.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\ProductCustomType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\ProductEvent.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\ProductStandard.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\RegisterDocumentType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Securityinfo.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Specialized.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\Subordinate.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\User.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\UserGroup.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\UserMessage.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\UserRelateTable.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\UserRelateType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\User_ContacTable.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\WorkMessage.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\WorkModul.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\WorkSpace.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\WorkSpaceBaseType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\WorkSpaceRole.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\WorkSpaceType.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\workTask.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\ZipCode.cs">
+      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Implementation\Repository\AdministrativecodeRepository.CS" />
+    <Compile Include="Implementation\Repository\AssetBaseTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\AssetMaintenanceRepository.CS" />
+    <Compile Include="Implementation\Repository\AssetUseRepository.CS" />
+    <Compile Include="Implementation\Repository\AuthorizationRepository.CS" />
+    <Compile Include="Implementation\Repository\Base\EFUnitOfWork.cs" />
+    <Compile Include="Implementation\Repository\Base\IEFUnitOfWork.cs" />
+    <Compile Include="Implementation\Repository\Base\Repository.cs" />
+    <Compile Include="Implementation\Repository\BussnessVerRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomCategoryRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomerGoupRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomGeographicTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomTabDataRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomTableRepository.CS" />
+    <Compile Include="Implementation\Repository\DesktopGeoManageRepository.CS" />
+    <Compile Include="Implementation\Repository\DllFileStreamRepository.CS" />
+    <Compile Include="Implementation\Repository\DocCheckStateRepository.CS" />
+    <Compile Include="Implementation\Repository\DocComentRepository.CS" />
+    <Compile Include="Implementation\Repository\DocLocationRepository.CS" />
+    <Compile Include="Implementation\Repository\DocManageStateRepository.CS" />
+    <Compile Include="Implementation\Repository\DocReaderRepository.CS" />
+    <Compile Include="Implementation\Repository\DocSenderRepository.CS" />
+    <Compile Include="Implementation\Repository\DocTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\DocumentContentRepository.CS" />
+    <Compile Include="Implementation\Repository\DocumentManageRepository.CS" />
+    <Compile Include="Implementation\Repository\DocumentTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\EmployeeRepository.CS" />
+    <Compile Include="Implementation\Repository\EventTimeRepository.CS" />
+    <Compile Include="Implementation\Repository\GroupNameRepository.CS" />
+    <Compile Include="Implementation\Repository\IndustryCodeRepository.CS" />
+    <Compile Include="Implementation\Repository\IndustrySolutionRepository.CS" />
+    <Compile Include="Implementation\Repository\IPCodeRepository.CS" />
+    <Compile Include="Implementation\Repository\JobChangeRepository.CS" />
+    <Compile Include="Implementation\Repository\LoginLogRepository.CS" />
+    <Compile Include="Implementation\Repository\MessageGroupMessagerRepository.CS" />
+    <Compile Include="Implementation\Repository\ModulPropertyRepository.CS" />
+    <Compile Include="Implementation\Repository\OrganicInvestorRepository.CS" />
+    <Compile Include="Implementation\Repository\OrganizationAssetTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\OrganizationCustomTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\OrganizationEventRepository.CS" />
+    <Compile Include="Implementation\Repository\OrganizationOtherNameRepository.CS" />
+    <Compile Include="Implementation\Repository\OrganizationRepository.CS" />
+    <Compile Include="Implementation\Repository\OrganizationTransitionRepository.CS" />
+    <Compile Include="Implementation\Repository\Organization_ContacTableRepository.CS" />
+    <Compile Include="Implementation\Repository\Organization_TypeRepository.CS" />
+    <Compile Include="Implementation\Repository\OrganizBasicRepository.CS" />
+    <Compile Include="Implementation\Repository\OrgaRegisterDocmentRepository.CS" />
+    <Compile Include="Implementation\Repository\physicalAssetRepository.CS" />
+    <Compile Include="Implementation\Repository\PositionRepository.CS" />
+    <Compile Include="Implementation\Repository\PostRepository.CS" />
+    <Compile Include="Implementation\Repository\PostRequireRepository.CS" />
+    <Compile Include="Implementation\Repository\ProductCompositionRepository.CS" />
+    <Compile Include="Implementation\Repository\ProductCustomCategoryRepository.CS" />
+    <Compile Include="Implementation\Repository\ProductCustomTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\ProductEventRepository.CS" />
+    <Compile Include="Implementation\Repository\ProductRepository.CS" />
+    <Compile Include="Implementation\Repository\ProductStandardRepository.CS" />
+    <Compile Include="Implementation\Repository\RegisterDocumentTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\SecurityinfoRepository.CS" />
+    <Compile Include="Implementation\Repository\SpecializedRepository.CS" />
+    <Compile Include="Implementation\Repository\SubordinateRepository.CS" />
+    <Compile Include="Implementation\Repository\UserGroupRepository.CS" />
+    <Compile Include="Implementation\Repository\UserMessageRepository.CS" />
+    <Compile Include="Implementation\Repository\UserRelateTableRepository.CS" />
+    <Compile Include="Implementation\Repository\UserRelateTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\UserRepository.CS" />
+    <Compile Include="Implementation\Repository\User_ContacTableRepository.CS" />
+    <Compile Include="Implementation\Repository\WorkMessageRepository.CS" />
+    <Compile Include="Implementation\Repository\WorkModulRepository.CS" />
+    <Compile Include="Implementation\Repository\WorkSpaceBaseTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\WorkSpaceRepository.CS" />
+    <Compile Include="Implementation\Repository\WorkSpaceRoleRepository.CS" />
+    <Compile Include="Implementation\Repository\WorkSpaceTypeRepository.CS" />
+    <Compile Include="Implementation\Repository\workTaskRepository.CS" />
+    <Compile Include="Implementation\Repository\ZipCodeRepository.CS" />
+    <Compile Include="Implementation\Service\Serivce.cs" />
+    <Compile Include="Interface\Repostiory\IAdministrativecodeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IAssetBaseTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IAssetMaintenanceRepository.CS" />
+    <Compile Include="Interface\Repostiory\IAssetUseRepository.CS" />
+    <Compile Include="Interface\Repostiory\IAuthorizationRepository.CS" />
+    <Compile Include="Interface\Repostiory\IBussnessVerRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomCategoryRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomerGoupRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomGeographicTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomTabDataRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomTableRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDesktopGeoManageRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDllFileStreamRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocCheckStateRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocComentRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocLocationRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocManageStateRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocReaderRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocSenderRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocumentContentRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocumentManageRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDocumentTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IEmployeeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IEventTimeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IGroupNameRepository.CS" />
+    <Compile Include="Interface\Repostiory\IIndustryCodeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IIndustrySolutionRepository.CS" />
+    <Compile Include="Interface\Repostiory\IIPCodeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IJobChangeRepository.CS" />
+    <Compile Include="Interface\Repostiory\ILoginLogRepository.CS" />
+    <Compile Include="Interface\Repostiory\IMessageGroupMessagerRepository.CS" />
+    <Compile Include="Interface\Repostiory\IModulPropertyRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganicInvestorRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganizationAssetTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganizationCustomTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganizationEventRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganizationOtherNameRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganizationRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganizationTransitionRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganization_ContacTableRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganization_TypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrganizBasicRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrgaRegisterDocmentRepository.CS" />
+    <Compile Include="Interface\Repostiory\IphysicalAssetRepository.CS" />
+    <Compile Include="Interface\Repostiory\IPositionRepository.CS" />
+    <Compile Include="Interface\Repostiory\IPostRepository.CS" />
+    <Compile Include="Interface\Repostiory\IPostRequireRepository.CS" />
+    <Compile Include="Interface\Repostiory\IProductCompositionRepository.CS" />
+    <Compile Include="Interface\Repostiory\IProductCustomCategoryRepository.CS" />
+    <Compile Include="Interface\Repostiory\IProductCustomTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IProductEventRepository.CS" />
+    <Compile Include="Interface\Repostiory\IProductRepository.CS" />
+    <Compile Include="Interface\Repostiory\IProductStandardRepository.CS" />
+    <Compile Include="Interface\Repostiory\IRegisterDocumentTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\ISecurityinfoRepository.CS" />
+    <Compile Include="Interface\Repostiory\ISpecializedRepository.CS" />
+    <Compile Include="Interface\Repostiory\ISubordinateRepository.CS" />
+    <Compile Include="Interface\Repostiory\IUserGroupRepository.CS" />
+    <Compile Include="Interface\Repostiory\IUserMessageRepository.CS" />
+    <Compile Include="Interface\Repostiory\IUserRelateTableRepository.CS" />
+    <Compile Include="Interface\Repostiory\IUserRelateTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IUserRepository.CS" />
+    <Compile Include="Interface\Repostiory\IUser_ContacTableRepository.CS" />
+    <Compile Include="Interface\Repostiory\IWorkMessageRepository.CS" />
+    <Compile Include="Interface\Repostiory\IWorkModulRepository.CS" />
+    <Compile Include="Interface\Repostiory\IWorkSpaceBaseTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IWorkSpaceRepository.CS" />
+    <Compile Include="Interface\Repostiory\IWorkSpaceRoleRepository.CS" />
+    <Compile Include="Interface\Repostiory\IWorkSpaceTypeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IworkTaskRepository.CS" />
+    <Compile Include="Interface\Repostiory\IZipCodeRepository.CS" />
+    <Compile Include="Mapping\AutoMapperBootStrapper.cs" />
+    <Compile Include="Mapping\MapperHelper.cs" />
+    <Compile Include="Model\Administrativecode.CS" />
+    <Compile Include="Model\AssetBaseType.CS" />
+    <Compile Include="Model\AssetMaintenance.CS" />
+    <Compile Include="Model\AssetUse.CS" />
+    <Compile Include="Model\Authorization.CS" />
+    <Compile Include="Model\BussnessVer.CS" />
+    <Compile Include="Model\CustomCategory.CS" />
+    <Compile Include="Model\CustomerGoup.CS" />
+    <Compile Include="Model\CustomGeographicType.CS" />
+    <Compile Include="Model\CustomTabData.CS" />
+    <Compile Include="Model\CustomTable.CS" />
+    <Compile Include="Model\DesktopGeoManage.CS" />
+    <Compile Include="Model\DllFileStream.CS" />
+    <Compile Include="Model\DocCheckState.CS" />
+    <Compile Include="Model\DocComent.CS" />
+    <Compile Include="Model\DocLocation.CS" />
+    <Compile Include="Model\DocManageState.CS" />
+    <Compile Include="Model\DocReader.CS" />
+    <Compile Include="Model\DocSender.CS" />
+    <Compile Include="Model\DocType.CS" />
+    <Compile Include="Model\DocumentContent.CS" />
+    <Compile Include="Model\DocumentManage.CS" />
+    <Compile Include="Model\DocumentType.CS" />
+    <Compile Include="Model\Employee.CS" />
+    <Compile Include="Model\EventTime.CS" />
+    <Compile Include="Model\GroupName.CS" />
+    <Compile Include="Model\IndustryCode.CS" />
+    <Compile Include="Model\IndustrySolution.CS" />
+    <Compile Include="Model\IPCode.CS" />
+    <Compile Include="Model\JobChange.CS" />
+    <Compile Include="Model\LoginLog.CS" />
+    <Compile Include="Model\MessageGroupMessager.CS" />
+    <Compile Include="Model\ModulProperty.CS" />
+    <Compile Include="Model\OrganicInvestor.CS" />
+    <Compile Include="Model\Organization.CS" />
+    <Compile Include="Model\OrganizationAssetType.CS" />
+    <Compile Include="Model\OrganizationCustomType.CS" />
+    <Compile Include="Model\OrganizationEvent.CS" />
+    <Compile Include="Model\OrganizationOtherName.CS" />
+    <Compile Include="Model\OrganizationTransition.CS" />
+    <Compile Include="Model\Organization_ContacTable.CS" />
+    <Compile Include="Model\Organization_Type.CS" />
+    <Compile Include="Model\OrganizBasic.CS" />
+    <Compile Include="Model\OrgaRegisterDocment.CS" />
+    <Compile Include="Model\physicalAsset.CS" />
+    <Compile Include="Model\Position.CS" />
+    <Compile Include="Model\Post.CS" />
+    <Compile Include="Model\PostRequire.CS" />
+    <Compile Include="Model\Product.CS" />
+    <Compile Include="Model\ProductComposition.CS" />
+    <Compile Include="Model\ProductCustomCategory.CS" />
+    <Compile Include="Model\ProductCustomType.CS" />
+    <Compile Include="Model\ProductEvent.CS" />
+    <Compile Include="Model\ProductStandard.CS" />
+    <Compile Include="Model\RegisterDocumentType.CS" />
+    <Compile Include="Model\Securityinfo.CS" />
+    <Compile Include="Model\Specialized.CS" />
+    <Compile Include="Model\Subordinate.CS" />
+    <Compile Include="Model\User.CS" />
+    <Compile Include="Model\UserGroup.CS" />
+    <Compile Include="Model\UserMessage.CS" />
+    <Compile Include="Model\UserRelateTable.CS" />
+    <Compile Include="Model\UserRelateType.CS" />
+    <Compile Include="Model\User_ContacTable.CS" />
+    <Compile Include="Model\WorkMessage.CS" />
+    <Compile Include="Model\WorkModul.CS" />
+    <Compile Include="Model\WorkSpace.CS" />
+    <Compile Include="Model\WorkSpaceBaseType.CS" />
+    <Compile Include="Model\WorkSpaceRole.CS" />
+    <Compile Include="Model\WorkSpaceType.CS" />
+    <Compile Include="Model\workTask.CS" />
+    <Compile Include="Model\ZipCode.CS" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <EntityDeploy Include="Edmx\DBPlaceFinal.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DBPlaceFinal.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Edmx\DBPlaceFinal.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DBPlaceFinal.Context.cs</LastGenOutput>
+      <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
+    </None>
+    <None Include="Edmx\DBPlaceFinal.edmx.diagram">
+      <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
+    </None>
+    <None Include="Edmx\DBPlaceFinal.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DBPlaceFinal.cs</LastGenOutput>
+      <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interface\Service\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BCP.Common\BCP.Common.csproj">
+      <Project>{1bf111f0-1a5f-47fe-bd3c-dc272cd3982b}</Project>
+      <Name>BCP.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BCP.ViewModel\BCP.ViewModel.csproj">
+      <Project>{71a0a4fb-2a11-4cff-95e6-37d0c07cb40d}</Project>
+      <Name>BCP.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Edmx\DBPlaceFinal.edmx.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

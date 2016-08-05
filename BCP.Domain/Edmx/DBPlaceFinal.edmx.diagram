@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a65c7466a75f443fb651e6b5e6da3781" Name="MainDigram" ZoomLevel="82" >
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Organization" Width="9" PointX="32.875" PointY="21.75" FillColor="128, 64, 0" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Organization_ContacTable" Width="2.25" PointX="5.25" PointY="18.375" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Position" Width="2.375" PointX="37.375" PointY="28.75" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.User" Width="2.25" PointX="64.625" PointY="25.75" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.User_ContacTable" Width="2" PointX="68.75" PointY="21.375" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.LoginLog" Width="2" PointX="59.5" PointY="29.875" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizationTransition" Width="2.125" PointX="46.25" PointY="20.625" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Organization_Type" Width="1.75" PointX="8.125" PointY="8.75" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserLoginLog" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocumentManage" Width="3" PointX="5.75" PointY="48.5" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.UserMessage" Width="2" PointX="68.75" PointY="32" IsExpanded="true" />
+        <AssociationConnector Association="BCP.Domain.Edmx.LoginLogUserMessage" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.UserGroup" Width="2.375" PointX="68.625" PointY="24.375" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizationOtherName" Width="2.25" PointX="42.5" PointY="19.5" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrganizationOtherName" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Administrativecode" Width="3.5" PointX="15.625" PointY="1" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocumentType" Width="1.875" PointX="0.75" PointY="50.25" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocManageState" Width="1.75" PointX="5.125" PointY="44.75" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.ProductStandard" Width="3.125" PointX="24.5" PointY="1" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductStandardProductStandard" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.IndustryCode" Width="2.75" PointX="19.625" PointY="1" />
+        <AssociationConnector Association="BCP.Domain.Edmx.IndustryCodeIndustryCode" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.ZipCode" Width="1.5" PointX="11.75" PointY="0.5" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.IPCode" Width="1.5" PointX="11.75" PointY="2.875" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrganizationTransition" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrganizationTransition1" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserUser_ContacTable" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizBasic" Width="5.75" PointX="11.5" PointY="11.25" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.PostRequire" PointX="49.25" PointY="25" Width="2.125" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Post" Width="3.875" PointX="32.5" PointY="35.375" FillColor="Teal" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.WorkSpace" Width="3.625" PointX="26.125" PointY="34" FillColor="Red" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrganization" />
+        <AssociationConnector Association="BCP.Domain.Edmx.AdministrativecodeAdministrativecode" />
+        <AssociationConnector Association="BCP.Domain.Edmx.Organization_TypeOrganization_Type" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Subordinate" Width="1.5" PointX="8.25" PointY="12.875" />
+        <AssociationConnector Association="BCP.Domain.Edmx.SubordinateOrganizBasic" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Specialized" Width="1.875" PointX="53.25" PointY="25" />
+        <AssociationConnector Association="BCP.Domain.Edmx.SpecializedSpecialized" />
+        <AssociationConnector Association="BCP.Domain.Edmx.SpecializedPostbasic" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.UserRelateTable" Width="2.125" PointX="64.5" PointY="17.5" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserUserRelateTable" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserUserRelateTable1" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.UserRelateType" Width="2" PointX="68.625" PointY="17.5" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserRelateTypeUserRelateTable" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserRelateTypeUserRelateType" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocumentContent" Width="2.125" PointX="4.375" PointY="54.75" FillColor="0, 192, 0" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocCheckState" Width="2.125" PointX="8.875" PointY="45.125" FillColor="0, 192, 0" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocHanderStateDocumentManage" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocumentManageDocumentContent" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocumentTypeDocumentType" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocumentContentDocumentContent" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Securityinfo" Width="1.5" PointX="1.125" PointY="47.125" FillColor="0, 192, 0" />
+        <AssociationConnector Association="BCP.Domain.Edmx.SecurityinfoDocumentManage" />
+        <AssociationConnector Association="BCP.Domain.Edmx.Organization_TypeOrganizBasic" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganicInvestor" Width="2.375" PointX="4" PointY="10.875" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicOrganicInvestor" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrgaRegisterDocment" Width="2.125" PointX="5.5" PointY="14.75" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicOrgaRegisterDocment" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.RegisterDocumentType" Width="1.75" PointX="2.875" PointY="15.25" />
+        <AssociationConnector Association="BCP.Domain.Edmx.RegisterDocumentTypeOrgaRegisterDocment" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicOrganizBasic" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrganizBasic" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizationEvent" Width="2.125" PointX="45.75" PointY="17.375" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrganizationEvent" />
+        <AssociationConnector Association="BCP.Domain.Edmx.IndustryCodeOrganizBasic" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicOrganization_ContacTable" />
+        <AssociationConnector Association="BCP.Domain.Edmx.AdministrativecodeOrganizBasic" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="BCP.Domain.Edmx.PositionPosition" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicOrganicInvestor1" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserMessageGroup" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.MessageGroupMessager" Width="2.25" PointX="72.625" PointY="26.5" />
+        <AssociationConnector Association="BCP.Domain.Edmx.MessageGroupMessageGroupMessager" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserMessageUserMessage" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.GroupName" Width="2.25" PointX="72.625" PointY="23.75" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserGroupName" />
+        <AssociationConnector Association="BCP.Domain.Edmx.GroupNameUserGroup" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.CustomerGoup" Width="2" PointX="68.625" PointY="28.625" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserCustomerGoup" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserUserMessage" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DllFileStream" Width="4" PointX="0.5" PointY="23.25" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizationCustomType" Width="2.25" PointX="39.5" PointY="15.75" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.CustomCategory" Width="1.875" PointX="43.375" PointY="15" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationCustomOrganizationType" />
+        <AssociationConnector Association="BCP.Domain.Edmx.CustomCategoryCustomOrganizationType" />
+        <AssociationConnector Association="BCP.Domain.Edmx.CustomCategoryCustomCategory" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Product" Width="2.25" PointX="32.75" PointY="4" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductStandardProduct" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.ProductEvent" Width="1.875" PointX="41.125" PointY="5.75" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.ProductComposition" Width="2" PointX="37.5" PointY="7.125" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductProductComposition1" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.ProductCustomType" Width="1.875" PointX="37.75" PointY="2.875" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductProductCustomType" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.ProductCustomCategory" Width="2" PointX="43.875" PointY="2.75" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductCustomCategoryProductCustomCategory" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductCustomCategoryProductCustomType" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductProductEvent" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.physicalAsset" Width="2.5" PointX="33.625" PointY="11.25" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationphysicalAsset" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductphysicalAsset" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationphysicalAsset1" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.AssetUse" Width="1.75" PointX="30.625" PointY="9.875" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.AssetMaintenance" Width="1.75" PointX="30.625" PointY="13.125" />
+        <AssociationConnector Association="BCP.Domain.Edmx.physicalAssetAssetUse" />
+        <AssociationConnector Association="BCP.Domain.Edmx.physicalAssetAssetMaintenance" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.AssetBaseType" Width="1.75" PointX="41" PointY="12.125" />
+        <AssociationConnector Association="BCP.Domain.Edmx.AssetTypeAssetType" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationPosition" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DllFileStreamDllFileStream" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizationAssetType" Width="2.125" PointX="37.25" PointY="12" />
+        <AssociationConnector Association="BCP.Domain.Edmx.physicalAssetOrganizationAssetType" />
+        <AssociationConnector Association="BCP.Domain.Edmx.AssetBaseTypeOrganizationAssetType" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Employee" Width="5.25" PointX="45" PointY="36.25" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserEmployee" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PostRequirePosition" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PostPost" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.IndustrySolution" Width="2.375" PointX="7.625" PointY="23.375" />
+        <AssociationConnector Association="BCP.Domain.Edmx.IndustryCodeIndustrySolution" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.WorkModul" Width="2.5" PointX="3.5" PointY="28.25" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PositionEmployee" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicProduct" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ProductCompositionProductComposition" />
+        <AssociationConnector Association="BCP.Domain.Edmx.IndustrySolutionWorkSpace" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationPost" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkSpaceWorkSpace" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationEmployee" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="BCP.Domain.Edmx.IndustrySolutionDllFileStream" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkModulWorkModul" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.WorkSpaceRole" Width="1.875" PointX="26.125" PointY="24.25" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkSpaceWorkSpaceRole" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationWorkSpaceRole" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkModulWorkSpaceRole" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Authorization" Width="1.875" PointX="11.375" PointY="37.875" FillColor="Green" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PostAuthorization" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationProduct" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PostAuthorization1" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.ModulProperty" Width="2" PointX="3.5" PointY="36.5" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkModulModulProperty" />
+        <AssociationConnector Association="BCP.Domain.Edmx.ModulPropertyAuthorization" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.WorkMessage" Width="1.5" PointX="8.25" PointY="39.25" FillColor="Green" />
+        <AssociationConnector Association="BCP.Domain.Edmx.AuthorizationWorkMessage" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserWorkSpaceRole" ManuallyRouted="false" >
+        </AssociationConnector>
+        <AssociationConnector Association="BCP.Domain.Edmx.UserAuthorization" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserAuthorization1" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocType" Width="1.5" PointX="3.375" PointY="50.5" FillColor="0, 192, 0" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocumentTypeDocType" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocumentManageDocType" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocReader" Width="1.5" PointX="15.25" PointY="48.875" FillColor="0, 192, 0" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationDocReader" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkSpaceDocReader" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PostDocReader" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserDocReader" />
+        <AssociationConnector Association="BCP.Domain.Edmx.SecurityinfoSecurityinfo" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocManageStateDocManageState" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocSender" Width="1.5" PointX="15.25" PointY="52.625" FillColor="0, 192, 0" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserDocSender" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PostDocSender" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocComent" Width="1.5" PointX="13" PointY="55" FillColor="0, 192, 0" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocSenderDocComent" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserCustomerGoup1" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.JobChange" Width="1.5" PointX="39.125" PointY="36" />
+        <AssociationConnector Association="BCP.Domain.Edmx.EmployeeJobChange" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PostJobChange" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.WorkSpaceType" Width="2" PointX="22.5" PointY="35.125" FillColor="255, 128, 128" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkSpaceWorkSpaceType" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.DocLocation" Width="1.5" PointX="12.25" PointY="49.875" FillColor="LimeGreen" />
+        <AssociationConnector Association="BCP.Domain.Edmx.FK_DocLocationDocComent" />
+        <AssociationConnector Association="BCP.Domain.Edmx.FK_DocLocationDocLocation" />
+        <AssociationConnector Association="BCP.Domain.Edmx.FK_DocReaderDocLocation" />
+        <AssociationConnector Association="BCP.Domain.Edmx.FK_DocSenderDocLocation" />
+        <AssociationConnector Association="BCP.Domain.Edmx.FK_DocumentManageDocLocation" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.WorkSpaceBaseType" Width="2.125" PointX="18.375" PointY="35.125" FillColor="255, 128, 128" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkSpaceBaseTypeWorkSpaceBaseType" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DllFileStreamWorkModul" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkSpaceBaseTypeWorkSpaceType" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.EventTime" Width="2" PointX="55.375" PointY="29.875" />
+        <AssociationConnector Association="BCP.Domain.Edmx.LoginLogEventTime" />
+        <AssociationConnector Association="BCP.Domain.Edmx.PositionPost" />
+        <EntityTypeShape EntityType="AthenaGIS.Database.UserExt" Width="1.5" PointX="60" PointY="23.875" />
+        <AssociationConnector Association="AthenaGIS.Database.EventTimeUserExt" />
+        <AssociationConnector Association="AthenaGIS.Database.UserUserExt" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkSpaceBaseTypeDocumentManage" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.workTask" Width="1.5" PointX="7.5" PointY="54.75" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocumentManageworkTask" />
+        <AssociationConnector Association="BCP.Domain.Edmx.workTaskworkTask" />
+        <AssociationConnector Association="BCP.Domain.Edmx.workTaskDocumentContent" />
+        <AssociationConnector Association="BCP.Domain.Edmx.DocManageStateDocumentManage" />
+        <AssociationConnector Association="BCP.Domain.Edmx.WorkModulWorkSpace" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

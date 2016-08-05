@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCP.WebAPI", "BCP.WebAPI\BC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCP.WebAPI.Tests", "BCP.WebAPI.Tests\BCP.WebAPI.Tests.csproj", "{627D17F4-6B90-439B-A356-7C29A33D9954}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BCPTest", "BCPTest\BCPTest.csproj", "{038D9150-47C2-4208-9D46-26434478E37E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{627D17F4-6B90-439B-A356-7C29A33D9954}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{627D17F4-6B90-439B-A356-7C29A33D9954}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{627D17F4-6B90-439B-A356-7C29A33D9954}.Release|Any CPU.Build.0 = Release|Any CPU
+		{038D9150-47C2-4208-9D46-26434478E37E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{038D9150-47C2-4208-9D46-26434478E37E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{038D9150-47C2-4208-9D46-26434478E37E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{038D9150-47C2-4208-9D46-26434478E37E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
