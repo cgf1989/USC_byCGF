@@ -32,25 +32,15 @@
                 </MenuItem>
             </Menu>
         </Grid>
-        <TreeView Grid.Row="1" Background="#ebf2f9  ">
-            <TreeViewItem Header="江罗高速分公司">
-               
-                    <TreeViewItem Name="tvi_BIM" Header="BIM公路建设管理系统" MouseDoubleClick="tvi_BIM_MouseDoubleClick"/>
-                    <TreeViewItem Name="tvi_GIS" Header="征地管理系统" MouseDoubleClick="tvi_GIS_MouseDoubleClick"/>
-                    <TreeViewItem Header="公路应急管理系统"/>
-                    <TreeViewItem Header="机电设备管理系统"/>
-                    <TreeViewItem  Header="视频监控管理系统"/>
-
-               
-            </TreeViewItem>
-            <TreeViewItem Header="图之灵计算机技术有限公司">
-                <TreeViewItem Header="客户管理系统"/>
-                <TreeViewItem Header="软件开发管理系统"/>
-            </TreeViewItem>
-            <TreeViewItem Header="本地单机系统">
-                <TreeViewItem Header="日志"/>
-                <TreeViewItem Header="计划任务"/>
-            </TreeViewItem>    
+        <TreeView Grid.Row="1" Background="#ebf2f9" Name="tv_mainWork" MouseDoubleClick="tv_mainWork_MouseDoubleClick">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type local:PropertyNodeItem}" ItemsSource="{Binding Path=Children}">
+                    <StackPanel Orientation="Horizontal" Margin="0,0.3,0,0">
+                        <Image Height="20" MaxWidth="20" Width="auto" VerticalAlignment="Center" Source="{Binding ImgSource}"/>
+                        <TextBlock VerticalAlignment="Center" Margin="1,0,0,0" Text="{Binding Header}"/>
+                    </StackPanel>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
         </TreeView>
     </Grid>
 </UserControl>

@@ -64,7 +64,18 @@ namespace WpfClient.Login
             }            
         }
 
-     
+
+        /// <summary>
+        /// 用户注册账号
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void hpLink_registAccount_Click(object sender, RoutedEventArgs e)
+        {
+            RegistWin rgWin = new RegistWin();
+            rgWin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            rgWin.ShowDialog();
+        }
     }
 
  
