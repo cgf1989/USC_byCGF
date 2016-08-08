@@ -364,6 +364,7 @@
     <Compile Include="Implementation\Repository\workTaskRepository.CS" />
     <Compile Include="Implementation\Repository\ZipCodeRepository.CS" />
     <Compile Include="Implementation\Service\Serivce.cs" />
+    <Compile Include="Implementation\Service\UserService.cs" />
     <Compile Include="Interface\Repostiory\IAdministrativecodeRepository.CS" />
     <Compile Include="Interface\Repostiory\IAssetBaseTypeRepository.CS" />
     <Compile Include="Interface\Repostiory\IAssetMaintenanceRepository.CS" />
@@ -436,6 +437,7 @@
     <Compile Include="Interface\Repostiory\IWorkSpaceTypeRepository.CS" />
     <Compile Include="Interface\Repostiory\IworkTaskRepository.CS" />
     <Compile Include="Interface\Repostiory\IZipCodeRepository.CS" />
+    <Compile Include="Interface\Service\IUserService.cs" />
     <Compile Include="Mapping\AutoMapperBootStrapper.cs" />
     <Compile Include="Mapping\MapperHelper.cs" />
     <Compile Include="Model\Administrativecode.CS" />
@@ -537,7 +539,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Interface\Service\" />
+    <Content Include="Edmx\DBPlaceFinal.edmx.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BCP.Common\BCP.Common.csproj">
@@ -548,9 +550,6 @@
       <Project>{71a0a4fb-2a11-4cff-95e6-37d0c07cb40d}</Project>
       <Name>BCP.ViewModel</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Edmx\DBPlaceFinal.edmx.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

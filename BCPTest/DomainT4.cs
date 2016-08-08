@@ -306,12 +306,14 @@ namespace BCPTest
         public void UnityBootStrapperT4()
         {
             var ass = Assembly.Load("BCP.Domain");
-            String path = @"E:\Work_hy\共性平台\BasePlace\BCP.WebAPI\Controllers";
+            String path = @"E:\Work_hy\共性平台\BasePlace\BCP.WebAPI\Controllers\Ioc";
 
-            using (FileStream fs = new FileStream(path + "\\UnityBootStrapper.CS", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(path + "\\UnityBootStrapper.CS", FileMode.Create))
             {
                 StreamWriter sw = new StreamWriter(fs);
                 sw.WriteLine("using BCP.Domain;");
+                sw.WriteLine("using BCP.Common;");
+                sw.WriteLine("using BCP.Domain.Service;");
                 sw.WriteLine("using Microsoft.Practices.Unity;");
                 sw.WriteLine("using Microsoft.Practices.Unity.InterceptionExtension;");
                 sw.WriteLine("using System;");
@@ -331,11 +333,18 @@ namespace BCPTest
                 sw.WriteLine("        public void Bindings()");
                 sw.WriteLine("        {");
                 sw.WriteLine("            UnityContainer.AddNewExtension<Interception>();");
+                sw.WriteLine("            UnityContainer.RegisterType<IUnitOfWork, EFUnitOfWork>();");
                 foreach (var node in ass.GetTypes())
                 {
+                    sw.Flush();
                     if (node.Namespace.Equals("BCP.Domain.Edmx") && !node.Name.Equals("DataContext")&&!node.IsEnum)
                     {
                         sw.WriteLine("            UnityContainer.RegisterType<I"+node.Name+"Repository, "+node.Name+"Repository>();");
+                    }
+
+                    if (node.Namespace.Equals("BCP.Domain.Service")&&node.IsInterface)
+                    {
+                        sw.WriteLine("            UnityContainer.RegisterType<" + node.Name + ", " + node.Name.Substring(1,node.Name.Length-1) + ">();");
                     }
                 }
 

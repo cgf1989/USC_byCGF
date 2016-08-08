@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BCP.Domain.Mapping;
+using BCP.WebAPI.Controllers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,6 +24,14 @@ namespace BCP.WebAPI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            //Ioc的两种方式 DefaultControllerFactory||(DenpendencyResolver&&DenpendencyScope)
+            //ControllerBuilder.Current.SetControllerFactory(new UnityControllerFactory());
+
+            GlobalConfiguration.Configuration.DependencyResolver = new UnityDependency();
+
+
+            AutoMapperBootStrapper.Start();
         }
     }
 }

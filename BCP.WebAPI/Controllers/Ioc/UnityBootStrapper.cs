@@ -1,4 +1,6 @@
 using BCP.Domain;
+using BCP.Common;
+using BCP.Domain.Service;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using System;
@@ -18,6 +20,7 @@ namespace BCP.WebAPI.Controllers
         public void Bindings()
         {
             UnityContainer.AddNewExtension<Interception>();
+            UnityContainer.RegisterType<IUnitOfWork, EFUnitOfWork>();
             UnityContainer.RegisterType<IAdministrativecodeRepository, AdministrativecodeRepository>();
             UnityContainer.RegisterType<IAssetBaseTypeRepository, AssetBaseTypeRepository>();
             UnityContainer.RegisterType<IAssetMaintenanceRepository, AssetMaintenanceRepository>();
@@ -90,6 +93,7 @@ namespace BCP.WebAPI.Controllers
             UnityContainer.RegisterType<IWorkSpaceTypeRepository, WorkSpaceTypeRepository>();
             UnityContainer.RegisterType<IworkTaskRepository, workTaskRepository>();
             UnityContainer.RegisterType<IZipCodeRepository, ZipCodeRepository>();
+            UnityContainer.RegisterType<IUserService, UserService>();
         }
     }
 }
