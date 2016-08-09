@@ -2,6 +2,7 @@
 using BCP.Domain;
 using BCP.Domain.Service;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +18,19 @@ namespace BCP.WebAPI.Controllers
         public IUserService UserService { get; set; }
 
         [HttpGet]
-        public bool Login(String userName,String userPwd)
+        public String Login(String userName,String userPwd)
         {
             try
             {
                 UserService.InitDataBase();
                 if (UserService.Login(userName, userPwd))
-                    return true;
+                    return JsonConvert.SerializeObject(UserService.GetUser(userName));
                 else
-                    return false;
+                    return "false";
             }
             catch (Exception ex)
             { }
-            return false;
+            return "false";
         }
     }
 }

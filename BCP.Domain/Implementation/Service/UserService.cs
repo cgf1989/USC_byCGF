@@ -1,6 +1,7 @@
 ﻿using BCP.Common;
 using BCP.Domain.Edmx;
 using BCP.Domain.Service;
+using BCP.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,36 @@ namespace BCP.Domain
                 return true;
             else
                 return false;
+        }
+
+
+        public bool RegisterUser(UserDTO userDto)
+        {
+            if (userDto == null || String.IsNullOrWhiteSpace(userDto.UserName)) return false;
+            if (_userRepository.GetAll().Where(it => it.UserName.Equals(userDto.UserName)).FirstOrDefault() != null)
+                return false;
+            User user = userDto.MapperTo<UserDTO, User>();
+            _userRepository.Add(user);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+
+        public UserDTO GetUser(int id)
+        {
+            return _userRepository.GetAll().Where(it => it.ID == id).First().MapperTo<User, UserDTO>();
+        }
+
+        public UserDTO GetUser(string userName)
+        {
+            return _userRepository.GetAll().Where(it => it.UserName.Equals(userName)).First().MapperTo<User, UserDTO>();
+        }
+
+        public bool DeleteUser(int id)
+        {
+            _userRepository.RemoveNonCascaded(id);
+            _unitOfWork.Commit();
+            return true;
         }
     }
 }
