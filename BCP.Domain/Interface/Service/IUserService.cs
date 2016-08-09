@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BCP.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,9 @@ namespace BCP.Domain.Service
     {
         void InitDataBase();
         bool Login(String userName, String userPwd);
+        bool RegisterUser(UserDTO user);
+        UserDTO GetUser(int id);
+        UserDTO GetUser(String userName);
+        bool DeleteUser(int id);
     }
 }
