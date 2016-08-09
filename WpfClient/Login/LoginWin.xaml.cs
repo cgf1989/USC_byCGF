@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,10 +29,10 @@ namespace WpfClient.Login
         public LoginWin()
         {
             InitializeComponent();
-            userList=SignalCore.Data.InitUserInfo();
+            userList = SignalCore.Data.InitUserInfo();
         }
 
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        private async void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             if (tb_account.Text.Trim() == "" || tb_password.Password.Trim() == "")
             {
@@ -38,30 +40,63 @@ namespace WpfClient.Login
             }
             else
             {
-                SignalCore.UserInfo user = new SignalCore.UserInfo();
-                user.UserAccount=tb_account.Text.Trim();
-                user.UserPwd = tb_password.Password.Trim();
-                foreach (var currentUser in userList)
+                BCP.ViewModel.UserDTO user = new BCP.ViewModel.UserDTO();
+                //SignalCore.UserInfo user = new SignalCore.UserInfo();
+                user.UserName = tb_account.Text.Trim();
+                user.Password = tb_password.Password.Trim();
+
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:37768/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Login/Login?userName=" + user.UserName + "&userPwd=" + user.Password);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
                 {
-                    if (currentUser.UserAccount == user.UserAccount)
+                    var ds = await response.Content.ReadAsStringAsync();
+                    if (ds.ToString() == "true")
                     {
-                        if (currentUser.UserPwd== user.UserPwd)
-                        {
-                            MainClient.currentUser = currentUser;
-                            MainClient mainWin = new MainClient();
-                            this.Close();
-                            mainWin.ShowDialog();
-                        }
-                        else
-                        {
-                            MessageBox.Show("密码错误");
-                        }
-                        return;
+                        //MainClient.currentUser = currentUser;  //返回当前用户
+                        MainClient mainWin = new MainClient();
+                        this.Close();                        
+
+                        mainWin.ShowDialog();
                     }
+                    else if (ds.ToString() == "false")
+                    { MessageBox.Show("密码错误"); }
 
                 }
+
+                //foreach (var currentUser in userList)
+                //{
+                //    if (currentUser.UserAccount == user.UserAccount)
+                //    {
+                //        if (currentUser.UserPwd== user.UserPwd)
+                //        {
+                //            MainClient.currentUser = currentUser;
+                //            MainClient mainWin = new MainClient();
+                //            this.Close();
+
+
+
+                //            mainWin.ShowDialog();
+                //        }
+                //        else
+                //        {
+                //            MessageBox.Show("密码错误");
+                //        }
+                //        return;
+                //    }
+
+                //}
+
+
                 MessageBox.Show("该账户不存在");
-            }            
+            }
+
+
+
         }
 
 
@@ -78,7 +113,7 @@ namespace WpfClient.Login
         }
     }
 
- 
 
-   
+
+
 }

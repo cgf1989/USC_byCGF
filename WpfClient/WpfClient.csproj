@@ -80,6 +80,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -473,6 +474,10 @@
     <ProjectReference Include="..\BaseDataLayout\BaseDataLayout.csproj">
       <Project>{350347c0-7f84-4a3f-b2d2-d775ac54451b}</Project>
       <Name>BaseDataLayout</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BCP.ViewModel\BCP.ViewModel.csproj">
+      <Project>{71a0a4fb-2a11-4cff-95e6-37d0c07cb40d}</Project>
+      <Name>BCP.ViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\SignalCore\SignalCore.csproj">
       <Project>{3c9927e4-1008-4a8f-a0d9-0dbcfe8c6570}</Project>
