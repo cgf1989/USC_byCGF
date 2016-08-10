@@ -2,6 +2,7 @@
 using BCP.Domain;
 using BCP.Domain.Service;
 using BCP.ViewModel;
+using BCP.WebAPI.Helpers;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using System;
@@ -27,15 +28,18 @@ namespace BCP.WebAPI.Controllers
                 UserService.InitDataBase();
                 if (UserService.Login(userName, userPwd))
                 {
-                    var str= JsonConvert.SerializeObject(UserService.GetUser(userName));
-                    HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
-                    return result;
+                    //var str= JsonConvert.SerializeObject(UserService.GetUser(userName));
+                    //HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
+                    //return result;
+                    return JsonHelper.GetResponseMessage(true, "登录成功", typeof(UserDTO), false, UserService.GetUser(userName));
 
                 }
             }
             catch (Exception ex)
-            { }
-           return new HttpResponseMessage { Content = new StringContent("false", Encoding.GetEncoding("UTF-8"), "application/json") };
+            {
+                return JsonHelper.GetResponseMessage(false, "登录失败"+ex.Message, null, false, null);
+            }
+            return JsonHelper.GetResponseMessage(false, "登录失败", null, false, null);
         }
     }
 }
