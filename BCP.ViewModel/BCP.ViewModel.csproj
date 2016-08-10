@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomMessage.cs" />
     <Compile Include="Model\AdministrativecodeDTO.CS" />
     <Compile Include="Model\AssetBaseTypeDTO.CS" />
     <Compile Include="Model\AssetMaintenanceDTO.CS" />
