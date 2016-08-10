@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace BCP.WebAPI.Controllers
@@ -19,24 +20,22 @@ namespace BCP.WebAPI.Controllers
         public IUserService UserService { get; set; }
 
         [HttpGet]
-        public String Login(String userName,String userPwd)
+        public HttpResponseMessage Login(String userName, String userPwd)
         {
             try
             {
                 UserService.InitDataBase();
                 if (UserService.Login(userName, userPwd))
                 {
-                    var ss= JsonConvert.SerializeObject(UserService.GetUser(userName));
-                    var sss = JsonConvert.DeserializeObject<UserDTO>(ss);
-                    return ss;
+                    var str= JsonConvert.SerializeObject(UserService.GetUser(userName));
+                    HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
+                    return result;
 
                 }
-                else
-                    return "false";
             }
             catch (Exception ex)
             { }
-            return "false";
+           return new HttpResponseMessage { Content = new StringContent("false", Encoding.GetEncoding("UTF-8"), "application/json") };
         }
     }
 }
