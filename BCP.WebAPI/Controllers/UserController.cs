@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace BCP.WebAPI.Controllers
 {
@@ -16,16 +17,20 @@ namespace BCP.WebAPI.Controllers
         [Dependency]
         public IUserService UserService { get; set; }
 
-        public String RegisterUser(UserDTO user)
+        public HttpResponseMessage RegisterUser(UserDTO user)
         {
 
             if (UserService.RegisterUser(user))
             {
-                return JsonConvert.SerializeObject(UserService.GetUser(user.UserName));
+                String str=JsonConvert.SerializeObject(UserService.GetUser(user.UserName));
+                //JavaScriptSerializer serializer = new JavaScriptSerializer();
+                //string str = serializer.Serialize(user);
+                HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
+                return result; 
             }
             else
             {
-                return "false";
+                return new HttpResponseMessage { Content = new StringContent("false", Encoding.GetEncoding("UTF-8"), "application/json") };
             }
         }
     }
