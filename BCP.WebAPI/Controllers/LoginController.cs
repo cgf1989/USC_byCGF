@@ -1,6 +1,7 @@
 ﻿using BCP.Common;
 using BCP.Domain;
 using BCP.Domain.Service;
+using BCP.ViewModel;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using System;
@@ -24,7 +25,12 @@ namespace BCP.WebAPI.Controllers
             {
                 UserService.InitDataBase();
                 if (UserService.Login(userName, userPwd))
-                    return JsonConvert.SerializeObject(UserService.GetUser(userName));
+                {
+                    var ss= JsonConvert.SerializeObject(UserService.GetUser(userName));
+                    var sss = JsonConvert.DeserializeObject<UserDTO>(ss);
+                    return ss;
+
+                }
                 else
                     return "false";
             }
