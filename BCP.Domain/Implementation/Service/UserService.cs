@@ -81,5 +81,24 @@ namespace BCP.Domain
             _unitOfWork.Commit();
             return true;
         }
+
+
+        public bool UpdateUserPwd(int id, string userPwd)
+        {
+            var user = _userRepository.GetAll().Where(it => it.ID == id).First();
+            user.Password = userPwd;
+            _userRepository.Save(user);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+
+        public List<UserDTO> GetUser()
+        {
+            var list = _userRepository.GetAll()
+                .MapperTo<User, UserDTO>()
+                .ToList();
+            return list;
+        }
     }
 }

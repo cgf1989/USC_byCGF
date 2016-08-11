@@ -14,6 +14,8 @@ namespace BCP.Domain.Service
         bool RegisterUser(UserDTO user);
         UserDTO GetUser(int id);
         UserDTO GetUser(String userName);
+        List<UserDTO> GetUser();
         bool DeleteUser(int id);
+        bool UpdateUserPwd(int id, String userPwd);
     }
 }
