@@ -26,14 +26,14 @@
         <Button Name="btn_browse" Content="浏览 ..." Height="20" Width="50" Grid.Column="2" Click="btn_browse_Click"/>
         
         <TextBlock VerticalAlignment="Center" Text="用户名" Grid.Row="1"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Margin="5,0,5,0"/>
+        <TextBox Name="tb_userName" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Margin="5,0,5,0"/>
         
         <TextBlock VerticalAlignment="Center" Text="密码" Grid.Row="2"/>
-        <PasswordBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Margin="5,0,5,0"/>
+        <PasswordBox Name="tb_Password" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Margin="5,0,5,0"/>
         
         <TextBlock VerticalAlignment="Center" Text="真实姓名" Grid.Row="3"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Margin="5,0,5,0"/>
+        <TextBox Name="tb_ActureName" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Margin="5,0,5,0"/>
 
-        <Button Content="注册" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}" Grid.Row="6" Grid.Column="2" Height="28" Width="70"/>
+        <Button Name="btn_Regist" Content="注册" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}" Grid.Row="6" Grid.Column="2" Height="28" Width="70" Click="btn_Regist_Click"/>
     </Grid>
 </Window>

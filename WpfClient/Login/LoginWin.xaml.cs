@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -13,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BCP.ViewModel;
 
 namespace WpfClient.Login
 {
@@ -40,7 +42,7 @@ namespace WpfClient.Login
             }
             else
             {
-                BCP.ViewModel.UserDTO user = new BCP.ViewModel.UserDTO();
+                UserDTO user = new UserDTO();
                 //SignalCore.UserInfo user = new SignalCore.UserInfo();
                 user.UserName = tb_account.Text.Trim();
                 user.Password = tb_password.Password.Trim();
@@ -54,17 +56,20 @@ namespace WpfClient.Login
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
-                    var ds = await response.Content.ReadAsStringAsync();
-                    if (ds.ToString() == "true")
+                    string  ds = await response.Content.ReadAsStringAsync();
+                    if (ds.ToString() == "false")
                     {
-                        //MainClient.currentUser = currentUser;  //返回当前用户
+                        MessageBox.Show("用户名或密码错误");
+                    }
+                    else
+                    {                       
+                        UserDTO currentUser = JsonConvert.DeserializeObject<UserDTO>(ds);
+                        MainClient.currentUser = currentUser;  //返回当前用户
                         MainClient mainWin = new MainClient();
-                        this.Close();                        
+                        this.Close();
 
                         mainWin.ShowDialog();
                     }
-                    else if (ds.ToString() == "false")
-                    { MessageBox.Show("密码错误"); }
 
                 }
 
@@ -90,9 +95,8 @@ namespace WpfClient.Login
                 //    }
 
                 //}
-
-
-                MessageBox.Show("该账户不存在");
+                
+                //MessageBox.Show("该账户不存在");
             }
 
 

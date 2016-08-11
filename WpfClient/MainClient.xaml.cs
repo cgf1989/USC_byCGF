@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BCP.ViewModel;
 
 namespace WpfClient
 {
@@ -23,7 +24,7 @@ namespace WpfClient
         /// <summary>
         /// 当前的登录用户
         /// </summary>
-        public static SignalCore.UserInfo currentUser { set; get; }
+        public static UserDTO currentUser { set; get; }
 
 
         public MainClient()
