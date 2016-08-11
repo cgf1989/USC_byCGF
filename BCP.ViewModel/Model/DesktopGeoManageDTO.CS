@@ -13,6 +13,7 @@ namespace BCP.ViewModel
     {
         public System.Int32 ID { get; set; }
         public System.String Tile { get; set; }
+        public Int32? EventTimeEventTimeID { get; set; }
         public System.String Content { get; set; }
         public System.String Descript { get; set; }
         public System.String link { get; set; }
@@ -20,4 +21,3 @@ namespace BCP.ViewModel
         public System.Int32 CustomGeographicTypeID { get; set; }
     }
 }
-

@@ -14,7 +14,7 @@ namespace BCP.ViewModel
         public System.Int32 ID { get; set; }
         public System.String Name { get; set; }
         public System.String Descript { get; set; }
+        public Int32? Parent { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

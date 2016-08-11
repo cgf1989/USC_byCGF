@@ -12,7 +12,10 @@ namespace BCP.ViewModel
     public partial class DocReaderDTO
     {
         public System.Int32 Id { get; set; }
+        public Int32? WorkSpaceID { get; set; }
+        public Int32? OrganizationID { get; set; }
+        public Int32? PostID { get; set; }
+        public Int32? UserID { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

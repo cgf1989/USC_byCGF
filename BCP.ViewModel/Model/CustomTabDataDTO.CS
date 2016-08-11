@@ -14,6 +14,6 @@ namespace BCP.ViewModel
         public System.Int32 Id { get; set; }
         public System.String Data { get; set; }
         public System.Int32 CustomTableId { get; set; }
+        public Int32? DocumentManageID { get; set; }
     }
 }
-

@@ -18,7 +18,9 @@ namespace BCP.ViewModel
         public System.String Comment { get; set; }
         public System.Boolean IsValid { get; set; }
         public System.String Descript { get; set; }
+        public Int32? IndustrySolutionId { get; set; }
+        public Int32? WorkSpaceID { get; set; }
+        public Int32? WorkModulId { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

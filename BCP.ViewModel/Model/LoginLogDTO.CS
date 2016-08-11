@@ -15,7 +15,7 @@ namespace BCP.ViewModel
         public System.String LoginIP { get; set; }
         public System.String LoginTime { get; set; }
         public System.String LogoutTime { get; set; }
+        public Int32? UserID { get; set; }
         public System.String CurrentSate { get; set; }
     }
 }
-

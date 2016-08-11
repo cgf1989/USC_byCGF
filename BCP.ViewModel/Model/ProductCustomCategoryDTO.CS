@@ -17,4 +17,3 @@ namespace BCP.ViewModel
         public System.Int32 ProductCustomCategoryId { get; set; }
     }
 }
-

@@ -188,7 +188,7 @@ namespace BCPTest
             {
                 if (node.Namespace.Equals("BCP.Domain.Edmx") && !node.Name.Equals("DataContext"))
                 {
-                    using (FileStream fs = new FileStream(path + "\\" + node.Name + "DTO.CS", FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream(path + "\\" + node.Name + "DTO.CS", FileMode.Create))
                     {
                         StreamWriter sw = new StreamWriter(fs);
                         sw.WriteLine("using System;");
@@ -237,10 +237,17 @@ namespace BCPTest
                                     if (property.PropertyType.IsEnum)
                                     {
                                         sw.WriteLine("        public " + property.PropertyType + "DTO " + property.Name + " { get; set; }");
+                                        continue;
                                     }
                                     if (!property.PropertyType.IsGenericType && !property.PropertyType.IsSubclassOf(typeof(EntityBase)))
                                     {
                                         sw.WriteLine("        public " + property.PropertyType + " " + property.Name + " { get; set; }");
+                                        continue;
+                                    }
+                                    if (property.PropertyType.IsValueType&&property.PropertyType.IsGenericType)
+                                    {
+                                        sw.WriteLine("        public " + property.PropertyType.GetGenericArguments()[0].Name + "? " + property.Name + " { get; set; }");
+                                        continue;
                                     }
                                 }
                             }

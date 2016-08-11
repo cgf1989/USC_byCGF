@@ -19,7 +19,8 @@ namespace BCP.ViewModel
         public System.String SCode { get; set; }
         public System.String FCode { get; set; }
         public System.String PCode { get; set; }
+        public Int32? OrganizBasicID { get; set; }
+        public Int32? OrganizationID { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

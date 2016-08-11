@@ -14,6 +14,6 @@ namespace BCP.ViewModel
         public System.Int32 ID { get; set; }
         public System.String Name { get; set; }
         public System.String other { get; set; }
+        public Int32? TimeLineTimeLineID { get; set; }
     }
 }
-

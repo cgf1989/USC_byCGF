@@ -14,7 +14,9 @@ namespace BCP.ViewModel
         public System.Int32 ID { get; set; }
         public System.String Content { get; set; }
         public System.String Message { get; set; }
+        public Int32? DocumentManageID { get; set; }
+        public Int32? DocumentContentID { get; set; }
+        public Int32? workTaskId { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-
