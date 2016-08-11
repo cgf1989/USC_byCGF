@@ -99,12 +99,12 @@ namespace WpfClient.Teams
                 };
 
 
-                pd.Init(MainClient.currentUser.UserName,MainClient.currentUser.Department, s);
+                //pd.Init(MainClient.currentUser.UserName,MainClient.currentUser.Department, s);
 
                 System.Threading.Thread.Sleep(1000);
 
-                s.Login(MainClient.currentUser.UserName, MainClient.currentUser.UserPwd);
-                s.GetContactRecord(MainClient.currentUser.Department);
+                s.Login(MainClient.currentUser.UserName, MainClient.currentUser.Password);
+                //s.GetContactRecord(MainClient.currentUser.Department);
                 pd.Show();
             }
            
@@ -132,12 +132,12 @@ namespace WpfClient.Teams
                 };
 
 
-                pd.Init(MainClient.currentUser.UserName, MainClient.currentUser.Department, s);
+                //pd.Init(MainClient.currentUser.UserName, MainClient.currentUser.Department, s);
 
                 System.Threading.Thread.Sleep(1000);
 
-                s.Login(MainClient.currentUser.UserName, MainClient.currentUser.UserPwd);
-                s.GetContactRecord(MainClient.currentUser.Department);
+                s.Login(MainClient.currentUser.UserName, MainClient.currentUser.Password);
+                //s.GetContactRecord(MainClient.currentUser.Department);
                 pd.Show();
             }
         }

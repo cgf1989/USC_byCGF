@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using BCP.ViewModel;
 
 namespace WpfClient.Login
 {
@@ -50,5 +53,30 @@ namespace WpfClient.Login
                 MessageBox.Show("文件格式不正确");
             }
         }
+
+        private async void btn_Regist_Click(object sender, RoutedEventArgs e)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:37768/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.PostAsync("api/User/RegisterUser?userName=" + tb_userName.Text.Trim() + "&userPwd=" + tb_Password.Password + "&Status=" + "" + "&LimiteTime=" + "20160810" + "&Note=" + "" + "&EventTime=" + 1);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string ds = await response.Content.ReadAsStringAsync();
+            }
+        }
+
+
+        //增
+        //api/User/RegisterUser?userName=" + tb_userName.Text.Trim() + "&userPwd=" + tb_Password.Password + "&Status=" + "" + "&LimiteTime=" + "20160810" + "&Note=" + "" + "&EventTime=" + 1
+        //删
+        //"&userId="+id
+        //改密码
+        //"&userId="+id+"&userPwd"+userPwd
+        
+
     }
 }
