@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BCP.ViewModel;
+using Newtonsoft.Json;
 
 namespace WpfClient.Login
 {
@@ -61,11 +62,21 @@ namespace WpfClient.Login
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await client.PostAsync("api/User/RegisterUser?userName=" + tb_userName.Text.Trim() + "&userPwd=" + tb_Password.Password + "&Status=" + "" + "&LimiteTime=" + "20160810" + "&Note=" + "" + "&EventTime=" + 1);
-
+            HttpResponseMessage response = await client.GetAsync("api/User/RegisterUser?userName=" + tb_userName.Text.Trim() + "&userPwd=" + tb_Password.Password + "&ActualName=" +tb_ActureName.Text.Trim());
+           
             if (response.IsSuccessStatusCode)
             {
                 string ds = await response.Content.ReadAsStringAsync();
+                CustomMessage result=JsonConvert.DeserializeObject<CustomMessage>(ds);
+                if (result.Success)
+                {
+                    MessageBox.Show("注册成功！");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("注册失败");
+                }
             }
         }
 

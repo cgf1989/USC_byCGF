@@ -62,13 +62,21 @@ namespace WpfClient.Login
                         MessageBox.Show("用户名或密码错误");
                     }
                     else
-                    {                       
-                        UserDTO currentUser = JsonConvert.DeserializeObject<UserDTO>(ds);
-                        MainClient.currentUser = currentUser;  //返回当前用户
-                        MainClient mainWin = new MainClient();
-                        this.Close();
+                    {
+                        CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                        if (result.Success)
+                        {
+                            UserDTO currentUser = JsonConvert.DeserializeObject<UserDTO>(result.Data);
+                            MainClient.currentUser = currentUser;  //返回当前用户
+                            MainClient mainWin = new MainClient();
+                            this.Close();
 
-                        mainWin.ShowDialog();
+                            mainWin.ShowDialog();
+                        }
+                        else
+                        {
+                            MessageBox.Show("用户名或密码错误");
+                        }
                     }
 
                 }
@@ -114,6 +122,17 @@ namespace WpfClient.Login
             RegistWin rgWin = new RegistWin();
             rgWin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             rgWin.ShowDialog();
+        }
+
+        /// <summary>
+        /// 找回密码 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void hpLink_findPassword_Click(object sender, RoutedEventArgs e)
+        {
+            UserManageWin umw=new UserManageWin();
+            umw.ShowDialog();
         }
     }
 

@@ -145,8 +145,14 @@
     <Compile Include="Login\LoginWin.xaml.cs">
       <DependentUpon>LoginWin.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Login\ModifyPwdWin.xaml.cs">
+      <DependentUpon>ModifyPwdWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Login\RegistWin.xaml.cs">
       <DependentUpon>RegistWin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Login\UserManageWin.xaml.cs">
+      <DependentUpon>UserManageWin.xaml</DependentUpon>
     </Compile>
     <Compile Include="Message\MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
@@ -279,7 +285,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Login\ModifyPwdWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Login\RegistWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Login\UserManageWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -32,6 +32,8 @@
         <TextBlock Grid.Row="1" Grid.Column="3" Margin="10,10,0,0" VerticalAlignment="Center">
             <Hyperlink Name="hpLink_registAccount" Click="hpLink_registAccount_Click">注册账号</Hyperlink>
         </TextBlock>
-        <TextBlock Text="找回密码" Foreground="Blue" Grid.Row="2" Grid.Column="3" Margin="10,0,0,0" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="3" Margin="10,0,0,0" VerticalAlignment="Center">
+            <Hyperlink Name="hpLink_findPassword" Click="hpLink_findPassword_Click">找回密码</Hyperlink>
+        </TextBlock>
     </Grid>
 </scr:MyMacClass_noneMaxBtn>

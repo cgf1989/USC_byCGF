@@ -590,6 +590,9 @@
             <!--Image Name="Head_Image" Grid.RowSpan="2" Source="/Image/Head.png"/-->
             <TextBlock Name="tb_UserName" Grid.Column="1" Grid.ColumnSpan="2" FontSize="30" Margin="10,0,0,0" VerticalAlignment="Center"/>
             <TextBlock Name="tb_LoginTime" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="3" HorizontalAlignment="Right" Margin="5">
+                <Hyperlink Name="hpLink_setting" Click="hpLink_setting_Click">设置</Hyperlink>
+            </TextBlock>
         </Grid>
         <Grid Name="Head_Grid" Grid.Row="1">
             <TabControl Style="{DynamicResource TabControlStyle1}" >
