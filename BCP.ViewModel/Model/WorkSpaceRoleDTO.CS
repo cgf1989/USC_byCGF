@@ -16,7 +16,8 @@ namespace BCP.ViewModel
         public System.Int32 WorkSpaceID { get; set; }
         public System.Int32 OrganizationID { get; set; }
         public System.String Descript { get; set; }
+        public Int32? WorkModulId { get; set; }
+        public Int32? UserID { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

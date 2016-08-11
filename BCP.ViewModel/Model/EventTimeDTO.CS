@@ -17,6 +17,6 @@ namespace BCP.ViewModel
         public System.String EventName { get; set; }
         public System.String EventType { get; set; }
         public System.String District { get; set; }
+        public Int32? LoginLogID { get; set; }
     }
 }
-

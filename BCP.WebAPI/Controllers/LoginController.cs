@@ -3,6 +3,7 @@ using BCP.Domain;
 using BCP.Domain.Service;
 using BCP.ViewModel;
 using BCP.WebAPI.Helpers;
+using BCP.WebAPI.SignalR;
 using Microsoft.Practices.Unity;
 using Newtonsoft.Json;
 using System;
@@ -31,7 +32,9 @@ namespace BCP.WebAPI.Controllers
                     //var str= JsonConvert.SerializeObject(UserService.GetUser(userName));
                     //HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
                     //return result;
-                    return JsonHelper.GetResponseMessage(true, "登录成功", typeof(UserDTO), false, UserService.GetUser(userName));
+                    var userDto=UserService.GetUser(userName);
+                    MyHub.Login(userDto);
+                    return JsonHelper.GetResponseMessage(true, "登录成功", typeof(UserDTO), false, userDto);
 
                 }
             }
@@ -40,6 +43,22 @@ namespace BCP.WebAPI.Controllers
                 return JsonHelper.GetResponseMessage(false, "登录失败"+ex.Message, null, false, null);
             }
             return JsonHelper.GetResponseMessage(false, "登录失败", null, false, null);
+        }
+
+        [HttpGet]
+        public HttpResponseMessage Logout(String userId)
+        {
+            try
+            {
+                if (UserService.Logout(Convert.ToInt32(userId)))
+                {
+                    MyHub.Logout(Convert.ToInt32(userId));
+                    return JsonHelper.GetResponseMessage(true, "注销成功", null, false, null);
+                }
+            }
+            catch (Exception ex)
+            { }
+            return JsonHelper.GetResponseMessage(false, "注销失败", null, false, null);
         }
     }
 }

@@ -8,6 +8,6 @@ namespace BCP.ViewModel
 {
     public partial class UserDTO
     {
-        public int ContextId { get; set; }
+        public String  ContextId { get; set; }
     }
 }

@@ -20,4 +20,3 @@ namespace BCP.ViewModel
         public System.Int64 EventTime1 { get; set; }
     }
 }
-

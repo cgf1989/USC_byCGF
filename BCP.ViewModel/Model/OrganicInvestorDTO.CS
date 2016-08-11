@@ -12,6 +12,7 @@ namespace BCP.ViewModel
     public partial class OrganicInvestorDTO
     {
         public System.Int32 ID { get; set; }
+        public Int32? Investor { get; set; }
         public System.String InvestorName { get; set; }
         public System.Int32 InvestorNumber { get; set; }
         public System.String CentisifierType { get; set; }
@@ -22,4 +23,3 @@ namespace BCP.ViewModel
         public System.Int64 EventTime { get; set; }
     }
 }
-

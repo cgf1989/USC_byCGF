@@ -14,8 +14,8 @@ namespace BCP.ViewModel
         public System.Int32 Id { get; set; }
         public System.String Name { get; set; }
         public System.String Note { get; set; }
+        public Int32? physicalAssetId { get; set; }
         public System.Int32 AssetBaseTypeId { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

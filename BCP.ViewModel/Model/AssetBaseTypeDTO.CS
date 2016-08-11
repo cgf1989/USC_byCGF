@@ -15,7 +15,7 @@ namespace BCP.ViewModel
         public System.String TypeName { get; set; }
         public System.String Note { get; set; }
         public System.Int32 OrganizationID { get; set; }
+        public Int32? AssetTypeId { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

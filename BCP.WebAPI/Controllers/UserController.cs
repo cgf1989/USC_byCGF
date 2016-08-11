@@ -31,14 +31,14 @@ namespace BCP.WebAPI.Controllers
                     //string str = serializer.Serialize(user);
                     //HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
                     //return result; 
-                    return JsonHelper.GetResponseMessage(true, "登录成功", typeof(UserDTO), false, UserService.GetUser(user.UserName));
+                    return JsonHelper.GetResponseMessage(true, "注册成功", typeof(UserDTO), false, UserService.GetUser(user.UserName));
                 }
             }
             catch (Exception ex)
             {
-                return JsonHelper.GetResponseMessage(false, "登录失败"+ex.Message, null, false, null);
+                return JsonHelper.GetResponseMessage(false, "注册失败"+ex.Message, null, false, null);
             }
-            return JsonHelper.GetResponseMessage(false, "登录失败", null, false, null);
+            return JsonHelper.GetResponseMessage(false, "注册失败", null, false, null);
         }
 
         [HttpGet]

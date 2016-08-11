@@ -15,7 +15,8 @@ namespace BCP.ViewModel
         public System.String TypeName { get; set; }
         public System.String Type { get; set; }
         public System.String Note { get; set; }
+        public Int32? DocumentTypeID { get; set; }
+        public Int32? OrigId { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

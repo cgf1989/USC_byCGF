@@ -16,4 +16,3 @@ namespace BCP.ViewModel
         public System.String DataType { get; set; }
     }
 }
-

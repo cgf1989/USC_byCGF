@@ -12,6 +12,7 @@ namespace BCP.ViewModel
     public partial class DocTypeDTO
     {
         public System.Int32 Id { get; set; }
+        public Int32? DocumentTypeID { get; set; }
+        public Int32? DocumentManageID { get; set; }
     }
 }
-

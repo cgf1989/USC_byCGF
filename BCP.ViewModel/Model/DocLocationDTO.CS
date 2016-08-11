@@ -14,8 +14,10 @@ namespace BCP.ViewModel
         public System.Int32 ID { get; set; }
         public System.String VisualScope { get; set; }
         public System.Int32 DocReaderId { get; set; }
+        public Int32? DocSenderId { get; set; }
         public System.Boolean IsRuleTransaction { get; set; }
+        public Int32? DocLocationID { get; set; }
+        public Int32? DocumentManageID { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

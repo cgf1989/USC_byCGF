@@ -15,7 +15,7 @@ namespace BCP.ViewModel
         public System.String SecurityName { get; set; }
         public System.Int32 Level { get; set; }
         public System.String Descript { get; set; }
+        public Int32? SecurityinfoID { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

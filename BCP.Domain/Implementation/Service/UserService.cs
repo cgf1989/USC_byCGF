@@ -13,15 +13,19 @@ namespace BCP.Domain
     public class UserService:IUserService
     {
         IUserRepository _userRepository = null;
+        IUserMessageRepository _userMessageRepository = null;
         IUnitOfWork _unitOfWork = null;
 
         public UserService(IUnitOfWork unitOfWork,
+            IUserMessageRepository userMessageRepository,
             IUserRepository userRepository)
         {
             this._userRepository = userRepository;
+            this._userMessageRepository = userMessageRepository;
 
             this._unitOfWork = unitOfWork;
             this._userRepository.UnitOfWork = unitOfWork;
+            this._userMessageRepository.UnitOfWork = unitOfWork;
 
         }
 
@@ -52,7 +56,6 @@ namespace BCP.Domain
                 return false;
         }
 
-
         public bool RegisterUser(UserDTO userDto)
         {
             if (userDto == null || String.IsNullOrWhiteSpace(userDto.UserName)) return false;
@@ -63,7 +66,6 @@ namespace BCP.Domain
             _unitOfWork.Commit();
             return true;
         }
-
 
         public UserDTO GetUser(int id)
         {
@@ -82,7 +84,6 @@ namespace BCP.Domain
             return true;
         }
 
-
         public bool UpdateUserPwd(int id, string userPwd)
         {
             var user = _userRepository.GetAll().Where(it => it.ID == id).First();
@@ -92,13 +93,34 @@ namespace BCP.Domain
             return true;
         }
 
-
         public List<UserDTO> GetUser()
         {
             var list = _userRepository.GetAll()
                 .MapperTo<User, UserDTO>()
                 .ToList();
             return list;
+        }
+
+        public List<UserMessageDTO> GetPTPMessage(int userId, int anotherId)
+        {
+            return _userMessageRepository.GetAll().Where(it =>
+                (it.SenderID == userId && it.ReplyID == anotherId)
+                || (it.SenderID == anotherId && it.ReplyID == userId))
+                .OrderBy(it=>it.ID)
+                .MapperTo<UserMessage, UserMessageDTO>()
+                .ToList();
+        }
+
+        public bool AddPTPMessage(UserMessageDTO message)
+        {
+            _userMessageRepository.Add(message.MapperTo<UserMessageDTO,UserMessage>());
+            _unitOfWork.Commit();
+            return false;
+        }
+
+        public bool Logout(int userId)
+        {
+            return true;
         }
     }
 }

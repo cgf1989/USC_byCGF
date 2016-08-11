@@ -15,7 +15,7 @@ namespace BCP.ViewModel
         public System.String Post { get; set; }
         public System.String UserName { get; set; }
         public System.Boolean CheckState { get; set; }
+        public DateTime? CheckTime { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-

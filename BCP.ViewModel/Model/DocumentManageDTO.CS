@@ -17,7 +17,10 @@ namespace BCP.ViewModel
         public System.String Content { get; set; }
         public System.String URL { get; set; }
         public System.String FileNumber { get; set; }
+        public Int32? DocCheckStateID { get; set; }
+        public Int32? SecurityinfoID { get; set; }
+        public Int32? WorkSpaceBaseTypeId { get; set; }
         public System.Int64 EventTime { get; set; }
+        public Int32? DocManageStateID { get; set; }
     }
 }
-

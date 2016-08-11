@@ -17,6 +17,7 @@ namespace BCP.ViewModel
         public System.String BegeinTime { get; set; }
         public System.String EndTime { get; set; }
         public System.String State { get; set; }
+        public Int32? DocumentManageID { get; set; }
+        public Int32? workTaskId { get; set; }
     }
 }
-

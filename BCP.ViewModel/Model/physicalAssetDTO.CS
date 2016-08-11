@@ -16,10 +16,11 @@ namespace BCP.ViewModel
         public System.Int32 ProductId { get; set; }
         public System.String PlaceOfBuy { get; set; }
         public System.String BuyTime { get; set; }
+        public Int32? Supplier { get; set; }
         public System.String Validity { get; set; }
         public System.String State { get; set; }
         public System.Decimal Value { get; set; }
+        public DateTimeOffset? MaintenancePeriod { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }
-
