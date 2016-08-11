@@ -42,11 +42,11 @@ namespace BCP.WebAPI.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage UpdateUser(string  id, String userName, String userPwd)
+        public HttpResponseMessage UpdateUser(string id, String userName, String userPwd)
         {
             try
             {
-                
+
                 if (UserService.UpdateUserPwd(Convert.ToInt32(id), userPwd))
                 {
                     return JsonHelper.GetResponseMessage(true, "修改成功", typeof(UserDTO), false, UserService.GetUser(Convert.ToInt32(id)));
@@ -54,7 +54,7 @@ namespace BCP.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonHelper.GetResponseMessage(false, "修改失败"+ex.Message, null, false, null);
+                return JsonHelper.GetResponseMessage(false, "修改失败" + ex.Message, null, false, null);
             }
             return JsonHelper.GetResponseMessage(false, "修改失败", null, false, null);
         }
