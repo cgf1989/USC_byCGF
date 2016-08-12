@@ -1,4 +1,5 @@
-﻿using SignalCore;
+﻿using BCP.ViewModel;
+using SignalCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,10 +33,10 @@ namespace WpfClient.Contacts
             this.UserMessageLable.Text = message;
         }
 
-        public void Init(String userName, Record record)
+        public void Init(String userName, UserMessageDTO record)
         {
             this.UserNameLable.Content = userName;
-            this.UserMessageLable.Text = record == null ? "" : record.Message;
+            this.UserMessageLable.Text = record == null ? "" : record.Content;
         }
     }
 }

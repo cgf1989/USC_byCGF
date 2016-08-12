@@ -77,11 +77,11 @@ namespace WpfClient.Contacts
 
             if (input.ToolTip.Equals("发送"))
             {
-                SignalRProxy.PublicSend(Group, false, String.Empty, System.Guid.Empty,keyWord, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
+                //SignalRProxy.PublicSend(Group, false, String.Empty, System.Guid.Empty,keyWord, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
             }
             else
             {
-                SignalRProxy.PublicSend(Group, true, String.Empty, CommentId,keyWord, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
+                //SignalRProxy.PublicSend(Group, true, String.Empty, CommentId,keyWord, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
             }
         }
 
@@ -167,38 +167,38 @@ namespace WpfClient.Contacts
             this.Group = group;
             this.UserName = userName;
 
-            if (SignalRProxy.ReceviceNotice == null)
-            {
-                SignalRProxy.ReceviceNotice = (username, notice) => {
-                    this.Dispatcher.Invoke(() => {
-                        bool isExistence = false;
-                        foreach (var node in NoticeStackPanel.Children)
-                        {
-                            if ((node as PLeftMessageBoxUControl).Id == notice.Id)
-                            {
-                                var item = node as PLeftMessageBoxUControl;
-                                item.UpdateListBox(notice.Comments);
-                                isExistence = true;
-                                break;
-                            }
-                        }
+            //if (SignalRProxy.ReceviceNotice == null)
+            //{
+            //    SignalRProxy.ReceviceNotice = (username, notice) => {
+            //        this.Dispatcher.Invoke(() => {
+            //            bool isExistence = false;
+            //            foreach (var node in NoticeStackPanel.Children)
+            //            {
+            //                if ((node as PLeftMessageBoxUControl).Id == notice.Id)
+            //                {
+            //                    var item = node as PLeftMessageBoxUControl;
+            //                    item.UpdateListBox(notice.Comments);
+            //                    isExistence = true;
+            //                    break;
+            //                }
+            //            }
 
-                        if (!isExistence)
-                        {
-                            PLeftMessageBoxUControl pLeftMessage = new PLeftMessageBoxUControl();
-                            pLeftMessage.Init(notice.Belongs, notice.Comments, notice.DateTime,
-                                notice.From, notice.Id, notice.Message);
-                            pLeftMessage.Comment = (id) =>
-                            {
-                                this.CommentId = id;
-                                this.input.ToolTip=  "评论";
-                                this.InputNoticeTBox.Text = userName + ":";
-                            };
-                            NoticeStackPanel.Children.Add(pLeftMessage);
-                        }
-                    });
-                };
-            }
+            //            if (!isExistence)
+            //            {
+            //                PLeftMessageBoxUControl pLeftMessage = new PLeftMessageBoxUControl();
+            //                pLeftMessage.Init(notice.Belongs, notice.Comments, notice.DateTime,
+            //                    notice.From, notice.Id, notice.Message);
+            //                pLeftMessage.Comment = (id) =>
+            //                {
+            //                    this.CommentId = id;
+            //                    this.input.ToolTip=  "评论";
+            //                    this.InputNoticeTBox.Text = userName + ":";
+            //                };
+            //                NoticeStackPanel.Children.Add(pLeftMessage);
+            //            }
+            //        });
+            //    };
+            //}
 
             SignalRProxy.ConnectAsync();
         }

@@ -81,26 +81,42 @@ namespace WpfClient.Contacts
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            //PrivateDialog pd1 = new PrivateDialog();
+            //pd1.SignalRProxy = new SignalRProxy();
+            //pd1.SignalRProxy.ConnectAsync();
+            //pd1.To = (sender as ListViewItem).Name.ToString();
+            //pd1.Self = MainClient.currentUser.UserName;
+            //pd1.ReplyId = MainClient.currentUser.ID;
+
+            //PrivateDialog pd2 = new PrivateDialog();
+            //pd2.To = MainClient.currentUser.UserName;
+            //pd2.Self = (sender as ListViewItem).Name.ToString();
+            ////pd2.SignalRProxy = new SignalRProxy();
+            //pd2.SignalRProxy.ConnectAsync();
+            //// pd2 .ID =
+
             PrivateDialog pd1 = new PrivateDialog();
             pd1.SignalRProxy = new SignalRProxy();
             pd1.SignalRProxy.ConnectAsync();
-            pd1.To = (sender as ListViewItem).Name.ToString();
-            pd1.Self = MainClient.currentUser.UserName;
+            pd1.To = "cgf";
+            pd1.Self = "hy";
+            pd1.ReplyId = 2;
 
             PrivateDialog pd2 = new PrivateDialog();
-            pd2.To = MainClient.currentUser.UserName;
-            pd2.Self = (sender as ListViewItem).Name.ToString();
-            //pd2.SignalRProxy = new SignalRProxy();
+            pd2.SignalRProxy = new SignalRProxy();
             pd2.SignalRProxy.ConnectAsync();
+            pd2.To = "hy";
+            pd2.Self = "cgf";
+            pd2.ReplyId = 1;
 
             pd1.Closed += (sen, er) =>
             {
-                pd1.SignalRProxy.Logout(MainClient.currentUser.UserName);
+                //pd1.SignalRProxy.Logout(MainClient.currentUser.UserName);
                 pd1.SignalRProxy.Dispose();
             };
             pd2.Closed += (sen, er) =>
             {
-                pd2.SignalRProxy.Logout((sender as ListViewItem).Name.ToString());
+                //pd2.SignalRProxy.Logout((sender as ListViewItem).Name.ToString());
                 pd2.SignalRProxy.Dispose();
             };
 
@@ -110,29 +126,38 @@ namespace WpfClient.Contacts
             System.Threading.Thread.Sleep(1000);
 
             string pwd1 = "";
-            string pwd2 = "";
-            foreach (SignalCore.UserInfo item in Login.LoginWin.userList)
-            {
-                if (item.UserName == MainClient.currentUser.UserName)
-                {
-                    pwd1 = item.UserPwd;
-                }
-                if (item.UserName == (sender as ListViewItem).Name.ToString())
-                {
-                    pwd2 = item.UserPwd;
-                }
-            }
+            //string pwd2 = "";
+            //foreach (SignalCore.UserInfo item in Login.LoginWin.userList)
+            //{
+            //    if (item.UserName == MainClient.currentUser.UserName)
+            //    {
+            //        pwd1 = item.UserPwd;
+            //    }
+            //    //if (item.UserName == (sender as ListViewItem).Name.ToString())
+            //    //{
+            //    //    pwd2 = item.UserPwd;
+            //    //}
+            //}
 
-            if (pd1.SignalRProxy.Login(MainClient.currentUser.UserName, pwd1))
-            {
-                pd1.SignalRProxy.GetContactRecord(MainClient.currentUser.UserName, (sender as ListViewItem).Name.ToString());
-                pd1.Show();
-            }
-            if (pd2.SignalRProxy.Login((sender as ListViewItem).Name.ToString(), pwd2))
-            {
-                pd2.SignalRProxy.GetContactRecord((sender as ListViewItem).Name.ToString(), MainClient.currentUser.UserName);
-                pd2.Show();
-            }
+            //if (pd1.SignalRProxy.Login(MainClient.currentUser.UserName, pwd1))
+            //{
+            //    pd1.SignalRProxy.GetContactRecord(MainClient.currentUser.UserName, (sender as ListViewItem).Name.ToString());
+            //    pd1.Show();
+            //}
+            //if (pd2.SignalRProxy.Login((sender as ListViewItem).Name.ToString(), pwd2))
+            //{
+            //    pd2.SignalRProxy.GetContactRecord((sender as ListViewItem).Name.ToString(), MainClient.currentUser.UserName);
+            //    pd2.Show();
+            //}
+
+            pd1.SignalRProxy.Login("hy", "hy");
+            pd1.SignalRProxy.InitPTP(2);
+            pd1.Show();
+
+            pd2.SignalRProxy.Login("cgf","cgf");
+            pd2.SignalRProxy.InitPTP(1);
+            pd2.Show();
+
         }
     }
 }

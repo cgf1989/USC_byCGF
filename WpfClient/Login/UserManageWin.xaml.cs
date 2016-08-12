@@ -35,7 +35,7 @@ namespace WpfClient.Login
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/Json"));
 
-            HttpResponseMessage response =await client.GetAsync("api/User/GetAllUser");
+            HttpResponseMessage response = await client.GetAsync("api/User/GetAllUser");
 
             if (response.IsSuccessStatusCode)
             {
@@ -56,34 +56,38 @@ namespace WpfClient.Login
             }
         }
 
-        private async void btn_del_MouseUp(object sender, MouseButtonEventArgs e)
+     
+
+        private async void btn_del_Click(object sender, RoutedEventArgs e)
         {
-            if (dg_AllUser.SelectedItem.GetType() !=typeof(UserDTO))
+            if (dg_AllUser.SelectedItem.GetType() != typeof(UserDTO))
             {
                 MessageBox.Show("该行没有用户数据");
             }
             else
             {
                 UserDTO selectedUser = dg_AllUser.SelectedItem as UserDTO;
-                MessageBox.Show("是否要删除用户'" + selectedUser.ActualName + "'");
-
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:37768");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/Json"));
-
-                HttpResponseMessage response =await client.GetAsync("api/User/deleteUser?id="+selectedUser.ID);
-
-                if (response.IsSuccessStatusCode)
+                MessageBoxResult msgboxResult = MessageBox.Show("是否要删除用户'" + selectedUser.ActualName + "'", "确认删除", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                if (msgboxResult == MessageBoxResult.OK)
                 {
-                    string ds = await response.Content.ReadAsStringAsync();
-                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
-                    if (result.Success)
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:37768");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/Json"));
+
+                    HttpResponseMessage response = await client.GetAsync("api/User/deleteUser?id=" + selectedUser.ID);
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show("删除成功");                        
+                        string ds = await response.Content.ReadAsStringAsync();
+                        CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                        if (result.Success)
+                        {
+                            MessageBox.Show("删除成功");
+                        }
+                        else
+                        { MessageBox.Show("删除失败"); }
                     }
-                    else
-                    { MessageBox.Show("删除失败"); }
                 }
             }
         }

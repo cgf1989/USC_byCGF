@@ -94,7 +94,7 @@ namespace WpfClient.Teams
                 Contacts.SignalRProxy s = new Contacts.SignalRProxy();
                 pd.Closed += (sen, er) =>
                 {
-                    s.Logout(MainClient.currentUser.UserName);
+                    //s.Logout(MainClient.currentUser.UserName);
                     s.Dispose();
                 };
 
@@ -127,7 +127,7 @@ namespace WpfClient.Teams
                 Contacts.SignalRProxy s = new Contacts.SignalRProxy();
                 pd.Closed += (sen, er) =>
                 {
-                    s.Logout(MainClient.currentUser.UserName);
+                    //s.Logout(MainClient.currentUser.UserName);
                     s.Dispose();
                 };
 
@@ -136,7 +136,7 @@ namespace WpfClient.Teams
 
                 System.Threading.Thread.Sleep(1000);
 
-                s.Login(MainClient.currentUser.UserName, MainClient.currentUser.Password);
+                //s.Login(MainClient.currentUser.UserName, MainClient.currentUser.Password);
                 //s.GetContactRecord(MainClient.currentUser.Department);
                 pd.Show();
             }

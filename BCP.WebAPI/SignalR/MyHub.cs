@@ -137,7 +137,7 @@ namespace BCP.WebAPI.SignalR
                     {
                         if (node.ReplyID != null)
                         {
-                            var to = userService.GetUser((int)node.ReplyID);
+                            var to = userService.GetUser((int)node.SenderID);
                             Clients.Client(from.ContextId).AddUserMessage(to, node);
                         }
                     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BCP.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,6 +39,8 @@ namespace WpfClient.Contacts
         /// 聊天对象
         /// </summary>
         public String To { get; set; }
+
+        public int ReplyId { get; set; }
 
         /// <summary>
         /// 自己
@@ -141,7 +144,13 @@ namespace WpfClient.Contacts
             String message = this.InputTBox.Text.Trim();
             try
             {
-                SignalRProxy.PrivateSend(this.To, message, SignalCore.MessageType.Text);
+                SignalRProxy.PTPSendMessage(this.ReplyId, message);
+
+                
+                RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                rightMessageBoxUControl.Init(Self, new UserMessageDTO() { Content=message});
+                this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+
             }
             catch (Exception ex)
             {
@@ -160,51 +169,77 @@ namespace WpfClient.Contacts
             SignalRProxy.ConnectAsync();
 
 
-            //注册SignalR客户端方法
-            if (SignalRProxy.ReceviceFialureMessage == null)
-            {
-                SignalRProxy.ReceviceFialureMessage = (message) =>
-                {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        MessageBox.Show(message);
-                    });
-                };
-            }
+            #region //注册SignalR客户端方法
+            //if (SignalRProxy.ReceviceFialureMessage == null)
+            //{
+            //    SignalRProxy.ReceviceFialureMessage = (message) =>
+            //    {
+            //        this.Dispatcher.Invoke(() =>
+            //        {
+            //            MessageBox.Show(message);
+            //        });
+            //    };
+            //}
 
-            if (SignalRProxy.ReceviceMessage == null)
-            {
-                SignalRProxy.ReceviceMessage = (username, message) =>
-                {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                        leftMessageBoxUControl.Init(username, message);
-                        this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
-                    });
-                };
-            }
+            //if (SignalRProxy.ReceviceMessage == null)
+            //{
+            //    SignalRProxy.ReceviceMessage = (username, message) =>
+            //    {
+            //        this.Dispatcher.Invoke(() =>
+            //        {
+            //            LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+            //            leftMessageBoxUControl.Init(username, message);
+            //            this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+            //        });
+            //    };
+            //}
 
-            if (SignalRProxy.ReceviceRecord == null)
+
+            //if (SignalRProxy.ReceviceRecord == null)
+            //{
+            //    SignalRProxy.ReceviceRecord = (username, record) =>
+            //    {
+            //        this.Dispatcher.Invoke(() =>
+            //        {
+            //            if (username.Equals(To))
+            //            {
+            //                LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+            //                leftMessageBoxUControl.Init(To, record);
+            //                this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+            //            }
+            //            else
+            //            {
+            //                RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+            //                rightMessageBoxUControl.Init(Self, record);
+            //                this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+            //            }
+            //        });
+            //    };
+            //}
+            #endregion
+
+            if (SignalRProxy.AddUserMessage == null)
             {
-                SignalRProxy.ReceviceRecord = (username, record) =>
-                {
-                    this.Dispatcher.Invoke(() =>
-                    {
-                        if (username.Equals(To))
-                        {
-                            LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                            leftMessageBoxUControl.Init(To, record);
-                            this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
-                        }
-                        else
-                        {
-                            RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                            rightMessageBoxUControl.Init(Self, record);
-                            this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
-                        }
-                    });
-                };
+                SignalRProxy.AddUserMessage = (from, umd) =>
+                  {
+                      this.Dispatcher.Invoke(() =>
+                      {
+                          if (from.ActualName.Equals(To))
+                          {
+                              LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                              leftMessageBoxUControl.Init(To, umd);
+                              this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+                          }
+                          else
+                          {
+                              RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                              rightMessageBoxUControl.Init(Self, umd);
+                              this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                          }
+                      }
+                      );
+  
+                  };
             }
         }
     }

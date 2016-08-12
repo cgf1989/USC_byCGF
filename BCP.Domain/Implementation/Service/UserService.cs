@@ -115,7 +115,7 @@ namespace BCP.Domain
         {
             _userMessageRepository.Add(message.MapperTo<UserMessageDTO,UserMessage>());
             _unitOfWork.Commit();
-            return false;
+            return true;
         }
 
         public bool Logout(int userId)

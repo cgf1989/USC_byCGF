@@ -13,15 +13,26 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <Button Name="btn_getAllUser" Content="获取" Height="30" Width="80" Click="btn_getAllUser_Click"/>
-        <DataGrid Name="dg_AllUser" Grid.Row="1" CanUserAddRows="False">
+        <DataGrid Name="dg_AllUser" Grid.Row="1" CanUserAddRows="False" >
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                                <Image Name="btn_del" Width="20" Source="/WpfClient;component/Images/Delete.png" MouseUp="btn_del_MouseUp" />
-                        </DataTemplate>
+                            <TextBlock>
+                                <Hyperlink Name="btn_del" Click="btn_del_Click">
+                                    <Image  Width="20" Source="/WpfClient;component/Images/Delete.png" />
+                                </Hyperlink>
+                            </TextBlock>                             
+                        </DataTemplate>                        
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <!--<DataGridTextColumn Width="1*"/>
+                <DataGridTextColumn Width="1*"/>
+                <DataGridTextColumn Width="1*"/>
+                <DataGridTextColumn Width="1*"/>
+                <DataGridTextColumn Width="1*"/>
+                <DataGridTextColumn Width="1*"/>
+                <DataGridTextColumn Width="1*"/>-->
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

@@ -83,7 +83,7 @@ namespace WpfClient.Contacts
 
         public void Logout()
         {
-            _signalRProxy.Logout(_userName);
+            //_signalRProxy.Logout(_userName);
         }
     }
 }

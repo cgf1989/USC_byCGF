@@ -69,7 +69,7 @@ namespace WpfClient.Contacts
             Thread.Sleep(10000);
 
             s.Login("邵工", "邵工");
-            s.GetContactRecord("市场部");
+            //s.GetContactRecord("市场部");
             pd.Show();
         }
 
