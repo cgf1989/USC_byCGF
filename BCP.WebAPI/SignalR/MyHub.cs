@@ -38,9 +38,12 @@ namespace BCP.WebAPI.SignalR
 
         public static void Logout(int userId)
         {
-            var user = OnLineUser.Where(it => it.ID == userId).FirstOrDefault();
-            if (user != null)
-                OnLineUser.Remove(user);
+            lock (_lockObject)
+            {
+                var user = OnLineUser.Where(it => it.ID == userId).FirstOrDefault();
+                if (user != null)
+                    OnLineUser.Remove(user);
+            }
         }
 
         /// <summary>
@@ -48,14 +51,18 @@ namespace BCP.WebAPI.SignalR
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="userPwd"></param>
-        public void Login(String userName, String userPwd)
+        public bool Login(String userName, String userPwd)
         {
             lock (_lockObject)
             {
                 var user = OnLineUser.Where(it => it.UserName.Equals(userName)).FirstOrDefault();
-                if(user!=null)
+                if (user != null)
+                {
                     user.ContextId = Context.ConnectionId;
+                    return true;
+                }
             }
+            return false;
         }
 
         public override Task OnConnected()
@@ -65,9 +72,12 @@ namespace BCP.WebAPI.SignalR
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            var user = OnLineUser.Where(it => it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
-            if(user!=null)
-                user.ContextId = String.Empty;
+            lock (_lockObject)
+            {
+                var user = OnLineUser.Where(it => it.ContextId != null && it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+                if (user != null)
+                    user.ContextId = String.Empty;
+            }
             return base.OnDisconnected(stopCalled);
         }
 
@@ -83,7 +93,8 @@ namespace BCP.WebAPI.SignalR
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             lock (_lockObject)
             {
-                var from = OnLineUser.Where(it => it.ContextId.Equals(Context.ConnectionId)).First();
+                var from = OnLineUser.Where(it => it.ContextId!=null&&it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+                if (from == null) return;
                 var to = userService.GetUser(replyId);
                 UserMessageDTO umd = new UserMessageDTO() { Content = message, CreateTime = DateTime.Now, EventTime = 1, SenderID = from.ID, ReplyID = to.ID, State = "ture" };
                 if (userService.AddPTPMessage(umd))
@@ -113,7 +124,8 @@ namespace BCP.WebAPI.SignalR
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             lock (_lockObject)
             {
-                var from = OnLineUser.Where(it => it.ContextId == Context.ConnectionId).First();
+                var from = OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
+                if (from == null) return;
                 List<UserMessageDTO> message = userService.GetPTPMessage(from.ID, replyId);
                 foreach (var node in message)
                 {
