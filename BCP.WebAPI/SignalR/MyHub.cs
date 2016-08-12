@@ -50,8 +50,12 @@ namespace BCP.WebAPI.SignalR
         /// <param name="userPwd"></param>
         public void Login(String userName, String userPwd)
         {
-            var user = OnLineUser.Where(it => it.UserName.Equals(userName)).First();
-            user.ContextId = Context.ConnectionId;
+            lock (_lockObject)
+            {
+                var user = OnLineUser.Where(it => it.UserName.Equals(userName)).FirstOrDefault();
+                if(user!=null)
+                    user.ContextId = Context.ConnectionId;
+            }
         }
 
         public override Task OnConnected()
@@ -61,8 +65,9 @@ namespace BCP.WebAPI.SignalR
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            var user = OnLineUser.Where(it => it.ContextId.Equals(Context.ConnectionId)).First();
-            user.ContextId = String.Empty;
+            var user = OnLineUser.Where(it => it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+            if(user!=null)
+                user.ContextId = String.Empty;
             return base.OnDisconnected(stopCalled);
         }
 
@@ -76,15 +81,18 @@ namespace BCP.WebAPI.SignalR
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
-            var from = OnLineUser.Where(it => it.ContextId.Equals(Context.ConnectionId)).First();
-            var to = userService.GetUser(replyId);
-            UserMessageDTO umd = new UserMessageDTO() { Content = message, CreateTime = DateTime.Now, EventTime = 1, SenderID = from.ID, ReplyID = to.ID, State = "ture" };
-            if (userService.AddPTPMessage(umd))
+            lock (_lockObject)
             {
-                to = OnLineUser.Where(it => it.ID == to.ID).FirstOrDefault();
-                if (to != null)
+                var from = OnLineUser.Where(it => it.ContextId.Equals(Context.ConnectionId)).First();
+                var to = userService.GetUser(replyId);
+                UserMessageDTO umd = new UserMessageDTO() { Content = message, CreateTime = DateTime.Now, EventTime = 1, SenderID = from.ID, ReplyID = to.ID, State = "ture" };
+                if (userService.AddPTPMessage(umd))
                 {
-                    Clients.Client(to.ContextId).AddUserMessage(from, umd);
+                    to = OnLineUser.Where(it => it.ID == to.ID).FirstOrDefault();
+                    if (to != null)
+                    {
+                        Clients.Client(to.ContextId).AddUserMessage(from, umd);
+                    }
                 }
             }
         }
@@ -103,20 +111,23 @@ namespace BCP.WebAPI.SignalR
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
-            var from = OnLineUser.Where(it => it.ContextId == Context.ConnectionId).First();
-            List<UserMessageDTO> message = userService.GetPTPMessage(from.ID, replyId);
-            foreach (var node in message)
+            lock (_lockObject)
             {
-                if (node.SenderID == from.ID)
+                var from = OnLineUser.Where(it => it.ContextId == Context.ConnectionId).First();
+                List<UserMessageDTO> message = userService.GetPTPMessage(from.ID, replyId);
+                foreach (var node in message)
                 {
-                    Clients.Client(from.ContextId).AddUserMessage(from, node);
-                }
-                else
-                {
-                    if (node.ReplyID != null)
+                    if (node.SenderID == from.ID)
                     {
-                        var to = userService.GetUser((int)node.ReplyID);
-                        Clients.Client(from.ContextId).AddUserMessage(to, node);
+                        Clients.Client(from.ContextId).AddUserMessage(from, node);
+                    }
+                    else
+                    {
+                        if (node.ReplyID != null)
+                        {
+                            var to = userService.GetUser((int)node.ReplyID);
+                            Clients.Client(from.ContextId).AddUserMessage(to, node);
+                        }
                     }
                 }
             }
