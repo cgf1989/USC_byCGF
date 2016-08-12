@@ -33,12 +33,17 @@ namespace WpfClient
 
             try
             {
-                tb_UserName.Text = currentUser.UserName;
+                tb_UserName.Text = currentUser.ActualName;
                 tb_LoginTime.Text = System.DateTime.Now.ToString();
             }
             catch { MessageBox.Show("用户名获取失败"); }
         }
 
-      
+        private void hpLink_setting_Click(object sender, RoutedEventArgs e)
+        {
+            Login.ModifyPwdWin mdfPwdWin = new Login.ModifyPwdWin();
+            mdfPwdWin.currentUser = currentUser;
+            mdfPwdWin.ShowDialog();
+        }
     }
 }
