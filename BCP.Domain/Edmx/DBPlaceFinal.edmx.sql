@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/08/2016 13:56:52
+-- Date Created: 08/12/2016 14:14:09
 -- Generated from EDMX file: E:\Work_hy\共性平台\BasePlace\BCP.Domain\Edmx\DBPlaceFinal.edmx
 -- --------------------------------------------------
 
@@ -734,12 +734,13 @@ GO
 CREATE TABLE [dbo].[UserMessages] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Content] nvarchar(max)  NOT NULL,
-    [ReplyID] int  NULL,
+    [ParetId] int  NULL,
     [CreateTime] datetime  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
     [LoginLogID] int  NULL,
     [SenderID] int  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [EventTime] bigint  NOT NULL,
+    [ReplyID] int  NOT NULL
 );
 GO
 
@@ -2451,10 +2452,10 @@ ON [dbo].[MessageGroupMessagers]
     ([MessageGroupID]);
 GO
 
--- Creating foreign key on [ReplyID] in table 'UserMessages'
+-- Creating foreign key on [ParetId] in table 'UserMessages'
 ALTER TABLE [dbo].[UserMessages]
 ADD CONSTRAINT [FK_UserMessageUserMessage]
-    FOREIGN KEY ([ReplyID])
+    FOREIGN KEY ([ParetId])
     REFERENCES [dbo].[UserMessages]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -2463,7 +2464,7 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserMessageUserMessage'
 CREATE INDEX [IX_FK_UserMessageUserMessage]
 ON [dbo].[UserMessages]
-    ([ReplyID]);
+    ([ParetId]);
 GO
 
 -- Creating foreign key on [UserID] in table 'GroupNames'

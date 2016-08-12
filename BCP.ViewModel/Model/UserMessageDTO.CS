@@ -13,11 +13,12 @@ namespace BCP.ViewModel
     {
         public System.Int32 ID { get; set; }
         public System.String Content { get; set; }
-        public Int32? ReplyID { get; set; }
+        public Int32? ParetId { get; set; }
         public System.DateTime CreateTime { get; set; }
         public System.String State { get; set; }
         public Int32? LoginLogID { get; set; }
         public System.Int32 SenderID { get; set; }
         public System.Int64 EventTime { get; set; }
+        public System.Int32 ReplyID { get; set; }
     }
 }

@@ -693,12 +693,13 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ReplyID" Type="int" Nullable="true" />
+    <Property Name="ParetId" Type="int" Nullable="true" />
     <Property Name="CreateTime" Type="datetime" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LoginLogID" Type="int" Nullable="true" />
     <Property Name="SenderID" Type="int" Nullable="false" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
+    <Property Name="ReplyID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="UserGroups">
     <Key>
@@ -1871,7 +1872,7 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="UserMessage1">
-        <PropertyRef Name="ReplyID" />
+        <PropertyRef Name="ParetId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -3783,7 +3784,7 @@
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="LoginLog" Relationship="BCP.Domain.Edmx.LoginLogUserMessage" FromRole="UserMessage" ToRole="LoginLog" />
-          <Property Type="Int32" Name="ReplyID" Nullable="true" />
+          <Property Type="Int32" Name="ParetId" Nullable="true" />
           <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="3" >
             <Documentation>
               <LongDescription>创建和发送时间</LongDescription>
@@ -3800,6 +3801,7 @@
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserUserMessage" FromRole="UserMessage" ToRole="User" />
           <Property Type="Int32" Name="SenderID" Nullable="false" />
           <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <Property Name="ReplyID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="LoginLogUserMessage">
           <End Type="BCP.Domain.Edmx.LoginLog" Role="LoginLog" Multiplicity="0..1" />
@@ -4809,7 +4811,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="UserMessage1">
-              <PropertyRef Name="ReplyID" />
+              <PropertyRef Name="ParetId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6739,12 +6741,13 @@
         <MappingFragment StoreEntitySet="UserMessages">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Content" ColumnName="Content" />
-          <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
+          <ScalarProperty Name="ParetId" ColumnName="ParetId" />
           <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="LoginLogID" ColumnName="LoginLogID" />
           <ScalarProperty Name="SenderID" ColumnName="SenderID" />
           <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

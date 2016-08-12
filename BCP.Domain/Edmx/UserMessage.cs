@@ -22,12 +22,13 @@ namespace BCP.Domain.Edmx
     
         public int ID { get; set; }
         public string Content { get; set; }
-        public Nullable<int> ReplyID { get; set; }
+        public Nullable<int> ParetId { get; set; }
         public System.DateTime CreateTime { get; set; }
         public string State { get; set; }
         public Nullable<int> LoginLogID { get; set; }
         public int SenderID { get; set; }
         public long EventTime { get; set; }
+        public int ReplyID { get; set; }
     
         public virtual LoginLog LoginLog { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
