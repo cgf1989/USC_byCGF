@@ -14,7 +14,5 @@ namespace BCP.ViewModel
         public System.Int32 ID { get; set; }
         public System.String GroupName { get; set; }
         public System.Int32 CreatID { get; set; }
-        public Int32? UserID { get; set; }
-        public System.Int64 EventTime { get; set; }
     }
 }

@@ -21,7 +21,6 @@ namespace BCP.Domain.Edmx
         public string Descript { get; set; }
         public Nullable<int> WorkModulId { get; set; }
         public Nullable<int> UserID { get; set; }
-        public long EventTime { get; set; }
     
         public virtual WorkSpace WorkSpace { get; set; }
         public virtual Organization Organization { get; set; }

@@ -17,26 +17,20 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Position()
         {
-            this.IsAdministrator = false;
             this.Positions = new HashSet<Position>();
             this.Employees = new HashSet<Employee>();
             this.Posts = new HashSet<Post>();
         }
     
         public int ID { get; set; }
-        public string Title { get; set; }
         public bool IsValid { get; set; }
         public string PositionType { get; set; }
-        public string PositionTile { get; set; }
+        public string Name { get; set; }
         public string TaskNature { get; set; }
-        public string WorkLocation { get; set; }
-        public string SolaryStandard { get; set; }
         public Nullable<int> PositionID { get; set; }
         public int OrganizationID { get; set; }
-        public bool IsAdministrator { get; set; }
         public Nullable<int> PostRequireID { get; set; }
         public string PositionLevel { get; set; }
-        public long EventTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Position> Positions { get; set; }

@@ -19,6 +19,5 @@ namespace BCP.ViewModel
         public System.String Isvalid { get; set; }
         public Int32? PositionID { get; set; }
         public Int32? OrganizationID { get; set; }
-        public System.Int64 EventTime { get; set; }
     }
 }

@@ -19,6 +19,5 @@ namespace BCP.ViewModel
         public System.String EducationRequirement { get; set; }
         public System.String SkillRequirement { get; set; }
         public System.String State { get; set; }
-        public System.Int64 EventTime { get; set; }
     }
 }

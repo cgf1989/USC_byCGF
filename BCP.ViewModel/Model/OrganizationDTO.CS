@@ -20,6 +20,5 @@ namespace BCP.ViewModel
         public System.String MarkerString { get; set; }
         public System.Boolean IsValid { get; set; }
         public System.String Type { get; set; }
-        public System.Int64 EventTime { get; set; }
     }
 }

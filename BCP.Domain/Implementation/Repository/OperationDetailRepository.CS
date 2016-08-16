@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BCP.Domain
 {
     /// <summary>
-    /// GroupName 基于EF的仓储实现
+    /// OperationDetail 基于EF的仓储实现
     /// </summary>
-    public class GroupNameRepository : EFRepository<GroupName, Int32>,IGroupNameRepository
+    public class OperationDetailRepository : EFRepository<OperationDetail, Int32>,IOperationDetailRepository
     {
     }
 }

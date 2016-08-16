@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BCP.Domain
 {
     /// <summary>
-    /// CustomGeographicType 基于EF的仓储实现
+    /// GroupMessager 基于EF的仓储实现
     /// </summary>
-    public class CustomGeographicTypeRepository : EFRepository<CustomGeographicType, Int32>,ICustomGeographicTypeRepository
+    public class GroupMessagerRepository : EFRepository<GroupMessager, Int32>,IGroupMessagerRepository
     {
     }
 }

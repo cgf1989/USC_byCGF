@@ -55,238 +55,235 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Edmx\Administrativecode.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\AssetBaseType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\AssetMaintenance.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\AssetUse.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Authorization.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\BussnessVer.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\CustomCategory.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\CustomerGoup.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Edmx\CustomGeographicType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\CustomTabData.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\CustomTable.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Edmx\DBPlaceFinal.Context.cs">
+    <Compile Include="Edmx\DataContext.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBPlaceFinal.Context.tt</DependentUpon>
+      <DependentUpon>DataContext.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Edmx\DBPlaceFinal.cs">
+    <Compile Include="Edmx\DataContext.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DBPlaceFinal.Designer.cs">
       <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Edmx\DesktopGeoManage.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
-    </Compile>
     <Compile Include="Edmx\DllFileStream.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocCheckState.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocComent.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocLocation.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocManageState.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocReader.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocSender.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocumentContent.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocumentManage.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\DocumentType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Employee.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Edmx\EventTime.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    <Compile Include="Edmx\Group.cs">
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Edmx\GroupName.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+    <Compile Include="Edmx\GroupMember.cs">
+      <DependentUpon>DataContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\GroupMessager.cs">
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\IndustryCode.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\IndustrySolution.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\IPCode.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\JobChange.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\LandState.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\LoginLog.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Edmx\MessageGroupMessager.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\ModulProperty.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OperationDetail.cs">
+      <DependentUpon>DataContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\OperationEvent.cs">
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\OrganicInvestor.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Organization.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\OrganizationAssetType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\OrganizationCustomType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\OrganizationEvent.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\OrganizationOtherName.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\OrganizationTransition.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Organization_ContacTable.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Organization_Type.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\OrganizBasic.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\OrgaRegisterDocment.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\physicalAsset.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Position.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Post.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\PostRequire.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Product.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\ProductComposition.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\ProductCustomCategory.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\ProductCustomType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\ProductEvent.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\ProductStandard.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\RegisterDocumentType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Securityinfo.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Specialized.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\Subordinate.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\User.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Edmx\UserGroup.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\UserMessage.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\UserRelateTable.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\UserRelateType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\User_ContacTable.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\WorkMessage.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\WorkModul.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\WorkSpace.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\WorkSpaceBaseType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\WorkSpaceRole.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\WorkSpaceType.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\workTask.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\ZipCode.cs">
-      <DependentUpon>DBPlaceFinal.tt</DependentUpon>
+      <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Implementation\Repository\AdministrativecodeRepository.CS" />
     <Compile Include="Implementation\Repository\AssetBaseTypeRepository.CS" />
@@ -299,10 +296,8 @@
     <Compile Include="Implementation\Repository\BussnessVerRepository.CS" />
     <Compile Include="Implementation\Repository\CustomCategoryRepository.CS" />
     <Compile Include="Implementation\Repository\CustomerGoupRepository.CS" />
-    <Compile Include="Implementation\Repository\CustomGeographicTypeRepository.CS" />
     <Compile Include="Implementation\Repository\CustomTabDataRepository.CS" />
     <Compile Include="Implementation\Repository\CustomTableRepository.CS" />
-    <Compile Include="Implementation\Repository\DesktopGeoManageRepository.CS" />
     <Compile Include="Implementation\Repository\DllFileStreamRepository.CS" />
     <Compile Include="Implementation\Repository\DocCheckStateRepository.CS" />
     <Compile Include="Implementation\Repository\DocComentRepository.CS" />
@@ -315,15 +310,17 @@
     <Compile Include="Implementation\Repository\DocumentManageRepository.CS" />
     <Compile Include="Implementation\Repository\DocumentTypeRepository.CS" />
     <Compile Include="Implementation\Repository\EmployeeRepository.CS" />
-    <Compile Include="Implementation\Repository\EventTimeRepository.CS" />
-    <Compile Include="Implementation\Repository\GroupNameRepository.CS" />
+    <Compile Include="Implementation\Repository\GroupMemberRepository.CS" />
+    <Compile Include="Implementation\Repository\GroupMessagerRepository.CS" />
+    <Compile Include="Implementation\Repository\GroupRepository.CS" />
     <Compile Include="Implementation\Repository\IndustryCodeRepository.CS" />
     <Compile Include="Implementation\Repository\IndustrySolutionRepository.CS" />
     <Compile Include="Implementation\Repository\IPCodeRepository.CS" />
     <Compile Include="Implementation\Repository\JobChangeRepository.CS" />
     <Compile Include="Implementation\Repository\LoginLogRepository.CS" />
-    <Compile Include="Implementation\Repository\MessageGroupMessagerRepository.CS" />
     <Compile Include="Implementation\Repository\ModulPropertyRepository.CS" />
+    <Compile Include="Implementation\Repository\OperationDetailRepository.CS" />
+    <Compile Include="Implementation\Repository\OperationEventRepository.CS" />
     <Compile Include="Implementation\Repository\OrganicInvestorRepository.CS" />
     <Compile Include="Implementation\Repository\OrganizationAssetTypeRepository.CS" />
     <Compile Include="Implementation\Repository\OrganizationCustomTypeRepository.CS" />
@@ -349,7 +346,6 @@
     <Compile Include="Implementation\Repository\SecurityinfoRepository.CS" />
     <Compile Include="Implementation\Repository\SpecializedRepository.CS" />
     <Compile Include="Implementation\Repository\SubordinateRepository.CS" />
-    <Compile Include="Implementation\Repository\UserGroupRepository.CS" />
     <Compile Include="Implementation\Repository\UserMessageRepository.CS" />
     <Compile Include="Implementation\Repository\UserRelateTableRepository.CS" />
     <Compile Include="Implementation\Repository\UserRelateTypeRepository.CS" />
@@ -373,10 +369,8 @@
     <Compile Include="Interface\Repostiory\IBussnessVerRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomCategoryRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomerGoupRepository.CS" />
-    <Compile Include="Interface\Repostiory\ICustomGeographicTypeRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomTabDataRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomTableRepository.CS" />
-    <Compile Include="Interface\Repostiory\IDesktopGeoManageRepository.CS" />
     <Compile Include="Interface\Repostiory\IDllFileStreamRepository.CS" />
     <Compile Include="Interface\Repostiory\IDocCheckStateRepository.CS" />
     <Compile Include="Interface\Repostiory\IDocComentRepository.CS" />
@@ -389,15 +383,17 @@
     <Compile Include="Interface\Repostiory\IDocumentManageRepository.CS" />
     <Compile Include="Interface\Repostiory\IDocumentTypeRepository.CS" />
     <Compile Include="Interface\Repostiory\IEmployeeRepository.CS" />
-    <Compile Include="Interface\Repostiory\IEventTimeRepository.CS" />
-    <Compile Include="Interface\Repostiory\IGroupNameRepository.CS" />
+    <Compile Include="Interface\Repostiory\IGroupMemberRepository.CS" />
+    <Compile Include="Interface\Repostiory\IGroupMessagerRepository.CS" />
+    <Compile Include="Interface\Repostiory\IGroupRepository.CS" />
     <Compile Include="Interface\Repostiory\IIndustryCodeRepository.CS" />
     <Compile Include="Interface\Repostiory\IIndustrySolutionRepository.CS" />
     <Compile Include="Interface\Repostiory\IIPCodeRepository.CS" />
     <Compile Include="Interface\Repostiory\IJobChangeRepository.CS" />
     <Compile Include="Interface\Repostiory\ILoginLogRepository.CS" />
-    <Compile Include="Interface\Repostiory\IMessageGroupMessagerRepository.CS" />
     <Compile Include="Interface\Repostiory\IModulPropertyRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOperationDetailRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOperationEventRepository.CS" />
     <Compile Include="Interface\Repostiory\IOrganicInvestorRepository.CS" />
     <Compile Include="Interface\Repostiory\IOrganizationAssetTypeRepository.CS" />
     <Compile Include="Interface\Repostiory\IOrganizationCustomTypeRepository.CS" />
@@ -423,7 +419,6 @@
     <Compile Include="Interface\Repostiory\ISecurityinfoRepository.CS" />
     <Compile Include="Interface\Repostiory\ISpecializedRepository.CS" />
     <Compile Include="Interface\Repostiory\ISubordinateRepository.CS" />
-    <Compile Include="Interface\Repostiory\IUserGroupRepository.CS" />
     <Compile Include="Interface\Repostiory\IUserMessageRepository.CS" />
     <Compile Include="Interface\Repostiory\IUserRelateTableRepository.CS" />
     <Compile Include="Interface\Repostiory\IUserRelateTypeRepository.CS" />
@@ -439,6 +434,7 @@
     <Compile Include="Interface\Repostiory\IZipCodeRepository.CS" />
     <Compile Include="Interface\Service\IUserService.cs" />
     <Compile Include="Mapping\AutoMapperBootStrapper.cs" />
+    <Compile Include="Mapping\CustomerGroupMapper.cs" />
     <Compile Include="Mapping\MapperHelper.cs" />
     <Compile Include="Model\Administrativecode.CS" />
     <Compile Include="Model\AssetBaseType.CS" />
@@ -448,10 +444,8 @@
     <Compile Include="Model\BussnessVer.CS" />
     <Compile Include="Model\CustomCategory.CS" />
     <Compile Include="Model\CustomerGoup.CS" />
-    <Compile Include="Model\CustomGeographicType.CS" />
     <Compile Include="Model\CustomTabData.CS" />
     <Compile Include="Model\CustomTable.CS" />
-    <Compile Include="Model\DesktopGeoManage.CS" />
     <Compile Include="Model\DllFileStream.CS" />
     <Compile Include="Model\DocCheckState.CS" />
     <Compile Include="Model\DocComent.CS" />
@@ -464,15 +458,17 @@
     <Compile Include="Model\DocumentManage.CS" />
     <Compile Include="Model\DocumentType.CS" />
     <Compile Include="Model\Employee.CS" />
-    <Compile Include="Model\EventTime.CS" />
-    <Compile Include="Model\GroupName.CS" />
+    <Compile Include="Model\Group.CS" />
+    <Compile Include="Model\GroupMember.CS" />
+    <Compile Include="Model\GroupMessager.CS" />
     <Compile Include="Model\IndustryCode.CS" />
     <Compile Include="Model\IndustrySolution.CS" />
     <Compile Include="Model\IPCode.CS" />
     <Compile Include="Model\JobChange.CS" />
     <Compile Include="Model\LoginLog.CS" />
-    <Compile Include="Model\MessageGroupMessager.CS" />
     <Compile Include="Model\ModulProperty.CS" />
+    <Compile Include="Model\OperationDetail.CS" />
+    <Compile Include="Model\OperationEvent.CS" />
     <Compile Include="Model\OrganicInvestor.CS" />
     <Compile Include="Model\Organization.CS" />
     <Compile Include="Model\OrganizationAssetType.CS" />
@@ -499,7 +495,6 @@
     <Compile Include="Model\Specialized.CS" />
     <Compile Include="Model\Subordinate.CS" />
     <Compile Include="Model\User.CS" />
-    <Compile Include="Model\UserGroup.CS" />
     <Compile Include="Model\UserMessage.CS" />
     <Compile Include="Model\UserRelateTable.CS" />
     <Compile Include="Model\UserRelateType.CS" />
@@ -520,26 +515,23 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBPlaceFinal.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Edmx\DBPlaceFinal.Context.tt">
+    <None Include="Edmx\DataContext.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBPlaceFinal.Context.cs</LastGenOutput>
+      <LastGenOutput>DataContext.Context.cs</LastGenOutput>
+      <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
+    </None>
+    <None Include="Edmx\DataContext.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataContext.cs</LastGenOutput>
       <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
     </None>
     <None Include="Edmx\DBPlaceFinal.edmx.diagram">
-      <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
-    </None>
-    <None Include="Edmx\DBPlaceFinal.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBPlaceFinal.cs</LastGenOutput>
       <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Edmx\DBPlaceFinal.edmx.sql" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BCP.Common\BCP.Common.csproj">
@@ -551,6 +543,10 @@
       <Name>BCP.ViewModel</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Edmx\DBPlaceFinal.edmx.sql" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

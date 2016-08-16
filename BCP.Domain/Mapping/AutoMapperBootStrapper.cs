@@ -49,20 +49,12 @@ namespace BCP.Domain.Mapping
             Mapper.CreateMap<CustomerGoupDTO, CustomerGoup>();
 
 //
-            Mapper.CreateMap<CustomGeographicType, CustomGeographicTypeDTO>();
-            Mapper.CreateMap<CustomGeographicTypeDTO, CustomGeographicType>();
-
-//
             Mapper.CreateMap<CustomTabData, CustomTabDataDTO>();
             Mapper.CreateMap<CustomTabDataDTO, CustomTabData>();
 
 //
             Mapper.CreateMap<CustomTable, CustomTableDTO>();
             Mapper.CreateMap<CustomTableDTO, CustomTable>();
-
-//
-            Mapper.CreateMap<DesktopGeoManage, DesktopGeoManageDTO>();
-            Mapper.CreateMap<DesktopGeoManageDTO, DesktopGeoManage>();
 
 //
             Mapper.CreateMap<DllFileStream, DllFileStreamDTO>();
@@ -113,12 +105,16 @@ namespace BCP.Domain.Mapping
             Mapper.CreateMap<EmployeeDTO, Employee>();
 
 //
-            Mapper.CreateMap<EventTime, EventTimeDTO>();
-            Mapper.CreateMap<EventTimeDTO, EventTime>();
+            Mapper.CreateMap<Group, GroupDTO>();
+            Mapper.CreateMap<GroupDTO, Group>();
 
 //
-            Mapper.CreateMap<GroupName, GroupNameDTO>();
-            Mapper.CreateMap<GroupNameDTO, GroupName>();
+            Mapper.CreateMap<GroupMember, GroupMemberDTO>();
+            Mapper.CreateMap<GroupMemberDTO, GroupMember>();
+
+//
+            Mapper.CreateMap<GroupMessager, GroupMessagerDTO>();
+            Mapper.CreateMap<GroupMessagerDTO, GroupMessager>();
 
 //
             Mapper.CreateMap<IndustryCode, IndustryCodeDTO>();
@@ -145,12 +141,16 @@ namespace BCP.Domain.Mapping
             Mapper.CreateMap<LoginLogDTO, LoginLog>();
 
 //
-            Mapper.CreateMap<MessageGroupMessager, MessageGroupMessagerDTO>();
-            Mapper.CreateMap<MessageGroupMessagerDTO, MessageGroupMessager>();
-
-//
             Mapper.CreateMap<ModulProperty, ModulPropertyDTO>();
             Mapper.CreateMap<ModulPropertyDTO, ModulProperty>();
+
+//
+            Mapper.CreateMap<OperationDetail, OperationDetailDTO>();
+            Mapper.CreateMap<OperationDetailDTO, OperationDetail>();
+
+//
+            Mapper.CreateMap<OperationEvent, OperationEventDTO>();
+            Mapper.CreateMap<OperationEventDTO, OperationEvent>();
 
 //
             Mapper.CreateMap<OrganicInvestor, OrganicInvestorDTO>();
@@ -255,10 +255,6 @@ namespace BCP.Domain.Mapping
 //
             Mapper.CreateMap<User, UserDTO>();
             Mapper.CreateMap<UserDTO, User>();
-
-//
-            Mapper.CreateMap<UserGroup, UserGroupDTO>();
-            Mapper.CreateMap<UserGroupDTO, UserGroup>();
 
 //
             Mapper.CreateMap<UserMessage, UserMessageDTO>();

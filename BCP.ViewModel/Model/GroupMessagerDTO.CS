@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 namespace BCP.ViewModel
 {
     /// <summary>
-    /// MessageGroupMessager DTO
+    /// GroupMessager DTO
     /// </summary>
-    public partial class MessageGroupMessagerDTO
+    public partial class GroupMessagerDTO
     {
         public System.Int32 ID { get; set; }
-        public System.String Title { get; set; }
+        public System.String Type { get; set; }
         public System.String Content { get; set; }
-        public System.Int32 MessageGroupID { get; set; }
         public System.String SendTime { get; set; }
-        public System.Int64 EventTime { get; set; }
+        public Int32? GroupMemberID { get; set; }
+        public Int32? GroupID { get; set; }
     }
 }

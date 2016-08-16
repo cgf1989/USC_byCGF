@@ -12,9 +12,9 @@ using BCP.Domain.Edmx;
 namespace BCP.Domain
 {
     /// <summary>
-    /// DesktopGeoManage 仓储接口
+    /// OperationDetail 仓储接口
     /// </summary>
-    public interface IDesktopGeoManageRepository :IRepository<DesktopGeoManage,Int32>
+    public interface IOperationDetailRepository :IRepository<OperationDetail,Int32>
     {
     }
 }

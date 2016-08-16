@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BCP.Domain
 {
     /// <summary>
-    /// EventTime 基于EF的仓储实现
+    /// OperationEvent 基于EF的仓储实现
     /// </summary>
-    public class EventTimeRepository : EFRepository<EventTime, Int32>,IEventTimeRepository
+    public class OperationEventRepository : EFRepository<OperationEvent, Int32>,IOperationEventRepository
     {
     }
 }

@@ -12,16 +12,16 @@ namespace BCP.Domain.Edmx
     using System;
     using System.Collections.Generic;
     
-    public partial class EventTime
+    public partial class GroupMessager
     {
-        public int Id { get; set; }
-        public string TimePoint { get; set; }
-        public string SpacePoint { get; set; }
-        public string EventName { get; set; }
-        public string EventType { get; set; }
-        public string District { get; set; }
-        public Nullable<int> LoginLogID { get; set; }
+        public int ID { get; set; }
+        public string Type { get; set; }
+        public string Content { get; set; }
+        public string SendTime { get; set; }
+        public Nullable<int> GroupMemberID { get; set; }
+        public Nullable<int> GroupID { get; set; }
     
-        public virtual LoginLog LoginLog { get; set; }
+        public virtual GroupMember GroupMember { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

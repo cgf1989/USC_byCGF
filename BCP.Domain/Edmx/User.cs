@@ -21,8 +21,8 @@ namespace BCP.Domain.Edmx
             this.User_ContacTable = new HashSet<User_ContacTable>();
             this.UserRelateTables = new HashSet<UserRelateTable>();
             this.UserRelateTables1 = new HashSet<UserRelateTable>();
-            this.MessageGroups = new HashSet<UserGroup>();
-            this.GroupNames = new HashSet<GroupName>();
+            this.MessageGroups = new HashSet<GroupMember>();
+            this.GroupNames = new HashSet<Group>();
             this.CustomerGoups = new HashSet<CustomerGoup>();
             this.UserMessages = new HashSet<UserMessage>();
             this.Employees = new HashSet<Employee>();
@@ -31,7 +31,7 @@ namespace BCP.Domain.Edmx
             this.Authorizations1 = new HashSet<Authorization>();
             this.DocReaders = new HashSet<DocReader>();
             this.DocSenders = new HashSet<DocSender>();
-            this.CustomerGoups1 = new HashSet<CustomerGoup>();
+            this.Belongs = new HashSet<CustomerGoup>();
         }
     
         public int ID { get; set; }
@@ -41,6 +41,8 @@ namespace BCP.Domain.Edmx
         public string Status { get; set; }
         public System.DateTime LimiteTime { get; set; }
         public string Note { get; set; }
+        public string Domain { get; set; }
+        public string DomainId { get; set; }
         public long EventTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,9 +54,9 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRelateTable> UserRelateTables1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserGroup> MessageGroups { get; set; }
+        public virtual ICollection<GroupMember> MessageGroups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GroupName> GroupNames { get; set; }
+        public virtual ICollection<Group> GroupNames { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerGoup> CustomerGoups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -72,6 +74,6 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocSender> DocSenders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerGoup> CustomerGoups1 { get; set; }
+        public virtual ICollection<CustomerGoup> Belongs { get; set; }
     }
 }

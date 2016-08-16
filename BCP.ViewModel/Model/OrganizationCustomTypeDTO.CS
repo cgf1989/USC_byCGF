@@ -14,7 +14,6 @@ namespace BCP.ViewModel
         public System.Int32 ID { get; set; }
         public System.Int32 OrganizationID { get; set; }
         public System.Int32 CustomCategoryID { get; set; }
-        public System.String note { get; set; }
-        public System.Int64 EventTime { get; set; }
+        public System.String Note { get; set; }
     }
 }

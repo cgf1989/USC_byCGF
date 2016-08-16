@@ -23,7 +23,6 @@ namespace BCP.Domain.Edmx
         public string Hander { get; set; }
         public string Result { get; set; }
         public string EventState { get; set; }
-        public long EventTime { get; set; }
     
         public virtual Organization Organization { get; set; }
     }

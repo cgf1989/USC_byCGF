@@ -12,25 +12,29 @@ namespace BCP.Domain.Edmx
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomGeographicType
+    public partial class Group
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CustomGeographicType()
+        public Group()
         {
-            this.CustomGeographicTypes = new HashSet<CustomGeographicType>();
-            this.DesktopGeoManages = new HashSet<DesktopGeoManage>();
+            this.GroupMembers = new HashSet<GroupMember>();
+            this.GroupMessagers = new HashSet<GroupMessager>();
         }
     
         public int ID { get; set; }
-        public string TypeName { get; set; }
-        public string Descript { get; set; }
-        public Nullable<int> CustomGeographicTypeID { get; set; }
-        public Nullable<int> EventTimeEventTimeID { get; set; }
+        public string Name { get; set; }
+        public string CreatTime { get; set; }
+        public int UserID { get; set; }
+        public string GroupNumber { get; set; }
+        public string State { get; set; }
+        public string Notes { get; set; }
+        public string Type { get; set; }
+        public string Validate { get; set; }
     
+        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomGeographicType> CustomGeographicTypes { get; set; }
-        public virtual CustomGeographicType CustomGeographicType1 { get; set; }
+        public virtual ICollection<GroupMember> GroupMembers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DesktopGeoManage> DesktopGeoManages { get; set; }
+        public virtual ICollection<GroupMessager> GroupMessagers { get; set; }
     }
 }

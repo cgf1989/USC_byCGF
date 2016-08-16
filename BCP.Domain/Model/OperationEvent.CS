@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BCP.Domain.Edmx
 {
     /// <summary>
-    /// CustomGeographicType 实体类
+    /// OperationEvent 实体类
     /// </summary>
-    public partial class CustomGeographicType:EntityBase
+    public partial class OperationEvent:EntityBase
     {
     }
 }

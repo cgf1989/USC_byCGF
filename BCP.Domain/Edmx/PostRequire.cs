@@ -28,7 +28,6 @@ namespace BCP.Domain.Edmx
         public string EducationRequirement { get; set; }
         public string SkillRequirement { get; set; }
         public string State { get; set; }
-        public long EventTime { get; set; }
     
         public virtual Specialized Specialized { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

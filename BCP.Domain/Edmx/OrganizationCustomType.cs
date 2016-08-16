@@ -17,8 +17,7 @@ namespace BCP.Domain.Edmx
         public int ID { get; set; }
         public int OrganizationID { get; set; }
         public int CustomCategoryID { get; set; }
-        public string note { get; set; }
-        public long EventTime { get; set; }
+        public string Note { get; set; }
     
         public virtual Organization Organization { get; set; }
         public virtual CustomCategory CustomCategory { get; set; }

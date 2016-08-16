@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BCP.Domain.Edmx
 {
     /// <summary>
-    /// DesktopGeoManage 实体类
+    /// Group 实体类
     /// </summary>
-    public partial class DesktopGeoManage:EntityBase
+    public partial class Group:EntityBase
     {
     }
 }

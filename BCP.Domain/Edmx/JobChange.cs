@@ -15,15 +15,14 @@ namespace BCP.Domain.Edmx
     public partial class JobChange
     {
         public int Id { get; set; }
-        public Nullable<int> EmployeeId { get; set; }
-        public Nullable<int> PostID { get; set; }
+        public string ChangeType { get; set; }
+        public string Content { get; set; }
         public bool State { get; set; }
         public System.DateTime StartTime { get; set; }
-        public System.DateTime EndTime { get; set; }
+        public Nullable<int> PostID { get; set; }
         public string Creater { get; set; }
         public long EventTime { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual Post Post { get; set; }
     }
 }

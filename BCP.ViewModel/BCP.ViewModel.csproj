@@ -48,10 +48,9 @@
     <Compile Include="Model\BussnessVerDTO.CS" />
     <Compile Include="Model\CustomCategoryDTO.CS" />
     <Compile Include="Model\CustomerGoupDTO.CS" />
-    <Compile Include="Model\CustomGeographicTypeDTO.CS" />
+    <Compile Include="CustomerGroupDTO.cs" />
     <Compile Include="Model\CustomTabDataDTO.CS" />
     <Compile Include="Model\CustomTableDTO.CS" />
-    <Compile Include="Model\DesktopGeoManageDTO.CS" />
     <Compile Include="Model\DllFileStreamDTO.CS" />
     <Compile Include="Model\DocCheckStateDTO.CS" />
     <Compile Include="Model\DocComentDTO.CS" />
@@ -64,16 +63,18 @@
     <Compile Include="Model\DocumentManageDTO.CS" />
     <Compile Include="Model\DocumentTypeDTO.CS" />
     <Compile Include="Model\EmployeeDTO.CS" />
-    <Compile Include="Model\EventTimeDTO.CS" />
-    <Compile Include="Model\GroupNameDTO.CS" />
+    <Compile Include="Model\GroupDTO.CS" />
+    <Compile Include="Model\GroupMemberDTO.CS" />
+    <Compile Include="Model\GroupMessagerDTO.CS" />
     <Compile Include="Model\IndustryCodeDTO.CS" />
     <Compile Include="Model\IndustrySolutionDTO.CS" />
     <Compile Include="Model\IPCodeDTO.CS" />
     <Compile Include="Model\JobChangeDTO.CS" />
     <Compile Include="Model\LandStateDTO.CS" />
     <Compile Include="Model\LoginLogDTO.CS" />
-    <Compile Include="Model\MessageGroupMessagerDTO.CS" />
     <Compile Include="Model\ModulPropertyDTO.CS" />
+    <Compile Include="Model\OperationDetailDTO.CS" />
+    <Compile Include="Model\OperationEventDTO.CS" />
     <Compile Include="Model\OrganicInvestorDTO.CS" />
     <Compile Include="Model\OrganizationAssetTypeDTO.CS" />
     <Compile Include="Model\OrganizationCustomTypeDTO.CS" />
@@ -100,7 +101,6 @@
     <Compile Include="Model\SpecializedDTO.CS" />
     <Compile Include="Model\SubordinateDTO.CS" />
     <Compile Include="Model\UserDTO.CS" />
-    <Compile Include="Model\UserGroupDTO.CS" />
     <Compile Include="Model\UserMessageDTO.CS" />
     <Compile Include="Model\UserRelateTableDTO.CS" />
     <Compile Include="Model\UserRelateTypeDTO.CS" />
@@ -116,6 +116,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDTO.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -17,8 +17,7 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public LoginLog()
         {
-            this.UserMessages = new HashSet<UserMessage>();
-            this.EventTimes = new HashSet<EventTime>();
+            this.OpenEvents = new HashSet<OperationEvent>();
         }
     
         public int ID { get; set; }
@@ -30,8 +29,6 @@ namespace BCP.Domain.Edmx
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserMessage> UserMessages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EventTime> EventTimes { get; set; }
+        public virtual ICollection<OperationEvent> OpenEvents { get; set; }
     }
 }

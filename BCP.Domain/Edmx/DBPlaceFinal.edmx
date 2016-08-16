@@ -16,7 +16,7 @@
     <EntitySet Name="Organization_Type" EntityType="BCP.Domain.Edmx.Store.Organization_Type" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DocumentManages" EntityType="BCP.Domain.Edmx.Store.DocumentManages" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserMessages" EntityType="BCP.Domain.Edmx.Store.UserMessages" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UserGroups" EntityType="BCP.Domain.Edmx.Store.UserGroups" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GroupMembers" EntityType="BCP.Domain.Edmx.Store.GroupMembers" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationOtherNames" EntityType="BCP.Domain.Edmx.Store.OrganizationOtherNames" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Administrativecodes" EntityType="BCP.Domain.Edmx.Store.Administrativecodes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DocumentTypes" EntityType="BCP.Domain.Edmx.Store.DocumentTypes" store:Type="Tables" Schema="dbo" />
@@ -41,14 +41,12 @@
     <EntitySet Name="OrgaRegisterDocments" EntityType="BCP.Domain.Edmx.Store.OrgaRegisterDocments" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="RegisterDocumentTypes" EntityType="BCP.Domain.Edmx.Store.RegisterDocumentTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationEvents" EntityType="BCP.Domain.Edmx.Store.OrganizationEvents" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="MessageGroupMessagers" EntityType="BCP.Domain.Edmx.Store.MessageGroupMessagers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="GroupNames" EntityType="BCP.Domain.Edmx.Store.GroupNames" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GroupMessagers" EntityType="BCP.Domain.Edmx.Store.GroupMessagers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Groups" EntityType="BCP.Domain.Edmx.Store.Groups" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomerGoups" EntityType="BCP.Domain.Edmx.Store.CustomerGoups" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DllFileStreams" EntityType="BCP.Domain.Edmx.Store.DllFileStreams" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationCustomTypes" EntityType="BCP.Domain.Edmx.Store.OrganizationCustomTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomCategories" EntityType="BCP.Domain.Edmx.Store.CustomCategories" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DesktopGeoManages" EntityType="BCP.Domain.Edmx.Store.DesktopGeoManages" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CustomGeographicTypes" EntityType="BCP.Domain.Edmx.Store.CustomGeographicTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Products" EntityType="BCP.Domain.Edmx.Store.Products" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProductEvents" EntityType="BCP.Domain.Edmx.Store.ProductEvents" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProductCompositions" EntityType="BCP.Domain.Edmx.Store.ProductCompositions" store:Type="Tables" Schema="dbo" />
@@ -77,14 +75,12 @@
     <EntitySet Name="CustomTabDatas" EntityType="BCP.Domain.Edmx.Store.CustomTabDatas" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="DocLocations" EntityType="BCP.Domain.Edmx.Store.DocLocations" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WorkSpaceBaseTypes" EntityType="BCP.Domain.Edmx.Store.WorkSpaceBaseTypes" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="EventTimes" EntityType="BCP.Domain.Edmx.Store.EventTimes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OperationDetails" EntityType="BCP.Domain.Edmx.Store.OperationDetails" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OperationEvents" EntityType="BCP.Domain.Edmx.Store.OperationEvents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CustomerGoupUser" EntityType="BCP.Domain.Edmx.Store.CustomerGoupUser" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserLoginLog" Association="BCP.Domain.Edmx.Store.UserLoginLog">
       <End Role="User" EntitySet="Users" />
       <End Role="LoginLog" EntitySet="LoginLogs" />
-    </AssociationSet>
-    <AssociationSet Name="LoginLogUserMessage" Association="BCP.Domain.Edmx.Store.LoginLogUserMessage">
-      <End Role="LoginLog" EntitySet="LoginLogs" />
-      <End Role="UserMessage" EntitySet="UserMessages" />
     </AssociationSet>
     <AssociationSet Name="OrganizationOrganizationOtherName" Association="BCP.Domain.Edmx.Store.OrganizationOrganizationOtherName">
       <End Role="Organization" EntitySet="Organizations" />
@@ -212,11 +208,7 @@
     </AssociationSet>
     <AssociationSet Name="UserMessageGroup" Association="BCP.Domain.Edmx.Store.UserMessageGroup">
       <End Role="User" EntitySet="Users" />
-      <End Role="MessageGroup" EntitySet="UserGroups" />
-    </AssociationSet>
-    <AssociationSet Name="MessageGroupMessageGroupMessager" Association="BCP.Domain.Edmx.Store.MessageGroupMessageGroupMessager">
-      <End Role="MessageGroup" EntitySet="UserGroups" />
-      <End Role="MessageGroupMessager" EntitySet="MessageGroupMessagers" />
+      <End Role="MessageGroup" EntitySet="GroupMembers" />
     </AssociationSet>
     <AssociationSet Name="UserMessageUserMessage" Association="BCP.Domain.Edmx.Store.UserMessageUserMessage">
       <End Role="UserMessage" EntitySet="UserMessages" />
@@ -224,11 +216,7 @@
     </AssociationSet>
     <AssociationSet Name="UserGroupName" Association="BCP.Domain.Edmx.Store.UserGroupName">
       <End Role="User" EntitySet="Users" />
-      <End Role="GroupName" EntitySet="GroupNames" />
-    </AssociationSet>
-    <AssociationSet Name="GroupNameUserGroup" Association="BCP.Domain.Edmx.Store.GroupNameUserGroup">
-      <End Role="GroupName" EntitySet="GroupNames" />
-      <End Role="UserGroup" EntitySet="UserGroups" />
+      <End Role="GroupName" EntitySet="Groups" />
     </AssociationSet>
     <AssociationSet Name="UserCustomerGoup" Association="BCP.Domain.Edmx.Store.UserCustomerGoup">
       <End Role="User" EntitySet="Users" />
@@ -249,14 +237,6 @@
     <AssociationSet Name="CustomCategoryCustomCategory" Association="BCP.Domain.Edmx.Store.CustomCategoryCustomCategory">
       <End Role="CustomCategory" EntitySet="CustomCategories" />
       <End Role="CustomCategory1" EntitySet="CustomCategories" />
-    </AssociationSet>
-    <AssociationSet Name="CustomGeographicTypeCustomGeographicType" Association="BCP.Domain.Edmx.Store.CustomGeographicTypeCustomGeographicType">
-      <End Role="CustomGeographicType" EntitySet="CustomGeographicTypes" />
-      <End Role="CustomGeographicType1" EntitySet="CustomGeographicTypes" />
-    </AssociationSet>
-    <AssociationSet Name="CustomGeographicTypeDesktopGeoManage" Association="BCP.Domain.Edmx.Store.CustomGeographicTypeDesktopGeoManage">
-      <End Role="CustomGeographicType" EntitySet="CustomGeographicTypes" />
-      <End Role="DesktopGeoManage" EntitySet="DesktopGeoManages" />
     </AssociationSet>
     <AssociationSet Name="ProductStandardProduct" Association="BCP.Domain.Edmx.Store.ProductStandardProduct">
       <End Role="ProductStandard" EntitySet="ProductStandards" />
@@ -470,14 +450,6 @@
       <End Role="DocSender" EntitySet="DocSenders" />
       <End Role="DocComent" EntitySet="DocComents" />
     </AssociationSet>
-    <AssociationSet Name="UserCustomerGoup1" Association="BCP.Domain.Edmx.Store.UserCustomerGoup1">
-      <End Role="User" EntitySet="Users" />
-      <End Role="CustomerGoup" EntitySet="CustomerGoups" />
-    </AssociationSet>
-    <AssociationSet Name="EmployeeJobChange" Association="BCP.Domain.Edmx.Store.EmployeeJobChange">
-      <End Role="Employee" EntitySet="Employees1" />
-      <End Role="JobChange" EntitySet="JobChanges" />
-    </AssociationSet>
     <AssociationSet Name="PostJobChange" Association="BCP.Domain.Edmx.Store.PostJobChange">
       <End Role="Post" EntitySet="Posts" />
       <End Role="JobChange" EntitySet="JobChanges" />
@@ -546,14 +518,6 @@
       <End Role="WorkSpaceBaseType" EntitySet="WorkSpaceBaseTypes" />
       <End Role="WorkSpaceType" EntitySet="WorkSpaceTypes" />
     </AssociationSet>
-    <AssociationSet Name="LoginLogEventTime" Association="BCP.Domain.Edmx.Store.LoginLogEventTime">
-      <End Role="LoginLog" EntitySet="LoginLogs" />
-      <End Role="EventTime" EntitySet="EventTimes" />
-    </AssociationSet>
-    <AssociationSet Name="PositionPost" Association="BCP.Domain.Edmx.Store.PositionPost">
-      <End Role="Position" EntitySet="Positions" />
-      <End Role="Post" EntitySet="Posts" />
-    </AssociationSet>
     <AssociationSet Name="WorkSpaceBaseTypeDocumentManage" Association="BCP.Domain.Edmx.Store.WorkSpaceBaseTypeDocumentManage">
       <End Role="WorkSpaceBaseType" EntitySet="WorkSpaceBaseTypes" />
       <End Role="DocumentManage" EntitySet="DocumentManages" />
@@ -561,6 +525,42 @@
     <AssociationSet Name="DocManageStateDocumentManage" Association="BCP.Domain.Edmx.Store.DocManageStateDocumentManage">
       <End Role="DocManageState" EntitySet="DocManageStates" />
       <End Role="DocumentManage" EntitySet="DocumentManages" />
+    </AssociationSet>
+    <AssociationSet Name="OpenEventEventTime" Association="BCP.Domain.Edmx.Store.OpenEventEventTime">
+      <End Role="OpenEvent" EntitySet="OperationEvents" />
+      <End Role="EventTime" EntitySet="OperationDetails" />
+    </AssociationSet>
+    <AssociationSet Name="LoginLogOpenEvent" Association="BCP.Domain.Edmx.Store.LoginLogOpenEvent">
+      <End Role="LoginLog" EntitySet="LoginLogs" />
+      <End Role="OpenEvent" EntitySet="OperationEvents" />
+    </AssociationSet>
+    <AssociationSet Name="GroupMemberGroupMessager" Association="BCP.Domain.Edmx.Store.GroupMemberGroupMessager">
+      <End Role="GroupMember" EntitySet="GroupMembers" />
+      <End Role="GroupMessager" EntitySet="GroupMessagers" />
+    </AssociationSet>
+    <AssociationSet Name="GroupGroupMember" Association="BCP.Domain.Edmx.Store.GroupGroupMember">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="GroupMember" EntitySet="GroupMembers" />
+    </AssociationSet>
+    <AssociationSet Name="EmployeePost" Association="BCP.Domain.Edmx.Store.EmployeePost">
+      <End Role="Employee" EntitySet="Employees1" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="PositionPost" Association="BCP.Domain.Edmx.Store.PositionPost">
+      <End Role="Position" EntitySet="Positions" />
+      <End Role="Post" EntitySet="Posts" />
+    </AssociationSet>
+    <AssociationSet Name="GroupGroupMessager" Association="BCP.Domain.Edmx.Store.GroupGroupMessager">
+      <End Role="Group" EntitySet="Groups" />
+      <End Role="GroupMessager" EntitySet="GroupMessagers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerGoupUser_CustomerGoup" Association="BCP.Domain.Edmx.Store.FK_CustomerGoupUser_CustomerGoup">
+      <End Role="CustomerGoup" EntitySet="CustomerGoups" />
+      <End Role="CustomerGoupUser" EntitySet="CustomerGoupUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CustomerGoupUser_User" Association="BCP.Domain.Edmx.Store.FK_CustomerGoupUser_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="CustomerGoupUser" EntitySet="CustomerGoupUser" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="Organizations">
@@ -576,7 +576,6 @@
     <Property Name="MarkerString" Type="nvarchar(max)" Nullable="true" />
     <Property Name="IsValid" Type="bit" Nullable="false" DefaultValue="true" />
     <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Organization_ContactTables">
     <Key>
@@ -595,19 +594,14 @@
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
     <Property Name="IsValid" Type="bit" Nullable="false" />
     <Property Name="PositionType" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="PositionTile" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
     <Property Name="TaskNature" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="WorkLocation" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="SolaryStandard" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PositionID" Type="int" Nullable="true" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="IsAdministrator" Type="bit" Nullable="false" DefaultValue="false" />
     <Property Name="PostRequireID" Type="int" Nullable="true" />
     <Property Name="PositionLevel" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Users">
     <Key>
@@ -620,6 +614,8 @@
     <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LimiteTime" Type="datetime" Nullable="false" />
     <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Domain" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DomainId" Type="nvarchar(max)" Nullable="false" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="User_ContactTable">
@@ -657,7 +653,6 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
     <Property Name="OldOrgan" Type="int" Nullable="true" />
     <Property Name="NewOrgan" Type="int" Nullable="true" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Organization_Type">
     <Key>
@@ -693,15 +688,15 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ParetId" Type="int" Nullable="true" />
+    <Property Name="ParentId" Type="int" Nullable="true" />
     <Property Name="CreateTime" Type="datetime" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="LoginLogID" Type="int" Nullable="true" />
     <Property Name="SenderID" Type="int" Nullable="false" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
-    <Property Name="ReplyID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="ReplyId" Type="int" Nullable="true" />
   </EntityType>
-  <EntityType Name="UserGroups">
+  <EntityType Name="GroupMembers">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
@@ -709,11 +704,10 @@
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Creator" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
-    <Property Name="CreateTime" Type="datetime" Nullable="false" />
+    <Property Name="JoinTime" Type="datetime" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="GroupNameID" Type="int" Nullable="false" />
     <Property Name="Rule" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
+    <Property Name="GroupID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="OrganizationOtherNames">
     <Key>
@@ -722,7 +716,6 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OtherName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Administrativecodes">
     <Key>
@@ -850,7 +843,6 @@
     <Property Name="EducationRequirement" Type="nvarchar(max)" Nullable="false" />
     <Property Name="SkillRequirement" Type="nvarchar(max)" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Posts">
     <Key>
@@ -858,15 +850,13 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PostName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="DepartmentID" Type="int" Nullable="false" />
-    <Property Name="Descript" Type="nvarchar(max)" Nullable="true" />
     <Property Name="MarkerString" Type="nvarchar(max)" Nullable="true" />
     <Property Name="IsValid" Type="bit" Nullable="false" />
-    <Property Name="Jobname" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PositionID" Type="int" Nullable="false" />
+    <Property Name="Descript" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PostID" Type="int" Nullable="true" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
-    <Property Name="PositionID1" Type="int" Nullable="true" />
+    <Property Name="EmployeeId" Type="int" Nullable="true" />
+    <Property Name="PositionID" Type="int" Nullable="true" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="WorkSpaces">
@@ -905,7 +895,6 @@
     <Property Name="Descript" Type="nvarchar(max)" Nullable="true" />
     <Property Name="ParentCode" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Parent" Type="int" Nullable="true" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="UserRelateTables">
     <Key>
@@ -1015,20 +1004,19 @@
     <Property Name="Hander" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Result" Type="nvarchar(max)" Nullable="false" />
     <Property Name="EventState" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
-  <EntityType Name="MessageGroupMessagers">
+  <EntityType Name="GroupMessagers">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="MessageGroupID" Type="int" Nullable="false" />
     <Property Name="SendTime" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
+    <Property Name="GroupMemberID" Type="int" Nullable="true" />
+    <Property Name="GroupID" Type="int" Nullable="true" />
   </EntityType>
-  <EntityType Name="GroupNames">
+  <EntityType Name="Groups">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
@@ -1037,7 +1025,10 @@
     <Property Name="CreatTime" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="GroupNumber" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Validate" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="CustomerGoups">
     <Key>
@@ -1046,8 +1037,6 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="GroupName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CreatID" Type="int" Nullable="false" />
-    <Property Name="UserID" Type="int" Nullable="true" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="DllFileStreams">
     <Key>
@@ -1072,8 +1061,7 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="CustomCategoryID" Type="int" Nullable="false" />
-    <Property Name="note" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
+    <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="CustomCategories">
     <Key>
@@ -1083,30 +1071,6 @@
     <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CustomCategoryID" Type="int" Nullable="true" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
-  </EntityType>
-  <EntityType Name="DesktopGeoManages">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Tile" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTimeEventTimeID" Type="int" Nullable="true" />
-    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Descript" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="link" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Geo_GraphID" Type="int" Nullable="false" />
-    <Property Name="CustomGeographicTypeID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="CustomGeographicTypes">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Descript" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CustomGeographicTypeID" Type="int" Nullable="true" />
-    <Property Name="EventTimeEventTimeID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -1240,7 +1204,6 @@
     <Property Name="Isvalid" Type="nvarchar(max)" Nullable="false" />
     <Property Name="PositionID" Type="int" Nullable="true" />
     <Property Name="OrganizationID" Type="int" Nullable="true" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="IndustrySolutions">
     <Key>
@@ -1277,7 +1240,6 @@
     <Property Name="Descript" Type="nvarchar(max)" Nullable="false" />
     <Property Name="WorkModulId" Type="int" Nullable="true" />
     <Property Name="UserID" Type="int" Nullable="true" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
   <EntityType Name="Authorizations">
     <Key>
@@ -1361,11 +1323,11 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="EmployeeId" Type="int" Nullable="true" />
-    <Property Name="PostID" Type="int" Nullable="true" />
+    <Property Name="ChangeType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="State" Type="bit" Nullable="false" />
     <Property Name="StartTime" Type="datetime" Nullable="false" />
-    <Property Name="EndTime" Type="datetime" Nullable="false" />
+    <Property Name="PostID" Type="int" Nullable="true" />
     <Property Name="Creater" Type="nvarchar(max)" Nullable="false" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
@@ -1432,17 +1394,37 @@
     <Property Name="WorkSpaceBaseTypeId" Type="int" Nullable="true" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
-  <EntityType Name="EventTimes">
+  <EntityType Name="OperationDetails">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TimePoint" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="SpacePoint" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventType" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="District" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TabName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TabRecordId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="HandleType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OpenEventId" Type="int" Nullable="true" />
+    <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OperationEvents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OperType" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OperName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OperModul" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OperTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OperSpace" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LoginLogID" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="CustomerGoupUser">
+    <Key>
+      <PropertyRef Name="Belongs_ID" />
+      <PropertyRef Name="Members_ID" />
+    </Key>
+    <Property Name="Belongs_ID" Type="int" Nullable="false" />
+    <Property Name="Members_ID" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UserLoginLog">
     <End Role="User" Type="BCP.Domain.Edmx.Store.Users" Multiplicity="0..1" />
@@ -1453,18 +1435,6 @@
       </Principal>
       <Dependent Role="LoginLog">
         <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="LoginLogUserMessage">
-    <End Role="LoginLog" Type="BCP.Domain.Edmx.Store.LoginLogs" Multiplicity="0..1" />
-    <End Role="UserMessage" Type="BCP.Domain.Edmx.Store.UserMessages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LoginLog">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="UserMessage">
-        <PropertyRef Name="LoginLogID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1842,25 +1812,13 @@
   </Association>
   <Association Name="UserMessageGroup">
     <End Role="User" Type="BCP.Domain.Edmx.Store.Users" Multiplicity="1" />
-    <End Role="MessageGroup" Type="BCP.Domain.Edmx.Store.UserGroups" Multiplicity="*" />
+    <End Role="MessageGroup" Type="BCP.Domain.Edmx.Store.GroupMembers" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="MessageGroup">
         <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="MessageGroupMessageGroupMessager">
-    <End Role="MessageGroup" Type="BCP.Domain.Edmx.Store.UserGroups" Multiplicity="1" />
-    <End Role="MessageGroupMessager" Type="BCP.Domain.Edmx.Store.MessageGroupMessagers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="MessageGroup">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="MessageGroupMessager">
-        <PropertyRef Name="MessageGroupID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1872,31 +1830,19 @@
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="UserMessage1">
-        <PropertyRef Name="ParetId" />
+        <PropertyRef Name="ParentId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="UserGroupName">
     <End Role="User" Type="BCP.Domain.Edmx.Store.Users" Multiplicity="1" />
-    <End Role="GroupName" Type="BCP.Domain.Edmx.Store.GroupNames" Multiplicity="*" />
+    <End Role="GroupName" Type="BCP.Domain.Edmx.Store.Groups" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="GroupName">
         <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="GroupNameUserGroup">
-    <End Role="GroupName" Type="BCP.Domain.Edmx.Store.GroupNames" Multiplicity="1" />
-    <End Role="UserGroup" Type="BCP.Domain.Edmx.Store.UserGroups" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="GroupName">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="UserGroup">
-        <PropertyRef Name="GroupNameID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1957,30 +1903,6 @@
       </Principal>
       <Dependent Role="CustomCategory1">
         <PropertyRef Name="CustomCategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CustomGeographicTypeCustomGeographicType">
-    <End Role="CustomGeographicType" Type="BCP.Domain.Edmx.Store.CustomGeographicTypes" Multiplicity="0..1" />
-    <End Role="CustomGeographicType1" Type="BCP.Domain.Edmx.Store.CustomGeographicTypes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CustomGeographicType">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="CustomGeographicType1">
-        <PropertyRef Name="CustomGeographicTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CustomGeographicTypeDesktopGeoManage">
-    <End Role="CustomGeographicType" Type="BCP.Domain.Edmx.Store.CustomGeographicTypes" Multiplicity="1" />
-    <End Role="DesktopGeoManage" Type="BCP.Domain.Edmx.Store.DesktopGeoManages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CustomGeographicType">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DesktopGeoManage">
-        <PropertyRef Name="CustomGeographicTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2620,30 +2542,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="UserCustomerGoup1">
-    <End Role="User" Type="BCP.Domain.Edmx.Store.Users" Multiplicity="0..1" />
-    <End Role="CustomerGoup" Type="BCP.Domain.Edmx.Store.CustomerGoups" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="User">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="CustomerGoup">
-        <PropertyRef Name="UserID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="EmployeeJobChange">
-    <End Role="Employee" Type="BCP.Domain.Edmx.Store.Employees1" Multiplicity="0..1" />
-    <End Role="JobChange" Type="BCP.Domain.Edmx.Store.JobChanges" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Employee">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="JobChange">
-        <PropertyRef Name="EmployeeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="PostJobChange">
     <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="0..1" />
     <End Role="JobChange" Type="BCP.Domain.Edmx.Store.JobChanges" Multiplicity="*" />
@@ -2848,30 +2746,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="LoginLogEventTime">
-    <End Role="LoginLog" Type="BCP.Domain.Edmx.Store.LoginLogs" Multiplicity="0..1" />
-    <End Role="EventTime" Type="BCP.Domain.Edmx.Store.EventTimes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="LoginLog">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="EventTime">
-        <PropertyRef Name="LoginLogID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PositionPost">
-    <End Role="Position" Type="BCP.Domain.Edmx.Store.Positions" Multiplicity="0..1" />
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Position">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Post">
-        <PropertyRef Name="PositionID1" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="WorkSpaceBaseTypeDocumentManage">
     <End Role="WorkSpaceBaseType" Type="BCP.Domain.Edmx.Store.WorkSpaceBaseTypes" Multiplicity="0..1" />
     <End Role="DocumentManage" Type="BCP.Domain.Edmx.Store.DocumentManages" Multiplicity="*" />
@@ -2896,6 +2770,114 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="OpenEventEventTime">
+    <End Role="OpenEvent" Type="BCP.Domain.Edmx.Store.OperationEvents" Multiplicity="0..1" />
+    <End Role="EventTime" Type="BCP.Domain.Edmx.Store.OperationDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OpenEvent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EventTime">
+        <PropertyRef Name="OpenEventId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LoginLogOpenEvent">
+    <End Role="LoginLog" Type="BCP.Domain.Edmx.Store.LoginLogs" Multiplicity="0..1" />
+    <End Role="OpenEvent" Type="BCP.Domain.Edmx.Store.OperationEvents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LoginLog">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="OpenEvent">
+        <PropertyRef Name="LoginLogID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupMemberGroupMessager">
+    <End Role="GroupMember" Type="BCP.Domain.Edmx.Store.GroupMembers" Multiplicity="0..1" />
+    <End Role="GroupMessager" Type="BCP.Domain.Edmx.Store.GroupMessagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GroupMember">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GroupMessager">
+        <PropertyRef Name="GroupMemberID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupGroupMember">
+    <End Role="Group" Type="BCP.Domain.Edmx.Store.Groups" Multiplicity="0..1" />
+    <End Role="GroupMember" Type="BCP.Domain.Edmx.Store.GroupMembers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GroupMember">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EmployeePost">
+    <End Role="Employee" Type="BCP.Domain.Edmx.Store.Employees1" Multiplicity="0..1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employee">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="EmployeeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PositionPost">
+    <End Role="Position" Type="BCP.Domain.Edmx.Store.Positions" Multiplicity="0..1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Position">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Post">
+        <PropertyRef Name="PositionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupGroupMessager">
+    <End Role="Group" Type="BCP.Domain.Edmx.Store.Groups" Multiplicity="0..1" />
+    <End Role="GroupMessager" Type="BCP.Domain.Edmx.Store.GroupMessagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="GroupMessager">
+        <PropertyRef Name="GroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerGoupUser_CustomerGoup">
+    <End Role="CustomerGoup" Type="BCP.Domain.Edmx.Store.CustomerGoups" Multiplicity="1" />
+    <End Role="CustomerGoupUser" Type="BCP.Domain.Edmx.Store.CustomerGoupUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerGoup">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CustomerGoupUser">
+        <PropertyRef Name="Belongs_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CustomerGoupUser_User">
+    <End Role="CustomerGoupUser" Type="BCP.Domain.Edmx.Store.CustomerGoupUser" Multiplicity="*" />
+    <End Role="User" Type="BCP.Domain.Edmx.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="CustomerGoupUser">
+        <PropertyRef Name="Members_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -2915,11 +2897,7 @@
           </AssociationSet>
           <EntitySet Name="DocumentManages" EntityType="BCP.Domain.Edmx.DocumentManage" />
           <EntitySet Name="UserMessages" EntityType="BCP.Domain.Edmx.UserMessage" />
-          <AssociationSet Name="LoginLogUserMessage" Association="BCP.Domain.Edmx.LoginLogUserMessage">
-            <End Role="LoginLog" EntitySet="LoginLogs" />
-            <End Role="UserMessage" EntitySet="UserMessages" />
-          </AssociationSet>
-          <EntitySet Name="UserGroups" EntityType="BCP.Domain.Edmx.UserGroup" />
+          <EntitySet Name="GroupMembers" EntityType="BCP.Domain.Edmx.GroupMember" />
           <EntitySet Name="OrganizationOtherNames" EntityType="BCP.Domain.Edmx.OrganizationOtherName" />
           <AssociationSet Name="OrganizationOrganizationOtherName" Association="BCP.Domain.Edmx.OrganizationOrganizationOtherName">
             <End Role="Organization" EntitySet="Organizations" />
@@ -3070,25 +3048,17 @@
           </AssociationSet>
           <AssociationSet Name="UserMessageGroup" Association="BCP.Domain.Edmx.UserMessageGroup">
             <End Role="User" EntitySet="Users" />
-            <End Role="MessageGroup" EntitySet="UserGroups" />
+            <End Role="MessageGroup" EntitySet="GroupMembers" />
           </AssociationSet>
-          <EntitySet Name="MessageGroupMessagers" EntityType="BCP.Domain.Edmx.MessageGroupMessager" />
-          <AssociationSet Name="MessageGroupMessageGroupMessager" Association="BCP.Domain.Edmx.MessageGroupMessageGroupMessager">
-            <End Role="MessageGroup" EntitySet="UserGroups" />
-            <End Role="MessageGroupMessager" EntitySet="MessageGroupMessagers" />
-          </AssociationSet>
+          <EntitySet Name="GroupMessagers" EntityType="BCP.Domain.Edmx.GroupMessager" />
           <AssociationSet Name="UserMessageUserMessage" Association="BCP.Domain.Edmx.UserMessageUserMessage">
             <End Role="UserMessage" EntitySet="UserMessages" />
             <End Role="UserMessage1" EntitySet="UserMessages" />
           </AssociationSet>
-          <EntitySet Name="GroupNames" EntityType="BCP.Domain.Edmx.GroupName" />
+          <EntitySet Name="Groups" EntityType="BCP.Domain.Edmx.Group" />
           <AssociationSet Name="UserGroupName" Association="BCP.Domain.Edmx.UserGroupName">
             <End Role="User" EntitySet="Users" />
-            <End Role="GroupName" EntitySet="GroupNames" />
-          </AssociationSet>
-          <AssociationSet Name="GroupNameUserGroup" Association="BCP.Domain.Edmx.GroupNameUserGroup">
-            <End Role="GroupName" EntitySet="GroupNames" />
-            <End Role="UserGroup" EntitySet="UserGroups" />
+            <End Role="GroupName" EntitySet="Groups" />
           </AssociationSet>
           <EntitySet Name="CustomerGoups" EntityType="BCP.Domain.Edmx.CustomerGoup" />
           <AssociationSet Name="UserCustomerGoup" Association="BCP.Domain.Edmx.UserCustomerGoup">
@@ -3113,16 +3083,6 @@
           <AssociationSet Name="CustomCategoryCustomCategory" Association="BCP.Domain.Edmx.CustomCategoryCustomCategory">
             <End Role="CustomCategory" EntitySet="CustomCategories" />
             <End Role="CustomCategory1" EntitySet="CustomCategories" />
-          </AssociationSet>
-          <EntitySet Name="DesktopGeoManages" EntityType="BCP.Domain.Edmx.DesktopGeoManage" />
-          <EntitySet Name="CustomGeographicTypes" EntityType="BCP.Domain.Edmx.CustomGeographicType" />
-          <AssociationSet Name="CustomGeographicTypeCustomGeographicType" Association="BCP.Domain.Edmx.CustomGeographicTypeCustomGeographicType">
-            <End Role="CustomGeographicType" EntitySet="CustomGeographicTypes" />
-            <End Role="CustomGeographicType1" EntitySet="CustomGeographicTypes" />
-          </AssociationSet>
-          <AssociationSet Name="CustomGeographicTypeDesktopGeoManage" Association="BCP.Domain.Edmx.CustomGeographicTypeDesktopGeoManage">
-            <End Role="CustomGeographicType" EntitySet="CustomGeographicTypes" />
-            <End Role="DesktopGeoManage" EntitySet="DesktopGeoManages" />
           </AssociationSet>
           <EntitySet Name="Products" EntityType="BCP.Domain.Edmx.Product" />
           <AssociationSet Name="ProductStandardProduct" Association="BCP.Domain.Edmx.ProductStandardProduct">
@@ -3357,15 +3317,7 @@
             <End Role="DocSender" EntitySet="DocSenders" />
             <End Role="DocComent" EntitySet="DocComents" />
           </AssociationSet>
-          <AssociationSet Name="UserCustomerGoup1" Association="BCP.Domain.Edmx.UserCustomerGoup1">
-            <End Role="User" EntitySet="Users" />
-            <End Role="CustomerGoup" EntitySet="CustomerGoups" />
-          </AssociationSet>
           <EntitySet Name="JobChanges" EntityType="BCP.Domain.Edmx.JobChange" />
-          <AssociationSet Name="EmployeeJobChange" Association="BCP.Domain.Edmx.EmployeeJobChange">
-            <End Role="Employee" EntitySet="Employees1" />
-            <End Role="JobChange" EntitySet="JobChanges" />
-          </AssociationSet>
           <AssociationSet Name="PostJobChange" Association="BCP.Domain.Edmx.PostJobChange">
             <End Role="Post" EntitySet="Posts" />
             <End Role="JobChange" EntitySet="JobChanges" />
@@ -3440,15 +3392,7 @@
             <End Role="WorkSpaceBaseType" EntitySet="WorkSpaceBaseTypes" />
             <End Role="WorkSpaceType" EntitySet="WorkSpaceTypes" />
           </AssociationSet>
-          <EntitySet Name="EventTimes" EntityType="BCP.Domain.Edmx.EventTime" />
-          <AssociationSet Name="LoginLogEventTime" Association="BCP.Domain.Edmx.LoginLogEventTime">
-            <End Role="LoginLog" EntitySet="LoginLogs" />
-            <End Role="EventTime" EntitySet="EventTimes" />
-          </AssociationSet>
-          <AssociationSet Name="PositionPost" Association="BCP.Domain.Edmx.PositionPost">
-            <End Role="Position" EntitySet="Positions" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
+          <EntitySet Name="OperationDetails" EntityType="BCP.Domain.Edmx.OperationDetail" />
           <AssociationSet Name="WorkSpaceBaseTypeDocumentManage" Association="BCP.Domain.Edmx.WorkSpaceBaseTypeDocumentManage">
             <End Role="WorkSpaceBaseType" EntitySet="WorkSpaceBaseTypes" />
             <End Role="DocumentManage" EntitySet="DocumentManages" />
@@ -3456,6 +3400,39 @@
           <AssociationSet Name="DocManageStateDocumentManage" Association="BCP.Domain.Edmx.DocManageStateDocumentManage">
             <End Role="DocManageState" EntitySet="DocManageStates" />
             <End Role="DocumentManage" EntitySet="DocumentManages" />
+          </AssociationSet>
+          <EntitySet Name="OperationEvents" EntityType="BCP.Domain.Edmx.OperationEvent" />
+          <AssociationSet Name="OpenEventEventTime" Association="BCP.Domain.Edmx.OpenEventEventTime">
+            <End Role="OpenEvent" EntitySet="OperationEvents" />
+            <End Role="EventTime" EntitySet="OperationDetails" />
+          </AssociationSet>
+          <AssociationSet Name="LoginLogOpenEvent" Association="BCP.Domain.Edmx.LoginLogOpenEvent">
+            <End Role="LoginLog" EntitySet="LoginLogs" />
+            <End Role="OpenEvent" EntitySet="OperationEvents" />
+          </AssociationSet>
+          <AssociationSet Name="GroupMemberGroupMessager" Association="BCP.Domain.Edmx.GroupMemberGroupMessager">
+            <End Role="GroupMember" EntitySet="GroupMembers" />
+            <End Role="GroupMessager" EntitySet="GroupMessagers" />
+          </AssociationSet>
+          <AssociationSet Name="GroupGroupMember" Association="BCP.Domain.Edmx.GroupGroupMember">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupMember" EntitySet="GroupMembers" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeePost" Association="BCP.Domain.Edmx.EmployeePost">
+            <End Role="Employee" EntitySet="Employees1" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="PositionPost" Association="BCP.Domain.Edmx.PositionPost">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="GroupGroupMessager" Association="BCP.Domain.Edmx.GroupGroupMessager">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupMessager" EntitySet="GroupMessagers" />
+          </AssociationSet>
+          <AssociationSet Name="CustomerGoupUser" Association="BCP.Domain.Edmx.CustomerGoupUser">
+            <End Role="CustomerGoup" EntitySet="CustomerGoups" />
+            <End Role="User" EntitySet="Users" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Organization">
@@ -3513,7 +3490,6 @@
           </Property>
           <NavigationProperty Name="Products" Relationship="BCP.Domain.Edmx.OrganizationProduct" FromRole="Organization" ToRole="Product" />
           <NavigationProperty Name="DocReaders" Relationship="BCP.Domain.Edmx.OrganizationDocReader" FromRole="Organization" ToRole="DocReader" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Organization_ContacTable">
           <Documentation>
@@ -3540,37 +3516,21 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>职位描述</LongDescription>
-            </Documentation>
-          </Property>
           <Property Type="Boolean" Name="IsValid" Nullable="false" />
-          <Property Type="String" Name="PositionType" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Type="String" Name="PositionType" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false">
             <Documentation>
               <Summary>表示具体的工作，如管理、技术、其他</Summary>
               <LongDescription>职务（job）</LongDescription>
             </Documentation>
           </Property>
-          <Property Type="String" Name="PositionTile" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Name="Name" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" Type="String">
             <Documentation>
-              <Summary>职务头衔，经理、办事员等</Summary>
-              <LongDescription>职位</LongDescription>
+              <LongDescription>工作地点</LongDescription>
             </Documentation>
           </Property>
           <Property Type="String" Name="TaskNature" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
             <Documentation>
               <LongDescription>工作性质</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="String" Name="WorkLocation" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>工作地点</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="String" Name="SolaryStandard" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>薪资待遇</LongDescription>
             </Documentation>
           </Property>
           <NavigationProperty Name="Positions" Relationship="BCP.Domain.Edmx.PositionPosition" FromRole="Position" ToRole="Position1" />
@@ -3582,7 +3542,6 @@
           </Property>
           <NavigationProperty Name="Organization" Relationship="BCP.Domain.Edmx.OrganizationPosition" FromRole="Position" ToRole="Organization" />
           <Property Type="Int32" Name="OrganizationID" Nullable="false" />
-          <Property Name="IsAdministrator" Type="Boolean" Nullable="false" DefaultValue="False" />
           <NavigationProperty Name="PostRequire" Relationship="BCP.Domain.Edmx.PostRequirePosition" FromRole="Position" ToRole="PostRequire" />
           <Property Name="PostRequireID" Type="Int32" Nullable="true" />
           <Property Name="PositionLevel" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
@@ -3592,7 +3551,6 @@
           </Property>
           <NavigationProperty Name="Employees" Relationship="BCP.Domain.Edmx.PositionEmployee" FromRole="Position" ToRole="Employee" />
           <NavigationProperty Name="Posts" Relationship="BCP.Domain.Edmx.PositionPost" FromRole="Position" ToRole="Post" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Documentation>
@@ -3620,14 +3578,25 @@
           <NavigationProperty Name="Authorizations1" Relationship="BCP.Domain.Edmx.UserAuthorization1" FromRole="User" ToRole="Authorization" />
           <NavigationProperty Name="DocReaders" Relationship="BCP.Domain.Edmx.UserDocReader" FromRole="User" ToRole="DocReader" />
           <NavigationProperty Name="DocSenders" Relationship="BCP.Domain.Edmx.UserDocSender" FromRole="User" ToRole="DocSender" />
-          <NavigationProperty Name="CustomerGoups1" Relationship="BCP.Domain.Edmx.UserCustomerGoup1" FromRole="User" ToRole="CustomerGoup" />
           <Property Name="LimiteTime" Type="DateTime" Nullable="false" >
             <Documentation>
               <LongDescription>有效时间</LongDescription>
             </Documentation>
           </Property>
           <Property Name="Note" Type="String" Nullable="false" />
+          <Property Name="Domain" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>如果用户是外部的，如微信，qq等其他社交体系的</Summary>
+              <LongDescription>域名</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="DomainId" Type="String" Nullable="false" >
+            <Documentation>
+              <LongDescription>域外用户ID，如微信的Id号等</LongDescription>
+            </Documentation>
+          </Property>
           <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Belongs" Relationship="BCP.Domain.Edmx.CustomerGoupUser" FromRole="User" ToRole="CustomerGoup" />
           </EntityType>
         <EntityType Name="User_ContacTable">
           <Documentation>
@@ -3658,9 +3627,8 @@
           <Property Type="String" Name="LogoutTime" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserLoginLog" FromRole="LoginLog" ToRole="User" />
           <Property Type="Int32" Name="UserID" Nullable="true" />
-          <NavigationProperty Name="UserMessages" Relationship="BCP.Domain.Edmx.LoginLogUserMessage" FromRole="LoginLog" ToRole="UserMessage" />
           <Property Type="String" Name="CurrentSate" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="EventTimes" Relationship="BCP.Domain.Edmx.LoginLogEventTime" FromRole="LoginLog" ToRole="EventTime" />
+          <NavigationProperty Name="OpenEvents" Relationship="BCP.Domain.Edmx.LoginLogOpenEvent" FromRole="LoginLog" ToRole="OpenEvent" />
         </EntityType>
         <EntityType Name="OrganizationTransition">
           <Documentation>
@@ -3700,7 +3668,6 @@
           <Property Type="Int32" Name="OldOrgan" Nullable="true" />
           <NavigationProperty Name="Organization1" Relationship="BCP.Domain.Edmx.OrganizationOrganizationTransition1" FromRole="OrganizationTransition" ToRole="Organization" />
           <Property Type="Int32" Name="NewOrgan" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Organization_Type">
           <Documentation>
@@ -3783,8 +3750,7 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="LoginLog" Relationship="BCP.Domain.Edmx.LoginLogUserMessage" FromRole="UserMessage" ToRole="LoginLog" />
-          <Property Type="Int32" Name="ParetId" Nullable="true" />
+          <Property Type="Int32" Name="ParentId" Nullable="true" />
           <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="3" >
             <Documentation>
               <LongDescription>创建和发送时间</LongDescription>
@@ -3795,27 +3761,15 @@
               <LongDescription>是否读取过</LongDescription>
             </Documentation>
           </Property>
-          <Property Type="Int32" Name="LoginLogID" Nullable="true" />
           <NavigationProperty Name="UserMessages" Relationship="BCP.Domain.Edmx.UserMessageUserMessage" FromRole="UserMessage" ToRole="UserMessage1" />
           <NavigationProperty Name="UserMessage1" Relationship="BCP.Domain.Edmx.UserMessageUserMessage" FromRole="UserMessage1" ToRole="UserMessage" />
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserUserMessage" FromRole="UserMessage" ToRole="User" />
           <Property Type="Int32" Name="SenderID" Nullable="false" />
           <Property Name="EventTime" Type="Int64" Nullable="false" />
-          <Property Name="ReplyID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ReplyId" Type="Int32" Nullable="true" />
         </EntityType>
-        <Association Name="LoginLogUserMessage">
-          <End Type="BCP.Domain.Edmx.LoginLog" Role="LoginLog" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.UserMessage" Role="UserMessage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoginLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserMessage">
-              <PropertyRef Name="LoginLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="UserGroup">
+        <EntityType Name="GroupMember">
           <Documentation>
             <Summary>信息群</Summary>
             <LongDescription>成员表</LongDescription>
@@ -3827,14 +3781,13 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="Creator" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="JoinTime" Nullable="false" Precision="3" />
           <Property Type="String" Name="State" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserMessageGroup" FromRole="MessageGroup" ToRole="User" />
-          <NavigationProperty Name="MessageGroupMessagers" Relationship="BCP.Domain.Edmx.MessageGroupMessageGroupMessager" FromRole="MessageGroup" ToRole="MessageGroupMessager" />
-          <NavigationProperty Name="GroupName" Relationship="BCP.Domain.Edmx.GroupNameUserGroup" FromRole="UserGroup" ToRole="GroupName" />
-          <Property Type="Int32" Name="GroupNameID" Nullable="false" />
           <Property Name="Rule" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="GroupMessagers" Relationship="BCP.Domain.Edmx.GroupMemberGroupMessager" FromRole="GroupMember" ToRole="GroupMessager" />
+          <NavigationProperty Name="Group" Relationship="BCP.Domain.Edmx.GroupGroupMember" FromRole="GroupMember" ToRole="Group" />
+          <Property Name="GroupID" Type="Int32" Nullable="true" />
         </EntityType>
         <EntityType Name="OrganizationOtherName">
           <Documentation>
@@ -3847,7 +3800,6 @@
           <Property Type="String" Name="OtherName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Organization" Relationship="BCP.Domain.Edmx.OrganizationOrganizationOtherName" FromRole="OrganizationOtherName" ToRole="Organization" />
           <Property Type="Int32" Name="OrganizationID" Nullable="false" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="OrganizationOrganizationOtherName">
           <End Type="BCP.Domain.Edmx.Organization" Role="Organization" Multiplicity="1" />
@@ -4177,7 +4129,6 @@
             </Documentation>
           </Property>
           <NavigationProperty Name="Positions" Relationship="BCP.Domain.Edmx.PostRequirePosition" FromRole="PostRequire" ToRole="Position" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Post">
           <Documentation>
@@ -4189,14 +4140,11 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="PostName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
-          <Property Type="String" Name="Descript" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="MarkerString" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="Boolean" Name="IsValid" Nullable="false" />
-          <Property Name="Jobname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="PositionID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Posts" Relationship="BCP.Domain.Edmx.PostPost" FromRole="Post" ToRole="Post1" />
           <NavigationProperty Name="Post1" Relationship="BCP.Domain.Edmx.PostPost" FromRole="Post1" ToRole="Post" />
+          <Property Type="String" Name="Descript" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="PostID" Type="Int32" Nullable="true" >
             <Documentation>
               <LongDescription>其他岗位的父级</LongDescription>
@@ -4209,8 +4157,10 @@
           <NavigationProperty Name="DocReaders" Relationship="BCP.Domain.Edmx.PostDocReader" FromRole="Post" ToRole="DocReader" />
           <NavigationProperty Name="DocSenders" Relationship="BCP.Domain.Edmx.PostDocSender" FromRole="Post" ToRole="DocSender" />
           <NavigationProperty Name="JobChanges" Relationship="BCP.Domain.Edmx.PostJobChange" FromRole="Post" ToRole="JobChange" />
+          <NavigationProperty Name="Employee" Relationship="BCP.Domain.Edmx.EmployeePost" FromRole="Post" ToRole="Employee" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Position" Relationship="BCP.Domain.Edmx.PositionPost" FromRole="Post" ToRole="Position" />
-          <Property Name="PositionID1" Type="Int32" Nullable="true" />
+          <Property Name="PositionID" Type="Int32" Nullable="true" />
           <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkSpace">
@@ -4316,7 +4266,6 @@
           <NavigationProperty Name="Specialized1" Relationship="BCP.Domain.Edmx.SpecializedSpecialized" FromRole="Specialized1" ToRole="Specialized" />
           <Property Type="Int32" Name="Parent" Nullable="true" />
           <NavigationProperty Name="Postbasics" Relationship="BCP.Domain.Edmx.SpecializedPostbasic" FromRole="Specialized" ToRole="Postbasic" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="SpecializedSpecialized">
           <End Type="BCP.Domain.Edmx.Specialized" Role="Specialized" Multiplicity="0..1" />
@@ -4687,7 +4636,6 @@
           <Property Type="String" Name="Hander" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="Result" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="EventState" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="OrganizationOrganizationEvent">
           <End Type="BCP.Domain.Edmx.Organization" Role="Organization" Multiplicity="1" />
@@ -4766,7 +4714,7 @@
         </Association>
         <Association Name="UserMessageGroup">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="1" />
-          <End Type="BCP.Domain.Edmx.UserGroup" Role="MessageGroup" Multiplicity="*" />
+          <End Type="BCP.Domain.Edmx.GroupMember" Role="MessageGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
@@ -4776,7 +4724,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="MessageGroupMessager">
+        <EntityType Name="GroupMessager">
           <Documentation>
             <LongDescription>群信息</LongDescription>
           </Documentation>
@@ -4784,25 +4732,14 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="MessageGroup" Relationship="BCP.Domain.Edmx.MessageGroupMessageGroupMessager" FromRole="MessageGroupMessager" ToRole="MessageGroup" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Int32" Name="MessageGroupID" Nullable="false" />
           <Property Type="String" Name="SendTime" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="GroupMember" Relationship="BCP.Domain.Edmx.GroupMemberGroupMessager" FromRole="GroupMessager" ToRole="GroupMember" />
+          <Property Name="GroupMemberID" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="Group" Relationship="BCP.Domain.Edmx.GroupGroupMessager" FromRole="GroupMessager" ToRole="Group" />
+          <Property Name="GroupID" Type="Int32" Nullable="true" />
         </EntityType>
-        <Association Name="MessageGroupMessageGroupMessager">
-          <End Type="BCP.Domain.Edmx.UserGroup" Role="MessageGroup" Multiplicity="1" />
-          <End Type="BCP.Domain.Edmx.MessageGroupMessager" Role="MessageGroupMessager" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MessageGroup">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MessageGroupMessager">
-              <PropertyRef Name="MessageGroupID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="UserMessageUserMessage">
           <End Type="BCP.Domain.Edmx.UserMessage" Role="UserMessage" Multiplicity="0..1" />
           <End Type="BCP.Domain.Edmx.UserMessage" Role="UserMessage1" Multiplicity="*" />
@@ -4811,11 +4748,11 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="UserMessage1">
-              <PropertyRef Name="ParetId" />
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="GroupName">
+        <EntityType Name="Group">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -4825,30 +4762,22 @@
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserGroupName" FromRole="GroupName" ToRole="User" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="GroupNumber" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="UserGroups" Relationship="BCP.Domain.Edmx.GroupNameUserGroup" FromRole="GroupName" ToRole="UserGroup" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="GroupMembers" Relationship="BCP.Domain.Edmx.GroupGroupMember" FromRole="Group" ToRole="GroupMember" />
+          <NavigationProperty Name="GroupMessagers" Relationship="BCP.Domain.Edmx.GroupGroupMessager" FromRole="Group" ToRole="GroupMessager" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="Notes" Type="String" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" />
+          <Property Name="Validate" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="UserGroupName">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="1" />
-          <End Type="BCP.Domain.Edmx.GroupName" Role="GroupName" Multiplicity="*" />
+          <End Type="BCP.Domain.Edmx.Group" Role="GroupName" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="GroupName">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="GroupNameUserGroup">
-          <End Type="BCP.Domain.Edmx.GroupName" Role="GroupName" Multiplicity="1" />
-          <End Type="BCP.Domain.Edmx.UserGroup" Role="UserGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GroupName">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserGroup">
-              <PropertyRef Name="GroupNameID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4860,9 +4789,7 @@
           <Property Type="String" Name="GroupName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserCustomerGoup" FromRole="CustomerGoup" ToRole="User" />
           <Property Type="Int32" Name="CreatID" Nullable="false" />
-          <NavigationProperty Name="User1" Relationship="BCP.Domain.Edmx.UserCustomerGoup1" FromRole="CustomerGoup" ToRole="User" />
-          <Property Name="UserID" Type="Int32" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Members" Relationship="BCP.Domain.Edmx.CustomerGoupUser" FromRole="CustomerGoup" ToRole="User" />
         </EntityType>
         <Association Name="UserCustomerGoup">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="1" />
@@ -4924,12 +4851,11 @@
           <Property Name="OrganizationID" Nullable="false" Type="Int32" />
           <NavigationProperty Name="CustomCategory" Relationship="BCP.Domain.Edmx.CustomCategoryCustomOrganizationType" FromRole="CustomOrganizationType" ToRole="CustomCategory" />
           <Property Type="Int32" Name="CustomCategoryID" Nullable="false" />
-          <Property Type="String" Name="note" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Type="String" Name="Note" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
             <Documentation>
               <LongDescription>备注</LongDescription>
             </Documentation>
           </Property>
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomCategory">
           <Documentation>
@@ -4945,7 +4871,6 @@
           <NavigationProperty Name="CustomCategories" Relationship="BCP.Domain.Edmx.CustomCategoryCustomCategory" FromRole="CustomCategory" ToRole="CustomCategory1" />
           <NavigationProperty Name="CustomCategory1" Relationship="BCP.Domain.Edmx.CustomCategoryCustomCategory" FromRole="CustomCategory1" ToRole="CustomCategory" />
           <Property Type="Int32" Name="CustomCategoryID" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="OrganizationCustomOrganizationType">
           <End Type="BCP.Domain.Edmx.Organization" Multiplicity="1" Role="Organization" />
@@ -4980,71 +4905,6 @@
             </Principal>
             <Dependent Role="CustomCategory1">
               <PropertyRef Name="CustomCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="DesktopGeoManage">
-          <Documentation>
-            <LongDescription>个人桌面地理</LongDescription>
-          </Documentation>
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Tile" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Int32" Name="EventTimeEventTimeID" Nullable="true" />
-          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="String" Name="Descript" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="String" Name="link" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>链接到其他网页</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="Int32" Name="Geo_GraphID" Nullable="false" />
-          <NavigationProperty Name="CustomGeographicType" Relationship="BCP.Domain.Edmx.CustomGeographicTypeDesktopGeoManage" FromRole="DesktopGeoManage" ToRole="CustomGeographicType" />
-          <Property Type="Int32" Name="CustomGeographicTypeID" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CustomGeographicType">
-          <Documentation>
-            <LongDescription>个人客户化管理</LongDescription>
-          </Documentation>
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="TypeName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>类型名称</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="String" Name="Descript" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="CustomGeographicTypes" Relationship="BCP.Domain.Edmx.CustomGeographicTypeCustomGeographicType" FromRole="CustomGeographicType" ToRole="CustomGeographicType1" />
-          <NavigationProperty Name="CustomGeographicType1" Relationship="BCP.Domain.Edmx.CustomGeographicTypeCustomGeographicType" FromRole="CustomGeographicType1" ToRole="CustomGeographicType" />
-          <Property Type="Int32" Name="CustomGeographicTypeID" Nullable="true" />
-          <Property Type="Int32" Name="EventTimeEventTimeID" Nullable="true" />
-          <NavigationProperty Name="DesktopGeoManages" Relationship="BCP.Domain.Edmx.CustomGeographicTypeDesktopGeoManage" FromRole="CustomGeographicType" ToRole="DesktopGeoManage" />
-        </EntityType>
-        <Association Name="CustomGeographicTypeCustomGeographicType">
-          <End Type="BCP.Domain.Edmx.CustomGeographicType" Role="CustomGeographicType" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.CustomGeographicType" Role="CustomGeographicType1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomGeographicType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomGeographicType1">
-              <PropertyRef Name="CustomGeographicTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CustomGeographicTypeDesktopGeoManage">
-          <End Type="BCP.Domain.Edmx.CustomGeographicType" Role="CustomGeographicType" Multiplicity="1" />
-          <End Type="BCP.Domain.Edmx.DesktopGeoManage" Role="DesktopGeoManage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomGeographicType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DesktopGeoManage">
-              <PropertyRef Name="CustomGeographicTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5520,8 +5380,7 @@
           <Property Name="PositionID" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Organization" Relationship="BCP.Domain.Edmx.OrganizationEmployee" FromRole="Employee" ToRole="Organization" />
           <Property Name="OrganizationID" Type="Int32" Nullable="true" />
-          <NavigationProperty Name="JobChanges" Relationship="BCP.Domain.Edmx.EmployeeJobChange" FromRole="Employee" ToRole="JobChange" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Posts" Relationship="BCP.Domain.Edmx.EmployeePost" FromRole="Employee" ToRole="Post" />
         </EntityType>
         <Association Name="UserEmployee">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="1" />
@@ -5758,7 +5617,6 @@
           <Property Name="WorkModulId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserWorkSpaceRole" FromRole="WorkSpaceRole" ToRole="User" />
           <Property Name="UserID" Type="Int32" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="WorkSpaceWorkSpaceRole">
           <End Type="BCP.Domain.Edmx.WorkSpace" Role="WorkSpace" Multiplicity="1" />
@@ -6191,45 +6049,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserCustomerGoup1">
-          <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.CustomerGoup" Role="CustomerGoup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomerGoup">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="JobChange">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Employee" Relationship="BCP.Domain.Edmx.EmployeeJobChange" FromRole="JobChange" ToRole="Employee" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="true" />
+          <Property Name="ChangeType" Type="String" Nullable="false" />
           <NavigationProperty Name="Post" Relationship="BCP.Domain.Edmx.PostJobChange" FromRole="JobChange" ToRole="Post" />
-          <Property Name="PostID" Type="Int32" Nullable="true" />
+          <Property Name="Content" Type="String" Nullable="false" />
           <Property Name="State" Type="Boolean" Nullable="false" />
           <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PostID" Type="Int32" Nullable="true" />
           <Property Name="Creater" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
-        <Association Name="EmployeeJobChange">
-          <End Type="BCP.Domain.Edmx.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.JobChange" Role="JobChange" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JobChange">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PostJobChange">
           <End Type="BCP.Domain.Edmx.Post" Role="Post" Multiplicity="0..1" />
           <End Type="BCP.Domain.Edmx.JobChange" Role="JobChange" Multiplicity="*" />
@@ -6536,43 +6369,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="EventTime">
+        <EntityType Name="OperationDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TimePoint" Type="String" Nullable="false" />
-          <Property Name="SpacePoint" Type="String" Nullable="false" />
-          <Property Name="EventName" Type="String" Nullable="false" />
-          <Property Name="EventType" Type="String" Nullable="false" />
-          <Property Name="District" Type="String" Nullable="false" />
-          <NavigationProperty Name="LoginLog" Relationship="BCP.Domain.Edmx.LoginLogEventTime" FromRole="EventTime" ToRole="LoginLog" />
-          <Property Name="LoginLogID" Type="Int32" Nullable="true" />
+          <Property Name="TabName" Type="String" Nullable="false" />
+          <Property Name="TabRecordId" Type="String" Nullable="false" />
+          <Property Name="HandleType" Type="String" Nullable="false" />
+          <NavigationProperty Name="OpenEvent" Relationship="BCP.Domain.Edmx.OpenEventEventTime" FromRole="EventTime" ToRole="OpenEvent" />
+          <Property Name="OpenEventId" Type="Int32" Nullable="true" />
+          <Property Name="Note" Type="String" Nullable="false" />
         </EntityType>
-        <Association Name="LoginLogEventTime">
-          <End Type="BCP.Domain.Edmx.LoginLog" Role="LoginLog" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.EventTime" Role="EventTime" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoginLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EventTime">
-              <PropertyRef Name="LoginLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="PositionPost">
-          <End Type="BCP.Domain.Edmx.Position" Role="Position" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.Post" Role="Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="PositionID1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="WorkSpaceBaseTypeDocumentManage">
           <End Type="BCP.Domain.Edmx.WorkSpaceBaseType" Role="WorkSpaceBaseType" Multiplicity="0..1" />
           <End Type="BCP.Domain.Edmx.DocumentManage" Role="DocumentManage" Multiplicity="*" />
@@ -6597,6 +6405,114 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="OperationEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OperType" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>登陆，查询，打印，授权，增加</Summary>
+              <LongDescription>事件名称</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="OperName" Type="String" Nullable="false" />
+          <Property Name="OperModul" Type="String" Nullable="false" />
+          <Property Name="OperTime" Type="String" Nullable="false" />
+          <NavigationProperty Name="EventTimes" Relationship="BCP.Domain.Edmx.OpenEventEventTime" FromRole="OpenEvent" ToRole="EventTime" />
+          <NavigationProperty Name="LoginLog" Relationship="BCP.Domain.Edmx.LoginLogOpenEvent" FromRole="OpenEvent" ToRole="LoginLog" />
+          <Property Name="OperSpace" Type="String" Nullable="false" />
+          <Property Name="Note" Type="String" Nullable="false" />
+          <Property Name="LoginLogID" Type="Int32" Nullable="true" />
+        </EntityType>
+        <Association Name="OpenEventEventTime">
+          <End Type="BCP.Domain.Edmx.OperationEvent" Role="OpenEvent" Multiplicity="0..1" />
+          <End Type="BCP.Domain.Edmx.OperationDetail" Role="EventTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OpenEvent">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventTime">
+              <PropertyRef Name="OpenEventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LoginLogOpenEvent">
+          <End Type="BCP.Domain.Edmx.LoginLog" Role="LoginLog" Multiplicity="0..1" />
+          <End Type="BCP.Domain.Edmx.OperationEvent" Role="OpenEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpenEvent">
+              <PropertyRef Name="LoginLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupMemberGroupMessager">
+          <End Type="BCP.Domain.Edmx.GroupMember" Role="GroupMember" Multiplicity="0..1" />
+          <End Type="BCP.Domain.Edmx.GroupMessager" Role="GroupMessager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupMember">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupMessager">
+              <PropertyRef Name="GroupMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupGroupMember">
+          <End Type="BCP.Domain.Edmx.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="BCP.Domain.Edmx.GroupMember" Role="GroupMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupMember">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeePost">
+          <End Type="BCP.Domain.Edmx.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="BCP.Domain.Edmx.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PositionPost">
+          <End Type="BCP.Domain.Edmx.Position" Role="Position" Multiplicity="0..1" />
+          <End Type="BCP.Domain.Edmx.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupGroupMessager">
+          <End Type="BCP.Domain.Edmx.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="BCP.Domain.Edmx.GroupMessager" Role="GroupMessager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupMessager">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CustomerGoupUser">
+          <End Type="BCP.Domain.Edmx.CustomerGoup" Role="CustomerGoup" Multiplicity="*" />
+          <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6615,7 +6531,6 @@
           <ScalarProperty Name="MarkerString" ColumnName="MarkerString" />
           <ScalarProperty Name="IsValid" ColumnName="IsValid" />
           <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6636,19 +6551,14 @@
       <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.Position)">
         <MappingFragment StoreEntitySet="Positions">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="IsValid" ColumnName="IsValid" />
           <ScalarProperty Name="PositionType" ColumnName="PositionType" />
-          <ScalarProperty Name="PositionTile" ColumnName="PositionTile" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="TaskNature" ColumnName="TaskNature" />
-          <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
-          <ScalarProperty Name="SolaryStandard" ColumnName="SolaryStandard" />
           <ScalarProperty Name="PositionID" ColumnName="PositionID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="IsAdministrator" ColumnName="IsAdministrator" />
           <ScalarProperty Name="PostRequireID" ColumnName="PostRequireID" />
           <ScalarProperty Name="PositionLevel" ColumnName="PositionLevel" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6662,6 +6572,8 @@
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="LimiteTime" ColumnName="LimiteTime" />
           <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Domain" ColumnName="Domain" />
+          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
           <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -6702,7 +6614,6 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="OldOrgan" ColumnName="OldOrgan" />
           <ScalarProperty Name="NewOrgan" ColumnName="NewOrgan" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6741,28 +6652,27 @@
         <MappingFragment StoreEntitySet="UserMessages">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Content" ColumnName="Content" />
-          <ScalarProperty Name="ParetId" ColumnName="ParetId" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
           <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="LoginLogID" ColumnName="LoginLogID" />
           <ScalarProperty Name="SenderID" ColumnName="SenderID" />
           <ScalarProperty Name="EventTime" ColumnName="EventTime" />
-          <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="ReplyId" ColumnName="ReplyId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserGroups">
-      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.UserGroup)">
-        <MappingFragment StoreEntitySet="UserGroups">
+    <EntitySetMapping Name="GroupMembers">
+      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.GroupMember)">
+        <MappingFragment StoreEntitySet="GroupMembers">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Creator" ColumnName="Creator" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="JoinTime" ColumnName="JoinTime" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="GroupNameID" ColumnName="GroupNameID" />
           <ScalarProperty Name="Rule" ColumnName="Rule" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6772,7 +6682,6 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="OtherName" ColumnName="OtherName" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6910,7 +6819,6 @@
           <ScalarProperty Name="EducationRequirement" ColumnName="EducationRequirement" />
           <ScalarProperty Name="SkillRequirement" ColumnName="SkillRequirement" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6919,15 +6827,13 @@
         <MappingFragment StoreEntitySet="Posts">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="PostName" ColumnName="PostName" />
-          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-          <ScalarProperty Name="Descript" ColumnName="Descript" />
           <ScalarProperty Name="MarkerString" ColumnName="MarkerString" />
           <ScalarProperty Name="IsValid" ColumnName="IsValid" />
-          <ScalarProperty Name="Jobname" ColumnName="Jobname" />
-          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
+          <ScalarProperty Name="Descript" ColumnName="Descript" />
           <ScalarProperty Name="PostID" ColumnName="PostID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="PositionID1" ColumnName="PositionID1" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
           <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -6969,7 +6875,6 @@
           <ScalarProperty Name="Descript" ColumnName="Descript" />
           <ScalarProperty Name="ParentCode" ColumnName="ParentCode" />
           <ScalarProperty Name="Parent" ColumnName="Parent" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7088,31 +6993,33 @@
           <ScalarProperty Name="Hander" ColumnName="Hander" />
           <ScalarProperty Name="Result" ColumnName="Result" />
           <ScalarProperty Name="EventState" ColumnName="EventState" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MessageGroupMessagers">
-      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.MessageGroupMessager)">
-        <MappingFragment StoreEntitySet="MessageGroupMessagers">
+    <EntitySetMapping Name="GroupMessagers">
+      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.GroupMessager)">
+        <MappingFragment StoreEntitySet="GroupMessagers">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
           <ScalarProperty Name="Content" ColumnName="Content" />
-          <ScalarProperty Name="MessageGroupID" ColumnName="MessageGroupID" />
           <ScalarProperty Name="SendTime" ColumnName="SendTime" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="GroupMemberID" ColumnName="GroupMemberID" />
+          <ScalarProperty Name="GroupID" ColumnName="GroupID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GroupNames">
-      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.GroupName)">
-        <MappingFragment StoreEntitySet="GroupNames">
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.Group)">
+        <MappingFragment StoreEntitySet="Groups">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="CreatTime" ColumnName="CreatTime" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="GroupNumber" ColumnName="GroupNumber" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Validate" ColumnName="Validate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7122,8 +7029,6 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="GroupName" ColumnName="GroupName" />
           <ScalarProperty Name="CreatID" ColumnName="CreatID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7150,8 +7055,7 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="CustomCategoryID" ColumnName="CustomCategoryID" />
-          <ScalarProperty Name="note" ColumnName="note" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7162,32 +7066,6 @@
           <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
           <ScalarProperty Name="content" ColumnName="content" />
           <ScalarProperty Name="CustomCategoryID" ColumnName="CustomCategoryID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DesktopGeoManages">
-      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.DesktopGeoManage)">
-        <MappingFragment StoreEntitySet="DesktopGeoManages">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Tile" ColumnName="Tile" />
-          <ScalarProperty Name="EventTimeEventTimeID" ColumnName="EventTimeEventTimeID" />
-          <ScalarProperty Name="Content" ColumnName="Content" />
-          <ScalarProperty Name="Descript" ColumnName="Descript" />
-          <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="Geo_GraphID" ColumnName="Geo_GraphID" />
-          <ScalarProperty Name="CustomGeographicTypeID" ColumnName="CustomGeographicTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CustomGeographicTypes">
-      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.CustomGeographicType)">
-        <MappingFragment StoreEntitySet="CustomGeographicTypes">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-          <ScalarProperty Name="Descript" ColumnName="Descript" />
-          <ScalarProperty Name="CustomGeographicTypeID" ColumnName="CustomGeographicTypeID" />
-          <ScalarProperty Name="EventTimeEventTimeID" ColumnName="EventTimeEventTimeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7332,7 +7210,6 @@
           <ScalarProperty Name="Isvalid" ColumnName="Isvalid" />
           <ScalarProperty Name="PositionID" ColumnName="PositionID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7372,7 +7249,6 @@
           <ScalarProperty Name="Descript" ColumnName="Descript" />
           <ScalarProperty Name="WorkModulId" ColumnName="WorkModulId" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7464,11 +7340,11 @@
       <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.JobChange)">
         <MappingFragment StoreEntitySet="JobChanges">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-          <ScalarProperty Name="PostID" ColumnName="PostID" />
+          <ScalarProperty Name="ChangeType" ColumnName="ChangeType" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+          <ScalarProperty Name="PostID" ColumnName="PostID" />
           <ScalarProperty Name="Creater" ColumnName="Creater" />
           <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
@@ -7543,19 +7419,40 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="EventTimes">
-      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.EventTime)">
-        <MappingFragment StoreEntitySet="EventTimes">
+    <EntitySetMapping Name="OperationDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.OperationDetail)">
+        <MappingFragment StoreEntitySet="OperationDetails">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="TimePoint" ColumnName="TimePoint" />
-          <ScalarProperty Name="SpacePoint" ColumnName="SpacePoint" />
-          <ScalarProperty Name="EventName" ColumnName="EventName" />
-          <ScalarProperty Name="EventType" ColumnName="EventType" />
-          <ScalarProperty Name="District" ColumnName="District" />
+          <ScalarProperty Name="TabName" ColumnName="TabName" />
+          <ScalarProperty Name="TabRecordId" ColumnName="TabRecordId" />
+          <ScalarProperty Name="HandleType" ColumnName="HandleType" />
+          <ScalarProperty Name="OpenEventId" ColumnName="OpenEventId" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OperationEvents">
+      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.OperationEvent)">
+        <MappingFragment StoreEntitySet="OperationEvents">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="OperType" ColumnName="OperType" />
+          <ScalarProperty Name="OperName" ColumnName="OperName" />
+          <ScalarProperty Name="OperModul" ColumnName="OperModul" />
+          <ScalarProperty Name="OperTime" ColumnName="OperTime" />
+          <ScalarProperty Name="OperSpace" ColumnName="OperSpace" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
           <ScalarProperty Name="LoginLogID" ColumnName="LoginLogID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="CustomerGoupUser" TypeName="BCP.Domain.Edmx.CustomerGoupUser" StoreEntitySet="CustomerGoupUser">
+      <EndProperty Name="CustomerGoup">
+        <ScalarProperty Name="ID" ColumnName="Belongs_ID" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="ID" ColumnName="Members_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -7572,12 +7469,12 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
-        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="47080140b0944622aff3ea260042e780" Name="Diagram1">
+      <Diagram DiagramId="47080140b0944622aff3ea260042e780" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="AthenaGIS.Database.Organization" Width="1.5" PointX="0.75" PointY="27.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.Organization_ContacTable" Width="1.5" PointX="8.25" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.Position" Width="1.5" PointX="3" PointY="25" IsExpanded="true" />
@@ -7645,8 +7542,6 @@
         <EntityTypeShape EntityType="AthenaGIS.Database.FinaceAccoutTab" Width="1.5" PointX="5.75" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.OrganizationCustomType" Width="1.5" PointX="9" PointY="29.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.CustomCategory" Width="1.5" PointX="6.75" PointY="36" IsExpanded="true" />
-        <EntityTypeShape EntityType="AthenaGIS.Database.DesktopGeoManage" Width="1.5" PointX="26" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AthenaGIS.Database.CustomGeographicType" Width="1.5" PointX="23.75" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.TaskLink" Width="1.5" PointX="30.75" PointY="66.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.Product" Width="1.5" PointX="11.25" PointY="22.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.ProductEvent" Width="1.5" PointX="13.5" PointY="21.25" IsExpanded="true" />
@@ -7768,9 +7663,7 @@
         <AssociationConnector Association="AthenaGIS.Database.OrganizationCustomOrganizationType" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.CustomCategoryCustomOrganizationType" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.CustomCategoryCustomCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="AthenaGIS.Database.CustomGeographicTypeCustomGeographicType" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.Geo_GraphDesktopGeoManage" ManuallyRouted="false" />
-        <AssociationConnector Association="AthenaGIS.Database.CustomGeographicTypeDesktopGeoManage" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.ProjectDocLocalScope" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.TaskTaskLink" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.ProductStandardProduct" ManuallyRouted="false" />

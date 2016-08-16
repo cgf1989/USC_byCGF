@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BCP.Domain
 {
     /// <summary>
-    /// DesktopGeoManage 基于EF的仓储实现
+    /// GroupMember 基于EF的仓储实现
     /// </summary>
-    public class DesktopGeoManageRepository : EFRepository<DesktopGeoManage, Int32>,IDesktopGeoManageRepository
+    public class GroupMemberRepository : EFRepository<GroupMember, Int32>,IGroupMemberRepository
     {
     }
 }

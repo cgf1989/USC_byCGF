@@ -12,23 +12,26 @@ namespace BCP.Domain.Edmx
     using System;
     using System.Collections.Generic;
     
-    public partial class GroupName
+    public partial class GroupMember
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public GroupName()
+        public GroupMember()
         {
-            this.UserGroups = new HashSet<UserGroup>();
+            this.GroupMessagers = new HashSet<GroupMessager>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
-        public string CreatTime { get; set; }
+        public string Creator { get; set; }
         public int UserID { get; set; }
-        public string GroupNumber { get; set; }
-        public long EventTime { get; set; }
+        public System.DateTime JoinTime { get; set; }
+        public string State { get; set; }
+        public string Rule { get; set; }
+        public Nullable<int> GroupID { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UserGroup> UserGroups { get; set; }
+        public virtual ICollection<GroupMessager> GroupMessagers { get; set; }
+        public virtual Group Group { get; set; }
     }
 }

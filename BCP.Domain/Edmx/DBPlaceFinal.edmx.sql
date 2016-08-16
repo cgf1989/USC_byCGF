@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/12/2016 14:14:09
+-- Date Created: 08/16/2016 14:44:34
 -- Generated from EDMX file: E:\Work_hy\共性平台\BasePlace\BCP.Domain\Edmx\DBPlaceFinal.edmx
 -- --------------------------------------------------
 
@@ -145,12 +145,6 @@ IF OBJECT_ID(N'[dbo].[FK_CustomCategoryCustomOrganizationType]', 'F') IS NOT NUL
 GO
 IF OBJECT_ID(N'[dbo].[FK_CustomCategoryCustomCategory]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CustomCategories] DROP CONSTRAINT [FK_CustomCategoryCustomCategory];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CustomGeographicTypeCustomGeographicType]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CustomGeographicTypes] DROP CONSTRAINT [FK_CustomGeographicTypeCustomGeographicType];
-GO
-IF OBJECT_ID(N'[dbo].[FK_CustomGeographicTypeDesktopGeoManage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[DesktopGeoManages] DROP CONSTRAINT [FK_CustomGeographicTypeDesktopGeoManage];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ProductStandardProduct]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Products] DROP CONSTRAINT [FK_ProductStandardProduct];
@@ -508,12 +502,6 @@ GO
 IF OBJECT_ID(N'[dbo].[CustomCategories]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CustomCategories];
 GO
-IF OBJECT_ID(N'[dbo].[DesktopGeoManages]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[DesktopGeoManages];
-GO
-IF OBJECT_ID(N'[dbo].[CustomGeographicTypes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CustomGeographicTypes];
-GO
 IF OBJECT_ID(N'[dbo].[Products]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Products];
 GO
@@ -616,8 +604,7 @@ CREATE TABLE [dbo].[Organizations] (
     [Parent] int  NULL,
     [MarkerString] nvarchar(max)  NULL,
     [IsValid] bit  NOT NULL,
-    [Type] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [Type] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -636,19 +623,14 @@ GO
 -- Creating table 'Positions'
 CREATE TABLE [dbo].[Positions] (
     [ID] int IDENTITY(1,1) NOT NULL,
-    [Title] nvarchar(max)  NOT NULL,
     [IsValid] bit  NOT NULL,
     [PositionType] nvarchar(max)  NULL,
-    [PositionTile] nvarchar(max)  NULL,
+    [Name] nvarchar(max)  NULL,
     [TaskNature] nvarchar(max)  NULL,
-    [WorkLocation] nvarchar(max)  NULL,
-    [SolaryStandard] nvarchar(max)  NULL,
     [PositionID] int  NULL,
     [OrganizationID] int  NOT NULL,
-    [IsAdministrator] bit  NOT NULL,
     [PostRequireID] int  NULL,
-    [PositionLevel] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [PositionLevel] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -661,6 +643,8 @@ CREATE TABLE [dbo].[Users] (
     [Status] nvarchar(max)  NOT NULL,
     [LimiteTime] datetime  NOT NULL,
     [Note] nvarchar(max)  NOT NULL,
+    [Domain] nvarchar(max)  NOT NULL,
+    [DomainId] nvarchar(max)  NOT NULL,
     [EventTime] bigint  NOT NULL
 );
 GO
@@ -697,8 +681,7 @@ CREATE TABLE [dbo].[OrganizationTransitions] (
     [Others] nvarchar(max)  NOT NULL,
     [Description] nvarchar(max)  NOT NULL,
     [OldOrgan] int  NULL,
-    [NewOrgan] int  NULL,
-    [EventTime] bigint  NOT NULL
+    [NewOrgan] int  NULL
 );
 GO
 
@@ -734,27 +717,26 @@ GO
 CREATE TABLE [dbo].[UserMessages] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Content] nvarchar(max)  NOT NULL,
-    [ParetId] int  NULL,
+    [ParentId] int  NULL,
     [CreateTime] datetime  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
-    [LoginLogID] int  NULL,
     [SenderID] int  NOT NULL,
     [EventTime] bigint  NOT NULL,
-    [ReplyID] int  NOT NULL
+    [UserID] int  NOT NULL,
+    [ReplyId] int  NULL
 );
 GO
 
--- Creating table 'UserGroups'
-CREATE TABLE [dbo].[UserGroups] (
+-- Creating table 'GroupMembers'
+CREATE TABLE [dbo].[GroupMembers] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [Creator] nvarchar(max)  NOT NULL,
     [UserID] int  NOT NULL,
-    [CreateTime] datetime  NOT NULL,
+    [JoinTime] datetime  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
-    [GroupNameID] int  NOT NULL,
     [Rule] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [GroupID] int  NULL
 );
 GO
 
@@ -762,8 +744,7 @@ GO
 CREATE TABLE [dbo].[OrganizationOtherNames] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [OtherName] nvarchar(max)  NOT NULL,
-    [OrganizationID] int  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [OrganizationID] int  NOT NULL
 );
 GO
 
@@ -890,8 +871,7 @@ CREATE TABLE [dbo].[PostRequires] (
     [Ranks] nvarchar(max)  NOT NULL,
     [EducationRequirement] nvarchar(max)  NOT NULL,
     [SkillRequirement] nvarchar(max)  NOT NULL,
-    [State] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [State] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -899,15 +879,13 @@ GO
 CREATE TABLE [dbo].[Posts] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [PostName] nvarchar(max)  NOT NULL,
-    [DepartmentID] int  NOT NULL,
-    [Descript] nvarchar(max)  NULL,
     [MarkerString] nvarchar(max)  NULL,
     [IsValid] bit  NOT NULL,
-    [Jobname] nvarchar(max)  NOT NULL,
-    [PositionID] int  NOT NULL,
+    [Descript] nvarchar(max)  NULL,
     [PostID] int  NULL,
     [OrganizationID] int  NOT NULL,
-    [PositionID1] int  NULL,
+    [EmployeeId] int  NULL,
+    [PositionID] int  NULL,
     [EventTime] bigint  NOT NULL
 );
 GO
@@ -945,8 +923,7 @@ CREATE TABLE [dbo].[Specializeds] (
     [SpecialName] nvarchar(max)  NOT NULL,
     [Descript] nvarchar(max)  NULL,
     [ParentCode] nvarchar(max)  NULL,
-    [Parent] int  NULL,
-    [EventTime] bigint  NOT NULL
+    [Parent] int  NULL
 );
 GO
 
@@ -1055,30 +1032,32 @@ CREATE TABLE [dbo].[OrganizationEvents] (
     [HanderSection] nvarchar(max)  NOT NULL,
     [Hander] nvarchar(max)  NOT NULL,
     [Result] nvarchar(max)  NOT NULL,
-    [EventState] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [EventState] nvarchar(max)  NOT NULL
 );
 GO
 
--- Creating table 'MessageGroupMessagers'
-CREATE TABLE [dbo].[MessageGroupMessagers] (
+-- Creating table 'GroupMessagers'
+CREATE TABLE [dbo].[GroupMessagers] (
     [ID] int IDENTITY(1,1) NOT NULL,
-    [Title] nvarchar(max)  NOT NULL,
+    [Type] nvarchar(max)  NOT NULL,
     [Content] nvarchar(max)  NOT NULL,
-    [MessageGroupID] int  NOT NULL,
     [SendTime] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [GroupMemberID] int  NULL,
+    [GroupID] int  NULL
 );
 GO
 
--- Creating table 'GroupNames'
-CREATE TABLE [dbo].[GroupNames] (
+-- Creating table 'Groups'
+CREATE TABLE [dbo].[Groups] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
     [CreatTime] nvarchar(max)  NOT NULL,
     [UserID] int  NOT NULL,
     [GroupNumber] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [State] nvarchar(max)  NOT NULL,
+    [Notes] nvarchar(max)  NOT NULL,
+    [Type] nvarchar(max)  NOT NULL,
+    [Validate] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -1086,9 +1065,7 @@ GO
 CREATE TABLE [dbo].[CustomerGoups] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [GroupName] nvarchar(max)  NOT NULL,
-    [CreatID] int  NOT NULL,
-    [UserID] int  NULL,
-    [EventTime] bigint  NOT NULL
+    [CreatID] int  NOT NULL
 );
 GO
 
@@ -1113,8 +1090,7 @@ CREATE TABLE [dbo].[OrganizationCustomTypes] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [OrganizationID] int  NOT NULL,
     [CustomCategoryID] int  NOT NULL,
-    [note] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [Note] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -1123,31 +1099,7 @@ CREATE TABLE [dbo].[CustomCategories] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [CategoryName] nvarchar(max)  NOT NULL,
     [content] nvarchar(max)  NOT NULL,
-    [CustomCategoryID] int  NULL,
-    [EventTime] bigint  NOT NULL
-);
-GO
-
--- Creating table 'DesktopGeoManages'
-CREATE TABLE [dbo].[DesktopGeoManages] (
-    [ID] int IDENTITY(1,1) NOT NULL,
-    [Tile] nvarchar(max)  NOT NULL,
-    [EventTimeEventTimeID] int  NULL,
-    [Content] nvarchar(max)  NOT NULL,
-    [Descript] nvarchar(max)  NOT NULL,
-    [link] nvarchar(max)  NOT NULL,
-    [Geo_GraphID] int  NOT NULL,
-    [CustomGeographicTypeID] int  NOT NULL
-);
-GO
-
--- Creating table 'CustomGeographicTypes'
-CREATE TABLE [dbo].[CustomGeographicTypes] (
-    [ID] int IDENTITY(1,1) NOT NULL,
-    [TypeName] nvarchar(max)  NOT NULL,
-    [Descript] nvarchar(max)  NOT NULL,
-    [CustomGeographicTypeID] int  NULL,
-    [EventTimeEventTimeID] int  NULL
+    [CustomCategoryID] int  NULL
 );
 GO
 
@@ -1280,8 +1232,7 @@ CREATE TABLE [dbo].[Employees1] (
     [UserID] int  NOT NULL,
     [Isvalid] nvarchar(max)  NOT NULL,
     [PositionID] int  NULL,
-    [OrganizationID] int  NULL,
-    [EventTime] bigint  NOT NULL
+    [OrganizationID] int  NULL
 );
 GO
 
@@ -1317,8 +1268,7 @@ CREATE TABLE [dbo].[WorkSpaceRoles] (
     [OrganizationID] int  NOT NULL,
     [Descript] nvarchar(max)  NOT NULL,
     [WorkModulId] int  NULL,
-    [UserID] int  NULL,
-    [EventTime] bigint  NOT NULL
+    [UserID] int  NULL
 );
 GO
 
@@ -1402,11 +1352,11 @@ GO
 -- Creating table 'JobChanges'
 CREATE TABLE [dbo].[JobChanges] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [EmployeeId] int  NULL,
-    [PostID] int  NULL,
+    [ChangeType] nvarchar(max)  NOT NULL,
+    [Content] nvarchar(max)  NOT NULL,
     [State] bit  NOT NULL,
     [StartTime] datetime  NOT NULL,
-    [EndTime] datetime  NOT NULL,
+    [PostID] int  NULL,
     [Creater] nvarchar(max)  NOT NULL,
     [EventTime] bigint  NOT NULL
 );
@@ -1475,15 +1425,34 @@ CREATE TABLE [dbo].[WorkSpaceBaseTypes] (
 );
 GO
 
--- Creating table 'EventTimes'
-CREATE TABLE [dbo].[EventTimes] (
+-- Creating table 'OperationDetails'
+CREATE TABLE [dbo].[OperationDetails] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [TimePoint] nvarchar(max)  NOT NULL,
-    [SpacePoint] nvarchar(max)  NOT NULL,
-    [EventName] nvarchar(max)  NOT NULL,
-    [EventType] nvarchar(max)  NOT NULL,
-    [District] nvarchar(max)  NOT NULL,
+    [TabName] nvarchar(max)  NOT NULL,
+    [TabRecordId] nvarchar(max)  NOT NULL,
+    [HandleType] nvarchar(max)  NOT NULL,
+    [OpenEventId] int  NULL,
+    [Note] nvarchar(max)  NOT NULL
+);
+GO
+
+-- Creating table 'OperationEvents'
+CREATE TABLE [dbo].[OperationEvents] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [OperType] nvarchar(max)  NOT NULL,
+    [OperName] nvarchar(max)  NOT NULL,
+    [OperModul] nvarchar(max)  NOT NULL,
+    [OperTime] nvarchar(max)  NOT NULL,
+    [OperSpace] nvarchar(max)  NOT NULL,
+    [Note] nvarchar(max)  NOT NULL,
     [LoginLogID] int  NULL
+);
+GO
+
+-- Creating table 'CustomerGoupUser'
+CREATE TABLE [dbo].[CustomerGoupUser] (
+    [Belongs_ID] int  NOT NULL,
+    [Members_ID] int  NOT NULL
 );
 GO
 
@@ -1551,9 +1520,9 @@ ADD CONSTRAINT [PK_UserMessages]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'UserGroups'
-ALTER TABLE [dbo].[UserGroups]
-ADD CONSTRAINT [PK_UserGroups]
+-- Creating primary key on [ID] in table 'GroupMembers'
+ALTER TABLE [dbo].[GroupMembers]
+ADD CONSTRAINT [PK_GroupMembers]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
@@ -1701,15 +1670,15 @@ ADD CONSTRAINT [PK_OrganizationEvents]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'MessageGroupMessagers'
-ALTER TABLE [dbo].[MessageGroupMessagers]
-ADD CONSTRAINT [PK_MessageGroupMessagers]
+-- Creating primary key on [ID] in table 'GroupMessagers'
+ALTER TABLE [dbo].[GroupMessagers]
+ADD CONSTRAINT [PK_GroupMessagers]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'GroupNames'
-ALTER TABLE [dbo].[GroupNames]
-ADD CONSTRAINT [PK_GroupNames]
+-- Creating primary key on [ID] in table 'Groups'
+ALTER TABLE [dbo].[Groups]
+ADD CONSTRAINT [PK_Groups]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
@@ -1734,18 +1703,6 @@ GO
 -- Creating primary key on [ID] in table 'CustomCategories'
 ALTER TABLE [dbo].[CustomCategories]
 ADD CONSTRAINT [PK_CustomCategories]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
-GO
-
--- Creating primary key on [ID] in table 'DesktopGeoManages'
-ALTER TABLE [dbo].[DesktopGeoManages]
-ADD CONSTRAINT [PK_DesktopGeoManages]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
-GO
-
--- Creating primary key on [ID] in table 'CustomGeographicTypes'
-ALTER TABLE [dbo].[CustomGeographicTypes]
-ADD CONSTRAINT [PK_CustomGeographicTypes]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
@@ -1917,10 +1874,22 @@ ADD CONSTRAINT [PK_WorkSpaceBaseTypes]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'EventTimes'
-ALTER TABLE [dbo].[EventTimes]
-ADD CONSTRAINT [PK_EventTimes]
+-- Creating primary key on [Id] in table 'OperationDetails'
+ALTER TABLE [dbo].[OperationDetails]
+ADD CONSTRAINT [PK_OperationDetails]
     PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'OperationEvents'
+ALTER TABLE [dbo].[OperationEvents]
+ADD CONSTRAINT [PK_OperationEvents]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Belongs_ID], [Members_ID] in table 'CustomerGoupUser'
+ALTER TABLE [dbo].[CustomerGoupUser]
+ADD CONSTRAINT [PK_CustomerGoupUser]
+    PRIMARY KEY CLUSTERED ([Belongs_ID], [Members_ID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -1940,21 +1909,6 @@ GO
 CREATE INDEX [IX_FK_UserLoginLog]
 ON [dbo].[LoginLogs]
     ([UserID]);
-GO
-
--- Creating foreign key on [LoginLogID] in table 'UserMessages'
-ALTER TABLE [dbo].[UserMessages]
-ADD CONSTRAINT [FK_LoginLogUserMessage]
-    FOREIGN KEY ([LoginLogID])
-    REFERENCES [dbo].[LoginLogs]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_LoginLogUserMessage'
-CREATE INDEX [IX_FK_LoginLogUserMessage]
-ON [dbo].[UserMessages]
-    ([LoginLogID]);
 GO
 
 -- Creating foreign key on [OrganizationID] in table 'OrganizationOtherNames'
@@ -2422,8 +2376,8 @@ ON [dbo].[OrganicInvestors]
     ([Investor]);
 GO
 
--- Creating foreign key on [UserID] in table 'UserGroups'
-ALTER TABLE [dbo].[UserGroups]
+-- Creating foreign key on [UserID] in table 'GroupMembers'
+ALTER TABLE [dbo].[GroupMembers]
 ADD CONSTRAINT [FK_UserMessageGroup]
     FOREIGN KEY ([UserID])
     REFERENCES [dbo].[Users]
@@ -2433,29 +2387,14 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserMessageGroup'
 CREATE INDEX [IX_FK_UserMessageGroup]
-ON [dbo].[UserGroups]
+ON [dbo].[GroupMembers]
     ([UserID]);
 GO
 
--- Creating foreign key on [MessageGroupID] in table 'MessageGroupMessagers'
-ALTER TABLE [dbo].[MessageGroupMessagers]
-ADD CONSTRAINT [FK_MessageGroupMessageGroupMessager]
-    FOREIGN KEY ([MessageGroupID])
-    REFERENCES [dbo].[UserGroups]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_MessageGroupMessageGroupMessager'
-CREATE INDEX [IX_FK_MessageGroupMessageGroupMessager]
-ON [dbo].[MessageGroupMessagers]
-    ([MessageGroupID]);
-GO
-
--- Creating foreign key on [ParetId] in table 'UserMessages'
+-- Creating foreign key on [ParentId] in table 'UserMessages'
 ALTER TABLE [dbo].[UserMessages]
 ADD CONSTRAINT [FK_UserMessageUserMessage]
-    FOREIGN KEY ([ParetId])
+    FOREIGN KEY ([ParentId])
     REFERENCES [dbo].[UserMessages]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -2464,11 +2403,11 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserMessageUserMessage'
 CREATE INDEX [IX_FK_UserMessageUserMessage]
 ON [dbo].[UserMessages]
-    ([ParetId]);
+    ([ParentId]);
 GO
 
--- Creating foreign key on [UserID] in table 'GroupNames'
-ALTER TABLE [dbo].[GroupNames]
+-- Creating foreign key on [UserID] in table 'Groups'
+ALTER TABLE [dbo].[Groups]
 ADD CONSTRAINT [FK_UserGroupName]
     FOREIGN KEY ([UserID])
     REFERENCES [dbo].[Users]
@@ -2478,23 +2417,8 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserGroupName'
 CREATE INDEX [IX_FK_UserGroupName]
-ON [dbo].[GroupNames]
+ON [dbo].[Groups]
     ([UserID]);
-GO
-
--- Creating foreign key on [GroupNameID] in table 'UserGroups'
-ALTER TABLE [dbo].[UserGroups]
-ADD CONSTRAINT [FK_GroupNameUserGroup]
-    FOREIGN KEY ([GroupNameID])
-    REFERENCES [dbo].[GroupNames]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_GroupNameUserGroup'
-CREATE INDEX [IX_FK_GroupNameUserGroup]
-ON [dbo].[UserGroups]
-    ([GroupNameID]);
 GO
 
 -- Creating foreign key on [CreatID] in table 'CustomerGoups'
@@ -2570,36 +2494,6 @@ GO
 CREATE INDEX [IX_FK_CustomCategoryCustomCategory]
 ON [dbo].[CustomCategories]
     ([CustomCategoryID]);
-GO
-
--- Creating foreign key on [CustomGeographicTypeID] in table 'CustomGeographicTypes'
-ALTER TABLE [dbo].[CustomGeographicTypes]
-ADD CONSTRAINT [FK_CustomGeographicTypeCustomGeographicType]
-    FOREIGN KEY ([CustomGeographicTypeID])
-    REFERENCES [dbo].[CustomGeographicTypes]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_CustomGeographicTypeCustomGeographicType'
-CREATE INDEX [IX_FK_CustomGeographicTypeCustomGeographicType]
-ON [dbo].[CustomGeographicTypes]
-    ([CustomGeographicTypeID]);
-GO
-
--- Creating foreign key on [CustomGeographicTypeID] in table 'DesktopGeoManages'
-ALTER TABLE [dbo].[DesktopGeoManages]
-ADD CONSTRAINT [FK_CustomGeographicTypeDesktopGeoManage]
-    FOREIGN KEY ([CustomGeographicTypeID])
-    REFERENCES [dbo].[CustomGeographicTypes]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_CustomGeographicTypeDesktopGeoManage'
-CREATE INDEX [IX_FK_CustomGeographicTypeDesktopGeoManage]
-ON [dbo].[DesktopGeoManages]
-    ([CustomGeographicTypeID]);
 GO
 
 -- Creating foreign key on [ProductStandardID] in table 'Products'
@@ -3397,36 +3291,6 @@ ON [dbo].[DocComents]
     ([DocSenderId]);
 GO
 
--- Creating foreign key on [UserID] in table 'CustomerGoups'
-ALTER TABLE [dbo].[CustomerGoups]
-ADD CONSTRAINT [FK_UserCustomerGoup1]
-    FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserCustomerGoup1'
-CREATE INDEX [IX_FK_UserCustomerGoup1]
-ON [dbo].[CustomerGoups]
-    ([UserID]);
-GO
-
--- Creating foreign key on [EmployeeId] in table 'JobChanges'
-ALTER TABLE [dbo].[JobChanges]
-ADD CONSTRAINT [FK_EmployeeJobChange]
-    FOREIGN KEY ([EmployeeId])
-    REFERENCES [dbo].[Employees1]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_EmployeeJobChange'
-CREATE INDEX [IX_FK_EmployeeJobChange]
-ON [dbo].[JobChanges]
-    ([EmployeeId]);
-GO
-
 -- Creating foreign key on [PostID] in table 'JobChanges'
 ALTER TABLE [dbo].[JobChanges]
 ADD CONSTRAINT [FK_PostJobChange]
@@ -3682,36 +3546,6 @@ ON [dbo].[WorkSpaceTypes]
     ([WorkSpaceBaseTypeId]);
 GO
 
--- Creating foreign key on [LoginLogID] in table 'EventTimes'
-ALTER TABLE [dbo].[EventTimes]
-ADD CONSTRAINT [FK_LoginLogEventTime]
-    FOREIGN KEY ([LoginLogID])
-    REFERENCES [dbo].[LoginLogs]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_LoginLogEventTime'
-CREATE INDEX [IX_FK_LoginLogEventTime]
-ON [dbo].[EventTimes]
-    ([LoginLogID]);
-GO
-
--- Creating foreign key on [PositionID1] in table 'Posts'
-ALTER TABLE [dbo].[Posts]
-ADD CONSTRAINT [FK_PositionPost]
-    FOREIGN KEY ([PositionID1])
-    REFERENCES [dbo].[Positions]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PositionPost'
-CREATE INDEX [IX_FK_PositionPost]
-ON [dbo].[Posts]
-    ([PositionID1]);
-GO
-
 -- Creating foreign key on [WorkSpaceBaseTypeId] in table 'DocumentManages'
 ALTER TABLE [dbo].[DocumentManages]
 ADD CONSTRAINT [FK_WorkSpaceBaseTypeDocumentManage]
@@ -3740,6 +3574,135 @@ GO
 CREATE INDEX [IX_FK_DocManageStateDocumentManage]
 ON [dbo].[DocumentManages]
     ([DocManageStateID]);
+GO
+
+-- Creating foreign key on [OpenEventId] in table 'OperationDetails'
+ALTER TABLE [dbo].[OperationDetails]
+ADD CONSTRAINT [FK_OpenEventEventTime]
+    FOREIGN KEY ([OpenEventId])
+    REFERENCES [dbo].[OperationEvents]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_OpenEventEventTime'
+CREATE INDEX [IX_FK_OpenEventEventTime]
+ON [dbo].[OperationDetails]
+    ([OpenEventId]);
+GO
+
+-- Creating foreign key on [LoginLogID] in table 'OperationEvents'
+ALTER TABLE [dbo].[OperationEvents]
+ADD CONSTRAINT [FK_LoginLogOpenEvent]
+    FOREIGN KEY ([LoginLogID])
+    REFERENCES [dbo].[LoginLogs]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LoginLogOpenEvent'
+CREATE INDEX [IX_FK_LoginLogOpenEvent]
+ON [dbo].[OperationEvents]
+    ([LoginLogID]);
+GO
+
+-- Creating foreign key on [GroupMemberID] in table 'GroupMessagers'
+ALTER TABLE [dbo].[GroupMessagers]
+ADD CONSTRAINT [FK_GroupMemberGroupMessager]
+    FOREIGN KEY ([GroupMemberID])
+    REFERENCES [dbo].[GroupMembers]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_GroupMemberGroupMessager'
+CREATE INDEX [IX_FK_GroupMemberGroupMessager]
+ON [dbo].[GroupMessagers]
+    ([GroupMemberID]);
+GO
+
+-- Creating foreign key on [GroupID] in table 'GroupMembers'
+ALTER TABLE [dbo].[GroupMembers]
+ADD CONSTRAINT [FK_GroupGroupMember]
+    FOREIGN KEY ([GroupID])
+    REFERENCES [dbo].[Groups]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_GroupGroupMember'
+CREATE INDEX [IX_FK_GroupGroupMember]
+ON [dbo].[GroupMembers]
+    ([GroupID]);
+GO
+
+-- Creating foreign key on [EmployeeId] in table 'Posts'
+ALTER TABLE [dbo].[Posts]
+ADD CONSTRAINT [FK_EmployeePost]
+    FOREIGN KEY ([EmployeeId])
+    REFERENCES [dbo].[Employees1]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EmployeePost'
+CREATE INDEX [IX_FK_EmployeePost]
+ON [dbo].[Posts]
+    ([EmployeeId]);
+GO
+
+-- Creating foreign key on [PositionID] in table 'Posts'
+ALTER TABLE [dbo].[Posts]
+ADD CONSTRAINT [FK_PositionPost]
+    FOREIGN KEY ([PositionID])
+    REFERENCES [dbo].[Positions]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PositionPost'
+CREATE INDEX [IX_FK_PositionPost]
+ON [dbo].[Posts]
+    ([PositionID]);
+GO
+
+-- Creating foreign key on [GroupID] in table 'GroupMessagers'
+ALTER TABLE [dbo].[GroupMessagers]
+ADD CONSTRAINT [FK_GroupGroupMessager]
+    FOREIGN KEY ([GroupID])
+    REFERENCES [dbo].[Groups]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_GroupGroupMessager'
+CREATE INDEX [IX_FK_GroupGroupMessager]
+ON [dbo].[GroupMessagers]
+    ([GroupID]);
+GO
+
+-- Creating foreign key on [Belongs_ID] in table 'CustomerGoupUser'
+ALTER TABLE [dbo].[CustomerGoupUser]
+ADD CONSTRAINT [FK_CustomerGoupUser_CustomerGoup]
+    FOREIGN KEY ([Belongs_ID])
+    REFERENCES [dbo].[CustomerGoups]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [Members_ID] in table 'CustomerGoupUser'
+ALTER TABLE [dbo].[CustomerGoupUser]
+ADD CONSTRAINT [FK_CustomerGoupUser_User]
+    FOREIGN KEY ([Members_ID])
+    REFERENCES [dbo].[Users]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CustomerGoupUser_User'
+CREATE INDEX [IX_FK_CustomerGoupUser_User]
+ON [dbo].[CustomerGoupUser]
+    ([Members_ID]);
 GO
 
 -- --------------------------------------------------

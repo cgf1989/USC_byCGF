@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace BCP.Domain.Edmx
 {
     /// <summary>
-    /// UserGroup 实体类
+    /// GroupMessager 实体类
     /// </summary>
-    public partial class UserGroup:EntityBase
+    public partial class GroupMessager:EntityBase
     {
     }
 }

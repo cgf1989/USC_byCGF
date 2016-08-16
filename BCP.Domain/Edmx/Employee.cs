@@ -17,7 +17,7 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            this.JobChanges = new HashSet<JobChange>();
+            this.Posts = new HashSet<Post>();
         }
     
         public int Id { get; set; }
@@ -28,12 +28,11 @@ namespace BCP.Domain.Edmx
         public string Isvalid { get; set; }
         public Nullable<int> PositionID { get; set; }
         public Nullable<int> OrganizationID { get; set; }
-        public long EventTime { get; set; }
     
         public virtual User User { get; set; }
         public virtual Position Position { get; set; }
         public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<JobChange> JobChanges { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
     }
 }

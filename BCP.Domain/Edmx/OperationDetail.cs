@@ -12,15 +12,15 @@ namespace BCP.Domain.Edmx
     using System;
     using System.Collections.Generic;
     
-    public partial class MessageGroupMessager
+    public partial class OperationDetail
     {
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public string Content { get; set; }
-        public int MessageGroupID { get; set; }
-        public string SendTime { get; set; }
-        public long EventTime { get; set; }
+        public int Id { get; set; }
+        public string TabName { get; set; }
+        public string TabRecordId { get; set; }
+        public string HandleType { get; set; }
+        public Nullable<int> OpenEventId { get; set; }
+        public string Note { get; set; }
     
-        public virtual UserGroup MessageGroup { get; set; }
+        public virtual OperationEvent OpenEvent { get; set; }
     }
 }

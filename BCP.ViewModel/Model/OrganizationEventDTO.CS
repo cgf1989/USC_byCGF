@@ -20,6 +20,5 @@ namespace BCP.ViewModel
         public System.String Hander { get; set; }
         public System.String Result { get; set; }
         public System.String EventState { get; set; }
-        public System.Int64 EventTime { get; set; }
     }
 }

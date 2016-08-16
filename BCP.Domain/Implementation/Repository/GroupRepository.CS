@@ -1,16 +1,16 @@
-using BCP.Common;
+using BCP.Domain.Edmx;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BCP.Domain.Edmx
+namespace BCP.Domain
 {
     /// <summary>
-    /// EventTime 实体类
+    /// Group 基于EF的仓储实现
     /// </summary>
-    public partial class EventTime:EntityBase
+    public class GroupRepository : EFRepository<Group, Int32>,IGroupRepository
     {
     }
 }

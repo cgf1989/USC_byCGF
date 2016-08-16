@@ -18,6 +18,8 @@ namespace BCP.ViewModel
         public System.String Status { get; set; }
         public System.DateTime LimiteTime { get; set; }
         public System.String Note { get; set; }
+        public System.String Domain { get; set; }
+        public System.String DomainId { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }

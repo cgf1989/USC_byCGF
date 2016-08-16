@@ -23,7 +23,6 @@ namespace BCP.Domain.Edmx
         public string Description { get; set; }
         public Nullable<int> OldOrgan { get; set; }
         public Nullable<int> NewOrgan { get; set; }
-        public long EventTime { get; set; }
     
         public virtual Organization Organization { get; set; }
         public virtual Organization Organization1 { get; set; }

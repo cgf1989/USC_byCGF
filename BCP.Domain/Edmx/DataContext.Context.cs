@@ -35,7 +35,7 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<Organization_Type> Organization_Type { get; set; }
         public virtual DbSet<DocumentManage> DocumentManages { get; set; }
         public virtual DbSet<UserMessage> UserMessages { get; set; }
-        public virtual DbSet<UserGroup> UserGroups { get; set; }
+        public virtual DbSet<GroupMember> GroupMembers { get; set; }
         public virtual DbSet<OrganizationOtherName> OrganizationOtherNames { get; set; }
         public virtual DbSet<Administrativecode> Administrativecodes { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
@@ -60,14 +60,12 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<OrgaRegisterDocment> OrgaRegisterDocments { get; set; }
         public virtual DbSet<RegisterDocumentType> RegisterDocumentTypes { get; set; }
         public virtual DbSet<OrganizationEvent> OrganizationEvents { get; set; }
-        public virtual DbSet<MessageGroupMessager> MessageGroupMessagers { get; set; }
-        public virtual DbSet<GroupName> GroupNames { get; set; }
+        public virtual DbSet<GroupMessager> GroupMessagers { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<CustomerGoup> CustomerGoups { get; set; }
         public virtual DbSet<DllFileStream> DllFileStreams { get; set; }
         public virtual DbSet<OrganizationCustomType> OrganizationCustomTypes { get; set; }
         public virtual DbSet<CustomCategory> CustomCategories { get; set; }
-        public virtual DbSet<DesktopGeoManage> DesktopGeoManages { get; set; }
-        public virtual DbSet<CustomGeographicType> CustomGeographicTypes { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<ProductEvent> ProductEvents { get; set; }
         public virtual DbSet<ProductComposition> ProductCompositions { get; set; }
@@ -96,6 +94,7 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<CustomTabData> CustomTabDatas { get; set; }
         public virtual DbSet<DocLocation> DocLocations { get; set; }
         public virtual DbSet<WorkSpaceBaseType> WorkSpaceBaseTypes { get; set; }
-        public virtual DbSet<EventTime> EventTimes { get; set; }
+        public virtual DbSet<OperationDetail> OperationDetails { get; set; }
+        public virtual DbSet<OperationEvent> OperationEvents { get; set; }
     }
 }

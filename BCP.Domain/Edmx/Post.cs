@@ -27,15 +27,13 @@ namespace BCP.Domain.Edmx
     
         public int ID { get; set; }
         public string PostName { get; set; }
-        public int DepartmentID { get; set; }
-        public string Descript { get; set; }
         public string MarkerString { get; set; }
         public bool IsValid { get; set; }
-        public string Jobname { get; set; }
-        public int PositionID { get; set; }
+        public string Descript { get; set; }
         public Nullable<int> PostID { get; set; }
         public int OrganizationID { get; set; }
-        public Nullable<int> PositionID1 { get; set; }
+        public Nullable<int> EmployeeId { get; set; }
+        public Nullable<int> PositionID { get; set; }
         public long EventTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -52,6 +50,7 @@ namespace BCP.Domain.Edmx
         public virtual ICollection<DocSender> DocSenders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobChange> JobChanges { get; set; }
+        public virtual Employee Employee { get; set; }
         public virtual Position Position { get; set; }
     }
 }

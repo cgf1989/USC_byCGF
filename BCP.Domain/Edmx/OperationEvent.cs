@@ -12,27 +12,25 @@ namespace BCP.Domain.Edmx
     using System;
     using System.Collections.Generic;
     
-    public partial class UserGroup
+    public partial class OperationEvent
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public UserGroup()
+        public OperationEvent()
         {
-            this.MessageGroupMessagers = new HashSet<MessageGroupMessager>();
+            this.EventTimes = new HashSet<OperationDetail>();
         }
     
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public string Creator { get; set; }
-        public int UserID { get; set; }
-        public System.DateTime CreateTime { get; set; }
-        public string State { get; set; }
-        public int GroupNameID { get; set; }
-        public string Rule { get; set; }
-        public long EventTime { get; set; }
+        public int Id { get; set; }
+        public string OperType { get; set; }
+        public string OperName { get; set; }
+        public string OperModul { get; set; }
+        public string OperTime { get; set; }
+        public string OperSpace { get; set; }
+        public string Note { get; set; }
+        public Nullable<int> LoginLogID { get; set; }
     
-        public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MessageGroupMessager> MessageGroupMessagers { get; set; }
-        public virtual GroupName GroupName { get; set; }
+        public virtual ICollection<OperationDetail> EventTimes { get; set; }
+        public virtual LoginLog LoginLog { get; set; }
     }
 }

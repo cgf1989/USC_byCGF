@@ -13,15 +13,13 @@ namespace BCP.ViewModel
     {
         public System.Int32 ID { get; set; }
         public System.String PostName { get; set; }
-        public System.Int32 DepartmentID { get; set; }
-        public System.String Descript { get; set; }
         public System.String MarkerString { get; set; }
         public System.Boolean IsValid { get; set; }
-        public System.String Jobname { get; set; }
-        public System.Int32 PositionID { get; set; }
+        public System.String Descript { get; set; }
         public Int32? PostID { get; set; }
         public System.Int32 OrganizationID { get; set; }
-        public Int32? PositionID1 { get; set; }
+        public Int32? EmployeeId { get; set; }
+        public Int32? PositionID { get; set; }
         public System.Int64 EventTime { get; set; }
     }
 }

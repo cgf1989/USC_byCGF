@@ -12,9 +12,9 @@ using BCP.Domain.Edmx;
 namespace BCP.Domain
 {
     /// <summary>
-    /// EventTime 仓储接口
+    /// GroupMessager 仓储接口
     /// </summary>
-    public interface IEventTimeRepository :IRepository<EventTime,Int32>
+    public interface IGroupMessagerRepository :IRepository<GroupMessager,Int32>
     {
     }
 }

@@ -12,9 +12,9 @@ using BCP.Domain.Edmx;
 namespace BCP.Domain
 {
     /// <summary>
-    /// CustomGeographicType 仓储接口
+    /// OperationEvent 仓储接口
     /// </summary>
-    public interface ICustomGeographicTypeRepository :IRepository<CustomGeographicType,Int32>
+    public interface IOperationEventRepository :IRepository<OperationEvent,Int32>
     {
     }
 }

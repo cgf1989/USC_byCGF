@@ -20,6 +20,5 @@ namespace BCP.ViewModel
         public System.String Description { get; set; }
         public Int32? OldOrgan { get; set; }
         public Int32? NewOrgan { get; set; }
-        public System.Int64 EventTime { get; set; }
     }
 }

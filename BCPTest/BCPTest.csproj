@@ -66,10 +66,6 @@
       <Project>{71a0a4fb-2a11-4cff-95e6-37d0c07cb40d}</Project>
       <Name>BCP.ViewModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BCP.WebAPI\BCP.WebAPI.csproj">
-      <Project>{63b4c3f6-3c91-4d74-b0b6-5720bbbb428a}</Project>
-      <Name>BCP.WebAPI</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
