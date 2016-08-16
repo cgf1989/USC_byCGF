@@ -161,6 +161,8 @@ namespace WpfClient.Contacts
         public void Init()
         {
             this.TitleLabel.Content = this.To;
+            this.Title = "与 " + this.To + " 聊天中";
+
 
             if (SignalRProxy == null)
             {
@@ -238,7 +240,7 @@ namespace WpfClient.Contacts
                           }
                       }
                       );
-  
+
                   };
             }
         }

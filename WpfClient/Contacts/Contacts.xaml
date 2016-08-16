@@ -32,6 +32,12 @@
         <StackPanel  Grid.Row="1" Name="tv_Contacts">
             <Expander Header="朋友 0/2"  Background="#ebf2f9">
                 <ListView Background="#ebf2f9" BorderThickness="0">
+                    <ListViewItem Name="cgf" ToolTip="chenguifa" Tag="2" Style="{DynamicResource ListViewItemStyle_ContractUser}" MouseDoubleClick="TreeViewItem_MouseDoubleClick">
+                        <Image Source="/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg"/>
+                    </ListViewItem>
+                    <ListViewItem Name="hy" ToolTip="huyong" Tag="1" Style="{DynamicResource ListViewItemStyle_ContractUser}" MouseDoubleClick="TreeViewItem_MouseDoubleClick">
+                        <Image Source="/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg"/>
+                    </ListViewItem>
                     <ListViewItem Name="李莫愁" ToolTip="天若有情天亦老"  Style="{DynamicResource ListViewItemStyle_ContractUser}" MouseDoubleClick="TreeViewItem_MouseDoubleClick">
                         <Image Source="/WpfClient;component/Images/Img_Header/Head1.jpg"/>
                     </ListViewItem>

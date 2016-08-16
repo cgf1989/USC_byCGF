@@ -53,10 +53,10 @@
                     <ContentPresenter/>
                 </AdornerDecorator>
                 <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" IsTabStop="false" Visibility="Collapsed" VerticalAlignment="Bottom"/>-->
-                <Border Grid.Row="1">
-                    <Border.Background>
+                <Border Grid.Row="1" Background="#ebf2f9">
+                    <!--<Border.Background>
                         <ImageBrush x:Name="MyBgImg" TileMode="Tile" Viewbox="0, 0, 100, 100" ViewboxUnits="Absolute" Viewport="0, 0, 100, 100" ViewportUnits="Absolute" ImageSource="../Images/Skin.png" Opacity=".25"/>
-                    </Border.Background>
+                    </Border.Background>-->
                     <Grid>
                         <Border>
                             <Border.Background>
@@ -116,10 +116,10 @@
                                 HorizontalAlignment="Left" VerticalAlignment="Center"  IsTabStop="False"
                             Margin="7,0,0,0"  Visibility="Collapsed"/>
                 </StackPanel>
-                <Border Grid.Row="1">
-                    <Border.Background>
+                <Border Grid.Row="1" Background="#ebf2f9">
+                    <!--<Border.Background>
                         <ImageBrush x:Name="MyBgImg" TileMode="Tile" Viewbox="0, 0, 100, 100" ViewboxUnits="Absolute" Viewport="0, 0, 100, 100" ViewportUnits="Absolute" ImageSource="../Images/Skin.png" Opacity=".25"/>
-                    </Border.Background>
+                    </Border.Background>-->
                     <Grid>
                         <Border>
                             <Border.Background>

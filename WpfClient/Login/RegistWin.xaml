@@ -1,11 +1,12 @@
-﻿<Window x:Class="WpfClient.Login.RegistWin"
+﻿<scr:MyMacClass_noneMaxBtn x:Class="WpfClient.Login.RegistWin"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient.Login"
+        xmlns:scr="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="用户注册" Height="300" Width="250" Background="#ebf2f9">
+        Title="用户注册" Height="300" Width="250" Background="#ebf2f9" Style="{DynamicResource WindowStyle2}">
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
@@ -34,6 +35,6 @@
         <TextBlock VerticalAlignment="Center" Text="真实姓名" Grid.Row="3"/>
         <TextBox Name="tb_ActureName" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Margin="5,0,5,0"/>
 
-        <Button Name="btn_Regist" Content="注册" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}" Grid.Row="6" Grid.Column="2" Height="28" Width="70" Click="btn_Regist_Click"/>
+        <Button Name="btn_Regist" Content="注册" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}" Grid.Row="5" Grid.Column="2" Height="28" Width="70" Click="btn_Regist_Click"/>
     </Grid>
-</Window>
+</scr:MyMacClass_noneMaxBtn>

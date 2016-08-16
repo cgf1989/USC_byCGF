@@ -6,22 +6,22 @@
         xmlns:local="clr-namespace:WpfClient.Login"
         xmlns:scr="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="登录" Height="320" Width="420" WindowStyle="None" Style="{DynamicResource WindowStyle2}" WindowStartupLocation="CenterScreen" IsTabStop="False">
+        Title="登录" Height="300" Width="420" WindowStyle="None" Style="{DynamicResource WindowStyle2}" WindowStartupLocation="CenterScreen" IsTabStop="False">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="50"/>
             <RowDefinition Height="40"/>
             <RowDefinition Height="20"/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="180"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Source="/WpfClient;component/Images/TitlePic.png" Stretch="Fill"/>
-        <Image Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Width="90" Height="90" Source="/WpfClient;component/Images/TR_Logo.jpg" Stretch="Fill" HorizontalAlignment="Right" Margin="0,10,10,0" />
+        <!--<Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Source="/WpfClient;component/Images/TitlePic.png" Stretch="Fill"/>-->
+        <Image Grid.Row="1" Grid.RowSpan="3" Grid.Column="0" Width="90" Height="90" Source="/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg" Stretch="Fill" HorizontalAlignment="Right" Margin="0,10,10,0" />
         <TextBox VerticalContentAlignment="Center" Name="tb_account" Grid.Row="1" Grid.Column="1" Margin="5,15,5,5" TabIndex="0"/>
         <PasswordBox VerticalContentAlignment="Center" Name="tb_password" Grid.Row="2" Grid.Column="1" Margin="5" TabIndex="1"/>
         <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Foreground="Gray" Content="记住密码"/>

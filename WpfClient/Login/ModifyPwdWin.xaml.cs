@@ -21,7 +21,7 @@ namespace WpfClient.Login
     /// <summary>
     /// ModifyPwdWin.xaml 的交互逻辑
     /// </summary>
-    public partial class ModifyPwdWin : Window
+    public partial class ModifyPwdWin : MyMacClass_noneMaxBtn
     {
 
         public UserDTO currentUser { get; set; }

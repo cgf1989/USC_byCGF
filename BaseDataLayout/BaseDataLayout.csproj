@@ -59,10 +59,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DatabasePlace.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DBPlaceFinal.cs" />
     <Compile Include="DBPlaceFinal.Designer.cs">
+      <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>DBPlaceFinal.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -21,7 +21,7 @@ namespace WpfClient.Login
     /// <summary>
     /// UserManageWin.xaml 的交互逻辑
     /// </summary>
-    public partial class UserManageWin : Window
+    public partial class UserManageWin : MyMacClass
     {
         public UserManageWin()
         {

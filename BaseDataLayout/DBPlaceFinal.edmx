@@ -47,8 +47,6 @@
     <EntitySet Name="DllFileStreams" EntityType="AthenaGIS.Database.Store.DllFileStreams" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationCustomTypes" EntityType="AthenaGIS.Database.Store.OrganizationCustomTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CustomCategories" EntityType="AthenaGIS.Database.Store.CustomCategories" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="DesktopGeoManages" EntityType="AthenaGIS.Database.Store.DesktopGeoManages" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CustomGeographicTypes" EntityType="AthenaGIS.Database.Store.CustomGeographicTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Products" EntityType="AthenaGIS.Database.Store.Products" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProductEvents" EntityType="AthenaGIS.Database.Store.ProductEvents" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ProductCompositions" EntityType="AthenaGIS.Database.Store.ProductCompositions" store:Type="Tables" Schema="dbo" />
@@ -249,14 +247,6 @@
     <AssociationSet Name="CustomCategoryCustomCategory" Association="AthenaGIS.Database.Store.CustomCategoryCustomCategory">
       <End Role="CustomCategory" EntitySet="CustomCategories" />
       <End Role="CustomCategory1" EntitySet="CustomCategories" />
-    </AssociationSet>
-    <AssociationSet Name="CustomGeographicTypeCustomGeographicType" Association="AthenaGIS.Database.Store.CustomGeographicTypeCustomGeographicType">
-      <End Role="CustomGeographicType" EntitySet="CustomGeographicTypes" />
-      <End Role="CustomGeographicType1" EntitySet="CustomGeographicTypes" />
-    </AssociationSet>
-    <AssociationSet Name="CustomGeographicTypeDesktopGeoManage" Association="AthenaGIS.Database.Store.CustomGeographicTypeDesktopGeoManage">
-      <End Role="CustomGeographicType" EntitySet="CustomGeographicTypes" />
-      <End Role="DesktopGeoManage" EntitySet="DesktopGeoManages" />
     </AssociationSet>
     <AssociationSet Name="ProductStandardProduct" Association="AthenaGIS.Database.Store.ProductStandardProduct">
       <End Role="ProductStandard" EntitySet="ProductStandards" />
@@ -1074,29 +1064,6 @@
     <Property Name="content" Type="nvarchar(max)" Nullable="false" />
     <Property Name="CustomCategoryID" Type="int" Nullable="true" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
-  </EntityType>
-  <EntityType Name="DesktopGeoManages">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Tile" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EventTimeEventTimeID" Type="int" Nullable="true" />
-    <Property Name="Content" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Descript" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="link" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Geo_GraphID" Type="int" Nullable="false" />
-    <Property Name="CustomGeographicTypeID" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="CustomGeographicTypes">
-    <Key>
-      <PropertyRef Name="ID" />
-    </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TypeName" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Descript" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CustomGeographicTypeID" Type="int" Nullable="true" />
-    <Property Name="EventTimeEventTimeID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -1947,30 +1914,6 @@
       </Principal>
       <Dependent Role="CustomCategory1">
         <PropertyRef Name="CustomCategoryID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CustomGeographicTypeCustomGeographicType">
-    <End Role="CustomGeographicType" Type="AthenaGIS.Database.Store.CustomGeographicTypes" Multiplicity="0..1" />
-    <End Role="CustomGeographicType1" Type="AthenaGIS.Database.Store.CustomGeographicTypes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CustomGeographicType">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="CustomGeographicType1">
-        <PropertyRef Name="CustomGeographicTypeID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CustomGeographicTypeDesktopGeoManage">
-    <End Role="CustomGeographicType" Type="AthenaGIS.Database.Store.CustomGeographicTypes" Multiplicity="1" />
-    <End Role="DesktopGeoManage" Type="AthenaGIS.Database.Store.DesktopGeoManages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="CustomGeographicType">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="DesktopGeoManage">
-        <PropertyRef Name="CustomGeographicTypeID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2905,11 +2848,7 @@
           </AssociationSet>
           <EntitySet Name="DocumentManages" EntityType="AthenaGIS.Database.DocumentManage" />
           <EntitySet Name="UserMessages" EntityType="AthenaGIS.Database.UserMessage" />
-          <AssociationSet Name="LoginLogUserMessage" Association="AthenaGIS.Database.LoginLogUserMessage">
-            <End Role="LoginLog" EntitySet="LoginLogs" />
-            <End Role="UserMessage" EntitySet="UserMessages" />
-          </AssociationSet>
-          <EntitySet Name="UserGroups" EntityType="AthenaGIS.Database.UserGroup" />
+          <EntitySet Name="GroupMembers" EntityType="AthenaGIS.Database.GroupMember" />
           <EntitySet Name="OrganizationOtherNames" EntityType="AthenaGIS.Database.OrganizationOtherName" />
           <AssociationSet Name="OrganizationOrganizationOtherName" Association="AthenaGIS.Database.OrganizationOrganizationOtherName">
             <End Role="Organization" EntitySet="Organizations" />
@@ -3060,25 +2999,17 @@
           </AssociationSet>
           <AssociationSet Name="UserMessageGroup" Association="AthenaGIS.Database.UserMessageGroup">
             <End Role="User" EntitySet="Users" />
-            <End Role="MessageGroup" EntitySet="UserGroups" />
+            <End Role="MessageGroup" EntitySet="GroupMembers" />
           </AssociationSet>
-          <EntitySet Name="MessageGroupMessagers" EntityType="AthenaGIS.Database.MessageGroupMessager" />
-          <AssociationSet Name="MessageGroupMessageGroupMessager" Association="AthenaGIS.Database.MessageGroupMessageGroupMessager">
-            <End Role="MessageGroup" EntitySet="UserGroups" />
-            <End Role="MessageGroupMessager" EntitySet="MessageGroupMessagers" />
-          </AssociationSet>
+          <EntitySet Name="GroupMessagers" EntityType="AthenaGIS.Database.GroupMessager" />
           <AssociationSet Name="UserMessageUserMessage" Association="AthenaGIS.Database.UserMessageUserMessage">
             <End Role="UserMessage" EntitySet="UserMessages" />
             <End Role="UserMessage1" EntitySet="UserMessages" />
           </AssociationSet>
-          <EntitySet Name="GroupNames" EntityType="AthenaGIS.Database.GroupName" />
+          <EntitySet Name="Groups" EntityType="AthenaGIS.Database.Group" />
           <AssociationSet Name="UserGroupName" Association="AthenaGIS.Database.UserGroupName">
             <End Role="User" EntitySet="Users" />
-            <End Role="GroupName" EntitySet="GroupNames" />
-          </AssociationSet>
-          <AssociationSet Name="GroupNameUserGroup" Association="AthenaGIS.Database.GroupNameUserGroup">
-            <End Role="GroupName" EntitySet="GroupNames" />
-            <End Role="UserGroup" EntitySet="UserGroups" />
+            <End Role="GroupName" EntitySet="Groups" />
           </AssociationSet>
           <EntitySet Name="CustomerGoups" EntityType="AthenaGIS.Database.CustomerGoup" />
           <AssociationSet Name="UserCustomerGoup" Association="AthenaGIS.Database.UserCustomerGoup">
@@ -3103,16 +3034,6 @@
           <AssociationSet Name="CustomCategoryCustomCategory" Association="AthenaGIS.Database.CustomCategoryCustomCategory">
             <End Role="CustomCategory" EntitySet="CustomCategories" />
             <End Role="CustomCategory1" EntitySet="CustomCategories" />
-          </AssociationSet>
-          <EntitySet Name="DesktopGeoManages" EntityType="AthenaGIS.Database.DesktopGeoManage" />
-          <EntitySet Name="CustomGeographicTypes" EntityType="AthenaGIS.Database.CustomGeographicType" />
-          <AssociationSet Name="CustomGeographicTypeCustomGeographicType" Association="AthenaGIS.Database.CustomGeographicTypeCustomGeographicType">
-            <End Role="CustomGeographicType" EntitySet="CustomGeographicTypes" />
-            <End Role="CustomGeographicType1" EntitySet="CustomGeographicTypes" />
-          </AssociationSet>
-          <AssociationSet Name="CustomGeographicTypeDesktopGeoManage" Association="AthenaGIS.Database.CustomGeographicTypeDesktopGeoManage">
-            <End Role="CustomGeographicType" EntitySet="CustomGeographicTypes" />
-            <End Role="DesktopGeoManage" EntitySet="DesktopGeoManages" />
           </AssociationSet>
           <EntitySet Name="Products" EntityType="AthenaGIS.Database.Product" />
           <AssociationSet Name="ProductStandardProduct" Association="AthenaGIS.Database.ProductStandardProduct">
@@ -3347,15 +3268,7 @@
             <End Role="DocSender" EntitySet="DocSenders" />
             <End Role="DocComent" EntitySet="DocComents" />
           </AssociationSet>
-          <AssociationSet Name="UserCustomerGoup1" Association="AthenaGIS.Database.UserCustomerGoup1">
-            <End Role="User" EntitySet="Users" />
-            <End Role="CustomerGoup" EntitySet="CustomerGoups" />
-          </AssociationSet>
           <EntitySet Name="JobChanges" EntityType="AthenaGIS.Database.JobChange" />
-          <AssociationSet Name="EmployeeJobChange" Association="AthenaGIS.Database.EmployeeJobChange">
-            <End Role="Employee" EntitySet="Employees1" />
-            <End Role="JobChange" EntitySet="JobChanges" />
-          </AssociationSet>
           <AssociationSet Name="PostJobChange" Association="AthenaGIS.Database.PostJobChange">
             <End Role="Post" EntitySet="Posts" />
             <End Role="JobChange" EntitySet="JobChanges" />
@@ -3430,15 +3343,7 @@
             <End Role="WorkSpaceBaseType" EntitySet="WorkSpaceBaseTypes" />
             <End Role="WorkSpaceType" EntitySet="WorkSpaceTypes" />
           </AssociationSet>
-          <EntitySet Name="EventTimes" EntityType="AthenaGIS.Database.EventTime" />
-          <AssociationSet Name="LoginLogEventTime" Association="AthenaGIS.Database.LoginLogEventTime">
-            <End Role="LoginLog" EntitySet="LoginLogs" />
-            <End Role="EventTime" EntitySet="EventTimes" />
-          </AssociationSet>
-          <AssociationSet Name="PositionPost" Association="AthenaGIS.Database.PositionPost">
-            <End Role="Position" EntitySet="Positions" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
+          <EntitySet Name="OperationDetails" EntityType="AthenaGIS.Database.OperationDetail" />
           <AssociationSet Name="WorkSpaceBaseTypeDocumentManage" Association="AthenaGIS.Database.WorkSpaceBaseTypeDocumentManage">
             <End Role="WorkSpaceBaseType" EntitySet="WorkSpaceBaseTypes" />
             <End Role="DocumentManage" EntitySet="DocumentManages" />
@@ -3446,6 +3351,48 @@
           <AssociationSet Name="DocManageStateDocumentManage" Association="AthenaGIS.Database.DocManageStateDocumentManage">
             <End Role="DocManageState" EntitySet="DocManageStates" />
             <End Role="DocumentManage" EntitySet="DocumentManages" />
+          </AssociationSet>
+          <EntitySet Name="OperationEvents" EntityType="AthenaGIS.Database.OperationEvent" />
+          <AssociationSet Name="OpenEventEventTime" Association="AthenaGIS.Database.OpenEventEventTime">
+            <End Role="OpenEvent" EntitySet="OperationEvents" />
+            <End Role="EventTime" EntitySet="OperationDetails" />
+          </AssociationSet>
+          <AssociationSet Name="LoginLogOpenEvent" Association="AthenaGIS.Database.LoginLogOpenEvent">
+            <End Role="LoginLog" EntitySet="LoginLogs" />
+            <End Role="OpenEvent" EntitySet="OperationEvents" />
+          </AssociationSet>
+          <AssociationSet Name="GroupMemberGroupMessager" Association="AthenaGIS.Database.GroupMemberGroupMessager">
+            <End Role="GroupMember" EntitySet="GroupMembers" />
+            <End Role="GroupMessager" EntitySet="GroupMessagers" />
+          </AssociationSet>
+          <AssociationSet Name="GroupGroupMember" Association="AthenaGIS.Database.GroupGroupMember">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupMember" EntitySet="GroupMembers" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeePost" Association="AthenaGIS.Database.EmployeePost">
+            <End Role="Employee" EntitySet="Employees1" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="PositionPost" Association="AthenaGIS.Database.PositionPost">
+            <End Role="Position" EntitySet="Positions" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="UserUserMessage1" Association="AthenaGIS.Database.UserUserMessage1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserMessage" EntitySet="UserMessages" />
+          </AssociationSet>
+          <AssociationSet Name="GroupGroupMessager" Association="AthenaGIS.Database.GroupGroupMessager">
+            <End Role="Group" EntitySet="Groups" />
+            <End Role="GroupMessager" EntitySet="GroupMessagers" />
+          </AssociationSet>
+          <EntitySet Name="CustomerMembers" EntityType="AthenaGIS.Database.CustomerMember" />
+          <AssociationSet Name="CustomerGoupCustomerMember" Association="AthenaGIS.Database.CustomerGoupCustomerMember">
+            <End Role="CustomerGoup" EntitySet="CustomerGoups" />
+            <End Role="CustomerMember" EntitySet="CustomerMembers" />
+          </AssociationSet>
+          <AssociationSet Name="UserCustomerMember" Association="AthenaGIS.Database.UserCustomerMember">
+            <End Role="User" EntitySet="Users" />
+            <End Role="CustomerMember" EntitySet="CustomerMembers" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Organization">
@@ -3503,7 +3450,6 @@
           </Property>
           <NavigationProperty Name="Products" Relationship="AthenaGIS.Database.OrganizationProduct" FromRole="Organization" ToRole="Product" />
           <NavigationProperty Name="DocReaders" Relationship="AthenaGIS.Database.OrganizationDocReader" FromRole="Organization" ToRole="DocReader" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Organization_ContacTable">
           <Documentation>
@@ -3530,37 +3476,21 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>职位描述</LongDescription>
-            </Documentation>
-          </Property>
           <Property Type="Boolean" Name="IsValid" Nullable="false" />
-          <Property Type="String" Name="PositionType" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Type="String" Name="PositionType" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false">
             <Documentation>
               <Summary>表示具体的工作，如管理、技术、其他</Summary>
               <LongDescription>职务（job）</LongDescription>
             </Documentation>
           </Property>
-          <Property Type="String" Name="PositionTile" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Name="Name" Nullable="true" MaxLength="Max" FixedLength="false" Unicode="true" Type="String">
             <Documentation>
-              <Summary>职务头衔，经理、办事员等</Summary>
-              <LongDescription>职位</LongDescription>
+              <LongDescription>工作地点</LongDescription>
             </Documentation>
           </Property>
           <Property Type="String" Name="TaskNature" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
             <Documentation>
               <LongDescription>工作性质</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="String" Name="WorkLocation" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>工作地点</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="String" Name="SolaryStandard" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>薪资待遇</LongDescription>
             </Documentation>
           </Property>
           <NavigationProperty Name="Positions" Relationship="AthenaGIS.Database.PositionPosition" FromRole="Position" ToRole="Position1" />
@@ -3572,7 +3502,6 @@
           </Property>
           <NavigationProperty Name="Organization" Relationship="AthenaGIS.Database.OrganizationPosition" FromRole="Position" ToRole="Organization" />
           <Property Type="Int32" Name="OrganizationID" Nullable="false" />
-          <Property Name="IsAdministrator" Type="Boolean" Nullable="false" DefaultValue="False" />
           <NavigationProperty Name="PostRequire" Relationship="AthenaGIS.Database.PostRequirePosition" FromRole="Position" ToRole="PostRequire" />
           <Property Name="PostRequireID" Type="Int32" Nullable="true" />
           <Property Name="PositionLevel" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
@@ -3582,7 +3511,6 @@
           </Property>
           <NavigationProperty Name="Employees" Relationship="AthenaGIS.Database.PositionEmployee" FromRole="Position" ToRole="Employee" />
           <NavigationProperty Name="Posts" Relationship="AthenaGIS.Database.PositionPost" FromRole="Position" ToRole="Post" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Documentation>
@@ -3610,14 +3538,26 @@
           <NavigationProperty Name="Authorizations1" Relationship="AthenaGIS.Database.UserAuthorization1" FromRole="User" ToRole="Authorization" />
           <NavigationProperty Name="DocReaders" Relationship="AthenaGIS.Database.UserDocReader" FromRole="User" ToRole="DocReader" />
           <NavigationProperty Name="DocSenders" Relationship="AthenaGIS.Database.UserDocSender" FromRole="User" ToRole="DocSender" />
-          <NavigationProperty Name="CustomerGoups1" Relationship="AthenaGIS.Database.UserCustomerGoup1" FromRole="User" ToRole="CustomerGoup" />
           <Property Name="LimiteTime" Type="DateTime" Nullable="false" >
             <Documentation>
               <LongDescription>有效时间</LongDescription>
             </Documentation>
           </Property>
           <Property Name="Note" Type="String" Nullable="false" />
+          <Property Name="Domain" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>如果用户是外部的，如微信，qq等其他社交体系的</Summary>
+              <LongDescription>域名</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="DomainId" Type="String" Nullable="false" >
+            <Documentation>
+              <LongDescription>域外用户ID，如微信的Id号等</LongDescription>
+            </Documentation>
+          </Property>
           <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="UserMessages1" Relationship="AthenaGIS.Database.UserUserMessage1" FromRole="User" ToRole="UserMessage" />
+          <NavigationProperty Name="CustomerMembers" Relationship="AthenaGIS.Database.UserCustomerMember" FromRole="User" ToRole="CustomerMember" />
           </EntityType>
         <EntityType Name="User_ContacTable">
           <Documentation>
@@ -3648,9 +3588,8 @@
           <Property Type="String" Name="LogoutTime" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="AthenaGIS.Database.UserLoginLog" FromRole="LoginLog" ToRole="User" />
           <Property Type="Int32" Name="UserID" Nullable="true" />
-          <NavigationProperty Name="UserMessages" Relationship="AthenaGIS.Database.LoginLogUserMessage" FromRole="LoginLog" ToRole="UserMessage" />
           <Property Type="String" Name="CurrentSate" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="EventTimes" Relationship="AthenaGIS.Database.LoginLogEventTime" FromRole="LoginLog" ToRole="EventTime" />
+          <NavigationProperty Name="OpenEvents" Relationship="AthenaGIS.Database.LoginLogOpenEvent" FromRole="LoginLog" ToRole="OpenEvent" />
         </EntityType>
         <EntityType Name="OrganizationTransition">
           <Documentation>
@@ -3690,7 +3629,6 @@
           <Property Type="Int32" Name="OldOrgan" Nullable="true" />
           <NavigationProperty Name="Organization1" Relationship="AthenaGIS.Database.OrganizationOrganizationTransition1" FromRole="OrganizationTransition" ToRole="Organization" />
           <Property Type="Int32" Name="NewOrgan" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Organization_Type">
           <Documentation>
@@ -3773,7 +3711,6 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="LoginLog" Relationship="AthenaGIS.Database.LoginLogUserMessage" FromRole="UserMessage" ToRole="LoginLog" />
           <Property Type="Int32" Name="ReplyID" Nullable="true" />
           <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="3" >
             <Documentation>
@@ -3785,26 +3722,15 @@
               <LongDescription>是否读取过</LongDescription>
             </Documentation>
           </Property>
-          <Property Type="Int32" Name="LoginLogID" Nullable="true" />
           <NavigationProperty Name="UserMessages" Relationship="AthenaGIS.Database.UserMessageUserMessage" FromRole="UserMessage" ToRole="UserMessage1" />
           <NavigationProperty Name="UserMessage1" Relationship="AthenaGIS.Database.UserMessageUserMessage" FromRole="UserMessage1" ToRole="UserMessage" />
           <NavigationProperty Name="User" Relationship="AthenaGIS.Database.UserUserMessage" FromRole="UserMessage" ToRole="User" />
           <Property Type="Int32" Name="SenderID" Nullable="false" />
           <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="User1" Relationship="AthenaGIS.Database.UserUserMessage1" FromRole="UserMessage" ToRole="User" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="LoginLogUserMessage">
-          <End Type="AthenaGIS.Database.LoginLog" Role="LoginLog" Multiplicity="0..1" />
-          <End Type="AthenaGIS.Database.UserMessage" Role="UserMessage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoginLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserMessage">
-              <PropertyRef Name="LoginLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="UserGroup">
+        <EntityType Name="GroupMember">
           <Documentation>
             <Summary>信息群</Summary>
             <LongDescription>成员表</LongDescription>
@@ -3816,14 +3742,13 @@
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="Creator" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="DateTime" Name="CreateTime" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="JoinTime" Nullable="false" Precision="3" />
           <Property Type="String" Name="State" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="AthenaGIS.Database.UserMessageGroup" FromRole="MessageGroup" ToRole="User" />
-          <NavigationProperty Name="MessageGroupMessagers" Relationship="AthenaGIS.Database.MessageGroupMessageGroupMessager" FromRole="MessageGroup" ToRole="MessageGroupMessager" />
-          <NavigationProperty Name="GroupName" Relationship="AthenaGIS.Database.GroupNameUserGroup" FromRole="UserGroup" ToRole="GroupName" />
-          <Property Type="Int32" Name="GroupNameID" Nullable="false" />
           <Property Name="Rule" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="GroupMessagers" Relationship="AthenaGIS.Database.GroupMemberGroupMessager" FromRole="GroupMember" ToRole="GroupMessager" />
+          <NavigationProperty Name="Group" Relationship="AthenaGIS.Database.GroupGroupMember" FromRole="GroupMember" ToRole="Group" />
+          <Property Name="GroupID" Type="Int32" Nullable="true" />
         </EntityType>
         <EntityType Name="OrganizationOtherName">
           <Documentation>
@@ -3836,7 +3761,6 @@
           <Property Type="String" Name="OtherName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Organization" Relationship="AthenaGIS.Database.OrganizationOrganizationOtherName" FromRole="OrganizationOtherName" ToRole="Organization" />
           <Property Type="Int32" Name="OrganizationID" Nullable="false" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="OrganizationOrganizationOtherName">
           <End Type="AthenaGIS.Database.Organization" Role="Organization" Multiplicity="1" />
@@ -4166,7 +4090,6 @@
             </Documentation>
           </Property>
           <NavigationProperty Name="Positions" Relationship="AthenaGIS.Database.PostRequirePosition" FromRole="PostRequire" ToRole="Position" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Post">
           <Documentation>
@@ -4178,14 +4101,11 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="PostName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
-          <Property Type="String" Name="Descript" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="MarkerString" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="Boolean" Name="IsValid" Nullable="false" />
-          <Property Name="Jobname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="PositionID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Posts" Relationship="AthenaGIS.Database.PostPost" FromRole="Post" ToRole="Post1" />
           <NavigationProperty Name="Post1" Relationship="AthenaGIS.Database.PostPost" FromRole="Post1" ToRole="Post" />
+          <Property Type="String" Name="Descript" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="PostID" Type="Int32" Nullable="true" >
             <Documentation>
               <LongDescription>其他岗位的父级</LongDescription>
@@ -4198,8 +4118,10 @@
           <NavigationProperty Name="DocReaders" Relationship="AthenaGIS.Database.PostDocReader" FromRole="Post" ToRole="DocReader" />
           <NavigationProperty Name="DocSenders" Relationship="AthenaGIS.Database.PostDocSender" FromRole="Post" ToRole="DocSender" />
           <NavigationProperty Name="JobChanges" Relationship="AthenaGIS.Database.PostJobChange" FromRole="Post" ToRole="JobChange" />
+          <NavigationProperty Name="Employee" Relationship="AthenaGIS.Database.EmployeePost" FromRole="Post" ToRole="Employee" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Position" Relationship="AthenaGIS.Database.PositionPost" FromRole="Post" ToRole="Position" />
-          <Property Name="PositionID1" Type="Int32" Nullable="true" />
+          <Property Name="PositionID" Type="Int32" Nullable="true" />
           <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkSpace">
@@ -4305,7 +4227,6 @@
           <NavigationProperty Name="Specialized1" Relationship="AthenaGIS.Database.SpecializedSpecialized" FromRole="Specialized1" ToRole="Specialized" />
           <Property Type="Int32" Name="Parent" Nullable="true" />
           <NavigationProperty Name="Postbasics" Relationship="AthenaGIS.Database.SpecializedPostbasic" FromRole="Specialized" ToRole="Postbasic" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="SpecializedSpecialized">
           <End Type="AthenaGIS.Database.Specialized" Role="Specialized" Multiplicity="0..1" />
@@ -4676,7 +4597,6 @@
           <Property Type="String" Name="Hander" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="Result" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="EventState" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="OrganizationOrganizationEvent">
           <End Type="AthenaGIS.Database.Organization" Role="Organization" Multiplicity="1" />
@@ -4755,7 +4675,7 @@
         </Association>
         <Association Name="UserMessageGroup">
           <End Type="AthenaGIS.Database.User" Role="User" Multiplicity="1" />
-          <End Type="AthenaGIS.Database.UserGroup" Role="MessageGroup" Multiplicity="*" />
+          <End Type="AthenaGIS.Database.GroupMember" Role="MessageGroup" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
@@ -4765,7 +4685,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="MessageGroupMessager">
+        <EntityType Name="GroupMessager">
           <Documentation>
             <LongDescription>群信息</LongDescription>
           </Documentation>
@@ -4773,25 +4693,14 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="MessageGroup" Relationship="AthenaGIS.Database.MessageGroupMessageGroupMessager" FromRole="MessageGroupMessager" ToRole="MessageGroup" />
-          <Property Type="String" Name="Title" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="String" Name="Type" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Int32" Name="MessageGroupID" Nullable="false" />
           <Property Type="String" Name="SendTime" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="GroupMember" Relationship="AthenaGIS.Database.GroupMemberGroupMessager" FromRole="GroupMessager" ToRole="GroupMember" />
+          <Property Name="GroupMemberID" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="Group" Relationship="AthenaGIS.Database.GroupGroupMessager" FromRole="GroupMessager" ToRole="Group" />
+          <Property Name="GroupID" Type="Int32" Nullable="true" />
         </EntityType>
-        <Association Name="MessageGroupMessageGroupMessager">
-          <End Type="AthenaGIS.Database.UserGroup" Role="MessageGroup" Multiplicity="1" />
-          <End Type="AthenaGIS.Database.MessageGroupMessager" Role="MessageGroupMessager" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MessageGroup">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="MessageGroupMessager">
-              <PropertyRef Name="MessageGroupID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="UserMessageUserMessage">
           <End Type="AthenaGIS.Database.UserMessage" Role="UserMessage" Multiplicity="0..1" />
           <End Type="AthenaGIS.Database.UserMessage" Role="UserMessage1" Multiplicity="*" />
@@ -4804,7 +4713,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="GroupName">
+        <EntityType Name="Group">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
@@ -4814,30 +4723,22 @@
           <NavigationProperty Name="User" Relationship="AthenaGIS.Database.UserGroupName" FromRole="GroupName" ToRole="User" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="GroupNumber" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="UserGroups" Relationship="AthenaGIS.Database.GroupNameUserGroup" FromRole="GroupName" ToRole="UserGroup" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="GroupMembers" Relationship="AthenaGIS.Database.GroupGroupMember" FromRole="Group" ToRole="GroupMember" />
+          <NavigationProperty Name="GroupMessagers" Relationship="AthenaGIS.Database.GroupGroupMessager" FromRole="Group" ToRole="GroupMessager" />
+          <Property Name="State" Type="String" Nullable="false" />
+          <Property Name="Notes" Type="String" Nullable="false" />
+          <Property Name="Type" Type="String" Nullable="false" />
+          <Property Name="Validate" Type="String" Nullable="false" />
         </EntityType>
         <Association Name="UserGroupName">
           <End Type="AthenaGIS.Database.User" Role="User" Multiplicity="1" />
-          <End Type="AthenaGIS.Database.GroupName" Role="GroupName" Multiplicity="*" />
+          <End Type="AthenaGIS.Database.Group" Role="GroupName" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="GroupName">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="GroupNameUserGroup">
-          <End Type="AthenaGIS.Database.GroupName" Role="GroupName" Multiplicity="1" />
-          <End Type="AthenaGIS.Database.UserGroup" Role="UserGroup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="GroupName">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="UserGroup">
-              <PropertyRef Name="GroupNameID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4849,9 +4750,7 @@
           <Property Type="String" Name="GroupName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="AthenaGIS.Database.UserCustomerGoup" FromRole="CustomerGoup" ToRole="User" />
           <Property Type="Int32" Name="CreatID" Nullable="false" />
-          <NavigationProperty Name="User1" Relationship="AthenaGIS.Database.UserCustomerGoup1" FromRole="CustomerGoup" ToRole="User" />
-          <Property Name="UserID" Type="Int32" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CustomerMembers" Relationship="AthenaGIS.Database.CustomerGoupCustomerMember" FromRole="CustomerGoup" ToRole="CustomerMember" />
         </EntityType>
         <Association Name="UserCustomerGoup">
           <End Type="AthenaGIS.Database.User" Role="User" Multiplicity="1" />
@@ -4913,12 +4812,11 @@
           <Property Name="OrganizationID" Nullable="false" Type="Int32" />
           <NavigationProperty Name="CustomCategory" Relationship="AthenaGIS.Database.CustomCategoryCustomOrganizationType" FromRole="CustomOrganizationType" ToRole="CustomCategory" />
           <Property Type="Int32" Name="CustomCategoryID" Nullable="false" />
-          <Property Type="String" Name="note" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Type="String" Name="Note" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
             <Documentation>
               <LongDescription>备注</LongDescription>
             </Documentation>
           </Property>
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="CustomCategory">
           <Documentation>
@@ -4934,7 +4832,6 @@
           <NavigationProperty Name="CustomCategories" Relationship="AthenaGIS.Database.CustomCategoryCustomCategory" FromRole="CustomCategory" ToRole="CustomCategory1" />
           <NavigationProperty Name="CustomCategory1" Relationship="AthenaGIS.Database.CustomCategoryCustomCategory" FromRole="CustomCategory1" ToRole="CustomCategory" />
           <Property Type="Int32" Name="CustomCategoryID" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="OrganizationCustomOrganizationType">
           <End Type="AthenaGIS.Database.Organization" Multiplicity="1" Role="Organization" />
@@ -4969,71 +4866,6 @@
             </Principal>
             <Dependent Role="CustomCategory1">
               <PropertyRef Name="CustomCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="DesktopGeoManage">
-          <Documentation>
-            <LongDescription>个人桌面地理</LongDescription>
-          </Documentation>
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Tile" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Int32" Name="EventTimeEventTimeID" Nullable="true" />
-          <Property Type="String" Name="Content" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="String" Name="Descript" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="String" Name="link" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>链接到其他网页</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="Int32" Name="Geo_GraphID" Nullable="false" />
-          <NavigationProperty Name="CustomGeographicType" Relationship="AthenaGIS.Database.CustomGeographicTypeDesktopGeoManage" FromRole="DesktopGeoManage" ToRole="CustomGeographicType" />
-          <Property Type="Int32" Name="CustomGeographicTypeID" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CustomGeographicType">
-          <Documentation>
-            <LongDescription>个人客户化管理</LongDescription>
-          </Documentation>
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="TypeName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
-            <Documentation>
-              <LongDescription>类型名称</LongDescription>
-            </Documentation>
-          </Property>
-          <Property Type="String" Name="Descript" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <NavigationProperty Name="CustomGeographicTypes" Relationship="AthenaGIS.Database.CustomGeographicTypeCustomGeographicType" FromRole="CustomGeographicType" ToRole="CustomGeographicType1" />
-          <NavigationProperty Name="CustomGeographicType1" Relationship="AthenaGIS.Database.CustomGeographicTypeCustomGeographicType" FromRole="CustomGeographicType1" ToRole="CustomGeographicType" />
-          <Property Type="Int32" Name="CustomGeographicTypeID" Nullable="true" />
-          <Property Type="Int32" Name="EventTimeEventTimeID" Nullable="true" />
-          <NavigationProperty Name="DesktopGeoManages" Relationship="AthenaGIS.Database.CustomGeographicTypeDesktopGeoManage" FromRole="CustomGeographicType" ToRole="DesktopGeoManage" />
-        </EntityType>
-        <Association Name="CustomGeographicTypeCustomGeographicType">
-          <End Type="AthenaGIS.Database.CustomGeographicType" Role="CustomGeographicType" Multiplicity="0..1" />
-          <End Type="AthenaGIS.Database.CustomGeographicType" Role="CustomGeographicType1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomGeographicType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomGeographicType1">
-              <PropertyRef Name="CustomGeographicTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="CustomGeographicTypeDesktopGeoManage">
-          <End Type="AthenaGIS.Database.CustomGeographicType" Role="CustomGeographicType" Multiplicity="1" />
-          <End Type="AthenaGIS.Database.DesktopGeoManage" Role="DesktopGeoManage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomGeographicType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DesktopGeoManage">
-              <PropertyRef Name="CustomGeographicTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5509,8 +5341,7 @@
           <Property Name="PositionID" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Organization" Relationship="AthenaGIS.Database.OrganizationEmployee" FromRole="Employee" ToRole="Organization" />
           <Property Name="OrganizationID" Type="Int32" Nullable="true" />
-          <NavigationProperty Name="JobChanges" Relationship="AthenaGIS.Database.EmployeeJobChange" FromRole="Employee" ToRole="JobChange" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Posts" Relationship="AthenaGIS.Database.EmployeePost" FromRole="Employee" ToRole="Post" />
         </EntityType>
         <Association Name="UserEmployee">
           <End Type="AthenaGIS.Database.User" Role="User" Multiplicity="1" />
@@ -5747,7 +5578,6 @@
           <Property Name="WorkModulId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="User" Relationship="AthenaGIS.Database.UserWorkSpaceRole" FromRole="WorkSpaceRole" ToRole="User" />
           <Property Name="UserID" Type="Int32" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="WorkSpaceWorkSpaceRole">
           <End Type="AthenaGIS.Database.WorkSpace" Role="WorkSpace" Multiplicity="1" />
@@ -6180,45 +6010,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="UserCustomerGoup1">
-          <End Type="AthenaGIS.Database.User" Role="User" Multiplicity="0..1" />
-          <End Type="AthenaGIS.Database.CustomerGoup" Role="CustomerGoup" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CustomerGoup">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="JobChange">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Employee" Relationship="AthenaGIS.Database.EmployeeJobChange" FromRole="JobChange" ToRole="Employee" />
-          <Property Name="EmployeeId" Type="Int32" Nullable="true" />
+          <Property Name="ChangeType" Type="String" Nullable="false" />
           <NavigationProperty Name="Post" Relationship="AthenaGIS.Database.PostJobChange" FromRole="JobChange" ToRole="Post" />
-          <Property Name="PostID" Type="Int32" Nullable="true" />
+          <Property Name="Content" Type="String" Nullable="false" />
           <Property Name="State" Type="Boolean" Nullable="false" />
           <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PostID" Type="Int32" Nullable="true" />
           <Property Name="Creater" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="EventTime" Type="Int64" Nullable="false" />
         </EntityType>
-        <Association Name="EmployeeJobChange">
-          <End Type="AthenaGIS.Database.Employee" Role="Employee" Multiplicity="0..1" />
-          <End Type="AthenaGIS.Database.JobChange" Role="JobChange" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="JobChange">
-              <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="PostJobChange">
           <End Type="AthenaGIS.Database.Post" Role="Post" Multiplicity="0..1" />
           <End Type="AthenaGIS.Database.JobChange" Role="JobChange" Multiplicity="*" />
@@ -6525,43 +6330,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="EventTime">
+        <EntityType Name="OperationDetail">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TimePoint" Type="String" Nullable="false" />
-          <Property Name="SpacePoint" Type="String" Nullable="false" />
-          <Property Name="EventName" Type="String" Nullable="false" />
-          <Property Name="EventType" Type="String" Nullable="false" />
-          <Property Name="District" Type="String" Nullable="false" />
-          <NavigationProperty Name="LoginLog" Relationship="AthenaGIS.Database.LoginLogEventTime" FromRole="EventTime" ToRole="LoginLog" />
-          <Property Name="LoginLogID" Type="Int32" Nullable="true" />
+          <Property Name="TabName" Type="String" Nullable="false" />
+          <Property Name="TabRecordId" Type="String" Nullable="false" />
+          <Property Name="HandleType" Type="String" Nullable="false" />
+          <NavigationProperty Name="OpenEvent" Relationship="AthenaGIS.Database.OpenEventEventTime" FromRole="EventTime" ToRole="OpenEvent" />
+          <Property Name="OpenEventId" Type="Int32" Nullable="true" />
+          <Property Name="Note" Type="String" Nullable="false" />
         </EntityType>
-        <Association Name="LoginLogEventTime">
-          <End Type="AthenaGIS.Database.LoginLog" Role="LoginLog" Multiplicity="0..1" />
-          <End Type="AthenaGIS.Database.EventTime" Role="EventTime" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="LoginLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="EventTime">
-              <PropertyRef Name="LoginLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="PositionPost">
-          <End Type="AthenaGIS.Database.Position" Role="Position" Multiplicity="0..1" />
-          <End Type="AthenaGIS.Database.Post" Role="Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="PositionID1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="WorkSpaceBaseTypeDocumentManage">
           <End Type="AthenaGIS.Database.WorkSpaceBaseType" Role="WorkSpaceBaseType" Multiplicity="0..1" />
           <End Type="AthenaGIS.Database.DocumentManage" Role="DocumentManage" Multiplicity="*" />
@@ -6586,6 +6366,156 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="OperationEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OperType" Type="String" Nullable="false" >
+            <Documentation>
+              <Summary>登陆，查询，打印，授权，增加</Summary>
+              <LongDescription>事件名称</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="OperName" Type="String" Nullable="false" />
+          <Property Name="OperModul" Type="String" Nullable="false" />
+          <Property Name="OperTime" Type="String" Nullable="false" />
+          <NavigationProperty Name="EventTimes" Relationship="AthenaGIS.Database.OpenEventEventTime" FromRole="OpenEvent" ToRole="EventTime" />
+          <NavigationProperty Name="LoginLog" Relationship="AthenaGIS.Database.LoginLogOpenEvent" FromRole="OpenEvent" ToRole="LoginLog" />
+          <Property Name="OperSpace" Type="String" Nullable="false" />
+          <Property Name="Note" Type="String" Nullable="false" />
+          <Property Name="LoginLogID" Type="Int32" Nullable="true" />
+        </EntityType>
+        <Association Name="OpenEventEventTime">
+          <End Type="AthenaGIS.Database.OperationEvent" Role="OpenEvent" Multiplicity="0..1" />
+          <End Type="AthenaGIS.Database.OperationDetail" Role="EventTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OpenEvent">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EventTime">
+              <PropertyRef Name="OpenEventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LoginLogOpenEvent">
+          <End Type="AthenaGIS.Database.LoginLog" Role="LoginLog" Multiplicity="0..1" />
+          <End Type="AthenaGIS.Database.OperationEvent" Role="OpenEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoginLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="OpenEvent">
+              <PropertyRef Name="LoginLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupMemberGroupMessager">
+          <End Type="AthenaGIS.Database.GroupMember" Role="GroupMember" Multiplicity="0..1" />
+          <End Type="AthenaGIS.Database.GroupMessager" Role="GroupMessager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupMember">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupMessager">
+              <PropertyRef Name="GroupMemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupGroupMember">
+          <End Type="AthenaGIS.Database.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="AthenaGIS.Database.GroupMember" Role="GroupMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupMember">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeePost">
+          <End Type="AthenaGIS.Database.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="AthenaGIS.Database.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PositionPost">
+          <End Type="AthenaGIS.Database.Position" Role="Position" Multiplicity="0..1" />
+          <End Type="AthenaGIS.Database.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="PositionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserUserMessage1">
+          <End Type="AthenaGIS.Database.User" Role="User" Multiplicity="1" />
+          <End Type="AthenaGIS.Database.UserMessage" Role="UserMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserMessage">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GroupGroupMessager">
+          <End Type="AthenaGIS.Database.Group" Role="Group" Multiplicity="0..1" />
+          <End Type="AthenaGIS.Database.GroupMessager" Role="GroupMessager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Group">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GroupMessager">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CustomerMember">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="CustomerGoup" Relationship="AthenaGIS.Database.CustomerGoupCustomerMember" FromRole="CustomerMember" ToRole="CustomerGoup" />
+          <Property Name="CustomerGoupID" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="User" Relationship="AthenaGIS.Database.UserCustomerMember" FromRole="CustomerMember" ToRole="User" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="CustomerGoupCustomerMember">
+          <End Type="AthenaGIS.Database.CustomerGoup" Role="CustomerGoup" Multiplicity="0..1" />
+          <End Type="AthenaGIS.Database.CustomerMember" Role="CustomerMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CustomerGoup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerMember">
+              <PropertyRef Name="CustomerGoupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserCustomerMember">
+          <End Type="AthenaGIS.Database.User" Role="User" Multiplicity="1" />
+          <End Type="AthenaGIS.Database.CustomerMember" Role="CustomerMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CustomerMember">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6604,7 +6534,6 @@
           <ScalarProperty Name="MarkerString" ColumnName="MarkerString" />
           <ScalarProperty Name="IsValid" ColumnName="IsValid" />
           <ScalarProperty Name="Type" ColumnName="Type" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6625,19 +6554,14 @@
       <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.Position)">
         <MappingFragment StoreEntitySet="Positions">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="IsValid" ColumnName="IsValid" />
           <ScalarProperty Name="PositionType" ColumnName="PositionType" />
-          <ScalarProperty Name="PositionTile" ColumnName="PositionTile" />
           <ScalarProperty Name="TaskNature" ColumnName="TaskNature" />
-          <ScalarProperty Name="WorkLocation" ColumnName="WorkLocation" />
-          <ScalarProperty Name="SolaryStandard" ColumnName="SolaryStandard" />
+          <ScalarProperty Name="Name" ColumnName="WorkLocation" />
           <ScalarProperty Name="PositionID" ColumnName="PositionID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="IsAdministrator" ColumnName="IsAdministrator" />
           <ScalarProperty Name="PostRequireID" ColumnName="PostRequireID" />
           <ScalarProperty Name="PositionLevel" ColumnName="PositionLevel" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6689,7 +6613,6 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="OldOrgan" ColumnName="OldOrgan" />
           <ScalarProperty Name="NewOrgan" ColumnName="NewOrgan" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6731,21 +6654,19 @@
           <ScalarProperty Name="ReplyID" ColumnName="ReplyID" />
           <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="LoginLogID" ColumnName="LoginLogID" />
           <ScalarProperty Name="SenderID" ColumnName="SenderID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="UserGroups">
-      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.UserGroup)">
+    <EntitySetMapping Name="GroupMembers">
+      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.GroupMember)">
         <MappingFragment StoreEntitySet="UserGroups">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Creator" ColumnName="Creator" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="JoinTime" ColumnName="CreateTime" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="GroupNameID" ColumnName="GroupNameID" />
           <ScalarProperty Name="Rule" ColumnName="Rule" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -6756,7 +6677,6 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="OtherName" ColumnName="OtherName" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6894,7 +6814,6 @@
           <ScalarProperty Name="EducationRequirement" ColumnName="EducationRequirement" />
           <ScalarProperty Name="SkillRequirement" ColumnName="SkillRequirement" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6903,15 +6822,11 @@
         <MappingFragment StoreEntitySet="Posts">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="PostName" ColumnName="PostName" />
-          <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
           <ScalarProperty Name="Descript" ColumnName="Descript" />
           <ScalarProperty Name="MarkerString" ColumnName="MarkerString" />
           <ScalarProperty Name="IsValid" ColumnName="IsValid" />
-          <ScalarProperty Name="Jobname" ColumnName="Jobname" />
-          <ScalarProperty Name="PositionID" ColumnName="PositionID" />
           <ScalarProperty Name="PostID" ColumnName="PostID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="PositionID1" ColumnName="PositionID1" />
           <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -6953,7 +6868,6 @@
           <ScalarProperty Name="Descript" ColumnName="Descript" />
           <ScalarProperty Name="ParentCode" ColumnName="ParentCode" />
           <ScalarProperty Name="Parent" ColumnName="Parent" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7070,23 +6984,21 @@
           <ScalarProperty Name="Hander" ColumnName="Hander" />
           <ScalarProperty Name="Result" ColumnName="Result" />
           <ScalarProperty Name="EventState" ColumnName="EventState" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="MessageGroupMessagers">
-      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.MessageGroupMessager)">
+    <EntitySetMapping Name="GroupMessagers">
+      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.GroupMessager)">
         <MappingFragment StoreEntitySet="MessageGroupMessagers">
           <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Type" ColumnName="Title" />
           <ScalarProperty Name="Content" ColumnName="Content" />
-          <ScalarProperty Name="MessageGroupID" ColumnName="MessageGroupID" />
           <ScalarProperty Name="SendTime" ColumnName="SendTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="GroupNames">
-      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.GroupName)">
+    <EntitySetMapping Name="Groups">
+      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.Group)">
         <MappingFragment StoreEntitySet="GroupNames">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -7102,7 +7014,6 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="GroupName" ColumnName="GroupName" />
           <ScalarProperty Name="CreatID" ColumnName="CreatID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7129,8 +7040,7 @@
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="CustomCategoryID" ColumnName="CustomCategoryID" />
-          <ScalarProperty Name="note" ColumnName="note" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="Note" ColumnName="note" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7141,32 +7051,6 @@
           <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
           <ScalarProperty Name="content" ColumnName="content" />
           <ScalarProperty Name="CustomCategoryID" ColumnName="CustomCategoryID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DesktopGeoManages">
-      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.DesktopGeoManage)">
-        <MappingFragment StoreEntitySet="DesktopGeoManages">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="Tile" ColumnName="Tile" />
-          <ScalarProperty Name="EventTimeEventTimeID" ColumnName="EventTimeEventTimeID" />
-          <ScalarProperty Name="Content" ColumnName="Content" />
-          <ScalarProperty Name="Descript" ColumnName="Descript" />
-          <ScalarProperty Name="link" ColumnName="link" />
-          <ScalarProperty Name="Geo_GraphID" ColumnName="Geo_GraphID" />
-          <ScalarProperty Name="CustomGeographicTypeID" ColumnName="CustomGeographicTypeID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="CustomGeographicTypes">
-      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.CustomGeographicType)">
-        <MappingFragment StoreEntitySet="CustomGeographicTypes">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-          <ScalarProperty Name="Descript" ColumnName="Descript" />
-          <ScalarProperty Name="CustomGeographicTypeID" ColumnName="CustomGeographicTypeID" />
-          <ScalarProperty Name="EventTimeEventTimeID" ColumnName="EventTimeEventTimeID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7311,7 +7195,6 @@
           <ScalarProperty Name="Isvalid" ColumnName="Isvalid" />
           <ScalarProperty Name="PositionID" ColumnName="PositionID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7351,7 +7234,6 @@
           <ScalarProperty Name="Descript" ColumnName="Descript" />
           <ScalarProperty Name="WorkModulId" ColumnName="WorkModulId" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7443,11 +7325,9 @@
       <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.JobChange)">
         <MappingFragment StoreEntitySet="JobChanges">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="PostID" ColumnName="PostID" />
           <ScalarProperty Name="State" ColumnName="State" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
-          <ScalarProperty Name="EndTime" ColumnName="EndTime" />
           <ScalarProperty Name="Creater" ColumnName="Creater" />
           <ScalarProperty Name="EventTime" ColumnName="EventTime" />
         </MappingFragment>
@@ -7522,16 +7402,11 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="EventTimes">
-      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.EventTime)">
+    <EntitySetMapping Name="OperationDetails">
+      <EntityTypeMapping TypeName="IsTypeOf(AthenaGIS.Database.OperationDetail)">
         <MappingFragment StoreEntitySet="EventTimes">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="TimePoint" ColumnName="TimePoint" />
-          <ScalarProperty Name="SpacePoint" ColumnName="SpacePoint" />
-          <ScalarProperty Name="EventName" ColumnName="EventName" />
-          <ScalarProperty Name="EventType" ColumnName="EventType" />
-          <ScalarProperty Name="District" ColumnName="District" />
-          <ScalarProperty Name="LoginLogID" ColumnName="LoginLogID" />
+          <ScalarProperty Name="HandleType" ColumnName="EventType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7556,7 +7431,7 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="47080140b0944622aff3ea260042e780" Name="Diagram1">
+      <Diagram DiagramId="47080140b0944622aff3ea260042e780" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="AthenaGIS.Database.Organization" Width="1.5" PointX="0.75" PointY="27.5" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.Organization_ContacTable" Width="1.5" PointX="8.25" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.Position" Width="1.5" PointX="3" PointY="25" IsExpanded="true" />
@@ -7624,8 +7499,6 @@
         <EntityTypeShape EntityType="AthenaGIS.Database.FinaceAccoutTab" Width="1.5" PointX="5.75" PointY="11.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.OrganizationCustomType" Width="1.5" PointX="9" PointY="29.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.CustomCategory" Width="1.5" PointX="6.75" PointY="36" IsExpanded="true" />
-        <EntityTypeShape EntityType="AthenaGIS.Database.DesktopGeoManage" Width="1.5" PointX="26" PointY="14.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="AthenaGIS.Database.CustomGeographicType" Width="1.5" PointX="23.75" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.TaskLink" Width="1.5" PointX="30.75" PointY="66.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.Product" Width="1.5" PointX="11.25" PointY="22.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AthenaGIS.Database.ProductEvent" Width="1.5" PointX="13.5" PointY="21.25" IsExpanded="true" />
@@ -7747,9 +7620,7 @@
         <AssociationConnector Association="AthenaGIS.Database.OrganizationCustomOrganizationType" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.CustomCategoryCustomOrganizationType" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.CustomCategoryCustomCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="AthenaGIS.Database.CustomGeographicTypeCustomGeographicType" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.Geo_GraphDesktopGeoManage" ManuallyRouted="false" />
-        <AssociationConnector Association="AthenaGIS.Database.CustomGeographicTypeDesktopGeoManage" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.ProjectDocLocalScope" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.TaskTaskLink" ManuallyRouted="false" />
         <AssociationConnector Association="AthenaGIS.Database.ProductStandardProduct" ManuallyRouted="false" />

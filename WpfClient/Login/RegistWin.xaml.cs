@@ -22,7 +22,7 @@ namespace WpfClient.Login
     /// <summary>
     /// RegistWin.xaml 的交互逻辑
     /// </summary>
-    public partial class RegistWin : Window
+    public partial class RegistWin : MyMacClass_noneMaxBtn
     {
         public RegistWin()
         {
