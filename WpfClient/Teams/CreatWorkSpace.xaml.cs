@@ -18,7 +18,7 @@ namespace WpfClient.Teams
     /// <summary>
     /// CreatWorkSpace.xaml 的交互逻辑
     /// </summary>
-    public partial class CreatWorkSpace : Window
+    public partial class CreatWorkSpace : MyMacClass
     {
         public CreatWorkSpace()
         {

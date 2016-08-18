@@ -18,7 +18,7 @@ namespace WpfClient.Teams
     /// <summary>
     /// jioinTeam.xaml 的交互逻辑
     /// </summary>
-    public partial class jioinTeam : Window
+    public partial class jioinTeam : MyMacClass_noneMaxBtn
     {
         List<SignalCore.OrgInfo> list_org = new List<SignalCore.OrgInfo>();
 

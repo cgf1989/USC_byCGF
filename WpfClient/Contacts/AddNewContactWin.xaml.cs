@@ -1,6 +1,10 @@
-﻿using System;
+﻿using BCP.ViewModel;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -17,13 +21,19 @@ namespace WpfClient.Contacts
     /// <summary>
     /// AddNewContactWin.xaml 的交互逻辑
     /// </summary>
-    public partial class AddNewContactWin : Window
+    public partial class AddNewContactWin : MyMacClass_noneMaxBtn
     {
-        public List<string> userGroupList = new List<string>();
+        public List<CustomerGoupDTO> userGroupList = new List<CustomerGoupDTO>();
+        /// <summary>
+        /// 搜索后选中的好友
+        /// </summary>
+        UserDTO SelectedUser { get; set; }
 
         public AddNewContactWin()
         {
             InitializeComponent();
+
+           
         }
 
         /// <summary>
@@ -32,6 +42,7 @@ namespace WpfClient.Contacts
         void LoadingUserGroups()
         {
             cbb_Groups.ItemsSource = userGroupList;
+            cbb_Groups.DisplayMemberPath = "GroupName";
         }
 
         private void cbb_Groups_Loaded(object sender, RoutedEventArgs e)
@@ -41,49 +52,79 @@ namespace WpfClient.Contacts
 
         private void btn_searchUser_Click(object sender, RoutedEventArgs e)
         {
+            SelectedUser = new UserDTO();
             if (tb_userId.Text.Trim() != "")
             {
-                string userId = tb_userId.Text.Trim();
-                foreach (SignalCore.UserInfo item in Login.LoginWin.userList)
+           
+                string userName = tb_userId.Text.Trim();
+                var a = from b in MainClient.SysUserCollection where b.ActualName == userName select b;
+                if (a.Any())
                 {
-                    if (userId == item.UserAccount)
-                    {
-                        tb_userName.Text = item.UserName;
-                        return;
-                    }
-                    else
-                    {
-                        tb_userName.Text = "";
-                    }
+                    SelectedUser = a.First();
+                    lbl_userName.Content = SelectedUser.ActualName;
+                    return;
                 }
+                else
+                {
+                    lbl_userName.Content = "找不到该用户";
+                }
+                
             }
             else
             {
-                MessageBox.Show("请输入要搜索的用户ID");
+                MessageBox.Show("请输入要搜索的用户名");
             }
         }
 
         public string GroupName = "";
         public string userName = "";
-        private void btn_AddNewContact_Click(object sender, RoutedEventArgs e)
+        public int newContactId = 0;
+        private async void btn_AddNewContact_Click(object sender, RoutedEventArgs e)
         {
-            if (tb_userName.Text.Trim() != "")
+            try
             {
-                if (cbb_Groups.SelectedItem != null)
+                if (lbl_userName.Content.ToString() != "找不到该用户" && lbl_userName.Content.ToString() != "")
                 {
-                    GroupName = cbb_Groups.SelectedItem.ToString();
-                    userName = tb_userName.Text.Trim();
+                    if (cbb_Groups.SelectedItem != null)
+                    {
+                        CustomerGoupDTO selectedGroup = cbb_Groups.SelectedItem as CustomerGoupDTO;
+                        GroupName = selectedGroup.GroupName;
+                        userName = lbl_userName.Content.ToString();
 
-                    this.Close();
+                        //把该好友存到数据库
+                        HttpClient client = new HttpClient();
+                        client.BaseAddress = new Uri("http://localhost:37768/");
+                        client.DefaultRequestHeaders.Accept.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                        HttpResponseMessage response = await client.GetAsync("api/user/AddUserToCustomerGroup?userId=" + SelectedUser.ID + "&groupId=" + selectedGroup.ID);
+                        response.EnsureSuccessStatusCode();
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string ds = await response.Content.ReadAsStringAsync();
+                            CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                            if (result.Success)
+                            {
+                                MessageBox.Show("添加成功");
+                                newContactId = SelectedUser.ID;
+                            }
+                        }
+
+                        this.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("请选择联系人分组");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("请选择联系人分组");
+                    MessageBox.Show("找不到该联系人");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("找不到该联系人");
+                MessageBox.Show("添加失败，请联系管理员");
             }
         }
     }

@@ -1,11 +1,12 @@
-﻿<Window x:Class="WpfClient.Teams.ModuleToPost"
+﻿<scr:MyMacClass x:Class="WpfClient.Teams.ModuleToPost"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient.Teams"
+        xmlns:scr="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="分配职责"  Height="600" Width="600" Background="#EBF2F9">
+        Title="分配职责"  Height="600" Width="600" Style="{DynamicResource WindowStyle1}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -107,4 +108,4 @@
         <Button Content="移除" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White" Grid.Row="2" HorizontalAlignment="Right" Width="60" Margin="5"/>
     </Grid>
 
-</Window>
+</scr:MyMacClass>

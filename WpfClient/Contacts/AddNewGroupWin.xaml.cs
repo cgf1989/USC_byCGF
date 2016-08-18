@@ -17,7 +17,7 @@ namespace WpfClient.Contacts
     /// <summary>
     /// AddNewContactWin.xaml 的交互逻辑
     /// </summary>
-    public partial class AddNewGroupWin : Window
+    public partial class AddNewGroupWin : MyMacClass_noneMaxBtn
     {
         public string NewGroupName { set; get; }
 

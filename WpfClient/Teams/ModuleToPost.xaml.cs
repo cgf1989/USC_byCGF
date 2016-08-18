@@ -17,7 +17,7 @@ namespace WpfClient.Teams
     /// <summary>
     /// ModuleToPost.xaml 的交互逻辑
     /// </summary>
-    public partial class ModuleToPost : Window
+    public partial class ModuleToPost : MyMacClass
     {
         public ModuleToPost()
         {

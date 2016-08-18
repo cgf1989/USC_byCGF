@@ -67,7 +67,7 @@ namespace WpfClient.Login
                         if (result.Success)
                         {
                             UserDTO currentUser = JsonConvert.DeserializeObject<UserDTO>(result.Data);
-                            MainClient.currentUser = currentUser;  //返回当前用户
+                            MainClient.CurrentUser = currentUser;  //返回当前用户
                             MainClient mainWin = new MainClient();
                             this.Close();
 

@@ -24,13 +24,14 @@
             <Menu  Grid.Column="2" Margin="2">
                 <MenuItem Header="三">
                     <MenuItem Name="mi_AddContact" Header="添加联系人" Click="mi_AddContact_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
+                    <MenuItem Name="mi_DelContact" Header="删除联系人" Click="mi_DelContact_Click"  Template="{DynamicResource MenuItemControlTemplate1}"/>
                     <MenuItem Name="mi_AddGroup" Header="添加分组" Click="mi_AddGroup_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
                 </MenuItem>
             </Menu>
         </Grid>
 
         <StackPanel  Grid.Row="1" Name="tv_Contacts">
-            <Expander Header="朋友 0/2"  Background="#ebf2f9">
+            <!--<Expander Header="朋友 0/2"  Background="#ebf2f9">
                 <ListView Background="#ebf2f9" BorderThickness="0">
                     <ListViewItem Name="cgf" ToolTip="chenguifa" Tag="2" Style="{DynamicResource ListViewItemStyle_ContractUser}" MouseDoubleClick="TreeViewItem_MouseDoubleClick">
                         <Image Source="/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg"/>
@@ -58,7 +59,7 @@
                         <Image Source="/WpfClient;component/Images/Img_Header/Head7.jpg"/>
                     </ListViewItem>
                 </ListView>
-            </Expander>
+            </Expander>-->
         </StackPanel>
         <!--<TreeView Visibility="Hidden" Name="tv_Contacts" Grid.Row="1" >
             

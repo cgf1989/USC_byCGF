@@ -23,18 +23,21 @@ namespace WpfClient.Login
     /// </summary>
     public partial class UserManageWin : MyMacClass
     {
+
+        HttpClient client = new HttpClient();
+
         public UserManageWin()
         {
             InitializeComponent();
+
+            client.BaseAddress = new Uri("http://localhost:37768");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/Json"));
         }
 
         private async void btn_getAllUser_Click(object sender, RoutedEventArgs e)
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:37768");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/Json"));
-
+            
             HttpResponseMessage response = await client.GetAsync("api/User/GetAllUser");
 
             if (response.IsSuccessStatusCode)
@@ -70,10 +73,10 @@ namespace WpfClient.Login
                 MessageBoxResult msgboxResult = MessageBox.Show("是否要删除用户'" + selectedUser.ActualName + "'", "确认删除", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
                 if (msgboxResult == MessageBoxResult.OK)
                 {
-                    HttpClient client = new HttpClient();
-                    client.BaseAddress = new Uri("http://localhost:37768");
-                    client.DefaultRequestHeaders.Accept.Clear();
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/Json"));
+                    //HttpClient client = new HttpClient();
+                    //client.BaseAddress = new Uri("http://localhost:37768");
+                    //client.DefaultRequestHeaders.Accept.Clear();
+                    //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/Json"));
 
                     HttpResponseMessage response = await client.GetAsync("api/User/deleteUser?id=" + selectedUser.ID);
 

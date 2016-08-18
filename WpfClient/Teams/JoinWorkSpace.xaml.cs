@@ -18,7 +18,7 @@ namespace WpfClient.Teams
     /// <summary>
     /// JoinWorkSpace.xaml 的交互逻辑
     /// </summary>
-    public partial class JoinWorkSpace : Window
+    public partial class JoinWorkSpace : MyMacClass
     {
         public JoinWorkSpace()
         {

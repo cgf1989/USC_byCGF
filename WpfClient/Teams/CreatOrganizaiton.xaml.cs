@@ -18,7 +18,7 @@ namespace WpfClient.Teams
     /// <summary>
     /// CreatOrganizaiton.xaml 的交互逻辑
     /// </summary>
-    public partial class CreatOrganizaiton : Window
+    public partial class CreatOrganizaiton : MyMacClass
     {
         public CreatOrganizaiton()
         {

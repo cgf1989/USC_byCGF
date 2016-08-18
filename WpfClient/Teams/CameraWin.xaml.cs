@@ -18,7 +18,7 @@ namespace WpfClient.Teams
     /// <summary>
     /// CameraWin.xaml 的交互逻辑
     /// </summary>
-    public partial class CameraWin : Window
+    public partial class CameraWin : MyMacClass
     {
         public CameraWin()
         {

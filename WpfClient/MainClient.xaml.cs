@@ -13,6 +13,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BCP.ViewModel;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
 
 namespace WpfClient
 {
@@ -24,8 +27,13 @@ namespace WpfClient
         /// <summary>
         /// 当前的登录用户
         /// </summary>
-        public static UserDTO currentUser { set; get; }
+        public static UserDTO CurrentUser { set; get; }
+        /// <summary>
+        /// 系统所有用户的集合
+        /// </summary>
+        public static List<UserDTO> SysUserCollection { set; get; }
 
+        
 
         public MainClient()
         {
@@ -33,17 +41,43 @@ namespace WpfClient
 
             try
             {
-                tb_UserName.Text = currentUser.ActualName;
+                tb_UserName.Text = CurrentUser.ActualName;
                 tb_LoginTime.Text = System.DateTime.Now.ToString();
+
+                getAllUser();
             }
-            catch { MessageBox.Show("用户名获取失败"); }
+            catch { MessageBox.Show("用户信息获取失败"); }
         }
 
         private void hpLink_setting_Click(object sender, RoutedEventArgs e)
         {
             Login.ModifyPwdWin mdfPwdWin = new Login.ModifyPwdWin();
-            mdfPwdWin.currentUser = currentUser;
+            mdfPwdWin.currentUser = CurrentUser;
             mdfPwdWin.ShowDialog();
+        }
+
+        async void getAllUser()
+        {
+            List<UserDTO> userlist = new List<UserDTO>();
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:37768/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync("api/user/GetAllUser");
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string ds = await response.Content.ReadAsStringAsync();
+                CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                if (result.Success)
+                {
+                    userlist = JsonConvert.DeserializeObject<List<UserDTO>>(result.Data);
+                }
+            }
+
+            SysUserCollection = userlist;
         }
     }
 }
