@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/16/2016 14:44:34
+-- Date Created: 08/17/2016 14:47:52
 -- Generated from EDMX file: E:\Work_hy\共性平台\BasePlace\BCP.Domain\Edmx\DBPlaceFinal.edmx
 -- --------------------------------------------------
 
@@ -19,9 +19,6 @@ GO
 
 IF OBJECT_ID(N'[dbo].[FK_UserLoginLog]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[LoginLogs] DROP CONSTRAINT [FK_UserLoginLog];
-GO
-IF OBJECT_ID(N'[dbo].[FK_LoginLogUserMessage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserMessages] DROP CONSTRAINT [FK_LoginLogUserMessage];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrganizationOrganizationOtherName]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OrganizationOtherNames] DROP CONSTRAINT [FK_OrganizationOrganizationOtherName];
@@ -117,19 +114,13 @@ IF OBJECT_ID(N'[dbo].[FK_OrganizBasicOrganicInvestor1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OrganicInvestors] DROP CONSTRAINT [FK_OrganizBasicOrganicInvestor1];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserMessageGroup]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserGroups] DROP CONSTRAINT [FK_UserMessageGroup];
-GO
-IF OBJECT_ID(N'[dbo].[FK_MessageGroupMessageGroupMessager]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[MessageGroupMessagers] DROP CONSTRAINT [FK_MessageGroupMessageGroupMessager];
+    ALTER TABLE [dbo].[GroupMembers] DROP CONSTRAINT [FK_UserMessageGroup];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserMessageUserMessage]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[UserMessages] DROP CONSTRAINT [FK_UserMessageUserMessage];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserGroupName]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[GroupNames] DROP CONSTRAINT [FK_UserGroupName];
-GO
-IF OBJECT_ID(N'[dbo].[FK_GroupNameUserGroup]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserGroups] DROP CONSTRAINT [FK_GroupNameUserGroup];
+    ALTER TABLE [dbo].[Groups] DROP CONSTRAINT [FK_UserGroupName];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserCustomerGoup]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CustomerGoups] DROP CONSTRAINT [FK_UserCustomerGoup];
@@ -305,12 +296,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_DocSenderDocComent]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DocComents] DROP CONSTRAINT [FK_DocSenderDocComent];
 GO
-IF OBJECT_ID(N'[dbo].[FK_UserCustomerGoup1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CustomerGoups] DROP CONSTRAINT [FK_UserCustomerGoup1];
-GO
-IF OBJECT_ID(N'[dbo].[FK_EmployeeJobChange]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[JobChanges] DROP CONSTRAINT [FK_EmployeeJobChange];
-GO
 IF OBJECT_ID(N'[dbo].[FK_PostJobChange]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[JobChanges] DROP CONSTRAINT [FK_PostJobChange];
 GO
@@ -362,17 +347,38 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_WorkSpaceBaseTypeWorkSpaceType]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[WorkSpaceTypes] DROP CONSTRAINT [FK_WorkSpaceBaseTypeWorkSpaceType];
 GO
-IF OBJECT_ID(N'[dbo].[FK_LoginLogEventTime]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EventTimes] DROP CONSTRAINT [FK_LoginLogEventTime];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PositionPost]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_PositionPost];
-GO
 IF OBJECT_ID(N'[dbo].[FK_WorkSpaceBaseTypeDocumentManage]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DocumentManages] DROP CONSTRAINT [FK_WorkSpaceBaseTypeDocumentManage];
 GO
 IF OBJECT_ID(N'[dbo].[FK_DocManageStateDocumentManage]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DocumentManages] DROP CONSTRAINT [FK_DocManageStateDocumentManage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_OpenEventEventTime]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OperationDetails] DROP CONSTRAINT [FK_OpenEventEventTime];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LoginLogOpenEvent]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OperationEvents] DROP CONSTRAINT [FK_LoginLogOpenEvent];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GroupMemberGroupMessager]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[GroupMessagers] DROP CONSTRAINT [FK_GroupMemberGroupMessager];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GroupGroupMember]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[GroupMembers] DROP CONSTRAINT [FK_GroupGroupMember];
+GO
+IF OBJECT_ID(N'[dbo].[FK_EmployeePost]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_EmployeePost];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PositionPost]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_PositionPost];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GroupGroupMessager]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[GroupMessagers] DROP CONSTRAINT [FK_GroupGroupMessager];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerGoupUser_CustomerGoup]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CustomerGoupUser] DROP CONSTRAINT [FK_CustomerGoupUser_CustomerGoup];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CustomerGoupUser_User]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CustomerGoupUser] DROP CONSTRAINT [FK_CustomerGoupUser_User];
 GO
 
 -- --------------------------------------------------
@@ -409,8 +415,8 @@ GO
 IF OBJECT_ID(N'[dbo].[UserMessages]', 'U') IS NOT NULL
     DROP TABLE [dbo].[UserMessages];
 GO
-IF OBJECT_ID(N'[dbo].[UserGroups]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UserGroups];
+IF OBJECT_ID(N'[dbo].[GroupMembers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[GroupMembers];
 GO
 IF OBJECT_ID(N'[dbo].[OrganizationOtherNames]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OrganizationOtherNames];
@@ -484,11 +490,11 @@ GO
 IF OBJECT_ID(N'[dbo].[OrganizationEvents]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OrganizationEvents];
 GO
-IF OBJECT_ID(N'[dbo].[MessageGroupMessagers]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[MessageGroupMessagers];
+IF OBJECT_ID(N'[dbo].[GroupMessagers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[GroupMessagers];
 GO
-IF OBJECT_ID(N'[dbo].[GroupNames]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[GroupNames];
+IF OBJECT_ID(N'[dbo].[Groups]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Groups];
 GO
 IF OBJECT_ID(N'[dbo].[CustomerGoups]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CustomerGoups];
@@ -586,8 +592,14 @@ GO
 IF OBJECT_ID(N'[dbo].[WorkSpaceBaseTypes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[WorkSpaceBaseTypes];
 GO
-IF OBJECT_ID(N'[dbo].[EventTimes]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[EventTimes];
+IF OBJECT_ID(N'[dbo].[OperationDetails]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OperationDetails];
+GO
+IF OBJECT_ID(N'[dbo].[OperationEvents]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OperationEvents];
+GO
+IF OBJECT_ID(N'[dbo].[CustomerGoupUser]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CustomerGoupUser];
 GO
 
 -- --------------------------------------------------
@@ -731,11 +743,11 @@ GO
 CREATE TABLE [dbo].[GroupMembers] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [Creator] nvarchar(max)  NOT NULL,
+    [ReferenceUserId] int  NOT NULL,
     [UserID] int  NOT NULL,
     [JoinTime] datetime  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
-    [Rule] nvarchar(max)  NOT NULL,
+    [GroupRole] nvarchar(max)  NOT NULL,
     [GroupID] int  NULL
 );
 GO
@@ -1051,7 +1063,7 @@ GO
 CREATE TABLE [dbo].[Groups] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(max)  NOT NULL,
-    [CreatTime] nvarchar(max)  NOT NULL,
+    [CreatTime] datetime  NOT NULL,
     [UserID] int  NOT NULL,
     [GroupNumber] nvarchar(max)  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
