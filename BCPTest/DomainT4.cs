@@ -22,7 +22,7 @@ namespace BCPTest
             //
         }
 
-        private TestContext testContextInstance;
+        private TestContext testContextInstance;          
 
         /// <summary>
         ///获取或设置测试上下文，该上下文提供
