@@ -435,6 +435,7 @@
     <Compile Include="Interface\Service\IUserService.cs" />
     <Compile Include="Mapping\AutoMapperBootStrapper.cs" />
     <Compile Include="Mapping\CustomerGroupMapper.cs" />
+    <Compile Include="Mapping\GroupMapper.cs" />
     <Compile Include="Mapping\MapperHelper.cs" />
     <Compile Include="Model\Administrativecode.CS" />
     <Compile Include="Model\AssetBaseType.CS" />

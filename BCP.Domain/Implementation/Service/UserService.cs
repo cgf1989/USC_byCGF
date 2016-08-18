@@ -15,22 +15,33 @@ namespace BCP.Domain
         IUserRepository _userRepository = null;
         IUserMessageRepository _userMessageRepository = null;
         ICustomerGoupRepository _customerGroupRepository = null;
+        IGroupRepository _groupRepository = null;
+        IGroupMemberRepository _groupMemberRepository = null;
+        IGroupMessagerRepository _groupMessagerRepository = null;
         IUnitOfWork _unitOfWork = null;
 
         public UserService(IUnitOfWork unitOfWork,
             IUserMessageRepository userMessageRepository,
             ICustomerGoupRepository customerGroupRepository,
+            IGroupRepository groupRepository,
+            IGroupMemberRepository groupMemberRepository,
+            IGroupMessagerRepository groupMessagerRepository,
             IUserRepository userRepository)
         {
             this._userRepository = userRepository;
             this._userMessageRepository = userMessageRepository;
             this._customerGroupRepository = customerGroupRepository;
+            this._groupRepository = groupRepository;
+            this._groupMemberRepository = groupMemberRepository;
+            this._groupMessagerRepository = groupMessagerRepository;
 
             this._unitOfWork = unitOfWork;
             this._userRepository.UnitOfWork = unitOfWork;
             this._userMessageRepository.UnitOfWork = unitOfWork;
             this._customerGroupRepository.UnitOfWork = unitOfWork;
-
+            this._groupMessagerRepository.UnitOfWork = unitOfWork;
+            this._groupRepository.UnitOfWork = unitOfWork;
+            this._groupMemberRepository.UnitOfWork = unitOfWork;
         }
 
         public void InitDataBase()
@@ -49,12 +60,14 @@ namespace BCP.Domain
                     Domain="",
                     DomainId=""
                 };
-                CustomerGoup cg = new CustomerGoup() { User = user, GroupName = "管理员" };
-                _customerGroupRepository.Add(cg);
+                //CustomerGoup cg = new CustomerGoup() { User = user, GroupName = "管理员" };
+                //_customerGroupRepository.Add(cg);
                 _userRepository.Add(user);
                 _unitOfWork.Commit();
             }
         }
+
+        #region user
 
         public bool Login(string userName, string userPwd)
         {
@@ -131,7 +144,6 @@ namespace BCP.Domain
             return true;
         }
 
-
         public void MarkPTPMessage(int sendId, int replyId)
         {
             var message = _userMessageRepository.GetAll().Where(it => it.SenderID == sendId && it.ReplyId == replyId);
@@ -143,8 +155,9 @@ namespace BCP.Domain
             _unitOfWork.Commit();
         }
 
+        #endregion
 
-        #region group
+        #region customergroup
         public bool AddCustomerGroup(CustomerGoupDTO customerGoupDTO)
         {
             CustomerGoup cg = customerGoupDTO.MapperTo<CustomerGoupDTO, CustomerGoup>();
@@ -187,12 +200,11 @@ namespace BCP.Domain
             }
         }
 
-        public List<UserDTO> GetUserByGroupId(int groupId)
+        public List<UserDTO> GetUserByCustomerGroupId(int groupId)
         {
-            return _userRepository.GetAll().Where(it => it.Belongs != null
-                && it.Belongs.Where(be => be.ID == groupId).FirstOrDefault()!=null)
-                .MapperTo<User, UserDTO>()
-                .ToList();
+            var ret = _userRepository.GetAllWithNavigationalProperty("Belongs").Where(it =>
+                (it.Belongs.Where(be => be.ID == groupId).FirstOrDefault()) != null);
+            return ret.MapperTo<User, UserDTO>().ToList();
         }
 
         public bool AddUserToCustomerGroup(int userId, int groupId)
@@ -226,6 +238,165 @@ namespace BCP.Domain
             _unitOfWork.Commit();
             return true;
         }
+        #endregion
+
+        #region group
+
+        public bool UpdateGroup(int groupId, string groupNumber, string groupName, string groupNotes, string groupType, int userId)
+        {
+            var group = _groupRepository.GetByKey(groupId);
+            if (group == null) throw new Exception("未找到对应的群组");
+            var member = _groupMemberRepository.GetAll().Where(it => it.User.ID == userId).FirstOrDefault();
+            if (member == null) throw new Exception("用户不属于你群组");
+            if (!member.GroupRole.Equals(GroupRole.GroupCreator.ToString()) && !member.GroupRole.Equals(GroupRole.GroupManager.ToString())) throw new Exception("用户没修改权限");
+            group.GroupNumber = groupNumber;
+            group.Name = groupName;
+            group.Notes = groupNotes;
+            group.Type = groupType;
+            _groupRepository.Save(group);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+        public bool RegisterGroup(GroupDTO groupDTO)
+        {
+            Group group = groupDTO.MapperTo<GroupDTO, Group>();
+            group.User = _userRepository.GetByKey(groupDTO.UserID);
+            if (group.User == null) throw new Exception("未找到用户数据");
+            if (group.GroupMembers == null) group.GroupMembers = new List<GroupMember>();
+            group.GroupMembers.Add(new GroupMember() { GroupRole = GroupRole.GroupCreator.ToString(), JoinTime = DateTime.Now, State = "1", Name = group.User.ActualName, ReferenceUserId = group.UserID });
+            _groupRepository.Add(group);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+        public bool DeleteGroup(int groupId, int userId)
+        {
+            var group = _groupRepository.GetAll().Where(it => it.ID == groupId && it.User.ID == userId).FirstOrDefault();
+            if (group == null) throw new Exception("不存在的群组或不是群组创建者");
+            if (_groupMessagerRepository.GetAll().Where(it => it.GroupID == groupId).Count() > 1) throw new Exception("群组成员不为空");
+            var member = _groupMemberRepository.GetAll().Where(it => it.UserID == userId && it.GroupID == groupId).FirstOrDefault();
+            if (member != null)
+            {
+                _groupMemberRepository.RemoveNonCascaded(member);
+            }
+            _groupRepository.RemoveNonCascaded(groupId);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+        public List<GroupDTO> GetAllGroupByUserId(int userId, bool IsCacasde)
+        {
+            if (IsCacasde)
+            {
+                if (userId == -1) throw new Exception("userId!=-1");
+                return _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => it.User.ID == userId)
+                    .ConvertToGroupDTO()
+                    .ToList();
+            }
+            else
+            {
+                if (userId == -1)
+                    return _groupRepository.GetAll().MapperTo<Group, GroupDTO>().ToList();
+                else
+                    return _groupRepository.GetAll().Where(it => it.User.ID == userId).MapperTo<Group, GroupDTO>()
+                    .ToList();
+            }
+        }
+
+        public GroupDTO GetGroupById(int groupId)
+        {
+            var ret = _groupRepository.GetByKey(groupId);
+            if (ret == null) throw new Exception("未找到数据");
+            return ret.MapperTo<Group, GroupDTO>();
+        }
+
+        public List<GroupMemberDTO> GetGroupMembersByGroupId(int groupId)
+        {
+            return _groupMemberRepository.GetAllWithNavigationalProperty("Group", "User").Where(it => it.GroupID == groupId)
+                .ConvertToGroupMemberDTO()
+                .ToList();
+        }
+
+        public bool AddUserToGroup(int memberUserId, int groupId, int userId)
+        {
+            //判读带加入用户是否存在并获取用户数据
+            var user = _userRepository.GetByKey(memberUserId);
+            if (user == null) throw new Exception("不存在的用户");
+
+            //判断群组是否存在并获得群组数据
+            var group = _groupRepository.GetByKey(groupId);
+            if (group == null) throw new Exception("不存在的群组");
+
+            //判断登录用户是否拥有操作权限
+            var refer = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).FirstOrDefault();
+            if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator) && !refer.GroupRole.Equals(GroupRole.GroupManager)))
+                throw new Exception("用户没有操作权限");
+
+            //判断带加入用户是否已经加入群组
+            if (_groupMemberRepository.GetAll().Where(it => it.UserID == memberUserId).FirstOrDefault() != null) throw new Exception("用户已加入群组");
+
+            GroupMember gm = new GroupMember() { Group = group, GroupRole = GroupRole.GroupMember.ToString(), JoinTime = DateTime.Now, Name = user.ActualName, ReferenceUserId = userId, User = user, UserID = user.ID };
+            _groupMemberRepository.Add(gm);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+        public bool RemoveUserFromGroup(int groupMemberId, int groupId, int userId)
+        {
+            //判断群成员是否存在以及是否可删除并获取群组成员数据
+            var member = _groupMemberRepository.GetByKey(groupMemberId);
+            if (member == null) throw new Exception("群组不存在该用户");
+            if (member.GroupRole == GroupRole.GroupCreator.ToString()) throw new Exception("不能删除群组创建者");
+
+            //获取群组数据
+            var group = _groupRepository.GetByKey(groupId);
+            if (group == null) throw new Exception("不存在的群组");
+
+            //判断用户是否拥有删除权限
+            var refer = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).FirstOrDefault();
+            if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator) && !refer.GroupRole.Equals(GroupRole.GroupManager)))
+                throw new Exception("用户没有操作权限");
+
+            _groupMemberRepository.RemoveNonCascaded(groupMemberId);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+        public bool ShiftGroupMemberRole(int userId, int groupId, string groupRole, int groupMemberId)
+        {
+            //
+            if (groupRole == GroupRole.GroupCreator.ToString()) throw new Exception("群组创建者只能有一个");
+
+            //验证并获得群组数据
+            var group = _groupRepository.GetByKey(groupId);
+            if (group == null) throw new Exception("不存在的群组");
+
+            //验证用户权限
+            var refer = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).FirstOrDefault();
+            if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator) && !refer.GroupRole.Equals(GroupRole.GroupManager)))
+                throw new Exception("用户没有操作权限");
+
+            //验证并取得群成员数据
+            var member = _groupMemberRepository.GetByKey(groupMemberId);
+            if (member == null) throw new Exception("不存在群成员");
+
+            member.GroupRole = groupRole;
+            _groupMemberRepository.Save(member);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+        public bool UpdateGroupMemberName(int userId, string newName, int groupMemberId)
+        {
+            var member = _groupMemberRepository.GetAll().Where(it => it.ID == groupMemberId && it.UserID == userId).FirstOrDefault();
+            if (member == null) throw new Exception("不存在的群成员或者并非用户修改自己的群名片");
+            member.Name = newName;
+            _groupMemberRepository.Save(member);
+            _unitOfWork.Commit();
+            return true;
+        }
+
         #endregion
     }
 }

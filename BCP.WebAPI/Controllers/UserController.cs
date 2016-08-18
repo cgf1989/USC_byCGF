@@ -67,6 +67,8 @@ namespace BCP.WebAPI.Controllers
             return JsonHelper.GetResponseMessage(true, "获取成功", typeof(UserDTO), true, UserService.GetUser());
         }
 
+        #region customerGroup
+
         /// <summary>
         /// 用户新增一个分组
         /// </summary>
@@ -147,7 +149,7 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetUserFromCustomerGroup(String groupId)
         {
-            return JsonHelper.GetResponseMessage(true, "获取用户所有分组数据", typeof(UserDTO), true, UserService.GetUserByGroupId(Convert.ToInt32(groupId)));
+            return JsonHelper.GetResponseMessage(true, "获取用户所有分组数据", typeof(UserDTO), true, UserService.GetUserByCustomerGroupId(Convert.ToInt32(groupId)));
         }
 
         /// <summary>
@@ -183,5 +185,196 @@ namespace BCP.WebAPI.Controllers
             else
                 throw new Exception("从分组删除用户失败");
         }
+
+        #endregion
+
+        #region group
+
+        /// <summary>
+        /// 创建一个群组
+        /// </summary>
+        /// <param name="userId">创建者Id</param>
+        /// <param name="groupNumber">群号</param>
+        /// <param name="groupName">群名</param>
+        /// <param name="groupNotes">备注</param>
+        /// <param name="groupType">群类型</param>
+        /// <param name="groupValidate">？</param>
+        /// <returns></returns>
+        public HttpResponseMessage RegisterGroup(String userId,String groupNumber,String groupName,String groupNotes,String groupType,String groupValidate)
+        {
+            if (UserService.RegisterGroup(new GroupDTO()
+            {
+                CreatTime = DateTime.Now,
+                GroupNumber = groupNumber,
+                Name = groupName,
+                Notes = groupNotes,
+                State = "ture",
+                Type = groupType,
+                UserID = Convert.ToInt32(userId),
+                Validate = groupValidate
+            }))
+            {
+                return JsonHelper.GetResponseMessage(true, "创建群组失败", null, false, null);
+            }
+            throw new Exception("创建群组失败");
+        }
+
+        /// <summary>
+        /// 修改群组信息
+        /// </summary>
+        /// <param name="groupNumber">群号</param>
+        /// <param name="groupName">群名</param>
+        /// <param name="groupNotes">备注</param>
+        /// <param name="groupType">群类型</param>
+        /// <returns></returns>
+        public HttpResponseMessage UpdateGroupInfo(String groupId,String groupNumber,String groupName,String groupNotes,String groupType,String userId)
+        {
+            if (UserService.UpdateGroup(Convert.ToInt32(groupId), groupNumber, groupName, groupNotes, groupType,Convert.ToInt32(userId)))
+            {
+                return JsonHelper.GetResponseMessage(true, "修改群组失败", null, false, null);
+            }
+            throw new Exception("修改群组失败");
+        }
+
+        /// <summary>
+        /// 删除群组(群组成员为空)
+        /// </summary>
+        /// <param name="groupId">群组主键</param>
+        /// <param name="userId">登录用户主键</param>
+        /// <returns></returns>
+        public HttpResponseMessage DeleteGroup(String groupId,String userId)
+        {
+            if (UserService.DeleteGroup(Convert.ToInt32(groupId), Convert.ToInt32(userId)))
+            {
+                return JsonHelper.GetResponseMessage(true, "删除群组失败", null, false, null);
+            }
+            throw new Exception("删除群组失败");
+        }
+
+        /// <summary>
+        /// 获取用户所有群组（不包括群组成员)
+        /// </summary>
+        /// <param name="userId">登录用户</param>
+        /// <returns></returns>
+        public HttpResponseMessage GetAllGroup(String userId)
+        {
+            return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupDTO), true, UserService.GetAllGroupByUserId(Convert.ToInt32(userId),false));
+            //throw new Exception("获取群组数据失败");
+        }
+
+        /// <summary>
+        /// 获取所有群组
+        /// </summary>
+        /// <returns></returns>
+        public HttpResponseMessage GetAllGroup()
+        {
+            return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupDTO), true, UserService.GetAllGroupByUserId(-1, false));
+        }
+
+        /// <summary>
+        /// 获取用户所有群组（包括群组成员)
+        /// </summary>
+        /// <param name="userId">登录用户Id</param>
+        /// <returns></returns>
+        public HttpResponseMessage GetAllGroupWithMember(String userId)
+        {
+            return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupDTO), true, UserService.GetAllGroupByUserId(Convert.ToInt32(userId), true));
+            //throw new Exception("获取群组数据失败");
+        }
+
+        /// <summary>
+        /// 获取群组信息
+        /// </summary>
+        /// <param name="groupId">群组主键</param>
+        /// <returns></returns>
+        public HttpResponseMessage GetGroupById(string groupId)
+        {
+            return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupDTO), false, UserService.GetGroupById(Convert.ToInt32(groupId)));
+            //throw new Exception("获取群组数据失败");
+        }
+
+        /// <summary>
+        /// 获取群组成员
+        /// </summary>
+        /// <param name="groupId">群组Id</param>
+        /// <returns></returns>
+        public HttpResponseMessage GetGroupMember(String groupId)
+        {
+            return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupMemberDTO), true, UserService.GetGroupMembersByGroupId(Convert.ToInt32(groupId)));
+            //throw new Exception("获取群组数据失败");
+        }
+
+        /// <summary>
+        /// 添加群组成员
+        /// </summary>
+        /// <param name="userId">登录用户</param>
+        /// <param name="groupId">群组</param>
+        /// <param name="memberUserId">待添加成员userId</param>
+        /// <returns></returns>
+        public HttpResponseMessage AddUserToGroup(String userId,String groupId,String memberUserId)
+        {
+            if (UserService.AddUserToGroup(Convert.ToInt32(memberUserId), Convert.ToInt32(groupId), Convert.ToInt32(userId)))
+            {
+                return JsonHelper.GetResponseMessage(true, "添加用户到群组成功", null, false, null);
+            }
+            throw new Exception("无法添加用户到群组");
+        }
+
+        /// <summary>
+        /// 移除群组成员
+        /// </summary>
+        /// <param name="userId">登录用户</param>
+        /// <param name="groupId">群组</param>
+        /// <param name="groupMemberId">带移除群组成员Id</param>
+        /// <returns></returns>
+        public HttpResponseMessage RemoveUserFromGroup(string userId, String groupId, String groupMemberId)
+        {
+            if (UserService.RemoveUserFromGroup(Convert.ToInt32(groupMemberId), Convert.ToInt32(groupId), Convert.ToInt32(userId)))
+            {
+                return JsonHelper.GetResponseMessage(true, "移除成功", null, false, null);
+            }
+            throw new Exception("无法从群组移除数据");
+        }
+
+
+        /// <summary>
+        /// 修改群组成员角色
+        /// </summary>
+        /// <param name="userId">登录用户</param>
+        /// <param name="groupId">群组</param>
+        /// <param name="groupRole">群角色</param>
+        /// <param name="groupMemberId">群组成员</param>
+        /// <returns></returns>
+        public HttpResponseMessage ShiftGroupMemberRole(String userId, String groupId, String groupRole, String groupMemberId)
+        {
+            if (UserService.ShiftGroupMemberRole(Convert.ToInt32(userId), Convert.ToInt32(groupId), groupRole, Convert.ToInt32(groupMemberId)))
+            {
+                return JsonHelper.GetResponseMessage(true, "修改群组角色成功", null, false, null);
+            }
+            throw new Exception("修改失败");
+        }
+
+       /// <summary>
+       /// 修改群名片
+       /// </summary>
+       /// <param name="userId">登录用户</param>
+       /// <param name="newName">新名称</param>
+       /// <param name="groupMemberId">群组成员</param>
+       /// <returns></returns>
+        public HttpResponseMessage UpdateGroupMemberName(String userId,String newName,String groupMemberId)
+        {
+            if (UserService.UpdateGroupMemberName(Convert.ToInt32(userId), newName, Convert.ToInt32(groupMemberId)))
+            {
+                return JsonHelper.GetResponseMessage(true, "修改群组名片成功", null, false, null);
+            }
+            throw new Exception("修改群组名片失败");
+        }
+
+        public HttpResponseMessage GetGroupMessage()
+        {
+            return null;
+        }
+
+        #endregion
     }
 }

@@ -22,11 +22,11 @@ namespace BCP.Domain.Edmx
     
         public int ID { get; set; }
         public string Name { get; set; }
-        public string Creator { get; set; }
+        public int ReferenceUserId { get; set; }
         public int UserID { get; set; }
         public System.DateTime JoinTime { get; set; }
         public string State { get; set; }
-        public string Rule { get; set; }
+        public string GroupRole { get; set; }
         public Nullable<int> GroupID { get; set; }
     
         public virtual User User { get; set; }

@@ -23,7 +23,7 @@ namespace BCP.Domain.Edmx
     
         public int ID { get; set; }
         public string Name { get; set; }
-        public string CreatTime { get; set; }
+        public System.DateTime CreatTime { get; set; }
         public int UserID { get; set; }
         public string GroupNumber { get; set; }
         public string State { get; set; }

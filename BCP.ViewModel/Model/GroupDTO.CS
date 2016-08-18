@@ -13,7 +13,7 @@ namespace BCP.ViewModel
     {
         public System.Int32 ID { get; set; }
         public System.String Name { get; set; }
-        public System.String CreatTime { get; set; }
+        public System.DateTime CreatTime { get; set; }
         public System.Int32 UserID { get; set; }
         public System.String GroupNumber { get; set; }
         public System.String State { get; set; }

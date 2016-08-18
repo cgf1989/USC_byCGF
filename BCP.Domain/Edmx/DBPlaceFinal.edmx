@@ -702,11 +702,11 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Creator" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ReferenceUserId" Type="int" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="JoinTime" Type="datetime" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Rule" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="GroupRole" Type="nvarchar(max)" Nullable="false" />
     <Property Name="GroupID" Type="int" Nullable="true" />
   </EntityType>
   <EntityType Name="OrganizationOtherNames">
@@ -1022,7 +1022,7 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CreatTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreatTime" Type="datetime" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="GroupNumber" Type="nvarchar(max)" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
@@ -3779,12 +3779,12 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="String" Name="Creator" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="Int32" Name="ReferenceUserId" Nullable="false" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="DateTime" Name="JoinTime" Nullable="false" Precision="3" />
           <Property Type="String" Name="State" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserMessageGroup" FromRole="MessageGroup" ToRole="User" />
-          <Property Name="Rule" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="GroupRole" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="GroupMessagers" Relationship="BCP.Domain.Edmx.GroupMemberGroupMessager" FromRole="GroupMember" ToRole="GroupMessager" />
           <NavigationProperty Name="Group" Relationship="BCP.Domain.Edmx.GroupGroupMember" FromRole="GroupMember" ToRole="Group" />
           <Property Name="GroupID" Type="Int32" Nullable="true" />
@@ -4758,7 +4758,7 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="String" Name="CreatTime" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Type="DateTime" Name="CreatTime" Nullable="false" />
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserGroupName" FromRole="GroupName" ToRole="User" />
           <Property Type="Int32" Name="UserID" Nullable="false" />
           <Property Type="String" Name="GroupNumber" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
@@ -6667,11 +6667,11 @@
         <MappingFragment StoreEntitySet="GroupMembers">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Creator" ColumnName="Creator" />
+          <ScalarProperty Name="ReferenceUserId" ColumnName="ReferenceUserId" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="JoinTime" ColumnName="JoinTime" />
           <ScalarProperty Name="State" ColumnName="State" />
-          <ScalarProperty Name="Rule" ColumnName="Rule" />
+          <ScalarProperty Name="GroupRole" ColumnName="GroupRole" />
           <ScalarProperty Name="GroupID" ColumnName="GroupID" />
         </MappingFragment>
       </EntityTypeMapping>
