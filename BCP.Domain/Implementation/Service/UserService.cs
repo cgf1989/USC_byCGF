@@ -264,7 +264,7 @@ namespace BCP.Domain
             group.User = _userRepository.GetByKey(groupDTO.UserID);
             if (group.User == null) throw new Exception("未找到用户数据");
             if (group.GroupMembers == null) group.GroupMembers = new List<GroupMember>();
-            group.GroupMembers.Add(new GroupMember() { GroupRole = GroupRole.GroupCreator.ToString(), JoinTime = DateTime.Now, State = "1", Name = group.User.ActualName, ReferenceUserId = group.UserID });
+            group.GroupMembers.Add(new GroupMember() { GroupRole = GroupRole.GroupCreator.ToString(), JoinTime = DateTime.Now, State = "1", Name = group.User.ActualName, ReferenceUserId = group.UserID,User=group.User });
             _groupRepository.Add(group);
             _unitOfWork.Commit();
             return true;
