@@ -379,7 +379,7 @@ namespace BCP.WebAPI.Controllers
             {
                 return JsonHelper.GetResponseMessage(true, "修改群组名片成功", null, false, null);
             }
-            throw new Exception("修改群组名片失败");
+            throw new Exception("修改群组名片失败"); 
         }
 
         public HttpResponseMessage GetGroupMessage()
