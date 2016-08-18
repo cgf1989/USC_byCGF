@@ -90,7 +90,7 @@ namespace BCP.Domain
 
         public UserDTO GetUser(int id)
         {
-            return _userRepository.GetAll().Where(it => it.ID == id).First().MapperTo<User, UserDTO>();
+            return _userRepository.GetAllWithNavigationalProperty("GroupNames").Where(it => it.ID == id).First().ConvertToUserDTO();
         }
 
         public UserDTO GetUser(string userName)

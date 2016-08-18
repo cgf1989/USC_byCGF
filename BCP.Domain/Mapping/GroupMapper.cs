@@ -29,7 +29,7 @@ namespace BCP.Domain
             GroupDTO dto = group.MapperTo<Group, GroupDTO>();
             if (group.GroupMembers != null && group.GroupMembers.Count > 0)
             {
-                dto.Members = group.GroupMembers.MapperTo<GroupMember, GroupMemberDTO>().ToList();
+                dto.Members = group.GroupMembers.ConvertToGroupMemberDTO().ToList();
             }
             return dto;
         }

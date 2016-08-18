@@ -9,5 +9,6 @@ namespace BCP.ViewModel
     public partial class UserDTO
     {
         public String  ContextId { get; set; }
+        public List<GroupDTO> Groups { get; set; }
     }
 }

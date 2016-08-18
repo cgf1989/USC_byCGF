@@ -124,10 +124,23 @@ namespace BCP.WebAPI.SignalR
             }
         }
 
-        public void PTASendMessage()
+        /// <summary>
+        /// 服务器方法 发送群组消息
+        /// </summary>
+        /// <param name="groupId"></param>
+        public void PTGSenderMessage(int groupId)
         {
- 
+            UnityBootStrapper ubs = new UnityBootStrapper();
+            ubs.Bindings();
+            IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+            lock (_lockObject)
+            {
+
+            }
         }
+
+        public void PTGMarkMessage()
+        { }
 
         /// <summary>
         /// 服务端方法
@@ -161,8 +174,7 @@ namespace BCP.WebAPI.SignalR
             }
         }
 
-        public void InitPTA()
-        { }
+        public void InitPTG() { }
 
         /// <summary>
         /// 服务器方法 按日期获取聊天记录
@@ -200,5 +212,8 @@ namespace BCP.WebAPI.SignalR
                 }
             }
         }
+
+        public void GetPTGMessage()
+        { }
     }
 }

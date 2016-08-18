@@ -200,6 +200,7 @@ namespace BCP.WebAPI.Controllers
         /// <param name="groupType">群类型</param>
         /// <param name="groupValidate">？</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage RegisterGroup(String userId,String groupNumber,String groupName,String groupNotes,String groupType,String groupValidate)
         {
             if (UserService.RegisterGroup(new GroupDTO()
@@ -214,7 +215,7 @@ namespace BCP.WebAPI.Controllers
                 Validate = groupValidate
             }))
             {
-                return JsonHelper.GetResponseMessage(true, "创建群组失败", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "创建群组成功", null, false, null);
             }
             throw new Exception("创建群组失败");
         }
@@ -227,11 +228,12 @@ namespace BCP.WebAPI.Controllers
         /// <param name="groupNotes">备注</param>
         /// <param name="groupType">群类型</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage UpdateGroupInfo(String groupId,String groupNumber,String groupName,String groupNotes,String groupType,String userId)
         {
             if (UserService.UpdateGroup(Convert.ToInt32(groupId), groupNumber, groupName, groupNotes, groupType,Convert.ToInt32(userId)))
             {
-                return JsonHelper.GetResponseMessage(true, "修改群组失败", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "修改群组成功", null, false, null);
             }
             throw new Exception("修改群组失败");
         }
@@ -242,11 +244,12 @@ namespace BCP.WebAPI.Controllers
         /// <param name="groupId">群组主键</param>
         /// <param name="userId">登录用户主键</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage DeleteGroup(String groupId,String userId)
         {
             if (UserService.DeleteGroup(Convert.ToInt32(groupId), Convert.ToInt32(userId)))
             {
-                return JsonHelper.GetResponseMessage(true, "删除群组失败", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "删除群组成功", null, false, null);
             }
             throw new Exception("删除群组失败");
         }
@@ -256,6 +259,7 @@ namespace BCP.WebAPI.Controllers
         /// </summary>
         /// <param name="userId">登录用户</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage GetAllGroup(String userId)
         {
             return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupDTO), true, UserService.GetAllGroupByUserId(Convert.ToInt32(userId),false));
@@ -266,6 +270,7 @@ namespace BCP.WebAPI.Controllers
         /// 获取所有群组
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage GetAllGroup()
         {
             return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupDTO), true, UserService.GetAllGroupByUserId(-1, false));
@@ -276,6 +281,7 @@ namespace BCP.WebAPI.Controllers
         /// </summary>
         /// <param name="userId">登录用户Id</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage GetAllGroupWithMember(String userId)
         {
             return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupDTO), true, UserService.GetAllGroupByUserId(Convert.ToInt32(userId), true));
@@ -287,6 +293,7 @@ namespace BCP.WebAPI.Controllers
         /// </summary>
         /// <param name="groupId">群组主键</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage GetGroupById(string groupId)
         {
             return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupDTO), false, UserService.GetGroupById(Convert.ToInt32(groupId)));
@@ -298,6 +305,7 @@ namespace BCP.WebAPI.Controllers
         /// </summary>
         /// <param name="groupId">群组Id</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage GetGroupMember(String groupId)
         {
             return JsonHelper.GetResponseMessage(true, "获取群组数据成功", typeof(GroupMemberDTO), true, UserService.GetGroupMembersByGroupId(Convert.ToInt32(groupId)));
@@ -311,6 +319,7 @@ namespace BCP.WebAPI.Controllers
         /// <param name="groupId">群组</param>
         /// <param name="memberUserId">待添加成员userId</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage AddUserToGroup(String userId,String groupId,String memberUserId)
         {
             if (UserService.AddUserToGroup(Convert.ToInt32(memberUserId), Convert.ToInt32(groupId), Convert.ToInt32(userId)))
@@ -327,6 +336,7 @@ namespace BCP.WebAPI.Controllers
         /// <param name="groupId">群组</param>
         /// <param name="groupMemberId">带移除群组成员Id</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage RemoveUserFromGroup(string userId, String groupId, String groupMemberId)
         {
             if (UserService.RemoveUserFromGroup(Convert.ToInt32(groupMemberId), Convert.ToInt32(groupId), Convert.ToInt32(userId)))
@@ -345,6 +355,7 @@ namespace BCP.WebAPI.Controllers
         /// <param name="groupRole">群角色</param>
         /// <param name="groupMemberId">群组成员</param>
         /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage ShiftGroupMemberRole(String userId, String groupId, String groupRole, String groupMemberId)
         {
             if (UserService.ShiftGroupMemberRole(Convert.ToInt32(userId), Convert.ToInt32(groupId), groupRole, Convert.ToInt32(groupMemberId)))
@@ -361,6 +372,7 @@ namespace BCP.WebAPI.Controllers
        /// <param name="newName">新名称</param>
        /// <param name="groupMemberId">群组成员</param>
        /// <returns></returns>
+        [HttpGet]
         public HttpResponseMessage UpdateGroupMemberName(String userId,String newName,String groupMemberId)
         {
             if (UserService.UpdateGroupMemberName(Convert.ToInt32(userId), newName, Convert.ToInt32(groupMemberId)))
