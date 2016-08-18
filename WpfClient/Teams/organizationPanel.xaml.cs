@@ -103,7 +103,7 @@ namespace WpfClient.Teams
 
                 System.Threading.Thread.Sleep(1000);
 
-                s.Login(MainClient.currentUser.UserName, MainClient.currentUser.Password);
+                s.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
                 //s.GetContactRecord(MainClient.currentUser.Department);
                 pd.Show();
             }

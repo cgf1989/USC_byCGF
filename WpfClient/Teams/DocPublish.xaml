@@ -1,7 +1,8 @@
-﻿<Window x:Class="WpfClient.Teams.DocPublish"
+﻿<scr:MyMacClass_noneMaxBtn x:Class="WpfClient.Teams.DocPublish"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="文档传输" Height="98" Width="320" >
+        xmlns:scr="clr-namespace:WpfClient"
+        Title="文档传输" Height="98" Width="320" Style="{DynamicResource WindowStyle2}">
     <StackPanel Height="auto" >
         <WrapPanel Margin="5">
             <Label Content="文件名："/>
@@ -14,4 +15,4 @@
             </StatusBarItem>
         </StatusBar>
     </StackPanel>
-</Window>
+</scr:MyMacClass_noneMaxBtn>

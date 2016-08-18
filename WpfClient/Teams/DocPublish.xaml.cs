@@ -17,7 +17,7 @@ namespace WpfClient.Teams
     /// <summary>
     /// DocPublish.xaml 的交互逻辑
     /// </summary>
-    public partial class DocPublish : Window
+    public partial class DocPublish : MyMacClass_noneMaxBtn
     {
         public DocPublish()
         {

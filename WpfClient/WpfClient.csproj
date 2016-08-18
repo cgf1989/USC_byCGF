@@ -111,6 +111,9 @@
     <Compile Include="Contacts\ContactsUControl.xaml.cs">
       <DependentUpon>ContactsUControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contacts\DelContactWin.xaml.cs">
+      <DependentUpon>DelContactWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contacts\DocManage.xaml.cs">
       <DependentUpon>DocManage.xaml</DependentUpon>
     </Compile>
@@ -236,6 +239,10 @@
     <Page Include="Contacts\ContactsUControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Contacts\DelContactWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Contacts\DocManage.xaml">
       <Generator>MSBuild:Compile</Generator>

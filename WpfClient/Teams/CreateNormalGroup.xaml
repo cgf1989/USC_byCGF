@@ -1,11 +1,12 @@
-﻿<Window x:Class="WpfClient.Teams.CreateNormalGroup"
+﻿<scr:MyMacClass_noneMaxBtn x:Class="WpfClient.Teams.CreateNormalGroup"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfClient.Teams"
+        xmlns:scr="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="创建普通群" Height="150" Width="320" WindowStartupLocation="CenterScreen" Background="#ebf2f9">
+        Title="创建普通群" Height="150" Width="320" WindowStartupLocation="CenterScreen"  Style="{DynamicResource WindowStyle2}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="70"/>
@@ -20,4 +21,4 @@
         <Button Grid.Row="1" Grid.Column="1" Name="btn_Confirm"  Content="确定"  Width="80" Height="28" HorizontalAlignment="Right" Margin="10,0,10,10" VerticalAlignment="Center" Click="btn_Confirm_Click" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White"/>
 
     </Grid>
-</Window>
+</scr:MyMacClass_noneMaxBtn>
