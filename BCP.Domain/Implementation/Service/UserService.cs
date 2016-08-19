@@ -424,7 +424,7 @@ namespace BCP.Domain
                 .MapperTo<GroupMember, GroupMemberDTO>();
         }
 
-        bool AddGroupMessage(GroupMessagerDTO gmt,int userid)
+        public bool AddGroupMessage(GroupMessagerDTO gmt,int userid)
         {
             GroupMember gm = _groupMemberRepository.GetAll().Where(it => it.UserID == userid).FirstOrDefault();
             if (gm == null) throw new Exception("不存在的群成员");
@@ -442,13 +442,13 @@ namespace BCP.Domain
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        bool MarkPTGMessage(int userId)
+        public bool MarkPTGMessage(int userId)
         {
             var groupMessage = _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserID == userId).FirstOrDefault();
             return true;
         }
 
-        List<GroupMessagerDTO> GetPTGMessage(int userId)
+        public List<GroupMessagerDTO> GetPTGMessage(int userId)
         {
             return _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserID == userId)
                 .MapperTo<GroupMessager, GroupMessagerDTO>()

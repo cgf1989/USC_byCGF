@@ -143,7 +143,7 @@ namespace BCP.WebAPI.SignalR
                     {
                         return;
                     }
-                    GroupMessagerDTO gmt = new GroupMessagerDTO() { Content = cp.Content.ToString(), GroupID = groupId, Type = MessageType.Text.ToString(), SendTime = cp.SendTime.ToString("yyyy-MM-dd hh:mm:dd") };
+                    GroupMessagerDTO gmt = new GroupMessagerDTO() { Content = cp.Content.ToString(), GroupID = groupId, Type = MessageType.Text.ToString(), SendTime = cp.SendTime.ToString() };
                     if (userService.AddGroupMessage(gmt, sender.ID))
                     {
                         foreach (var node in OnLineUser)
@@ -216,6 +216,18 @@ namespace BCP.WebAPI.SignalR
                 var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
                 if (sender == null) return;
                 List<GroupMessagerDTO> list = userService.GetPTGMessage(sender.ID);
+                foreach (var node in list)
+                {
+                    CommunitcationPackage cp = new CommunitcationPackage();
+                    if (node.Type == MessageType.Text.ToString())
+                    {
+                        cp.Content = node.Content;
+                        cp.MType = MessageType.Text;
+                        cp.CType = CommunitcationType.PersonToGroup;
+                        cp.SendTime = Convert.ToDateTime(node.SendTime);
+                    }
+                    Clients.Client(Context.ConnectionId).AddPTGMessage(sender, cp);
+                }
             }
         }
 
