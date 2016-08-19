@@ -271,4 +271,83 @@ namespace BCP.WebAPI.SignalR
         public void GetPTGMessage()
         { }
     }
+
+
+    public class CHun:Hub
+    {
+        public static List<UserDTO> OnLineUser = new List<UserDTO>();
+        private static object _lockObject = new object();
+
+        #region ApiInterface
+
+        public static void Login(UserDTO userDto)
+        {
+            lock (_lockObject)
+            {
+                if (OnLineUser.Where(it => it.ID.Equals(userDto.ID)).FirstOrDefault() == null)
+                {
+                    OnLineUser.Add(userDto);
+                }
+            }
+        }
+
+        public static void Logout(int userId)
+        {
+            lock (_lockObject)
+            {
+                var user = OnLineUser.Where(it => it.ID == userId).FirstOrDefault();
+                if (user != null)
+                    OnLineUser.Remove(user);
+            }
+        }
+
+        #endregion
+
+        #region override
+        //public override Task OnConnected()
+        //{
+        //    return base.OnConnected();
+        //}
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    base.Dispose(disposing);
+        //}
+
+        //public override Task OnDisconnected(bool stopCalled)
+        //{
+        //    return base.OnDisconnected(stopCalled);
+        //}
+        #endregion
+
+        #region ServerInterface
+
+        public bool Login(String userName, String userPwd)
+        {
+            lock (_lockObject)
+            {
+                var user = OnLineUser.Where(it => it.UserName.Equals(userName)).FirstOrDefault();
+                if (user != null)
+                {
+                    user.ContextId = Context.ConnectionId;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void SendMessage()
+        { }
+
+        public void MarkMessage()
+        { }
+
+        public void GetAllMessage()
+        { }
+
+        public void GetUnMarkedMessage()
+        { }
+
+        #endregion
+    }
 }

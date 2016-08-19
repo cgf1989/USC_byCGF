@@ -303,10 +303,11 @@ namespace BCP.Domain
                 //    .ToList();
                 //var partionList=_groupRepository.GetAllWithNavigationalProperty("GroupMembers")
                 //    .Where(it=>it.GroupMembers.Where(it=>it.UserID
-                var added = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).ToList();
-                var ret= _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => it.GroupMembers.Where(m=>added.Contains(m)).FirstOrDefault()!=null);
+                var added = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).Select(it => it.GroupID).ToList();
 
-                return     ret.ConvertToGroupDTO().ToList();
+                var ret= _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it =>added.Contains(it.ID));
+
+                return ret.ConvertToGroupDTO().ToList();
             }
             else
             {
@@ -316,9 +317,8 @@ namespace BCP.Domain
                 //return _groupRepository.GetAll().Where(it => it.User.ID == userId).MapperTo<Group, GroupDTO>()
                 //.ToList();
                 {
-                    var added = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).ToList();
-                    return  _groupRepository.GetAllWithNavigationalProperty("GroupMembers")
-                        .Where(it => it.GroupMembers.Where(m => added.Contains(m)).FirstOrDefault() != null)
+                    var added = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).Select(it => it.GroupID).ToList();
+                    return _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => added.Contains(it.ID))
                         .MapperTo<Group,GroupDTO>()
                         .ToList();
                 }
