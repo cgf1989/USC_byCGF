@@ -138,6 +138,9 @@
     <Compile Include="Contacts\PublicDialog.xaml.cs">
       <DependentUpon>PublicDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contacts\RemoveGroupWin.xaml.cs">
+      <DependentUpon>RemoveGroupWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contacts\RightMessageBoxUControl.xaml.cs">
       <DependentUpon>RightMessageBoxUControl.xaml</DependentUpon>
     </Compile>
@@ -184,6 +187,9 @@
     </Compile>
     <Compile Include="Teams\DocTransmit.xaml.cs">
       <DependentUpon>DocTransmit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Teams\RemoveNormalGroup.xaml.cs">
+      <DependentUpon>RemoveNormalGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Works\Application1.xaml.cs">
       <DependentUpon>Application1.xaml</DependentUpon>
@@ -280,6 +286,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Contacts\RemoveGroupWin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Contacts\RightMessageBoxUControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -359,6 +369,10 @@
     <Page Include="Teams\DocTransmit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Teams\RemoveNormalGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Works\Application1.xaml">
       <SubType>Designer</SubType>

@@ -26,6 +26,7 @@
                     <MenuItem Name="mi_AddContact" Header="添加联系人" Click="mi_AddContact_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
                     <MenuItem Name="mi_DelContact" Header="删除联系人" Click="mi_DelContact_Click"  Template="{DynamicResource MenuItemControlTemplate1}"/>
                     <MenuItem Name="mi_AddGroup" Header="添加分组" Click="mi_AddGroup_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
+                    <MenuItem Name="mi_DelGroup" Header="删除分组" Click="mi_DelGroup_Click"  Template="{DynamicResource MenuItemControlTemplate1}"/>
                 </MenuItem>
             </Menu>
         </Grid>

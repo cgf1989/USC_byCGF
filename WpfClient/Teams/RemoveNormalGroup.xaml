@@ -1,0 +1,23 @@
+﻿<scr:MyMacClass_noneMaxBtn x:Class="WpfClient.Teams.RemoveNormalGroup"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfClient.Teams"
+        xmlns:scr="clr-namespace:WpfClient"
+        mc:Ignorable="d"
+        Title="删除普通组" Height="120" Width="300" Style="{DynamicResource WindowStyle2}" Loaded="MyMacClass_noneMaxBtn_Loaded">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="选择组" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <ComboBox Name="cbb_NormalGroup" Grid.Row="0" Grid.Column="1" Height="30" Width="200" />
+        <Button Name="btn_RemoveGroup" Height="30" Content="删除" Grid.Row="1" Grid.Column="1" Width="80" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}" HorizontalAlignment="Right" Margin="5,5,10,10" Click="btn_RemoveGroup_Click"/>
+    </Grid>
+</scr:MyMacClass_noneMaxBtn>

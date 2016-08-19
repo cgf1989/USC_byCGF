@@ -1,6 +1,10 @@
-﻿using System;
+﻿using BCP.ViewModel;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +27,8 @@ namespace WpfClient.Teams
         public organizationPanel()
         {
             InitializeComponent();
+
+            LoadNormalGroup();
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -44,7 +50,7 @@ namespace WpfClient.Teams
             createWS.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             createWS.ShowDialog();
 
-            if (createWS.NewWorkSpaceName!=null)
+            if (createWS.NewWorkSpaceName != null)
             {
                 TreeViewItem tvi = new TreeViewItem();
                 tvi.Header = createWS.NewWorkSpaceName;
@@ -70,11 +76,10 @@ namespace WpfClient.Teams
         {
             CreateNormalGroup cng_win = new CreateNormalGroup();
             cng_win.ShowDialog();
-            if (cng_win.NewGroupName != "")
+            if (cng_win.IsRefresh)
             {
-                TreeViewItem tvi = new TreeViewItem();
-                tvi.Header = cng_win.NewGroupName;
-                tv_NormalSpace.Items.Add(tvi);
+                tv_NormalSpace.ItemsSource = null;
+                LoadNormalGroup();              
             }
         }
 
@@ -107,7 +112,7 @@ namespace WpfClient.Teams
                 //s.GetContactRecord(MainClient.currentUser.Department);
                 pd.Show();
             }
-           
+
         }
 
 
@@ -169,6 +174,60 @@ namespace WpfClient.Teams
             ModuleToPost mtoPost = new ModuleToPost();
             mtoPost.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             mtoPost.ShowDialog();
+        }
+
+
+        /// <summary>
+        /// 存储用户的普通群组
+        /// </summary>
+        List<GroupDTO> listGroup = new List<GroupDTO>();
+        /// <summary>
+        /// 加载用户的普通群
+        /// </summary>
+        async void LoadNormalGroup()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:37768/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/User/GetAllGroup?userId=" + MainClient.CurrentUser.ID);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string ds = await response.Content.ReadAsStringAsync();
+                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                    if (result.Success)
+                    {
+                        listGroup = JsonConvert.DeserializeObject<List<GroupDTO>>(result.Data);
+                        tv_NormalSpace.ItemsSource = listGroup;
+                        tv_NormalSpace.DisplayMemberPath = "Name";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 删除普通群
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mi_removeNormalGroup_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveNormalGroup rng = new RemoveNormalGroup();
+            rng.groupList = listGroup;
+            rng.ShowDialog();
+            if (rng.IsRefresh)
+            {
+                tv_NormalSpace.ItemsSource = null;
+                LoadNormalGroup();
+            }
         }
     }
 }

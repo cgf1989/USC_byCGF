@@ -19,32 +19,38 @@ using System.Windows.Shapes;
 namespace WpfClient.Teams
 {
     /// <summary>
-    /// AddNewContactWin.xaml 的交互逻辑
+    /// RemoveNormalGroup.xaml 的交互逻辑
     /// </summary>
-    public partial class CreateNormalGroup : MyMacClass_noneMaxBtn
+    public partial class RemoveNormalGroup : MyMacClass_noneMaxBtn
     {
+
+        public List<GroupDTO> groupList { set; get; }
+        /// <summary>
+        /// 是否需要刷新界面
+        /// </summary>
         public bool IsRefresh { set; get; }
 
-        public CreateNormalGroup()
+        public RemoveNormalGroup()
         {
             InitializeComponent();
             IsRefresh = false;
 
-            //生成群号
-            Random rNum = new Random();
-            tb_GroupNum.Text ="100"+rNum.Next(1000).ToString();
+            
+            
         }
 
-        private async void btn_Confirm_Click(object sender, RoutedEventArgs e)
+        private async void btn_RemoveGroup_Click(object sender, RoutedEventArgs e)
         {
-            if (tb_GroupName.Text.Trim() != "")
+            if (cbb_NormalGroup.SelectedItem != null)
             {
+                GroupDTO gdto = cbb_NormalGroup.SelectedItem as GroupDTO;
+
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("http://localhost:37768/");
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/User/RegisterGroup?userId=" + MainClient.CurrentUser.ID+ "&groupNumber=" +tb_GroupNum.Text+ "&groupName="+tb_GroupName.Text+ "&groupNotes="+"1"+"&groupType="+tb_GroupType.Text+ "&groupValidate="+"1");
+                HttpResponseMessage response = await client.GetAsync("api/User/DeleteGroup?userId=" + MainClient.CurrentUser.ID+ "&groupId="+gdto.ID);
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
@@ -57,16 +63,25 @@ namespace WpfClient.Teams
                     }
                     else
                     {
-                        MessageBox.Show("创建失败");
+                        MessageBox.Show("删除失败");
                     }
                 }
-
-                    
             }
             else
             {
-                MessageBox.Show("群名不能为空");
+                MessageBox.Show("选择要删除的分组");
             }
+        }
+
+        /// <summary>
+        /// 移除分组主窗体加载事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MyMacClass_noneMaxBtn_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbb_NormalGroup.ItemsSource = groupList;
+            cbb_NormalGroup.DisplayMemberPath = "Name";
         }
     }
 }

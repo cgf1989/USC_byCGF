@@ -6,11 +6,14 @@
         xmlns:local="clr-namespace:WpfClient.Teams"
         xmlns:scr="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="创建普通群" Height="150" Width="320" WindowStartupLocation="CenterScreen"  Style="{DynamicResource WindowStyle2}">
+        Title="创建普通群" Height="250" Width="320" WindowStartupLocation="CenterScreen"   Style="{DynamicResource WindowStyle2}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition />
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60"/>
@@ -18,7 +21,11 @@
         </Grid.ColumnDefinitions>
         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Text="群名:" Grid.Column="0"/>
         <TextBox Name="tb_GroupName" Height="30" Margin="10" Grid.Column="1"/>
-        <Button Grid.Row="1" Grid.Column="1" Name="btn_Confirm"  Content="确定"  Width="80" Height="28" HorizontalAlignment="Right" Margin="10,0,10,10" VerticalAlignment="Center" Click="btn_Confirm_Click" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White"/>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Text="群号:" Grid.Column="0" Grid.Row="1"/>
+        <TextBox Name="tb_GroupNum" IsEnabled="False" Height="30" Margin="10" Grid.Column="1" Grid.Row="1"/>
+        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Text="群类型:" Grid.Column="0" Grid.Row="2"/>
+        <TextBox Name="tb_GroupType"  Height="30" Margin="10" Grid.Column="1" Grid.Row="2"/>
+        <Button Grid.Row="4" Grid.Column="1" Name="btn_Confirm"  Content="确定"  Width="80" Height="28" HorizontalAlignment="Right" Margin="10,0,10,10" VerticalAlignment="Center" Click="btn_Confirm_Click" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White"/>
 
     </Grid>
 </scr:MyMacClass_noneMaxBtn>
