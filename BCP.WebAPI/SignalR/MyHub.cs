@@ -273,7 +273,7 @@ namespace BCP.WebAPI.SignalR
     }
 
 
-    public class CHun:Hub
+    public class CHun
     {
         public static List<UserDTO> OnLineUser = new List<UserDTO>();
         private static object _lockObject = new object();
