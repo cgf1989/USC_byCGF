@@ -81,6 +81,13 @@ namespace BCP.Domain.Service
         List<UserDTO> GetUserByCustomerGroupId(int groupId);
 
         /// <summary>
+        /// 获取分组数据(包括分组成员)
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        CustomerGoupDTO GetCustomerGroupById(int groupId);
+
+        /// <summary>
         /// 添加用户到分组
         /// </summary>
         /// <param name="userId"></param>
@@ -185,6 +192,29 @@ namespace BCP.Domain.Service
         /// <param name="groupMemberId"></param>
         /// <returns></returns>
         bool UpdateGroupMemberName(int userId, string newName, int groupMemberId);
+
+        /// <summary>
+        /// 获取群名片
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        GroupMemberDTO GetGroupMemberById(int id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="gmt"></param>
+        /// <returns></returns>
+        bool AddGroupMessage(GroupMessagerDTO gmt,int userId);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool MarkPTGMessage(int userId);
+
+        List<GroupMessagerDTO> GetPTGMessage(int userId);
 
         #endregion
     }

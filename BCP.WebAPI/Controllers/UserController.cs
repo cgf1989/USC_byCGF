@@ -80,7 +80,8 @@ namespace BCP.WebAPI.Controllers
         {
             if (UserService.AddCustomerGroup(new CustomerGoupDTO() { CreatID = Convert.ToInt32(userId), GroupName = groupName }))
             {
-                return JsonHelper.GetResponseMessage(true, "创建分组成功", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "创建分组成功", typeof(CustomerGoupDTO), false, 
+                    UserService.GetCustomerGroup(Convert.ToInt32(userId),true).Where(it=>it.GroupName==groupName).FirstOrDefault());
             }
             else
                 throw new Exception("创建分组失败");
@@ -97,7 +98,7 @@ namespace BCP.WebAPI.Controllers
         {
             if (UserService.UpdateCustomerGroupName(Convert.ToInt32(groupId), groupName))
             {
-                return JsonHelper.GetResponseMessage(true, "修改分组名称成功", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "修改分组名称成功", typeof(CustomerGoupDTO), false, UserService.GetCustomerGroupById(Convert.ToInt32(groupId)));
             }
             else
                 throw new Exception("修改分组名称失败");
@@ -163,7 +164,8 @@ namespace BCP.WebAPI.Controllers
         {
             if (UserService.AddUserToCustomerGroup(Convert.ToInt32(userId), Convert.ToInt32(groupId)))
             {
-                return JsonHelper.GetResponseMessage(true, "添加用户到分组成功", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "添加用户到分组成功", typeof(CustomerGoupDTO), false,
+                    UserService.GetCustomerGroupById(Convert.ToInt32(groupId)));
             }
             else
                 throw new Exception("添加用户到分组失败");
@@ -215,7 +217,8 @@ namespace BCP.WebAPI.Controllers
                 Validate = groupValidate
             }))
             {
-                return JsonHelper.GetResponseMessage(true, "创建群组成功", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "创建群组成功", typeof(GroupDTO), false, 
+                    UserService.GetAllGroupByUserId(Convert.ToInt32(userId),true).Where(it=>it.UserID.ToString().Equals(userId)).ToList());
             }
             throw new Exception("创建群组失败");
         }
@@ -233,7 +236,7 @@ namespace BCP.WebAPI.Controllers
         {
             if (UserService.UpdateGroup(Convert.ToInt32(groupId), groupNumber, groupName, groupNotes, groupType,Convert.ToInt32(userId)))
             {
-                return JsonHelper.GetResponseMessage(true, "修改群组成功", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "修改群组成功", typeof(GroupDTO), false, UserService.GetGroupById(Convert.ToInt32(groupId)));
             }
             throw new Exception("修改群组失败");
         }
@@ -324,7 +327,8 @@ namespace BCP.WebAPI.Controllers
         {
             if (UserService.AddUserToGroup(Convert.ToInt32(memberUserId), Convert.ToInt32(groupId), Convert.ToInt32(userId)))
             {
-                return JsonHelper.GetResponseMessage(true, "添加用户到群组成功", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "添加用户到群组成功", typeof(GroupDTO), false, 
+                    UserService.GetAllGroupByUserId(Convert.ToInt32(userId),true).Where(it=>it.ID.ToString().Equals(groupId)).FirstOrDefault());
             }
             throw new Exception("无法添加用户到群组");
         }
@@ -360,7 +364,7 @@ namespace BCP.WebAPI.Controllers
         {
             if (UserService.ShiftGroupMemberRole(Convert.ToInt32(userId), Convert.ToInt32(groupId), groupRole, Convert.ToInt32(groupMemberId)))
             {
-                return JsonHelper.GetResponseMessage(true, "修改群组角色成功", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "修改群组角色成功", typeof(GroupMemberDTO), false, UserService.GetGroupMembersByGroupId(Convert.ToInt32(groupId)));
             }
             throw new Exception("修改失败");
         }
@@ -377,7 +381,7 @@ namespace BCP.WebAPI.Controllers
         {
             if (UserService.UpdateGroupMemberName(Convert.ToInt32(userId), newName, Convert.ToInt32(groupMemberId)))
             {
-                return JsonHelper.GetResponseMessage(true, "修改群组名片成功", null, false, null);
+                return JsonHelper.GetResponseMessage(true, "修改群组名片成功", typeof(GroupDTO), false, UserService.GetGroupMemberById(Convert.ToInt32(groupMemberId)));
             }
             throw new Exception("修改群组名片失败"); 
         }
