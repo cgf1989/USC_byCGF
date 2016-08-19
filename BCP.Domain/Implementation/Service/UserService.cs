@@ -207,6 +207,14 @@ namespace BCP.Domain
             return ret.MapperTo<User, UserDTO>().ToList();
         }
 
+        public CustomerGoupDTO GetCustomerGroupById(int groupId)
+        {
+            return _customerGroupRepository.GetAllWithNavigationalProperty("Members")
+                    .Where(it => it.ID == groupId)
+                    .FirstOrDefault()
+                    .ConvertToCustomerGroupDTO();
+        }
+
         public bool AddUserToCustomerGroup(int userId, int groupId)
         {
             var user = _customerGroupRepository.GetAllWithNavigationalProperty("User").Where(it => it.ID == groupId).First().User;
@@ -290,17 +298,30 @@ namespace BCP.Domain
             if (IsCacasde)
             {
                 if (userId == -1) throw new Exception("userId!=-1");
-                return _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => it.User.ID == userId)
-                    .ConvertToGroupDTO()
-                    .ToList();
+                //var creatList= _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => it.User.ID == userId)
+                //    .ConvertToGroupDTO()
+                //    .ToList();
+                //var partionList=_groupRepository.GetAllWithNavigationalProperty("GroupMembers")
+                //    .Where(it=>it.GroupMembers.Where(it=>it.UserID
+                var added = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).ToList();
+                var ret= _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => it.GroupMembers.Where(m=>added.Contains(m)).FirstOrDefault()!=null);
+
+                return     ret.ConvertToGroupDTO().ToList();
             }
             else
             {
                 if (userId == -1)
                     return _groupRepository.GetAll().MapperTo<Group, GroupDTO>().ToList();
                 else
-                    return _groupRepository.GetAll().Where(it => it.User.ID == userId).MapperTo<Group, GroupDTO>()
-                    .ToList();
+                //return _groupRepository.GetAll().Where(it => it.User.ID == userId).MapperTo<Group, GroupDTO>()
+                //.ToList();
+                {
+                    var added = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).ToList();
+                    return  _groupRepository.GetAllWithNavigationalProperty("GroupMembers")
+                        .Where(it => it.GroupMembers.Where(m => added.Contains(m)).FirstOrDefault() != null)
+                        .MapperTo<Group,GroupDTO>()
+                        .ToList();
+                }
             }
         }
 
@@ -395,6 +416,43 @@ namespace BCP.Domain
             _groupMemberRepository.Save(member);
             _unitOfWork.Commit();
             return true;
+        }
+
+        public GroupMemberDTO GetGroupMemberById(int id)
+        {
+            return _groupMemberRepository.GetByKey(id)
+                .MapperTo<GroupMember, GroupMemberDTO>();
+        }
+
+        bool AddGroupMessage(GroupMessagerDTO gmt,int userid)
+        {
+            GroupMember gm = _groupMemberRepository.GetAll().Where(it => it.UserID == userid).FirstOrDefault();
+            if (gm == null) throw new Exception("不存在的群成员");
+            GroupMessager groupMessage = gmt.MapperTo<GroupMessagerDTO, GroupMessager>();
+            groupMessage.GroupID = gm.GroupID;
+            groupMessage.GroupMemberID = gm.ID;
+            _groupMessagerRepository.Add(groupMessage);
+            _unitOfWork.Commit();
+            return true;
+        }
+
+
+        /// <summary>
+        /// 暂时无法使用
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        bool MarkPTGMessage(int userId)
+        {
+            var groupMessage = _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserID == userId).FirstOrDefault();
+            return true;
+        }
+
+        List<GroupMessagerDTO> GetPTGMessage(int userId)
+        {
+            return _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserID == userId)
+                .MapperTo<GroupMessager, GroupMessagerDTO>()
+                .ToList();
         }
 
         #endregion

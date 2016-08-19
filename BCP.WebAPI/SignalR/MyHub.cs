@@ -16,6 +16,7 @@ namespace BCP.WebAPI.SignalR
      * 
      * 
      * 客户端方法AddUserMessage(from, umd)
+     *           AddPTGMessage(UserDTO sender,String groupId,CommunitcationPackage cp)
      * **/
     /// <summary>
     /// 
@@ -93,16 +94,16 @@ namespace BCP.WebAPI.SignalR
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             lock (_lockObject)
             {
-                var from = OnLineUser.Where(it => it.ContextId!=null&&it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
-                if (from == null) return;
-                var to = userService.GetUser(replyId);
-                UserMessageDTO umd = new UserMessageDTO() { Content = message, CreateTime = DateTime.Now, EventTime = 1, SenderID = from.ID, ReplyId = to.ID, State = "0" };
+                var sender = OnLineUser.Where(it => it.ContextId!=null&&it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+                if (sender == null) return;
+                var recevier = userService.GetUser(replyId);
+                UserMessageDTO umd = new UserMessageDTO() { Content = message, CreateTime = DateTime.Now, EventTime = 1, SenderID = sender.ID, ReplyId = recevier.ID, State = "0" };
                 if (userService.AddPTPMessage(umd))
                 {
-                    to = OnLineUser.Where(it => it.ID == to.ID).FirstOrDefault();
-                    if (to != null)
+                    recevier = OnLineUser.Where(it => it.ID == recevier.ID).FirstOrDefault();
+                    if (recevier != null)
                     {
-                        Clients.Client(to.ContextId).AddUserMessage(from, umd);
+                        Clients.Client(recevier.ContextId).AddUserMessage(sender, umd);
                     }
                 }
             }
@@ -119,8 +120,8 @@ namespace BCP.WebAPI.SignalR
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             lock (_lockObject)
             {
-                var from = OnLineUser.Where(it => it.ContextId != null && it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
-                userService.MarkPTPMessage(from.ID, replyId);
+                var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+                userService.MarkPTPMessage(sender.ID, replyId);
             }
         }
 
@@ -128,19 +129,51 @@ namespace BCP.WebAPI.SignalR
         /// 服务器方法 发送群组消息
         /// </summary>
         /// <param name="groupId"></param>
-        public void PTGSenderMessage(int groupId)
+        public void PTGSenderMessage(int groupId,CommunitcationPackage cp)
         {
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             lock (_lockObject)
             {
-
+                if (cp.MType == MessageType.Text)
+                {
+                    var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+                    if (sender == null)
+                    {
+                        return;
+                    }
+                    GroupMessagerDTO gmt = new GroupMessagerDTO() { Content = cp.Content.ToString(), GroupID = groupId, Type = MessageType.Text.ToString(), SendTime = cp.SendTime.ToString("yyyy-MM-dd hh:mm:dd") };
+                    if (userService.AddGroupMessage(gmt, sender.ID))
+                    {
+                        foreach (var node in OnLineUser)
+                        {
+                            if (node.Groups.Where(it => it.ID == groupId).FirstOrDefault() != null && node.ContextId != null)
+                            {
+                                Clients.Client(node.ContextId).AddPTGMessage(sender, cp);
+                            }
+                        }
+                    }
+                }
             }
         }
 
+        /// <summary>
+        /// 服务器方法 标记已读数据
+        /// </summary>
         public void PTGMarkMessage()
-        { }
+        {
+            UnityBootStrapper ubs = new UnityBootStrapper();
+            ubs.Bindings();
+            IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+            lock (_lockObject)
+            {
+                var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+                if (sender == null) return;
+                userService.MarkPTGMessage(sender.ID);
+                //未完成
+            }
+        }
 
         /// <summary>
         /// 服务端方法
@@ -153,28 +186,38 @@ namespace BCP.WebAPI.SignalR
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             lock (_lockObject)
             {
-                var from = OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
-                if (from == null) return;
-                List<UserMessageDTO> message = userService.GetPTPMessage(from.ID, replyId).Where(it=>it.State.Equals("0")).ToList();
+                var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
+                if (sender == null) return;
+                List<UserMessageDTO> message = userService.GetPTPMessage(sender.ID, replyId).Where(it => it.State.Equals("0")).ToList();
                 foreach (var node in message)
                 {
-                    if (node.SenderID == from.ID)
+                    if (node.SenderID == sender.ID)
                     {
-                        Clients.Client(from.ContextId).AddUserMessage(from, node);
+                        Clients.Client(sender.ContextId).AddUserMessage(sender, node);
                     }
                     else
                     {
                         if (node.ReplyId != null)
                         {
-                            var to = userService.GetUser((int)node.SenderID);
-                            Clients.Client(from.ContextId).AddUserMessage(to, node);
+                            var recevier = userService.GetUser((int)node.SenderID);
+                            Clients.Client(sender.ContextId).AddUserMessage(recevier, node);
                         }
                     }
                 }
             }
         }
 
-        public void InitPTG() { }
+        public void InitPTG() {
+            UnityBootStrapper ubs = new UnityBootStrapper();
+            ubs.Bindings();
+            IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+            lock (_lockObject)
+            {
+                var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+                if (sender == null) return;
+                List<GroupMessagerDTO> list = userService.GetPTGMessage(sender.ID);
+            }
+        }
 
         /// <summary>
         /// 服务器方法 按日期获取聊天记录
@@ -192,21 +235,21 @@ namespace BCP.WebAPI.SignalR
             int day = Convert.ToInt32(date.Split('-')[2]);
             lock (_lockObject)
             {
-                var from = OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
-                if (from == null) return;
-                List<UserMessageDTO> message = userService.GetPTPMessage(from.ID, replyId).Where(it => it.CreateTime.Year==year&&it.CreateTime.Month==month&&it.CreateTime.Day==day).ToList();
+                var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
+                if (sender == null) return;
+                List<UserMessageDTO> message = userService.GetPTPMessage(sender.ID, replyId).Where(it => it.CreateTime.Year == year && it.CreateTime.Month == month && it.CreateTime.Day == day).ToList();
                 foreach (var node in message)
                 {
-                    if (node.SenderID == from.ID)
+                    if (node.SenderID == sender.ID)
                     {
-                        Clients.Client(from.ContextId).AddUserMessage(from, node);
+                        Clients.Client(sender.ContextId).AddUserMessage(sender, node);
                     }
                     else
                     {
                         if (node.ReplyId != null)
                         {
-                            var to = userService.GetUser((int)node.SenderID);
-                            Clients.Client(from.ContextId).AddUserMessage(to, node);
+                            var recevier = userService.GetUser((int)node.SenderID);
+                            Clients.Client(sender.ContextId).AddUserMessage(recevier, node);
                         }
                     }
                 }

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommunitcationPackage.cs" />
     <Compile Include="CustomMessage.cs" />
     <Compile Include="GroupDTO.cs" />
     <Compile Include="GroupMemberDTO.cs" />
