@@ -29,8 +29,10 @@ namespace WpfClient.Contacts
             InitializeComponent();
 
             LoadUserGroup();
+            LoadGroupWihtoutUsers(); //分组改动时要重新加载，如添加分组，删除分组时
+
         }
-         
+
 
         private async void mi_AddGroup_Click(object sender, RoutedEventArgs e)
         {
@@ -56,15 +58,21 @@ namespace WpfClient.Contacts
                         MessageBox.Show(result.Message);
 
                         //在界面添加
-                        TreeViewItem tvi = new TreeViewItem();
-                        tvi.Header = ang_win.NewGroupName;
-                        Expander exp = new Expander() { Header= ang_win.NewGroupName };
-                        tv_Contacts.Children.Add(exp);
+                        //TreeViewItem tvi = new TreeViewItem();
+                        //tvi.Header = ang_win.NewGroupName;
+                        //Expander exp = new Expander() { Header = ang_win.NewGroupName };
+                        //tv_Contacts.Children.Add(exp);
+
+                        //刷新界面
+                        tv_Contacts.Children.Clear();
+                        LoadUserGroup();
+                        LoadGroupWihtoutUsers();
+
                     }
                 }
             }
 
-     
+
 
         }
 
@@ -82,17 +90,17 @@ namespace WpfClient.Contacts
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await client.GetAsync("api/user/GetAllCustomerGroupWithoutUser?userId="+MainClient.CurrentUser.ID);
+            HttpResponseMessage response = await client.GetAsync("api/user/GetAllCustomerGroupWithoutUser?userId=" + MainClient.CurrentUser.ID);
             response.EnsureSuccessStatusCode();
             if (response.IsSuccessStatusCode)
             {
-                string ds =await response.Content.ReadAsStringAsync();
+                string ds = await response.Content.ReadAsStringAsync();
                 CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
                 if (result.Success)
                 {
                     List<CustomerGoupDTO> userGroups = JsonConvert.DeserializeObject<List<CustomerGoupDTO>>(result.Data);
 
-         
+
                     AddNewContactWin anc_win = new AddNewContactWin();
                     anc_win.userGroupList = userGroups;
                     anc_win.ShowDialog();
@@ -110,6 +118,8 @@ namespace WpfClient.Contacts
                             else
                             {
                                 listView = new ListView();
+                                listView.BorderThickness = new Thickness(0);
+                                listView.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ebf2f9"));
                                 item.Content = listView;
                             }
                             ListViewItem lvi = new ListViewItem();
@@ -133,15 +143,17 @@ namespace WpfClient.Contacts
                         }
 
                     }
+
+
                 }
             }
 
-           
+
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-           
+
 
             PrivateDialog pd1 = new PrivateDialog();
             pd1.SignalRProxy = new SignalRProxy();
@@ -198,8 +210,8 @@ namespace WpfClient.Contacts
             //    pd2.Show();
             //}
 
-            pd1.SignalRProxy.Login(MainClient.CurrentUser.UserName,MainClient.CurrentUser.Password);
-            
+            pd1.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
+
             pd1.Show();
             pd1.SignalRProxy.InitPTP(Convert.ToInt32((sender as ListViewItem).Tag.ToString()));
 
@@ -231,7 +243,7 @@ namespace WpfClient.Contacts
                     List<CustomerGoupDTO> listUserGroup = JsonConvert.DeserializeObject<List<CustomerGoupDTO>>(result.Data);
                     foreach (var item in listUserGroup)
                     {
-                        Expander exp = new Expander() {Header=item.GroupName,Background=new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ebf2f9")) };                      
+                        Expander exp = new Expander() { Header = item.GroupName, Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ebf2f9")) };
 
                         ListView lv = new ListView();
                         lv.BorderThickness = new Thickness(0);
@@ -253,7 +265,7 @@ namespace WpfClient.Contacts
                             lvi.Name = user.ActualName;
                             lvi.Tag = user.ID;
                             lvi.ToolTip = "";
-                            Image userHeader = new Image() { Source= new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative)) };
+                            Image userHeader = new Image() { Source = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative)) };
                             lvi.Content = userHeader;
 
                             lv.Items.Add(lvi);
@@ -276,6 +288,55 @@ namespace WpfClient.Contacts
             dcw.ShowDialog();
             if (dcw.IsRefresh)
             {
+                tv_Contacts.Children.Clear();
+                LoadUserGroup();
+            }
+        }
+
+        /// <summary>
+        /// 不包含用户内容的用户组list
+        /// </summary>
+        List<CustomerGoupDTO> listUserGroupWithoutUser = new List<CustomerGoupDTO>();
+        /// <summary>
+        /// 获取分组，不包含用户内容
+        /// </summary>
+        async void LoadGroupWihtoutUsers()
+        {
+            //GetAllCustomerGroupWithoutUser
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:37768/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync("api/User/GetAllCustomerGroupWithoutUser?userId=" + MainClient.CurrentUser.ID);
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string ds = await response.Content.ReadAsStringAsync();
+                CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                if (result.Success)
+                {
+                    listUserGroupWithoutUser = JsonConvert.DeserializeObject<List<CustomerGoupDTO>>(result.Data);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 删除联系人分组
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mi_DelGroup_Click(object sender, RoutedEventArgs e)
+        {
+
+            RemoveGroupWin rgw = new RemoveGroupWin();
+            rgw.GroupWitoutUserList = listUserGroupWithoutUser;
+            rgw.ShowDialog();
+            if (rgw.IsRefresh)
+            {
+                //刷新分组（不含用户）
+                LoadGroupWihtoutUsers();
+                //刷新分组并更新界面
                 tv_Contacts.Children.Clear();
                 LoadUserGroup();
             }

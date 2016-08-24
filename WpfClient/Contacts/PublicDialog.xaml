@@ -1,8 +1,9 @@
-﻿<Window x:Class="WpfClient.Contacts.PublicDialog"
+﻿<scr:MyMacClass x:Class="WpfClient.Contacts.PublicDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" 
-        xmlns:teamInput="clr-namespace:WpfClient.Teams.Control"
+        xmlns:scr="clr-namespace:WpfClient"
+        xmlns:teamInput="clr-namespace:WpfClient.Teams.Control" Style="{DynamicResource WindowStyle1}"
          Width="320">
     
     <Grid>
@@ -47,4 +48,4 @@
             <Button Name="InputNoticeBtn" DockPanel.Dock="Right" Width="50" HorizontalAlignment="Right">发布</Button>-->
         </DockPanel>
     </Grid>
-</Window>
+</scr:MyMacClass>

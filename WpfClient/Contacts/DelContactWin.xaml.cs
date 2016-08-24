@@ -66,22 +66,23 @@ namespace WpfClient.Contacts
 
 
                         //刷新本界面界面
-                        HttpResponseMessage response1 = await client.GetAsync("api/User/GetUserFromCustomerGroup?groupId=" + selectedGroup.ID);
-                        response1.EnsureSuccessStatusCode();
-                        if (response1.IsSuccessStatusCode)
-                        {
-                            string ds1 = await response1.Content.ReadAsStringAsync();
-                            CustomMessage result1 = JsonConvert.DeserializeObject<CustomMessage>(ds1);
-                            if (result1.Success)
-                            {
-                                List<UserDTO> userlist = JsonConvert.DeserializeObject<List<UserDTO>>(result1.Data);
-                                lbox_GroupMember.ItemsSource = userlist;
-                            }
-                        }
+                        //HttpResponseMessage response1 = await client.GetAsync("api/User/GetUserFromCustomerGroup?groupId=" + selectedGroup.ID);
+                        //response1.EnsureSuccessStatusCode();
+                        //if (response1.IsSuccessStatusCode)
+                        //{
+                        //    string ds1 = await response1.Content.ReadAsStringAsync();
+                        //    CustomMessage result1 = JsonConvert.DeserializeObject<CustomMessage>(ds1);
+                        //    if (result1.Success)
+                        //    {
+                        //        List<UserDTO> userlist = JsonConvert.DeserializeObject<List<UserDTO>>(result1.Data);
+                        //        lbox_GroupMember.ItemsSource = userlist;
+                        //    }
+                        //}
 
 
                         //刷新联系人界面
                         IsRefresh = true;
+                        this.Close();
 
                     }
                     else

@@ -20,11 +20,13 @@ namespace WpfClient.Contacts
     public partial class AddNewGroupWin : MyMacClass_noneMaxBtn
     {
         public string NewGroupName { set; get; }
+        public bool IsRefresh { set; get; }
 
         public AddNewGroupWin()
         {
             InitializeComponent();
             NewGroupName = tb_GroupName.Text.Trim();
+            IsRefresh = false;
         }
 
         private void btn_Confirm_Click(object sender, RoutedEventArgs e)
@@ -32,6 +34,7 @@ namespace WpfClient.Contacts
             if (tb_GroupName.Text.Trim() != "")
             {
                 NewGroupName = tb_GroupName.Text.Trim();
+                IsRefresh = true;
                 this.Close();
             }
             else

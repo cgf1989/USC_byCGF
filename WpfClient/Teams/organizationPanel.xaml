@@ -25,9 +25,13 @@
                 <MenuItem Header="三" >
                     <MenuItem Name="mi_createOrganization" Header="创建组织" Click="mi_createOrganization_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
                     <MenuItem Name="mi_joinTeam" Header="加入组织" Click="mi_joinTeam_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
+                    <Separator />
                     <MenuItem Name="mi_createWorkspace" Header="创建工作空间" Click="mi_createWorkspace_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
                     <MenuItem Name="mi_joinWorkspace" Header="申请工作空间" Click="mi_joinWorkspace_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
+                    <Separator/>
                     <MenuItem Name="mi_createNormalGroup" Header="创建普通群" Click="mi_createNormalGroup_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
+                    <MenuItem Name="mi_removeNormalGroup" Header="删除普通群" Click="mi_removeNormalGroup_Click"  Template="{DynamicResource MenuItemControlTemplate1}"/>
+                    <Separator />
                     <MenuItem Name="mi_moduleToPost" Header="分配职责" Click="mi_moduleToPost_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
                 </MenuItem>
             </Menu>
@@ -91,7 +95,12 @@
                         </StackPanel>
                     </DataTemplate>
                 </TreeViewItem.HeaderTemplate>
-                <TreeViewItem Header="同学群"/>
+                <TreeViewItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="tv_NormalSpace_MouseDoubleClick"/>
+                    </Style>
+                </TreeViewItem.ItemContainerStyle>
+                <!--<TreeViewItem Header="同学群"/>-->
             </TreeViewItem>
         </TreeView>
     </Grid>

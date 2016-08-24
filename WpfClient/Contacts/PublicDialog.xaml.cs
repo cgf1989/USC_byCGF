@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BCP.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace WpfClient.Contacts
     /// <summary>
     /// PublicDialog.xaml 的交互逻辑
     /// </summary>
-    public partial class PublicDialog : Window
+    public partial class PublicDialog : MyMacClass
     {
         public String TitleLable { set; get; }
 
@@ -41,15 +42,17 @@ namespace WpfClient.Contacts
         private String UserName { get; set; }
         private System.Guid CommentId { get; set; }
 
+        public GroupDTO CurrentGroup { get; set; }
+
         public PublicDialog()
         {
             InitializeComponent();
             mWindowResouce.Source = new Uri("WpfClient;component/Contacts/MyWindow.xaml", UriKind.Relative);
             this.Resources.MergedDictionaries.Add(mWindowResouce);
-            this.Style = (Style)mWindowResouce["WindowStyle"];
-            var windowTemplate = (ControlTemplate)mWindowResouce["WindowTemplate"];
-            this.Template = windowTemplate;
-            mTemplate = windowTemplate;
+            //this.Style = (Style)mWindowResouce["WindowStyle"];
+            //var windowTemplate = (ControlTemplate)mWindowResouce["WindowTemplate"];
+            //this.Template = windowTemplate;
+            //mTemplate = windowTemplate;
             this.Loaded += new RoutedEventHandler(WindowBase_Loaded);
             this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
@@ -77,82 +80,85 @@ namespace WpfClient.Contacts
 
             if (input.ToolTip.Equals("发送"))
             {
-                //SignalRProxy.PublicSend(Group, false, String.Empty, System.Guid.Empty,keyWord, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
+               
+                //SignalRProxy.PublicSend(Group, false, String.Empty, System.Guid.Empty, keyWord, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
             }
             else
             {
                 //SignalRProxy.PublicSend(Group, true, String.Empty, CommentId,keyWord, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
             }
+
+        
         }
 
         private void WindowBase_Loaded(object sender, RoutedEventArgs e)
         {
-            ((Border)mTemplate.FindName("FussWindowBorder", this)).MouseLeftButtonDown += (s1, e1) => this.DragMove();
-            ((TextBlock)mTemplate.FindName("TitleText", this)).Text = this.Title;
-            ((Image)mTemplate.FindName("ImgApp", this)).Source = this.Icon;
+            //((Border)mTemplate.FindName("FussWindowBorder", this)).MouseLeftButtonDown += (s1, e1) => this.DragMove();
+            //((TextBlock)mTemplate.FindName("TitleText", this)).Text = this.Title;
+            //((Image)mTemplate.FindName("ImgApp", this)).Source = this.Icon;
 
-            var backBorder = (Border)mTemplate.FindName("BorderBack", this);
-            var headBorder = (Border)mTemplate.FindName("TitleBar", this);
-            switch (mBackGroundType)
-            {
-                case BackGroundType.Green:
-                    backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
-                    headBorder.Style = (Style)mWindowResouce["HeadStyleGreen"];
-                    break;
-                case BackGroundType.Blue:
-                    backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
-                    headBorder.Style = (Style)mWindowResouce["HeadStyleBlue"];
-                    break;
-                //case BackGroundType.Image:
-                //    backBorder.Style = (Style)mWindowResouce["BackStyleImage"];
-                //    backBorder.Background = new ImageBrush(mBackImage);
-                //    headBorder.Style = (Style)mWindowResouce["HeadStyleTransparent"];
-                //    break;
-                default:
-                    backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
-                    headBorder.Style = (Style)mWindowResouce["HeadStyleGreen"];
-                    break;
-            }
-
-            mMaxButton = (Button)mTemplate.FindName("MaxButton", this);
-            if (!IsShowMax)
-            {
-                mMaxButton.Visibility = Visibility.Collapsed;
-                var rectangle = mTemplate.FindName("MaxSplitter", this) as Rectangle;
-                if (rectangle != null)
-                    rectangle.Visibility = Visibility.Collapsed;
-            }
-            else mMaxButton.Visibility = Visibility.Visible;
-
-            this.SizeChanged += (s1, e1) =>
-            {
-                if (this.WindowState == WindowState.Normal)
-                {
-                    mMaxButton.Style = (Style)mWindowResouce["WinNormalButton"];
-                }
-                else if (mMaxButton.Style != (Style)mWindowResouce["WinMaxButton"]
-                    && this.WindowState == WindowState.Maximized)
-                {
-                    mMaxButton.Style = (Style)mWindowResouce["WinMaxButton"];
-                }
-            };
-
-            ((Button)mTemplate.FindName("MiniButton", this)).Click += (s2, e2) =>
-            {
-                this.WindowState = WindowState.Minimized;
-            };
-            mMaxButton.Click += (s3, e3) =>
-            {
-                this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
-            };
-
-            ((Button)mTemplate.FindName("CloseButton", this)).Click += (s4, e4) => this.Close();
-
-            //var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-            //if (hwndSource != null)
+            //var backBorder = (Border)mTemplate.FindName("BorderBack", this);
+            //var headBorder = (Border)mTemplate.FindName("TitleBar", this);
+            //switch (mBackGroundType)
             //{
-            //    hwndSource.AddHook(new HwndSourceHook(WndProc));
+            //    case BackGroundType.Green:
+            //        backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
+            //        headBorder.Style = (Style)mWindowResouce["HeadStyleGreen"];
+            //        break;
+            //    case BackGroundType.Blue:
+            //        backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
+            //        headBorder.Style = (Style)mWindowResouce["HeadStyleBlue"];
+            //        break;
+            //    //case BackGroundType.Image:
+            //    //    backBorder.Style = (Style)mWindowResouce["BackStyleImage"];
+            //    //    backBorder.Background = new ImageBrush(mBackImage);
+            //    //    headBorder.Style = (Style)mWindowResouce["HeadStyleTransparent"];
+            //    //    break;
+            //    default:
+            //        backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
+            //        headBorder.Style = (Style)mWindowResouce["HeadStyleGreen"];
+            //        break;
             //}
+
+            //mMaxButton = (Button)mTemplate.FindName("MaxButton", this);
+            //if (!IsShowMax)
+            //{
+            //    mMaxButton.Visibility = Visibility.Collapsed;
+            //    var rectangle = mTemplate.FindName("MaxSplitter", this) as Rectangle;
+            //    if (rectangle != null)
+            //        rectangle.Visibility = Visibility.Collapsed;
+            //}
+            //else mMaxButton.Visibility = Visibility.Visible;
+
+            //this.SizeChanged += (s1, e1) =>
+            //{
+            //    if (this.WindowState == WindowState.Normal)
+            //    {
+            //        mMaxButton.Style = (Style)mWindowResouce["WinNormalButton"];
+            //    }
+            //    else if (mMaxButton.Style != (Style)mWindowResouce["WinMaxButton"]
+            //        && this.WindowState == WindowState.Maximized)
+            //    {
+            //        mMaxButton.Style = (Style)mWindowResouce["WinMaxButton"];
+            //    }
+            //};
+
+            //((Button)mTemplate.FindName("MiniButton", this)).Click += (s2, e2) =>
+            //{
+            //    this.WindowState = WindowState.Minimized;
+            //};
+            //mMaxButton.Click += (s3, e3) =>
+            //{
+            //    this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
+            //};
+
+            //((Button)mTemplate.FindName("CloseButton", this)).Click += (s4, e4) => this.Close();
+
+            ////var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
+            ////if (hwndSource != null)
+            ////{
+            ////    hwndSource.AddHook(new HwndSourceHook(WndProc));
+            ////}
 
 
 
@@ -166,6 +172,7 @@ namespace WpfClient.Contacts
             if (signalrProxy != null) this.SignalRProxy = signalrProxy;
             this.Group = group;
             this.UserName = userName;
+
 
             //if (SignalRProxy.ReceviceNotice == null)
             //{
