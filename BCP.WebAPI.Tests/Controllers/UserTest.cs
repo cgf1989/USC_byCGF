@@ -67,6 +67,9 @@ namespace BCP.WebAPI.Tests.Controllers
         public void UserCurd()
         {
             UserController userController = new UserController();
+            
+
+
 
 
             HttpResponseMessage response = userController.RegisterUser("hy", "polan", "hy");
