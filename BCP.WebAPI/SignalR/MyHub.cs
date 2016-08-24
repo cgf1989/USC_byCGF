@@ -291,6 +291,9 @@ namespace BCP.WebAPI.SignalR
     //    { }
     //}
 
+    /*
+     * 客户端方法 ReceviceMessage(SignalRMessagePackage package)
+     * **/
 
     public class MyHub : Hub
     {
@@ -345,7 +348,18 @@ namespace BCP.WebAPI.SignalR
 
         public UserDTO Get()
         {
-            return OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
+            lock (_lockObject)
+            {
+                return OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
+            }
+        }
+
+        public IEnumerable<UserDTO> GetAllOnLineUser()
+        {
+            lock (_lockObject)
+            {
+                return OnLineUser;
+            }
         }
 
         #endregion
@@ -364,12 +378,24 @@ namespace BCP.WebAPI.SignalR
 
         public override Task OnDisconnected(bool stopCalled)
         {
+            lock (_lockObject)
+            {
+                var user = OnLineUser.Where(it => it.ContextId != null && it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
+                if (user != null)
+                    user.ContextId = String.Empty;
+            }
             return base.OnDisconnected(stopCalled);
         }
         #endregion
 
         #region ServerInterface
 
+        /// <summary>
+        /// 服务器方法 用户登录
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="userPwd"></param>
+        /// <returns></returns>
         public bool Login(String userName, String userPwd)
         {
             lock (_lockObject)
@@ -384,6 +410,10 @@ namespace BCP.WebAPI.SignalR
             return false;
         }
 
+        /// <summary>
+        /// 服务器方法 用户发送信息
+        /// </summary>
+        /// <param name="package">package 为SignalRMessagePackage的子类</param>
         public void SendMessage(SignalRMessagePackage package)
         {
             //数据验证
@@ -395,19 +425,35 @@ namespace BCP.WebAPI.SignalR
             package.SendMessage(Clients, Context, this);
         }
 
-        public void MarkMessage()
-        { }
+        public void MarkMessage(SignalRMessagePackage package)
+        {
+            if (package == null)
+            {
+                Clients.Client(Context.ConnectionId)
+                    .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+            }
+            package.MarkMessage(Clients, Context, this);
+        }
 
-        public void GetAllMessage()
-        { }
+        public void GetAllMessage(SignalRMessagePackage package,DateTime date)
+        {
+            if (package == null)
+            {
+                Clients.Client(Context.ConnectionId)
+                    .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+            }
+            package.GetAllMessage(Clients, Context, this, date);
+        }
 
-        public void InitClient()
-        { }
-
-        #endregion
-
-        #region PrivateMethod
-
+        public void InitClient(SignalRMessagePackage package)
+        {
+            if (package == null)
+            {
+                Clients.Client(Context.ConnectionId)
+                    .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+            }
+            package.InitClient(Clients, Context, this);
+        }
 
         #endregion
     }
