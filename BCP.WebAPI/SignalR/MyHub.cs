@@ -536,7 +536,7 @@ namespace BCP.WebAPI.SignalR
 
         public override void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
-            throw new NotImplementedException();
+
         }
 
         public override void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
