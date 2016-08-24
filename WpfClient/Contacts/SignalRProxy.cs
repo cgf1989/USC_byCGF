@@ -20,6 +20,7 @@ namespace WpfClient.Contacts
         private HubConnection _hubConnection = null;
         private IHubProxy _hubProxy = null;
         public Action<UserDTO, UserMessageDTO> AddUserMessage { get; set; }
+        public Action<UserDTO, String, CommunitcationPackage> AddPTGMessage { get; set; }
 
         //public Action<String> ReceviceFialureMessage { get; set; }
         //public Action<List<UserInfo>> UpdateContacts { get; set; }
@@ -112,6 +113,19 @@ namespace WpfClient.Contacts
                     replyId);
         }
 
+        public void PTGSenderMessage(int groupId, CommunitcationPackage cp)
+        {
+            if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
+                _hubProxy.Invoke("PTGSenderMessage",
+                    groupId, cp);
+        }
+
+        public void InitPTG()
+        {
+            if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
+                _hubProxy.Invoke("InitPTG");
+        }
+
         public async void ConnectAsync()
         {
             if (_hubConnection != null && _hubConnection.State != ConnectionState.Disconnected) return;
@@ -127,6 +141,11 @@ namespace WpfClient.Contacts
                 if (AddUserMessage != null)
                     AddUserMessage(from, umd);
             });
+            _hubProxy.On<UserDTO, String, CommunitcationPackage>("AddPTGMessage", (sender, groupId, cp) =>
+             {
+                 if (AddPTGMessage != null)
+                     AddPTGMessage(sender, groupId, cp);
+             });
             //_hubProxy.On<String>("AddFailureMessage",(message)=>{
             //    if (ReceviceFialureMessage != null)
             //        ReceviceFialureMessage(message);

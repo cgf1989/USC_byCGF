@@ -1,6 +1,10 @@
-﻿using System;
+﻿using BCP.ViewModel;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,32 +20,11 @@ using WpfClient.Teams;
 namespace WpfClient.Contacts
 {
     /// <summary>
-    /// PublicDialog.xaml 的交互逻辑
+    /// NormalGroupDialog.xaml 的交互逻辑
     /// </summary>
-    public partial class WorkSpaceDialog : MyMacClass
+    public partial class NormalGroupDialog : MyMacClass
     {
-        public String TitleLable { set; get; }
-
-        private readonly ResourceDictionary mWindowResouce = new ResourceDictionary();
-        private readonly ControlTemplate mTemplate;
-
-        private const int WM_NCHITTEST = 0x0084;
-        private const int WM_GETMINMAXINFO = 0x0024;
-
-        private const int CORNER_WIDTH = 12; //拐角宽度  
-        private const int MARGIN_WIDTH = 4; // 边框宽度  
-        private Point mMousePoint = new Point(); //鼠标坐标  
-        private Button mMaxButton;
-        private bool mIsShowMax = true;
-        private bool IsShowMax = false;
-        private BackGroundType mBackGroundType = BackGroundType.Blue;
-
-        private SignalRProxy SignalRProxy { get; set; }
-        private String Group { get; set; }
-        private String UserName { get; set; }
-        private System.Guid CommentId { get; set; }
-
-        public WorkSpaceDialog()
+        public NormalGroupDialog()
         {
             InitializeComponent();
             mWindowResouce.Source = new Uri("WpfClient;component/Contacts/MyWindow.xaml", UriKind.Relative);
@@ -58,7 +41,33 @@ namespace WpfClient.Contacts
             input.Click += InputNoticeBtn_Click;
             InputNoticeTBox.TextChanged += InputNoticeTBox_TextChanged;
 
+            
+            //Init(MainClient.CurrentUser.ActualName, CurrentGroup.ID.ToString());
+            //this.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
         }
+
+        public String TitleLable { set; get; }
+
+        private readonly ResourceDictionary mWindowResouce = new ResourceDictionary();
+        private readonly ControlTemplate mTemplate;
+
+        private const int WM_NCHITTEST = 0x0084;
+        private const int WM_GETMINMAXINFO = 0x0024;
+
+        private const int CORNER_WIDTH = 12; //拐角宽度  
+        private const int MARGIN_WIDTH = 4; // 边框宽度  
+        private Point mMousePoint = new Point(); //鼠标坐标  
+        private Button mMaxButton;
+        private bool mIsShowMax = true;
+        private bool IsShowMax = false;
+        private BackGroundType mBackGroundType = BackGroundType.Blue;
+
+        public SignalRProxy SignalRProxy { get; set; }
+        private String Group { get; set; }
+        private String UserName { get; set; }
+        private System.Guid CommentId { get; set; }
+        public GroupDTO CurrentGroup { get; set; }
+
 
         void InputNoticeTBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -73,99 +82,90 @@ namespace WpfClient.Contacts
             if (input.Content.Equals("+"))      //防止点击"+"直接发送消息了
                 return;
 
-            String keyword=Expander_Range.Header.ToString();
+            String keyword = Expander_Range.Header.ToString();
 
             if (input.ToolTip.Equals("发送"))
             {
+                CommunitcationPackage cp = new CommunitcationPackage() {  Content = InputNoticeTBox.Text.Trim(),MType=MessageType.Text,CType=CommunitcationType.PersonToGroup, SendTime = System.DateTime.Now };
+                SignalRProxy.PTGSenderMessage(CurrentGroup.ID, cp);
+
+
+                RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, cp.Content.ToString());
+                this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+
+
                 //SignalRProxy.PublicSend(Group, false, String.Empty, System.Guid.Empty,keyword, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
+
             }
             else
             {
                 //SignalRProxy.PublicSend(Group, true, String.Empty, CommentId,keyword, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
             }
+
+            //String message = this.InputTBox.Text.Trim();
+            //try
+            //{
+            //    SignalRProxy.PTPSendMessage(this.ReplyId, message);
+
+
+            //    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+            //    rightMessageBoxUControl.Init(Self, new UserMessageDTO() { Content = message });
+            //    this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show("发生未知错误！");
+            //}
         }
 
         private void WindowBase_Loaded(object sender, RoutedEventArgs e)
         {
-            //((Border)mTemplate.FindName("FussWindowBorder", this)).MouseLeftButtonDown += (s1, e1) => this.DragMove();
-            //((TextBlock)mTemplate.FindName("TitleText", this)).Text = this.Title;
-            //((Image)mTemplate.FindName("ImgApp", this)).Source = this.Icon;
-
-            //var backBorder = (Border)mTemplate.FindName("BorderBack", this);
-            //var headBorder = (Border)mTemplate.FindName("TitleBar", this);
-            //switch (mBackGroundType)
-            //{
-            //    case BackGroundType.Green:
-            //        backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
-            //        headBorder.Style = (Style)mWindowResouce["HeadStyleGreen"];
-            //        break;
-            //    case BackGroundType.Blue:
-            //        backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
-            //        headBorder.Style = (Style)mWindowResouce["HeadStyleBlue"];
-            //        break;
-            //    //case BackGroundType.Image:
-            //    //    backBorder.Style = (Style)mWindowResouce["BackStyleImage"];
-            //    //    backBorder.Background = new ImageBrush(mBackImage);
-            //    //    headBorder.Style = (Style)mWindowResouce["HeadStyleTransparent"];
-            //    //    break;
-            //    default:
-            //        backBorder.Style = (Style)mWindowResouce["BackStyleWhite"];
-            //        headBorder.Style = (Style)mWindowResouce["HeadStyleGreen"];
-            //        break;
-            //}
-
-            //mMaxButton = (Button)mTemplate.FindName("MaxButton", this);
-            //if (!IsShowMax)
-            //{
-            //    mMaxButton.Visibility = Visibility.Collapsed;
-            //    var rectangle = mTemplate.FindName("MaxSplitter", this) as Rectangle;
-            //    if (rectangle != null)
-            //        rectangle.Visibility = Visibility.Collapsed;
-            //}
-            //else mMaxButton.Visibility = Visibility.Visible;
-
-            //this.SizeChanged += (s1, e1) =>
-            //{
-            //    if (this.WindowState == WindowState.Normal)
-            //    {
-            //        mMaxButton.Style = (Style)mWindowResouce["WinNormalButton"];
-            //    }
-            //    else if (mMaxButton.Style != (Style)mWindowResouce["WinMaxButton"]
-            //        && this.WindowState == WindowState.Maximized)
-            //    {
-            //        mMaxButton.Style = (Style)mWindowResouce["WinMaxButton"];
-            //    }
-            //};
-
-            //((Button)mTemplate.FindName("MiniButton", this)).Click += (s2, e2) =>
-            //{
-            //    this.WindowState = WindowState.Minimized;
-            //};
-            //mMaxButton.Click += (s3, e3) =>
-            //{
-            //    this.WindowState = (this.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
-            //};
-
-            //((Button)mTemplate.FindName("CloseButton", this)).Click += (s4, e4) => this.Close();
-
-            ////var hwndSource = PresentationSource.FromVisual(this) as HwndSource;
-            ////if (hwndSource != null)
-            ////{
-            ////    hwndSource.AddHook(new HwndSourceHook(WndProc));
-            ////}
-
-
 
             //-------------------给标头赋值------------------------
 
-            lb_Title.Content = TitleLable;
+            //lb_Title.Content = TitleLable;
+            this.Title = TitleLable;
+            LoadGroupMembers();
+
         }
 
-        public void Init(String userName, String group, SignalRProxy signalrProxy)
+        public void Init(String userName, String group)
         {
-            if (signalrProxy != null) this.SignalRProxy = signalrProxy;
+            if (SignalRProxy == null)
+            {
+                SignalRProxy = new SignalRProxy();
+            }
+            SignalRProxy.ConnectAsync();
+
             this.Group = group;
             this.UserName = userName;
+
+            if (SignalRProxy.AddPTGMessage == null)
+            {
+                //Label lb123 = new Label() { Content = "123" };
+                //this.NoticeStackPanel.Children.Add(lb123);
+                SignalRProxy.AddPTGMessage = (sender, groupid, cp) =>
+                {
+            
+                    this.Dispatcher.Invoke(() =>
+                    {                        
+                        if (MainClient.CurrentUser.ActualName.Equals(sender.ActualName))
+                        {
+                            LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                            leftMessageBoxUControl.Init(sender.ActualName, cp.Content.ToString());
+                            this.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
+                        }
+                        else
+                        {
+                            RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                            rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, cp.Content.ToString());
+                            this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                        }
+                    });
+                };
+            }
 
             //if (SignalRProxy.ReceviceNotice == null)
             //{
@@ -199,17 +199,17 @@ namespace WpfClient.Contacts
             //            //        NoticeStackPanel.Children.Add(pLeftMessage);
             //            //    }
             //            //}
-            //            SaveMessage(notice,userName);
+            //SaveMessage(notice, userName);
             //        });
             //    };
             //}
 
-            SignalRProxy.ConnectAsync();
+
         }
 
         private List<SignalCore.publicMessage> _noticeList = new List<SignalCore.publicMessage>();
 
-        void SaveMessage(SignalCore.publicMessage notice,string userName)
+        void SaveMessage(SignalCore.publicMessage notice, string userName)
         {
             bool isExistence = false;
             foreach (var node in NoticeStackPanel.Children)
@@ -225,7 +225,7 @@ namespace WpfClient.Contacts
 
             if (!isExistence)
             {
-                if (notice.KeyWord == Expander_Range.Header.ToString()|| Expander_Range.Header.ToString()=="所有内容")
+                if (notice.KeyWord == Expander_Range.Header.ToString() || Expander_Range.Header.ToString() == "所有内容")
                 {
                     PLeftMessageBoxUControl pLeftMessage = new PLeftMessageBoxUControl();
                     pLeftMessage.Init(notice.Belongs, notice.Comments, notice.DateTime,
@@ -242,7 +242,7 @@ namespace WpfClient.Contacts
             _noticeList.Add(notice);
         }
 
-        void Show(String keyword,String userName)
+        void Show(String keyword, String userName)
         {
             if (NoticeStackPanel.Children.Count >= 0)
                 NoticeStackPanel.Children.Clear();
@@ -262,7 +262,7 @@ namespace WpfClient.Contacts
 
                 if (!isExistence)
                 {
-                    if (notice.KeyWord == keyword||keyword=="所有内容")
+                    if (notice.KeyWord == keyword || keyword == "所有内容")
                     {
                         PLeftMessageBoxUControl pLeftMessage = new PLeftMessageBoxUControl();
                         pLeftMessage.Init(notice.Belongs, notice.Comments, notice.DateTime,
@@ -365,7 +365,7 @@ namespace WpfClient.Contacts
         {
             //Expander_Range.Header = (TreeView_range.SelectedItem as TreeViewItem).Header;
 
-            lbName = (TreeView_range.SelectedItem as TreeViewItem).Header.ToString() ;
+            lbName = (TreeView_range.SelectedItem as TreeViewItem).Header.ToString();
             selectTreeViewParent(TreeView_range.SelectedItem as TreeViewItem);
             Expander_Range.Header = lbName;
             Expander_Range.IsExpanded = false;
@@ -387,7 +387,7 @@ namespace WpfClient.Contacts
                 if (aaa is TreeViewItem)
                 {
                     lbName = (tvItem.Parent as TreeViewItem).Header.ToString() + "->" + lbName;
-                    selectTreeViewParent(tvItem.Parent as TreeViewItem);                   
+                    selectTreeViewParent(tvItem.Parent as TreeViewItem);
                 }
                 else
                 {
@@ -395,5 +395,93 @@ namespace WpfClient.Contacts
                 }
             }
         }
+
+        /// <summary>
+        /// 添加群成员
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_AddGroupMember_Click(object sender, RoutedEventArgs e)
+        {
+            Win_NewUserToNormalGroup Win_nutg = new Win_NewUserToNormalGroup();
+            Win_nutg.CurGroup = CurrentGroup;
+            Win_nutg.ShowDialog();
+            if (Win_nutg.AddedUsers.Count > 0)
+            {
+                //这里应该是获取登录用户的所有群组，所以应该要遍历一下，找到当前组再把组员放进去,可以考虑用loadgroupmember()
+                GroupDTO groupSource = Win_nutg.AddedUsers.First();
+                lbox_GroupMember.ItemsSource = groupSource.Members;
+            }
+        }
+
+
+        /// <summary>
+        /// 移除组成员
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btn_RemoveGroupMember_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbox_GroupMember.SelectedItem != null)
+            {
+                UserDTO selectedContact = lbox_GroupMember.SelectedItem as UserDTO;
+
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:37768/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/User/RemoveUserFromGroup?userId=" + MainClient.CurrentUser.ID + "&groupId=" + CurrentGroup.ID + "&memberUserId=" + selectedContact.ID);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string ds = await response.Content.ReadAsStringAsync();
+                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                    if (result.Success)
+                    {
+                        //成功移除,刷新界面
+                        LoadGroupMembers();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("请选择要移除的成员");
+            }
+        }
+
+        /// <summary>
+        /// 获取该分组成员并加载
+        /// </summary>
+        async void LoadGroupMembers()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:37768/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/User/GetGroupMember?&groupId=" + CurrentGroup.ID);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string ds = await response.Content.ReadAsStringAsync();
+                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                    if (result.Success)
+                    {
+                        List<GroupMemberDTO> groupMembers = JsonConvert.DeserializeObject<List<GroupMemberDTO>>(ds);
+                        lbox_GroupMember.ItemsSource = null;
+                        lbox_GroupMember.ItemsSource = groupMembers;
+                        lbox_GroupMember.DisplayMemberPath = "Name";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("成员获取失败");
+            }
+        }
     }
 }
+

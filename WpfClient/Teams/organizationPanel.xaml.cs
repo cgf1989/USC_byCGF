@@ -79,7 +79,7 @@ namespace WpfClient.Teams
             if (cng_win.IsRefresh)
             {
                 tv_NormalSpace.ItemsSource = null;
-                LoadNormalGroup();              
+                LoadNormalGroup();
             }
         }
 
@@ -159,8 +159,13 @@ namespace WpfClient.Teams
                 var aaa = tvItem.Parent;
                 if (aaa is TreeViewItem)
                 {
-                    lbName = (tvItem.Parent as TreeViewItem).Header.ToString() + "->" + lbName;
-                    selectTreeViewParent(tvItem.Parent as TreeViewItem);
+                    if ((aaa as TreeViewItem).Header == null)
+                    { }
+                    else
+                    {
+                        lbName = (tvItem.Parent as TreeViewItem).Header.ToString() + "->" + lbName;
+                        selectTreeViewParent(tvItem.Parent as TreeViewItem);
+                    }
                 }
                 else
                 {
@@ -228,6 +233,51 @@ namespace WpfClient.Teams
                 tv_NormalSpace.ItemsSource = null;
                 LoadNormalGroup();
             }
+        }
+
+        /// <summary>
+        /// 打开普通群聊天框
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tv_NormalSpace_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if ((e.Source as TreeViewItem).IsSelected)   //加这个判断防止父节点递归传递事件
+            {
+
+                TreeViewItem curTv = sender as TreeViewItem;
+                GroupDTO group = curTv.Header as GroupDTO;
+                lbName = group.Name;
+
+                //selectTreeViewParent(curTv);
+
+
+                Contacts.NormalGroupDialog pd = new Contacts.NormalGroupDialog();
+                pd.SignalRProxy = new Contacts.SignalRProxy();
+                pd.SignalRProxy.ConnectAsync();
+                pd.TitleLable = lbName;
+                pd.CurrentGroup = group;
+                //Contacts.SignalRProxy s = new Contacts.SignalRProxy();
+                pd.Closed += (sen, er) =>
+                {
+                    //s.Logout(MainClient.currentUser.UserName);
+                    pd.SignalRProxy.Dispose();
+                };
+
+
+                //pd.Init(MainClient.currentUser.UserName, MainClient.currentUser.Department, s);
+                pd.Init(MainClient.CurrentUser.ActualName,group.ID.ToString());
+
+                System.Threading.Thread.Sleep(1000);
+
+
+                pd.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
+                //s.Login(MainClient.currentUser.UserName, MainClient.currentUser.Password);
+                //s.GetContactRecord(MainClient.currentUser.Department);
+                pd.Show();
+                pd.SignalRProxy.InitPTG();
+            }
+
         }
     }
 }

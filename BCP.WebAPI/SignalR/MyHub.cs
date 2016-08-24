@@ -147,7 +147,7 @@ namespace BCP.WebAPI.SignalR
                     if (userService.AddGroupMessage(gmt, sender.ID))
                     {
                         foreach (var node in OnLineUser)
-                        {
+                        { 
                             if (node.Groups.Where(it => it.ID == groupId).FirstOrDefault() != null && node.ContextId != null)
                             {
                                 Clients.Client(node.ContextId).AddPTGMessage(sender, cp);

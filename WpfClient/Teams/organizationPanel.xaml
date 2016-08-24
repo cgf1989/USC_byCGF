@@ -95,6 +95,11 @@
                         </StackPanel>
                     </DataTemplate>
                 </TreeViewItem.HeaderTemplate>
+                <TreeViewItem.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <EventSetter Event="MouseDoubleClick" Handler="tv_NormalSpace_MouseDoubleClick"/>
+                    </Style>
+                </TreeViewItem.ItemContainerStyle>
                 <!--<TreeViewItem Header="同学群"/>-->
             </TreeViewItem>
         </TreeView>
