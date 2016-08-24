@@ -28,14 +28,14 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<Organization> Organizations { get; set; }
         public virtual DbSet<Organization_ContacTable> Organization_ContactTables { get; set; }
         public virtual DbSet<Position> Positions { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<User> sys_User { get; set; }
         public virtual DbSet<User_ContacTable> User_ContactTable { get; set; }
         public virtual DbSet<LoginLog> LoginLogs { get; set; }
         public virtual DbSet<OrganizationTransition> OrganizationTransitions { get; set; }
         public virtual DbSet<Organization_Type> Organization_Type { get; set; }
         public virtual DbSet<DocumentManage> DocumentManages { get; set; }
-        public virtual DbSet<UserMessage> UserMessages { get; set; }
-        public virtual DbSet<GroupMember> GroupMembers { get; set; }
+        public virtual DbSet<UserMessage> sys_UserMessage { get; set; }
+        public virtual DbSet<GroupMember> sys_GroupMember { get; set; }
         public virtual DbSet<OrganizationOtherName> OrganizationOtherNames { get; set; }
         public virtual DbSet<Administrativecode> Administrativecodes { get; set; }
         public virtual DbSet<DocumentType> DocumentTypes { get; set; }
@@ -60,9 +60,9 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<OrgaRegisterDocment> OrgaRegisterDocments { get; set; }
         public virtual DbSet<RegisterDocumentType> RegisterDocumentTypes { get; set; }
         public virtual DbSet<OrganizationEvent> OrganizationEvents { get; set; }
-        public virtual DbSet<GroupMessager> GroupMessagers { get; set; }
-        public virtual DbSet<Group> Groups { get; set; }
-        public virtual DbSet<CustomerGoup> CustomerGoups { get; set; }
+        public virtual DbSet<GroupMessager> sys_GroupMessager { get; set; }
+        public virtual DbSet<Group> sys_Group { get; set; }
+        public virtual DbSet<CustomGroup> sys_CustomerGoup { get; set; }
         public virtual DbSet<DllFileStream> DllFileStreams { get; set; }
         public virtual DbSet<OrganizationCustomType> OrganizationCustomTypes { get; set; }
         public virtual DbSet<CustomCategory> CustomCategories { get; set; }
@@ -96,5 +96,6 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<WorkSpaceBaseType> WorkSpaceBaseTypes { get; set; }
         public virtual DbSet<OperationDetail> OperationDetails { get; set; }
         public virtual DbSet<OperationEvent> OperationEvents { get; set; }
+        public virtual DbSet<CustomGroupUser> sys_CustomGroupUser { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace BCP.ViewModel
         public System.String RegionName { get; set; }
         public System.String ParentCode { get; set; }
         public Int32? Parent { get; set; }
+        //public System.Data.Entity.Spatial.DbGeography Geometry { get; set; }
         public System.String Vesion { get; set; }
         public System.Int64 EventTime { get; set; }
     }

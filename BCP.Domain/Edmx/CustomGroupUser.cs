@@ -12,20 +12,18 @@ namespace BCP.Domain.Edmx
     using System;
     using System.Collections.Generic;
     
-    public partial class UserMessage
+    public partial class CustomGroupUser
     {
         public int Id { get; set; }
-        public Nullable<int> FromUserId { get; set; }
-        public Nullable<int> ToUserId { get; set; }
-        public int MessageType { get; set; }
-        public string Content { get; set; }
-        public Nullable<int> State { get; set; }
+        public Nullable<int> GroupId { get; set; }
+        public Nullable<int> UserId { get; set; }
         public string Notes { get; set; }
         public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<int> CreateUserId { get; set; }
         public Nullable<System.DateTime> UpdateTime { get; set; }
-        public string UpdateUserId { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
     
         public virtual User User { get; set; }
+        public virtual CustomGroup CustomGroup { get; set; }
     }
 }

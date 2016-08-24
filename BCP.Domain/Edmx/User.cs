@@ -23,7 +23,7 @@ namespace BCP.Domain.Edmx
             this.UserRelateTables1 = new HashSet<UserRelateTable>();
             this.MessageGroups = new HashSet<GroupMember>();
             this.GroupNames = new HashSet<Group>();
-            this.CustomerGoups = new HashSet<CustomerGoup>();
+            this.CustomerGoups = new HashSet<CustomGroup>();
             this.UserMessages = new HashSet<UserMessage>();
             this.Employees = new HashSet<Employee>();
             this.WorkSpaceRoles = new HashSet<WorkSpaceRole>();
@@ -31,19 +31,22 @@ namespace BCP.Domain.Edmx
             this.Authorizations1 = new HashSet<Authorization>();
             this.DocReaders = new HashSet<DocReader>();
             this.DocSenders = new HashSet<DocSender>();
-            this.Belongs = new HashSet<CustomerGoup>();
+            this.CustomGroupUsers = new HashSet<CustomGroupUser>();
         }
     
         public int ID { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string ActualName { get; set; }
-        public string Status { get; set; }
-        public System.DateTime LimiteTime { get; set; }
-        public string Note { get; set; }
+        public System.DateTime LimitTime { get; set; }
         public string Domain { get; set; }
         public string DomainId { get; set; }
-        public long EventTime { get; set; }
+        public int State { get; set; }
+        public string Notes { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> CreateUserId { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LoginLog> LoginLogs { get; set; }
@@ -58,7 +61,7 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Group> GroupNames { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerGoup> CustomerGoups { get; set; }
+        public virtual ICollection<CustomGroup> CustomerGoups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserMessage> UserMessages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -74,6 +77,6 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocSender> DocSenders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerGoup> Belongs { get; set; }
+        public virtual ICollection<CustomGroupUser> CustomGroupUsers { get; set; }
     }
 }

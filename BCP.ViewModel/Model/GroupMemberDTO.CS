@@ -11,13 +11,18 @@ namespace BCP.ViewModel
     /// </summary>
     public partial class GroupMemberDTO
     {
-        public System.Int32 ID { get; set; }
+        public System.Int32 Id { get; set; }
+        public Int32? GroupId { get; set; }
+        public Int32? UserId { get; set; }
         public System.String Name { get; set; }
-        public System.Int32 ReferenceUserId { get; set; }
-        public System.Int32 UserID { get; set; }
-        public System.DateTime JoinTime { get; set; }
-        public System.String State { get; set; }
+        public Int32? ReferenceUserId { get; set; }
+        public Int32? ApproveUserId { get; set; }
         public System.String GroupRole { get; set; }
-        public Int32? GroupID { get; set; }
+        public Int32? State { get; set; }
+        public System.String Notes { get; set; }
+        public Int32? CreateUserId { get; set; }
+        public DateTime? CreateTime { get; set; }
+        public DateTime? UpdateTiime { get; set; }
+        public Int32? UpdateUserId { get; set; }
     }
 }

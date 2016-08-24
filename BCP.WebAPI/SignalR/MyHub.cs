@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Providers.Entities;
 using Microsoft.Practices.Unity;
+using System.ComponentModel;
 
 namespace BCP.WebAPI.SignalR
 {
@@ -44,6 +45,21 @@ namespace BCP.WebAPI.SignalR
                 var user = OnLineUser.Where(it => it.ID == userId).FirstOrDefault();
                 if (user != null)
                     OnLineUser.Remove(user);
+            }
+        }
+
+        public static void UpdateOnLineUser(UserDTO user)
+        {
+            if (user == null) return;
+            lock (_lockObject)
+            {
+                var old = OnLineUser.Where(it => it.ID == user.ID).FirstOrDefault();
+                if (old != null)
+                {
+                    user.ContextId = old.ContextId;
+                    OnLineUser.Remove(old);
+                    OnLineUser.Add(user);
+                }
             }
         }
 
@@ -97,7 +113,7 @@ namespace BCP.WebAPI.SignalR
                 var sender = OnLineUser.Where(it => it.ContextId!=null&&it.ContextId.Equals(Context.ConnectionId)).FirstOrDefault();
                 if (sender == null) return;
                 var recevier = userService.GetUser(replyId);
-                UserMessageDTO umd = new UserMessageDTO() { Content = message, CreateTime = DateTime.Now, EventTime = 1, SenderID = sender.ID, ReplyId = recevier.ID, State = "0" };
+                UserMessageDTO umd = new UserMessageDTO() { Content = message, CreateTime = DateTime.Now, FromUserId = sender.ID, ToUserId = recevier.ID, State = 0 };
                 if (userService.AddPTPMessage(umd))
                 {
                     recevier = OnLineUser.Where(it => it.ID == recevier.ID).FirstOrDefault();
@@ -143,12 +159,12 @@ namespace BCP.WebAPI.SignalR
                     {
                         return;
                     }
-                    GroupMessagerDTO gmt = new GroupMessagerDTO() { Content = cp.Content.ToString(), GroupID = groupId, Type = MessageType.Text.ToString(), SendTime = cp.SendTime.ToString() };
+                    GroupMessagerDTO gmt = new GroupMessagerDTO() { Content = cp.Content.ToString(), GroupId = groupId, MessageType = (int)MessageType.Text, CrateTime = cp.SendTime };
                     if (userService.AddGroupMessage(gmt, sender.ID))
                     {
                         foreach (var node in OnLineUser)
                         {
-                            if (node.Groups.Where(it => it.ID == groupId).FirstOrDefault() != null && node.ContextId != null)
+                            if (node.Groups.Where(it => it.Id == groupId).FirstOrDefault() != null && node.ContextId != null)
                             {
                                 Clients.Client(node.ContextId).AddPTGMessage(sender, cp);
                             }
@@ -191,15 +207,15 @@ namespace BCP.WebAPI.SignalR
                 List<UserMessageDTO> message = userService.GetPTPMessage(sender.ID, replyId).Where(it => it.State.Equals("0")).ToList();
                 foreach (var node in message)
                 {
-                    if (node.SenderID == sender.ID)
+                    if (node.FromUserId == sender.ID)
                     {
                         Clients.Client(sender.ContextId).AddUserMessage(sender, node);
                     }
                     else
                     {
-                        if (node.ReplyId != null)
+                        if (node.ToUserId != null)
                         {
-                            var recevier = userService.GetUser((int)node.SenderID);
+                            var recevier = userService.GetUser((int)node.FromUserId);
                             Clients.Client(sender.ContextId).AddUserMessage(recevier, node);
                         }
                     }
@@ -219,12 +235,12 @@ namespace BCP.WebAPI.SignalR
                 foreach (var node in list)
                 {
                     CommunitcationPackage cp = new CommunitcationPackage();
-                    if (node.Type == MessageType.Text.ToString())
+                    if (node.MessageType == (int)MessageType.Text)
                     {
                         cp.Content = node.Content;
                         cp.MType = MessageType.Text;
                         cp.CType = CommunitcationType.PersonToGroup;
-                        cp.SendTime = Convert.ToDateTime(node.SendTime);
+                        cp.SendTime = Convert.ToDateTime(node.CrateTime);
                     }
                     Clients.Client(Context.ConnectionId).AddPTGMessage(sender, cp);
                 }
@@ -249,18 +265,19 @@ namespace BCP.WebAPI.SignalR
             {
                 var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
                 if (sender == null) return;
-                List<UserMessageDTO> message = userService.GetPTPMessage(sender.ID, replyId).Where(it => it.CreateTime.Year == year && it.CreateTime.Month == month && it.CreateTime.Day == day).ToList();
+                List<UserMessageDTO> message = userService.GetPTPMessage(sender.ID, replyId).Where(it => it.CreateTime!=null
+                &&it.CreateTime.Value.Year == year && it.CreateTime.Value.Month == month && it.CreateTime.Value.Day == day).ToList();
                 foreach (var node in message)
                 {
-                    if (node.SenderID == sender.ID)
+                    if (node.FromUserId == sender.ID)
                     {
                         Clients.Client(sender.ContextId).AddUserMessage(sender, node);
                     }
                     else
                     {
-                        if (node.ReplyId != null)
+                        if (node.ToUserId != null)
                         {
-                            var recevier = userService.GetUser((int)node.SenderID);
+                            var recevier = userService.GetUser((int)node.FromUserId);
                             Clients.Client(sender.ContextId).AddUserMessage(recevier, node);
                         }
                     }
@@ -273,81 +290,308 @@ namespace BCP.WebAPI.SignalR
     }
 
 
-    public class CHun
-    {
-        public static List<UserDTO> OnLineUser = new List<UserDTO>();
-        private static object _lockObject = new object();
+    //public class CHun:Hub
+    //{
+    //    public static List<UserDTO> OnLineUser = new List<UserDTO>();
+    //    private static object _lockObject = new object();
 
-        #region ApiInterface
+    //    #region ApiInterface
 
-        public static void Login(UserDTO userDto)
-        {
-            lock (_lockObject)
-            {
-                if (OnLineUser.Where(it => it.ID.Equals(userDto.ID)).FirstOrDefault() == null)
-                {
-                    OnLineUser.Add(userDto);
-                }
-            }
-        }
+    //    public static void Login(UserDTO userDto)
+    //    {
+    //        lock (_lockObject)
+    //        {
+    //            if (OnLineUser.Where(it => it.ID.Equals(userDto.ID)).FirstOrDefault() == null)
+    //            {
+    //                OnLineUser.Add(userDto);
+    //            }
+    //        }
+    //    }
 
-        public static void Logout(int userId)
-        {
-            lock (_lockObject)
-            {
-                var user = OnLineUser.Where(it => it.ID == userId).FirstOrDefault();
-                if (user != null)
-                    OnLineUser.Remove(user);
-            }
-        }
+    //    public static void Logout(int userId)
+    //    {
+    //        lock (_lockObject)
+    //        {
+    //            var user = OnLineUser.Where(it => it.ID == userId).FirstOrDefault();
+    //            if (user != null)
+    //                OnLineUser.Remove(user);
+    //        }
+    //    }
 
-        #endregion
+    //    public UserDTO Get(int id)
+    //    {
+    //        lock (_lockObject)
+    //        {
+    //            return OnLineUser.Where(it => it.ID == id).FirstOrDefault();
+    //        }
+    //    }
 
-        #region override
-        //public override Task OnConnected()
-        //{
-        //    return base.OnConnected();
-        //}
+    //    public UserDTO Get()
+    //    {
+    //        return OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
+    //    }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    base.Dispose(disposing);
-        //}
+    //    #endregion
 
-        //public override Task OnDisconnected(bool stopCalled)
-        //{
-        //    return base.OnDisconnected(stopCalled);
-        //}
-        #endregion
+    //    #region override
 
-        #region ServerInterface
+    //    public override Task OnConnected()
+    //    {
+    //        return base.OnConnected();
+    //    }
 
-        public bool Login(String userName, String userPwd)
-        {
-            lock (_lockObject)
-            {
-                var user = OnLineUser.Where(it => it.UserName.Equals(userName)).FirstOrDefault();
-                if (user != null)
-                {
-                    user.ContextId = Context.ConnectionId;
-                    return true;
-                }
-            }
-            return false;
-        }
+    //    protected override void Dispose(bool disposing)
+    //    {
+    //        base.Dispose(disposing);
+    //    }
 
-        public void SendMessage()
-        { }
+    //    public override Task OnDisconnected(bool stopCalled)
+    //    {
+    //        return base.OnDisconnected(stopCalled);
+    //    }
+    //    #endregion
 
-        public void MarkMessage()
-        { }
+    //    #region ServerInterface
 
-        public void GetAllMessage()
-        { }
+    //    public bool Login(String userName, String userPwd)
+    //    {
+    //        lock (_lockObject)
+    //        {
+    //            var user = OnLineUser.Where(it => it.UserName.Equals(userName)).FirstOrDefault();
+    //            if (user != null)
+    //            {
+    //                user.ContextId = Context.ConnectionId;
+    //                return true;
+    //            }
+    //        }
+    //        return false;
+    //    }
 
-        public void GetUnMarkedMessage()
-        { }
+    //    public void SendMessage(SignalRMessagePackage package)
+    //    {
+    //        //数据验证
+    //        if (package == null || !package.Validate())
+    //        {
+    //            Clients.Client(Context.ConnectionId)
+    //                .ReceviceMessage(new SignalRMessagePackage() { Context = "数据不完整", RecevierId = package.RecevierId,
+    //                                                               SenderId = package.SenderId,
+    //                                                               SCType = package.SCType,
+    //                                                               SMType = SignalRMessageType.StateMessage,
+    //                                                               State=false
+    //                });
+    //        }
+    //        switch (package.GetTypeCode())
+    //        {
+    //            case "00": SendPTPText(package); break;
+    //            case "01": break;
+    //            case "02": break;
+    //            case "03": break;
+    //            case "10": break;
+    //            case "11": break;
+    //            case "12": break;
+    //            case "13": break;
+    //            default: break;
+    //        }
+    //    }
 
-        #endregion
-    }
+    //    public void MarkMessage()
+    //    { }
+
+    //    public void GetAllMessage()
+    //    { }
+
+    //    public void InitClient()
+    //    { }
+
+    //    #endregion
+
+    //    #region PrivateMethod
+
+    //    void SendPTPText(SignalRMessagePackage package)
+    //    {
+    //        UnityBootStrapper ubs = new UnityBootStrapper();
+    //        ubs.Bindings();
+    //        lock (_lockObject)
+    //        {
+    //            IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+    //            var sender = OnLineUser.Where(it => it.ContextId != null && it.ContextId == Context.ConnectionId).FirstOrDefault();
+    //            var recevier = userService.GetUser(package.RecevierId);
+    //            //数据验证
+    //            if(sender==null||recevier==null)
+    //                Clients.Client(Context.ConnectionId)
+    //                    .ReceviceMessage(new SignalRMessagePackage() { Context = sender==null?"发送者不在线":recevier==null?"接收方不存在":"",
+    //                                                                   RecevierId = package.RecevierId, 
+    //                                                                   SenderId = package.SenderId,
+    //                                                                   SCType = package.SCType,
+    //                                                                   SMType = SignalRMessageType.StateMessage,
+    //                                                                   State=false
+    //                    });
+
+    //            try
+    //            {
+    //                //存储发送信息
+    //                if (userService.AddPTPMessage(new UserMessageDTO()
+    //                {
+    //                    Content = package.Context.ToString(),
+    //                    CreateTime = DateTime.Now,
+    //                    ToUserId = recevier.ID,
+    //                    FromUserId = sender.ID,
+    //                    State = 0
+    //                }))
+    //                {
+    //                    //将信息发送给接受者 如果接受者在线
+    //                    recevier = OnLineUser.Where(it => it.ID == recevier.ID && String.IsNullOrWhiteSpace(it.ContextId)).FirstOrDefault();
+    //                    if (recevier != null) Clients.Client(recevier.ContextId)
+    //                         .ReceviceMessage(new SignalRMessagePackage()
+    //                         {
+    //                             Context = package.Context,
+    //                             RecevierId = package.RecevierId,
+    //                             SenderId = package.SenderId,
+    //                             SCType = package.SCType,
+    //                             SMType = SignalRMessageType.Text,
+    //                             State = true
+    //                         });
+
+    //                    //通知发送者 信息发送成功
+    //                    Clients.Client(Context.ConnectionId)
+    //                    .ReceviceMessage(new SignalRMessagePackage()
+    //                    {
+    //                        Context = "",
+    //                        RecevierId = package.RecevierId,
+    //                        SenderId = package.SenderId,
+    //                        SCType = package.SCType,
+    //                        SMType = SignalRMessageType.StateMessage,
+    //                        State = true
+    //                    });
+    //                }
+    //            }
+    //            catch (Exception ex)
+    //            {
+    //                //通知发送者 信息发送失败
+    //                Clients.Client(Context.ConnectionId)
+    //                .ReceviceMessage(new SignalRMessagePackage()
+    //                {
+    //                    Context = "信息发送失败"+ex.Message,
+    //                    RecevierId = package.RecevierId,
+    //                    SenderId = package.SenderId,
+    //                    SCType = package.SCType,
+    //                    SMType = SignalRMessageType.StateMessage,
+    //                    State = false
+    //                });
+    //            }
+    //        }
+    //    }
+
+    //    void SendPTPDoc()
+    //    { }
+
+    //    void SendPTPError()
+    //    { }
+
+    //    void SendPTPPic()
+    //    { }
+
+    //    void SendPTGText()
+    //    { }
+
+    //    void SendPTGDoc()
+    //    { }
+
+    //    void SendPTGError()
+    //    { }
+
+    //    void SendPTGPic()
+    //    { }
+
+    //    #endregion
+    //}
+
+    //public class SignalRMessagePackage
+    //{
+    //    /// <summary>
+    //    /// 通信类型 PersonToPerson PersonToGroup
+    //    /// </summary>
+    //    public SignalRCommunicationType SCType { get; set; }
+
+    //    /// <summary>
+    //    /// 消息类型 Doc Pic Text Video
+    //    /// </summary>
+    //    public SignalRMessageType SMType { get; set; }
+
+    //    /// <summary>
+    //    /// 
+    //    /// </summary>
+    //    public object Context { get; set; }
+
+    //    /// <summary>
+    //    /// 文档、图片等使用
+    //    /// </summary>
+    //    public String Title { get; set; }
+
+    //    /// <summary>
+    //    /// 发送者Id
+    //    /// </summary>
+    //    public int SenderId { get; set; }
+
+    //    /// <summary>
+    //    /// 接收方Id(用户或群组Id0
+    //    /// </summary>
+    //    public int RecevierId { get; set; }
+
+    //    /// <summary>
+    //    /// 信息发送是否成功
+    //    /// </summary>
+    //    public bool State { get; set; }
+
+    //    public bool Validate()
+    //    {
+    //        return true;
+    //    }
+
+    //    public String GetTypeCode()
+    //    {
+    //        if (SCType == SignalRCommunicationType.PersonToGroup)
+    //        {
+    //            switch (SMType)
+    //            {
+    //                case SignalRMessageType.Text: return "00";
+    //                case SignalRMessageType.Doc: return "01";
+    //                case SignalRMessageType.StateMessage: return "02";
+    //                case SignalRMessageType.Pic: return "03";
+    //                default: return "99";
+    //            }
+    //        }
+    //        else
+    //        {
+    //            switch (SMType)
+    //            {
+    //                case SignalRMessageType.Text: return "10";
+    //                case SignalRMessageType.Doc: return "11";
+    //                case SignalRMessageType.StateMessage: return "12";
+    //                case SignalRMessageType.Pic: return "13";
+    //                default: return "99";
+    //            }
+    //        }
+    //    }
+    //}
+
+    //public enum SignalRMessageType
+    //{ 
+    //    Doc,Pic,Text,
+    //    [Description("状态信息")]
+    //    StateMessage
+    //}
+
+    //public enum SignalRCommunicationType
+    //{
+    //    PersonToPerson,PersonToGroup
+    //}
+
+    //public class PTPPackage : SignalRMessagePackage
+    //{
+    //    public void SendMessage()
+    //    {
+ 
+    //    }
+    //}
 }

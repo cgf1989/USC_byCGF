@@ -44,6 +44,7 @@
     <Compile Include="GroupDTO.cs" />
     <Compile Include="GroupMemberDTO.cs" />
     <Compile Include="GroupRole.cs" />
+    <Compile Include="CustomerGroupDTO.cs" />
     <Compile Include="Model\AdministrativecodeDTO.CS" />
     <Compile Include="Model\AssetBaseTypeDTO.CS" />
     <Compile Include="Model\AssetMaintenanceDTO.CS" />
@@ -51,8 +52,8 @@
     <Compile Include="Model\AuthorizationDTO.CS" />
     <Compile Include="Model\BussnessVerDTO.CS" />
     <Compile Include="Model\CustomCategoryDTO.CS" />
-    <Compile Include="Model\CustomerGoupDTO.CS" />
-    <Compile Include="CustomerGroupDTO.cs" />
+    <Compile Include="Model\CustomGroupDTO.CS" />
+    <Compile Include="Model\CustomGroupUserDTO.CS" />
     <Compile Include="Model\CustomTabDataDTO.CS" />
     <Compile Include="Model\CustomTableDTO.CS" />
     <Compile Include="Model\DllFileStreamDTO.CS" />

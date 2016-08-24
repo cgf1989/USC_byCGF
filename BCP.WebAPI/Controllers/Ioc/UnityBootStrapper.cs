@@ -28,7 +28,8 @@ namespace BCP.WebAPI.Controllers
             UnityContainer.RegisterType<IAuthorizationRepository, AuthorizationRepository>();
             UnityContainer.RegisterType<IBussnessVerRepository, BussnessVerRepository>();
             UnityContainer.RegisterType<ICustomCategoryRepository, CustomCategoryRepository>();
-            UnityContainer.RegisterType<ICustomerGoupRepository, CustomerGoupRepository>();
+            UnityContainer.RegisterType<ICustomGroupRepository, CustomGroupRepository>();
+            UnityContainer.RegisterType<ICustomGroupUserRepository, CustomGroupUserRepository>();
             UnityContainer.RegisterType<ICustomTabDataRepository, CustomTabDataRepository>();
             UnityContainer.RegisterType<ICustomTableRepository, CustomTableRepository>();
             UnityContainer.RegisterType<IDllFileStreamRepository, DllFileStreamRepository>();

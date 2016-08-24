@@ -12,6 +12,11 @@ namespace BCP.Domain
     {
         private DbContext _dbContext = new DataContext();
 
+        public EFUnitOfWork()
+        {
+            if (_dbContext == null) _dbContext = new DataContext();
+        }
+
         public DbContext DbContext
         {
             get { return _dbContext; }

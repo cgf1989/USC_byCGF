@@ -12,9 +12,9 @@ using BCP.Domain.Edmx;
 namespace BCP.Domain
 {
     /// <summary>
-    /// CustomerGoup 仓储接口
+    /// CustomGroupUser 仓储接口
     /// </summary>
-    public interface ICustomerGoupRepository :IRepository<CustomerGoup,Int32>
+    public interface ICustomGroupUserRepository :IRepository<CustomGroupUser,Int32>
     {
     }
 }

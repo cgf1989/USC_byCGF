@@ -7,18 +7,16 @@ using System.Threading.Tasks;
 namespace BCP.ViewModel
 {
     /// <summary>
-    /// GroupMessager DTO
+    /// CustomGroupUser DTO
     /// </summary>
-    public partial class GroupMessagerDTO
+    public partial class CustomGroupUserDTO
     {
         public System.Int32 Id { get; set; }
         public Int32? GroupId { get; set; }
-        public Int32? GroupMemberId { get; set; }
-        public Int32? MessageType { get; set; }
-        public System.String Content { get; set; }
+        public Int32? UserId { get; set; }
         public System.String Notes { get; set; }
-        public DateTime? CrateTime { get; set; }
-        public Int32? CrateUseId { get; set; }
+        public DateTime? CreateTime { get; set; }
+        public Int32? CreateUserId { get; set; }
         public DateTime? UpdateTime { get; set; }
         public Int32? UpdateUserId { get; set; }
     }

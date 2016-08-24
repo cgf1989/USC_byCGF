@@ -15,7 +15,7 @@
         <EntityTypeShape EntityType="BCP.Domain.Edmx.Organization_Type" Width="1.75" PointX="8.125" PointY="8.75" />
         <AssociationConnector Association="BCP.Domain.Edmx.UserLoginLog" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.DocumentManage" Width="3" PointX="5.75" PointY="48.5" FillColor="0, 192, 0" />
-        <EntityTypeShape EntityType="BCP.Domain.Edmx.UserMessage" Width="2" PointX="67.25" PointY="33.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.UserMessage" Width="2" PointX="67.625" PointY="34.625" IsExpanded="true" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.GroupMember" Width="2.375" PointX="68.625" PointY="24.375" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizationOtherName" Width="2.25" PointX="42.5" PointY="19.5" />
         <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrganizationOtherName" />
@@ -75,11 +75,10 @@
         <AssociationConnector Association="BCP.Domain.Edmx.PositionPosition" />
         <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicOrganicInvestor1" />
         <AssociationConnector Association="BCP.Domain.Edmx.UserMessageGroup" />
-        <EntityTypeShape EntityType="BCP.Domain.Edmx.GroupMessager" Width="2.25" PointX="72.625" PointY="27.75" />
-        <AssociationConnector Association="BCP.Domain.Edmx.UserMessageUserMessage" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.GroupMessager" Width="2.25" PointX="72.625" PointY="28.25" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.Group" Width="2.25" PointX="72.625" PointY="23.75" />
         <AssociationConnector Association="BCP.Domain.Edmx.UserGroupName" />
-        <EntityTypeShape EntityType="BCP.Domain.Edmx.CustomerGoup" Width="2" PointX="69" PointY="28.5" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.CustomGroup" Width="2" PointX="70.375" PointY="30.25" />
         <AssociationConnector Association="BCP.Domain.Edmx.UserCustomerGoup" />
         <AssociationConnector Association="BCP.Domain.Edmx.UserUserMessage" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.DllFileStream" Width="4" PointX="0.5" PointY="23.25" />
@@ -195,8 +194,10 @@
         <AssociationConnector Association="BCP.Domain.Edmx.EmployeePost" />
         <AssociationConnector Association="BCP.Domain.Edmx.PositionPost" />
         <AssociationConnector Association="BCP.Domain.Edmx.GroupGroupMessager" />
-        <AssociationConnector Association="BCP.Domain.Edmx.CustomerGoupUser" />
         <AssociationConnector Association="BCP.Domain.Edmx.WorkModulWorkSpace" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.CustomGroupUser" Width="2" PointX="67.625" PointY="31.375" />
+        <AssociationConnector Association="BCP.Domain.Edmx.UserCustomGroupUser" />
+        <AssociationConnector Association="BCP.Domain.Edmx.CustomGroupCustomGroupUser" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

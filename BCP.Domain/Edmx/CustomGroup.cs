@@ -12,20 +12,24 @@ namespace BCP.Domain.Edmx
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomerGoup
+    public partial class CustomGroup
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CustomerGoup()
+        public CustomGroup()
         {
-            this.Members = new HashSet<User>();
+            this.CustomGroupUsers = new HashSet<CustomGroupUser>();
         }
     
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string GroupName { get; set; }
-        public int CreatID { get; set; }
+        public string Notes { get; set; }
+        public Nullable<System.DateTime> CreatTime { get; set; }
+        public Nullable<int> CreateUserId { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Members { get; set; }
+        public virtual ICollection<CustomGroupUser> CustomGroupUsers { get; set; }
     }
 }

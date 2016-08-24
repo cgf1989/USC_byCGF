@@ -14,34 +14,38 @@ namespace BCP.Domain
     {
         IUserRepository _userRepository = null;
         IUserMessageRepository _userMessageRepository = null;
-        ICustomerGoupRepository _customerGroupRepository = null;
+        ICustomGroupRepository _customGroupRepository = null;
         IGroupRepository _groupRepository = null;
         IGroupMemberRepository _groupMemberRepository = null;
         IGroupMessagerRepository _groupMessagerRepository = null;
+        ICustomGroupUserRepository _customGroupUserRepository = null;
         IUnitOfWork _unitOfWork = null;
 
         public UserService(IUnitOfWork unitOfWork,
             IUserMessageRepository userMessageRepository,
-            ICustomerGoupRepository customerGroupRepository,
+            ICustomGroupRepository customGroupRepository,
             IGroupRepository groupRepository,
             IGroupMemberRepository groupMemberRepository,
             IGroupMessagerRepository groupMessagerRepository,
+            ICustomGroupUserRepository customGroupUserRepository,
             IUserRepository userRepository)
         {
             this._userRepository = userRepository;
             this._userMessageRepository = userMessageRepository;
-            this._customerGroupRepository = customerGroupRepository;
+            this._customGroupRepository = customGroupRepository;
             this._groupRepository = groupRepository;
             this._groupMemberRepository = groupMemberRepository;
             this._groupMessagerRepository = groupMessagerRepository;
+            this._customGroupUserRepository = customGroupUserRepository;
 
             this._unitOfWork = unitOfWork;
             this._userRepository.UnitOfWork = unitOfWork;
             this._userMessageRepository.UnitOfWork = unitOfWork;
-            this._customerGroupRepository.UnitOfWork = unitOfWork;
+            this._customGroupRepository.UnitOfWork = unitOfWork;
             this._groupMessagerRepository.UnitOfWork = unitOfWork;
             this._groupRepository.UnitOfWork = unitOfWork;
             this._groupMemberRepository.UnitOfWork = unitOfWork;
+            this._customGroupUserRepository.UnitOfWork = unitOfWork;
         }
 
         public void InitDataBase()
@@ -53,10 +57,9 @@ namespace BCP.Domain
                     UserName = "Admin",
                     Password = "Admin",
                     ActualName = "Admin",
-                    EventTime = 1,
-                    LimiteTime = DateTime.Now,
-                    Note = "",
-                    Status = "",
+                    LimitTime = DateTime.Now,
+                    Notes = "",
+                    State = 0,
                     Domain="",
                     DomainId=""
                 };
@@ -90,12 +93,20 @@ namespace BCP.Domain
 
         public UserDTO GetUser(int id)
         {
-            return _userRepository.GetAllWithNavigationalProperty("GroupNames").Where(it => it.ID == id).First().ConvertToUserDTO();
+            var user = _userRepository.GetAllWithNavigationalProperty("GroupNames").Where(it => it.ID == id).FirstOrDefault();
+            if (user != null)
+                return user.ConvertToUserDTO();
+            else
+                throw new Exception("不存在的用户");
         }
 
         public UserDTO GetUser(string userName)
         {
-            return _userRepository.GetAll().Where(it => it.UserName.Equals(userName)).First().MapperTo<User, UserDTO>();
+            var user = _userRepository.GetAllWithNavigationalProperty("GroupNames").Where(it => it.UserName.Equals(userName)).FirstOrDefault();
+            if (user != null)
+                return user.ConvertToUserDTO();
+            else
+                throw new Exception("不存在的用户");
         }
 
         public bool DeleteUser(int id)
@@ -107,7 +118,8 @@ namespace BCP.Domain
 
         public bool UpdateUserPwd(int id, string userPwd)
         {
-            var user = _userRepository.GetAll().Where(it => it.ID == id).First();
+            var user = _userRepository.GetAll().Where(it => it.ID == id).FirstOrDefault();
+            if (user == null) throw new Exception("不存在的用户");
             user.Password = userPwd;
             _userRepository.Save(user);
             _unitOfWork.Commit();
@@ -116,8 +128,8 @@ namespace BCP.Domain
 
         public List<UserDTO> GetUser()
         {
-            var list = _userRepository.GetAll()
-                .MapperTo<User, UserDTO>()
+            var list = _userRepository.GetAllWithNavigationalProperty("GroupNames")
+                .ConvertToUserDTO()
                 .ToList();
             return list;
         }
@@ -125,9 +137,9 @@ namespace BCP.Domain
         public List<UserMessageDTO> GetPTPMessage(int userId, int anotherId)
         {
             return _userMessageRepository.GetAll().Where(it =>
-                (it.SenderID == userId && it.ReplyId == anotherId)
-                || (it.SenderID == anotherId && it.ReplyId == userId))
-                .OrderBy(it=>it.ID)
+                (it.FromUserId == userId && it.ToUserId == anotherId)
+                || (it.FromUserId == anotherId && it.ToUserId == userId))
+                .OrderBy(it=>it.Id)
                 .MapperTo<UserMessage, UserMessageDTO>()
                 .ToList();
         }
@@ -146,10 +158,10 @@ namespace BCP.Domain
 
         public void MarkPTPMessage(int sendId, int replyId)
         {
-            var message = _userMessageRepository.GetAll().Where(it => it.SenderID == sendId && it.ReplyId == replyId);
+            var message = _userMessageRepository.GetAll().Where(it => it.FromUserId == sendId && it.ToUserId == replyId);
             foreach (var node in message)
             {
-                node.State = "1";
+                node.State = 1;
                 _userMessageRepository.Save(node);
             }
             _unitOfWork.Commit();
@@ -158,92 +170,125 @@ namespace BCP.Domain
         #endregion
 
         #region customergroup
-        public bool AddCustomerGroup(CustomerGoupDTO customerGoupDTO)
+        public bool AddCustomGroup(CustomGroupDTO customGroupDTO)
         {
-            CustomerGoup cg = customerGoupDTO.MapperTo<CustomerGoupDTO, CustomerGoup>();
-            cg.User = _userRepository.GetAll().Where(it => it.ID == customerGoupDTO.CreatID).FirstOrDefault();
-            _customerGroupRepository.Add(cg);
+            CustomGroup cg = customGroupDTO.MapperTo<CustomGroupDTO, CustomGroup>();
+            cg.User = _userRepository.GetAll().Where(it => it.ID == customGroupDTO.CreateUserId).FirstOrDefault();
+            _customGroupRepository.Add(cg);
             _unitOfWork.Commit();
             return true;
         }
 
-        public bool UpdateCustomerGroupName(int groupId, string groupName)
+        public bool UpdateCustomGroupName(int groupId, string groupName)
         {
-            CustomerGoup cg = _customerGroupRepository.GetAll().Where(it => it.ID == groupId).FirstOrDefault();
+            CustomGroup cg = _customGroupRepository.GetAll().Where(it => it.Id==groupId).FirstOrDefault();
             if (cg == null) throw new Exception("不存在的分组");
             cg.GroupName = groupName;
-            _customerGroupRepository.Save(cg);
+            _customGroupRepository.Save(cg);
             _unitOfWork.Commit();
             return true;
         }
 
-        public bool DeleteCustomerGroup(int groupId)
+        public bool DeleteCustomGroup(int groupId)
         {
-            _customerGroupRepository.RemoveNonCascaded(groupId);
+            _customGroupRepository.RemoveNonCascaded(groupId);
             _unitOfWork.Commit();
             return true;
         }
 
-        public List<CustomerGoupDTO> GetCustomerGroup(int userId, bool IsCascade)
+        public List<CustomGroupDTO> GetCustomGroup(int userId, bool IsCascade)
         {
+            //if (IsCascade)
+            //{
+            //    var list = _customerGroupRepository.GetAllWithNavigationalProperty("Members").Where(it => it.User.ID == userId)
+            //        .ConvertToCustomGroupDTO();
+            //    return list.ToList();
+            //}
+            //else
+            //{
+            //    var list = _customerGroupRepository.GetAll().Where(it => it.)
+            //        .ConvertToCustomerGroupDTO();
+            //    return list.ToList();
+            //}
             if (IsCascade)
             {
-                var list = _customerGroupRepository.GetAllWithNavigationalProperty("Members").Where(it => it.User.ID == userId)
-                    .ConvertToCustomerGroupDTO();
+                //var list=_customGroupRepository.GetAllWithNavigationalProperty("").Where(it=>it.CustomGroupUsers
+                var list = _customGroupRepository.GetAllWithNavigationalProperty("CustomGroupUsers").Where(it => it.User.ID == userId)
+                    .ConvertToCustomGroupDTO(_customGroupUserRepository);
                 return list.ToList();
             }
             else
             {
-                var list = _customerGroupRepository.GetAll().Where(it => it.User.ID == userId)
-                    .ConvertToCustomerGroupDTO();
+                var list = _customGroupRepository.GetAll().Where(it => it.User.ID == userId)
+                    .ConvertToCustomGroupDTO(_customGroupUserRepository);
                 return list.ToList();
             }
         }
 
-        public List<UserDTO> GetUserByCustomerGroupId(int groupId)
+        public List<UserDTO> GetUserByCustomGroupId(int groupId)
         {
-            var ret = _userRepository.GetAllWithNavigationalProperty("Belongs").Where(it =>
-                (it.Belongs.Where(be => be.ID == groupId).FirstOrDefault()) != null);
-            return ret.MapperTo<User, UserDTO>().ToList();
+            var list = _customGroupUserRepository.GetAllWithNavigationalProperty("User").Where(it => it.GroupId == groupId).Select(it => it.User)
+                .ConvertToUserDTO();
+            return list.ToList();
         }
 
-        public CustomerGoupDTO GetCustomerGroupById(int groupId)
+        public CustomGroupDTO GetCustomGroupById(int groupId)
         {
-            return _customerGroupRepository.GetAllWithNavigationalProperty("Members")
-                    .Where(it => it.ID == groupId)
-                    .FirstOrDefault()
-                    .ConvertToCustomerGroupDTO();
+            //return _customerGroupRepository.GetAllWithNavigationalProperty("Members")
+            //        .Where(it => it.ID == groupId)
+            //        .FirstOrDefault()
+            //        .ConvertToCustomerGroupDTO();
+            var customgroup = _customGroupRepository.GetAllWithNavigationalProperty("CustomGroupUsers").Where(it => it.Id==groupId)
+                .FirstOrDefault();
+            if(customgroup==null) throw new Exception("不存在的分组");
+            return customgroup.ConvertToCustomGroupDTO(_customGroupUserRepository);
         }
 
-        public bool AddUserToCustomerGroup(int userId, int groupId)
+        public bool AddUserToCustomGroup(int userId, int groupId)
         {
-            var user = _customerGroupRepository.GetAllWithNavigationalProperty("User").Where(it => it.ID == groupId).First().User;
-            var groups = _customerGroupRepository.GetAll().Where(it => it.User.ID == user.ID);
-            if (groups.Where(it => it.Members.Where(m => m.ID == userId).FirstOrDefault() == null).FirstOrDefault() != null)
-            {
-                ///不能如此做
-                var adduser = _userRepository.GetAllWithNavigationalProperty("Belongs").Where(it => it.ID == userId).First();
-                var addgroup = _customerGroupRepository.GetAll().Where(it => it.ID == groupId).First();
-                if (adduser.Belongs == null) adduser.Belongs = new List<CustomerGoup>();
-                adduser.Belongs.Add(addgroup);
-                _userRepository.Save(adduser);
-                _unitOfWork.Commit();
-                return true;
-            }
-            else
-            {
+            //var user = _customerGroupRepository.GetAllWithNavigationalProperty("User").Where(it => it.ID == groupId).First().User;
+            //var groups = _customerGroupRepository.GetAll().Where(it => it.User.ID == user.ID);
+            //if (groups.Where(it => it.Members.Where(m => m.ID == userId).FirstOrDefault() == null).FirstOrDefault() != null)
+            //{
+            //    ///不能如此做
+            //    var adduser = _userRepository.GetAllWithNavigationalProperty("Belongs").Where(it => it.ID == userId).First();
+            //    var addgroup = _customerGroupRepository.GetAll().Where(it => it.ID == groupId).First();
+            //    if (adduser.Belongs == null) adduser.Belongs = new List<CustomerGoup>();
+            //    adduser.Belongs.Add(addgroup);
+            //    _userRepository.Save(adduser);
+            //    _unitOfWork.Commit();
+            //    return true;
+            //}
+            //else
+            //{
+            //    throw new Exception("该用户已分组");
+            //}
+
+            var user = _userRepository.GetByKey(userId);
+            var group = _customGroupRepository.GetByKey(groupId);
+            if(user==null||group==null)throw new Exception("用户或者分组不存在");
+
+            //检测用户是否已经分组
+            if (_customGroupUserRepository.GetAll().Where(it => it.UserId == userId && it.CustomGroup.CreateUserId == group.CreateUserId).FirstOrDefault() != null)
                 throw new Exception("该用户已分组");
-            }
+
+            //添加分组
+            CustomGroupUser cgu = new CustomGroupUser() { User = user, CustomGroup = group };
+            _customGroupUserRepository.Add(cgu);
+            _unitOfWork.Commit();
+
+            return true;
         }
 
-        public bool RemoveUserFromCustomerGroup(int userId, int groupId)
+        public bool RemoveUserFromCustomGroup(int userId, int groupId)
         {
-            var user = _userRepository.GetAll().Where(it => it.ID == userId).First();
-            var group = _customerGroupRepository.GetAllWithNavigationalProperty("Members").Where(it => it.ID == groupId).First();
-            if (group.Members == null) group.Members = new List<User>();
-            group.Members.Remove(user);
-            _customerGroupRepository.Save(group);
-            _unitOfWork.Commit();
+            var cgu = _customGroupUserRepository.GetAll().Where(it => it.UserId == userId && it.GroupId == groupId).FirstOrDefault();
+            if (cgu != null)
+            {
+                _customGroupUserRepository.RemoveNonCascaded(cgu);
+                _unitOfWork.Commit();
+            }
+
             return true;
         }
         #endregion
@@ -257,10 +302,10 @@ namespace BCP.Domain
             var member = _groupMemberRepository.GetAll().Where(it => it.User.ID == userId).FirstOrDefault();
             if (member == null) throw new Exception("用户不属于你群组");
             if (!member.GroupRole.Equals(GroupRole.GroupCreator.ToString()) && !member.GroupRole.Equals(GroupRole.GroupManager.ToString())) throw new Exception("用户没修改权限");
-            group.GroupNumber = groupNumber;
+            group.GroupNo = groupNumber;
             group.Name = groupName;
             group.Notes = groupNotes;
-            group.Type = groupType;
+            group.Category = groupType;
             _groupRepository.Save(group);
             _unitOfWork.Commit();
             return true;
@@ -269,10 +314,10 @@ namespace BCP.Domain
         public bool RegisterGroup(GroupDTO groupDTO)
         {
             Group group = groupDTO.MapperTo<GroupDTO, Group>();
-            group.User = _userRepository.GetByKey(groupDTO.UserID);
+            group.User = _userRepository.GetByKey((int)groupDTO.UserId);
             if (group.User == null) throw new Exception("未找到用户数据");
             if (group.GroupMembers == null) group.GroupMembers = new List<GroupMember>();
-            group.GroupMembers.Add(new GroupMember() { GroupRole = GroupRole.GroupCreator.ToString(), JoinTime = DateTime.Now, State = "1", Name = group.User.ActualName, ReferenceUserId = group.UserID,User=group.User });
+            group.GroupMembers.Add(new GroupMember() { GroupRole = GroupRole.GroupCreator.ToString(), CreateTime = DateTime.Now, State = 0,ReferenceUserId=groupDTO.UserId, Name = group.User.ActualName, User = group.User });
             _groupRepository.Add(group);
             _unitOfWork.Commit();
             return true;
@@ -280,10 +325,10 @@ namespace BCP.Domain
 
         public bool DeleteGroup(int groupId, int userId)
         {
-            var group = _groupRepository.GetAll().Where(it => it.ID == groupId && it.User.ID == userId).FirstOrDefault();
+            var group = _groupRepository.GetAll().Where(it => it.Id == groupId && it.User.ID == userId).FirstOrDefault();
             if (group == null) throw new Exception("不存在的群组或不是群组创建者");
-            if (_groupMessagerRepository.GetAll().Where(it => it.GroupID == groupId).Count() > 1) throw new Exception("群组成员不为空");
-            var member = _groupMemberRepository.GetAll().Where(it => it.UserID == userId && it.GroupID == groupId).FirstOrDefault();
+            if (_groupMessagerRepository.GetAll().Where(it => it.GroupId == groupId).Count() > 1) throw new Exception("群组成员不为空");
+            var member = _groupMemberRepository.GetAll().Where(it => it.UserId == userId && it.GroupId == groupId).FirstOrDefault();
             if (member != null)
             {
                 _groupMemberRepository.RemoveNonCascaded(member);
@@ -303,9 +348,9 @@ namespace BCP.Domain
                 //    .ToList();
                 //var partionList=_groupRepository.GetAllWithNavigationalProperty("GroupMembers")
                 //    .Where(it=>it.GroupMembers.Where(it=>it.UserID
-                var added = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).Select(it => it.GroupID).ToList();
+                var added = _groupMemberRepository.GetAll().Where(it => it.UserId == userId).Select(it => it.GroupId).ToList();
 
-                var ret= _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it =>added.Contains(it.ID));
+                var ret = _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => added.Contains(it.Id));
 
                 return ret.ConvertToGroupDTO().ToList();
             }
@@ -317,9 +362,9 @@ namespace BCP.Domain
                 //return _groupRepository.GetAll().Where(it => it.User.ID == userId).MapperTo<Group, GroupDTO>()
                 //.ToList();
                 {
-                    var added = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).Select(it => it.GroupID).ToList();
-                    return _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => added.Contains(it.ID))
-                        .MapperTo<Group,GroupDTO>()
+                    var added = _groupMemberRepository.GetAll().Where(it => it.UserId == userId).Select(it => it.GroupId).ToList();
+                    return _groupRepository.GetAllWithNavigationalProperty("GroupMembers").Where(it => added.Contains(it.Id))
+                        .MapperTo<Group, GroupDTO>()
                         .ToList();
                 }
             }
@@ -334,12 +379,12 @@ namespace BCP.Domain
 
         public List<GroupMemberDTO> GetGroupMembersByGroupId(int groupId)
         {
-            return _groupMemberRepository.GetAllWithNavigationalProperty("Group", "User").Where(it => it.GroupID == groupId)
+            return _groupMemberRepository.GetAllWithNavigationalProperty("Group", "User").Where(it => it.GroupId == groupId)
                 .ConvertToGroupMemberDTO()
                 .ToList();
         }
 
-        public bool AddUserToGroup(int memberUserId, int groupId, int userId)
+        public bool AddUserToGroup(int memberUserId, int groupId, int userId,int referenceUserId)
         {
             //判读带加入用户是否存在并获取用户数据
             var user = _userRepository.GetByKey(memberUserId);
@@ -350,14 +395,14 @@ namespace BCP.Domain
             if (group == null) throw new Exception("不存在的群组");
 
             //判断登录用户是否拥有操作权限
-            var refer = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).FirstOrDefault();
+            var refer = _groupMemberRepository.GetAll().Where(it => it.UserId == userId).FirstOrDefault();
             if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator) && !refer.GroupRole.Equals(GroupRole.GroupManager)))
                 throw new Exception("用户没有操作权限");
 
             //判断带加入用户是否已经加入群组
-            if (_groupMemberRepository.GetAll().Where(it => it.UserID == memberUserId).FirstOrDefault() != null) throw new Exception("用户已加入群组");
+            if (_groupMemberRepository.GetAll().Where(it => it.UserId == memberUserId).FirstOrDefault() != null) throw new Exception("用户已加入群组");
 
-            GroupMember gm = new GroupMember() { Group = group, GroupRole = GroupRole.GroupMember.ToString(), JoinTime = DateTime.Now, Name = user.ActualName, ReferenceUserId = userId, User = user, UserID = user.ID };
+            GroupMember gm = new GroupMember() { Group = group, GroupRole = GroupRole.GroupMember.ToString(), CreateTime = DateTime.Now, Name = user.ActualName, ReferenceUserId = referenceUserId, User = user, UserId = user.ID };
             _groupMemberRepository.Add(gm);
             _unitOfWork.Commit();
             return true;
@@ -375,8 +420,8 @@ namespace BCP.Domain
             if (group == null) throw new Exception("不存在的群组");
 
             //判断用户是否拥有删除权限
-            var refer = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).FirstOrDefault();
-            if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator) && !refer.GroupRole.Equals(GroupRole.GroupManager)))
+            var refer = _groupMemberRepository.GetAll().Where(it => it.UserId == userId).FirstOrDefault();
+            if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator.ToString()) && !refer.GroupRole.Equals(GroupRole.GroupManager.ToString())))
                 throw new Exception("用户没有操作权限");
 
             _groupMemberRepository.RemoveNonCascaded(groupMemberId);
@@ -394,7 +439,7 @@ namespace BCP.Domain
             if (group == null) throw new Exception("不存在的群组");
 
             //验证用户权限
-            var refer = _groupMemberRepository.GetAll().Where(it => it.UserID == userId).FirstOrDefault();
+            var refer = _groupMemberRepository.GetAll().Where(it => it.UserId == userId).FirstOrDefault();
             if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator) && !refer.GroupRole.Equals(GroupRole.GroupManager)))
                 throw new Exception("用户没有操作权限");
 
@@ -410,7 +455,7 @@ namespace BCP.Domain
 
         public bool UpdateGroupMemberName(int userId, string newName, int groupMemberId)
         {
-            var member = _groupMemberRepository.GetAll().Where(it => it.ID == groupMemberId && it.UserID == userId).FirstOrDefault();
+            var member = _groupMemberRepository.GetAll().Where(it => it.Id == groupMemberId && it.UserId == userId).FirstOrDefault();
             if (member == null) throw new Exception("不存在的群成员或者并非用户修改自己的群名片");
             member.Name = newName;
             _groupMemberRepository.Save(member);
@@ -426,11 +471,11 @@ namespace BCP.Domain
 
         public bool AddGroupMessage(GroupMessagerDTO gmt,int userid)
         {
-            GroupMember gm = _groupMemberRepository.GetAll().Where(it => it.UserID == userid).FirstOrDefault();
+            GroupMember gm = _groupMemberRepository.GetAll().Where(it => it.UserId == userid).FirstOrDefault();
             if (gm == null) throw new Exception("不存在的群成员");
             GroupMessager groupMessage = gmt.MapperTo<GroupMessagerDTO, GroupMessager>();
-            groupMessage.GroupID = gm.GroupID;
-            groupMessage.GroupMemberID = gm.ID;
+            groupMessage.GroupId = gm.GroupId;
+            groupMessage.GroupMemberId = gm.Id;
             _groupMessagerRepository.Add(groupMessage);
             _unitOfWork.Commit();
             return true;
@@ -444,15 +489,16 @@ namespace BCP.Domain
         /// <returns></returns>
         public bool MarkPTGMessage(int userId)
         {
-            var groupMessage = _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserID == userId).FirstOrDefault();
+            //var groupMessage = _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserID == userId).FirstOrDefault();
             return true;
         }
 
         public List<GroupMessagerDTO> GetPTGMessage(int userId)
         {
-            return _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserID == userId)
+            return _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserId == userId)
                 .MapperTo<GroupMessager, GroupMessagerDTO>()
                 .ToList();
+            return null;
         }
 
         #endregion

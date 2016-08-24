@@ -11,14 +11,16 @@ namespace BCP.ViewModel
     /// </summary>
     public partial class UserMessageDTO
     {
-        public System.Int32 ID { get; set; }
+        public System.Int32 Id { get; set; }
+        public Int32? FromUserId { get; set; }
+        public Int32? ToUserId { get; set; }
+        public System.Int32 MessageType { get; set; }
         public System.String Content { get; set; }
-        public Int32? ParentId { get; set; }
-        public System.DateTime CreateTime { get; set; }
-        public System.String State { get; set; }
-        public System.Int32 SenderID { get; set; }
-        public System.Int64 EventTime { get; set; }
-        public System.Int32 UserID { get; set; }
-        public Int32? ReplyId { get; set; }
+        public Int32? State { get; set; }
+        public System.String Notes { get; set; }
+        public DateTime? CreateTime { get; set; }
+        public Int32? CreateUserId { get; set; }
+        public DateTime? UpdateTime { get; set; }
+        public System.String UpdateUserId { get; set; }
     }
 }
