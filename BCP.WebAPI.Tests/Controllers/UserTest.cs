@@ -15,6 +15,7 @@ namespace BCP.WebAPI.Tests.Controllers
     [TestClass]
     public class UserTest
     {
+
         public UserTest()
         {
             //

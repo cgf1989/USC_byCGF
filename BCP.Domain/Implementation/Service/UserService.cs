@@ -387,8 +387,8 @@ namespace BCP.Domain
         public bool AddUserToGroup(int memberUserId, int groupId, int userId,int referenceUserId)
         {
             //判读带加入用户是否存在并获取用户数据
-            var user = _userRepository.GetByKey(memberUserId);
-            if (user == null) throw new Exception("不存在的用户");
+            var member = _userRepository.GetByKey(memberUserId);
+            if (member == null) throw new Exception("不存在的用户");
 
             //判断群组是否存在并获得群组数据
             var group = _groupRepository.GetByKey(groupId);
@@ -400,9 +400,9 @@ namespace BCP.Domain
                 throw new Exception("用户没有操作权限");
 
             //判断带加入用户是否已经加入群组
-            if (_groupMemberRepository.GetAll().Where(it => it.UserId == memberUserId).FirstOrDefault() != null) throw new Exception("用户已加入群组");
+            if (_groupMemberRepository.GetAll().Where(it => it.UserId==memberUserId&&it.GroupId==groupId).FirstOrDefault() != null) throw new Exception("用户已加入群组");
 
-            GroupMember gm = new GroupMember() { Group = group, GroupRole = GroupRole.GroupMember.ToString(), CreateTime = DateTime.Now, Name = user.ActualName, ReferenceUserId = referenceUserId, User = user, UserId = user.ID };
+            GroupMember gm = new GroupMember() { Group = group, GroupRole = GroupRole.GroupMember.ToString(), CreateTime = DateTime.Now, Name = member.ActualName, ReferenceUserId = referenceUserId, User = member, UserId = member.ID };
             _groupMemberRepository.Add(gm);
             _unitOfWork.Commit();
             return true;

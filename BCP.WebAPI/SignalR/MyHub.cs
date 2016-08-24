@@ -463,7 +463,9 @@ namespace BCP.WebAPI.SignalR
     /// </summary>
     public enum SignalRMessageType
     {
-        Doc, Pic, Text,
+        Doc,
+        Pic, 
+        Text,
         [Description("状态信息")]
         StateMessage
     }
@@ -473,6 +475,9 @@ namespace BCP.WebAPI.SignalR
     /// </summary>
     public enum SignalRCommunicationType
     {
-        PersonToPerson, PersonToGroup
+        [Description("点对点通讯")]
+        PersonToPerson, 
+        [Description("点对群通讯")]
+        PersonToGroup
     }
 }
