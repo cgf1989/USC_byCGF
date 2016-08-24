@@ -45,8 +45,12 @@ namespace BCP.Domain.Mapping
             Mapper.CreateMap<CustomCategoryDTO, CustomCategory>();
 
 //
-            Mapper.CreateMap<CustomerGoup, CustomerGoupDTO>();
-            Mapper.CreateMap<CustomerGoupDTO, CustomerGoup>();
+            Mapper.CreateMap<CustomGroup, CustomGroupDTO>();
+            Mapper.CreateMap<CustomGroupDTO, CustomGroup>();
+
+//
+            Mapper.CreateMap<CustomGroupUser, CustomGroupUserDTO>();
+            Mapper.CreateMap<CustomGroupUserDTO, CustomGroupUser>();
 
 //
             Mapper.CreateMap<CustomTabData, CustomTabDataDTO>();

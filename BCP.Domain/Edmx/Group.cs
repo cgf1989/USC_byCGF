@@ -21,15 +21,18 @@ namespace BCP.Domain.Edmx
             this.GroupMessagers = new HashSet<GroupMessager>();
         }
     
-        public int ID { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> UserId { get; set; }
+        public string GroupNo { get; set; }
         public string Name { get; set; }
-        public System.DateTime CreatTime { get; set; }
-        public int UserID { get; set; }
-        public string GroupNumber { get; set; }
-        public string State { get; set; }
+        public string Category { get; set; }
+        public Nullable<int> ValidattionPattern { get; set; }
+        public Nullable<short> State { get; set; }
         public string Notes { get; set; }
-        public string Type { get; set; }
-        public string Validate { get; set; }
+        public Nullable<System.DateTime> CreatTime { get; set; }
+        public Nullable<int> CreateUserId { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
     
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

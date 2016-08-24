@@ -14,12 +14,16 @@ namespace BCP.Domain.Edmx
     
     public partial class GroupMessager
     {
-        public int ID { get; set; }
-        public string Type { get; set; }
+        public int Id { get; set; }
+        public Nullable<int> GroupId { get; set; }
+        public Nullable<int> GroupMemberId { get; set; }
+        public Nullable<int> MessageType { get; set; }
         public string Content { get; set; }
-        public string SendTime { get; set; }
-        public Nullable<int> GroupMemberID { get; set; }
-        public Nullable<int> GroupID { get; set; }
+        public string Notes { get; set; }
+        public Nullable<System.DateTime> CrateTime { get; set; }
+        public Nullable<int> CrateUseId { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
     
         public virtual GroupMember GroupMember { get; set; }
         public virtual Group Group { get; set; }

@@ -48,7 +48,7 @@ namespace BCP.Domain.Service
         /// </summary>
         /// <param name="customerGoupDTO"></param>
         /// <returns></returns>
-        bool AddCustomerGroup(CustomerGoupDTO customerGoupDTO);
+        bool AddCustomGroup(CustomGroupDTO customGroupDTO);
 
         /// <summary>
         /// 修改分组名称
@@ -56,36 +56,36 @@ namespace BCP.Domain.Service
         /// <param name="groupId"></param>
         /// <param name="groupName"></param>
         /// <returns></returns>
-        bool UpdateCustomerGroupName(int groupId, string groupName);
+        bool UpdateCustomGroupName(int groupId, string groupName);
 
         /// <summary>
         /// 删除分组（非级联删除）
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        bool DeleteCustomerGroup(int groupId);
+        bool DeleteCustomGroup(int groupId);
 
         /// <summary>
         /// 获取所有分组数据
         /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="IsCascade"></param>
+        /// <param name="userId">分组创建者Id</param>
+        /// <param name="IsCascade">是否包含分组chengyuan</param>
         /// <returns></returns>
-        List<CustomerGoupDTO> GetCustomerGroup(int userId, bool IsCascade);
+        List<CustomGroupDTO> GetCustomGroup(int userId, bool IsCascade);
 
         /// <summary>获取分组成员
         /// 
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        List<UserDTO> GetUserByCustomerGroupId(int groupId);
+        List<UserDTO> GetUserByCustomGroupId(int groupId);
 
         /// <summary>
         /// 获取分组数据(包括分组成员)
         /// </summary>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        CustomerGoupDTO GetCustomerGroupById(int groupId);
+        CustomGroupDTO GetCustomGroupById(int groupId);
 
         /// <summary>
         /// 添加用户到分组
@@ -93,7 +93,7 @@ namespace BCP.Domain.Service
         /// <param name="userId"></param>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        bool AddUserToCustomerGroup(int userId, int groupId);
+        bool AddUserToCustomGroup(int userId, int groupId);
 
         /// <summary>
         /// 从分组移除用户
@@ -101,7 +101,7 @@ namespace BCP.Domain.Service
         /// <param name="userId"></param>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        bool RemoveUserFromCustomerGroup(int userId, int groupId);
+        bool RemoveUserFromCustomGroup(int userId, int groupId);
 
         #endregion
 
@@ -163,7 +163,7 @@ namespace BCP.Domain.Service
         /// <param name="groupId"></param>
         /// <param name="userId">登录用户，用于验证权限</param>
         /// <returns></returns>
-        bool AddUserToGroup(int memberUserId, int groupId, int userId);
+        bool AddUserToGroup(int memberUserId, int groupId, int userId,int referenceUserId);
 
         /// <summary>
         /// 移除用户
@@ -205,7 +205,7 @@ namespace BCP.Domain.Service
         /// </summary>
         /// <param name="gmt"></param>
         /// <returns></returns>
-        bool AddGroupMessage(GroupMessagerDTO gmt,int userId);
+        bool AddGroupMessage(GroupMessagerDTO gmt, int userId);
 
         /// <summary>
         /// 

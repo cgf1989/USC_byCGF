@@ -11,14 +11,17 @@ namespace BCP.ViewModel
     /// </summary>
     public partial class GroupDTO
     {
-        public System.Int32 ID { get; set; }
+        public System.Int32 Id { get; set; }
+        public Int32? UserId { get; set; }
+        public System.String GroupNo { get; set; }
         public System.String Name { get; set; }
-        public System.DateTime CreatTime { get; set; }
-        public System.Int32 UserID { get; set; }
-        public System.String GroupNumber { get; set; }
-        public System.String State { get; set; }
+        public System.String Category { get; set; }
+        public Int32? ValidattionPattern { get; set; }
+        public Int16? State { get; set; }
         public System.String Notes { get; set; }
-        public System.String Type { get; set; }
-        public System.String Validate { get; set; }
+        public DateTime? CreatTime { get; set; }
+        public Int32? CreateUserId { get; set; }
+        public DateTime? UpdateTime { get; set; }
+        public Int32? UpdateUserId { get; set; }
     }
 }

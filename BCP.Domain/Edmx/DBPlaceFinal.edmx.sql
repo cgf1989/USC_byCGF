@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/17/2016 14:47:52
+-- Date Created: 08/24/2016 10:35:05
 -- Generated from EDMX file: E:\Work_hy\共性平台\BasePlace\BCP.Domain\Edmx\DBPlaceFinal.edmx
 -- --------------------------------------------------
 
@@ -114,19 +114,16 @@ IF OBJECT_ID(N'[dbo].[FK_OrganizBasicOrganicInvestor1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OrganicInvestors] DROP CONSTRAINT [FK_OrganizBasicOrganicInvestor1];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserMessageGroup]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[GroupMembers] DROP CONSTRAINT [FK_UserMessageGroup];
-GO
-IF OBJECT_ID(N'[dbo].[FK_UserMessageUserMessage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserMessages] DROP CONSTRAINT [FK_UserMessageUserMessage];
+    ALTER TABLE [dbo].[sys_GroupMember] DROP CONSTRAINT [FK_UserMessageGroup];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserGroupName]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Groups] DROP CONSTRAINT [FK_UserGroupName];
+    ALTER TABLE [dbo].[sys_Group] DROP CONSTRAINT [FK_UserGroupName];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserCustomerGoup]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CustomerGoups] DROP CONSTRAINT [FK_UserCustomerGoup];
+    ALTER TABLE [dbo].[sys_CustomerGoup] DROP CONSTRAINT [FK_UserCustomerGoup];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserUserMessage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[UserMessages] DROP CONSTRAINT [FK_UserUserMessage];
+    ALTER TABLE [dbo].[sys_UserMessage] DROP CONSTRAINT [FK_UserUserMessage];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrganizationCustomOrganizationType]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OrganizationCustomTypes] DROP CONSTRAINT [FK_OrganizationCustomOrganizationType];
@@ -360,10 +357,10 @@ IF OBJECT_ID(N'[dbo].[FK_LoginLogOpenEvent]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OperationEvents] DROP CONSTRAINT [FK_LoginLogOpenEvent];
 GO
 IF OBJECT_ID(N'[dbo].[FK_GroupMemberGroupMessager]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[GroupMessagers] DROP CONSTRAINT [FK_GroupMemberGroupMessager];
+    ALTER TABLE [dbo].[sys_GroupMessager] DROP CONSTRAINT [FK_GroupMemberGroupMessager];
 GO
 IF OBJECT_ID(N'[dbo].[FK_GroupGroupMember]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[GroupMembers] DROP CONSTRAINT [FK_GroupGroupMember];
+    ALTER TABLE [dbo].[sys_GroupMember] DROP CONSTRAINT [FK_GroupGroupMember];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EmployeePost]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_EmployeePost];
@@ -372,13 +369,13 @@ IF OBJECT_ID(N'[dbo].[FK_PositionPost]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_PositionPost];
 GO
 IF OBJECT_ID(N'[dbo].[FK_GroupGroupMessager]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[GroupMessagers] DROP CONSTRAINT [FK_GroupGroupMessager];
+    ALTER TABLE [dbo].[sys_GroupMessager] DROP CONSTRAINT [FK_GroupGroupMessager];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CustomerGoupUser_CustomerGoup]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CustomerGoupUser] DROP CONSTRAINT [FK_CustomerGoupUser_CustomerGoup];
+IF OBJECT_ID(N'[dbo].[FK_UserCustomGroupUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[sys_CustomGroupUser] DROP CONSTRAINT [FK_UserCustomGroupUser];
 GO
-IF OBJECT_ID(N'[dbo].[FK_CustomerGoupUser_User]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CustomerGoupUser] DROP CONSTRAINT [FK_CustomerGoupUser_User];
+IF OBJECT_ID(N'[dbo].[FK_CustomGroupCustomGroupUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[sys_CustomGroupUser] DROP CONSTRAINT [FK_CustomGroupCustomGroupUser];
 GO
 
 -- --------------------------------------------------
@@ -394,8 +391,8 @@ GO
 IF OBJECT_ID(N'[dbo].[Positions]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Positions];
 GO
-IF OBJECT_ID(N'[dbo].[Users]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Users];
+IF OBJECT_ID(N'[dbo].[sys_User]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_User];
 GO
 IF OBJECT_ID(N'[dbo].[User_ContactTable]', 'U') IS NOT NULL
     DROP TABLE [dbo].[User_ContactTable];
@@ -412,11 +409,11 @@ GO
 IF OBJECT_ID(N'[dbo].[DocumentManages]', 'U') IS NOT NULL
     DROP TABLE [dbo].[DocumentManages];
 GO
-IF OBJECT_ID(N'[dbo].[UserMessages]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[UserMessages];
+IF OBJECT_ID(N'[dbo].[sys_UserMessage]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_UserMessage];
 GO
-IF OBJECT_ID(N'[dbo].[GroupMembers]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[GroupMembers];
+IF OBJECT_ID(N'[dbo].[sys_GroupMember]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_GroupMember];
 GO
 IF OBJECT_ID(N'[dbo].[OrganizationOtherNames]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OrganizationOtherNames];
@@ -490,14 +487,14 @@ GO
 IF OBJECT_ID(N'[dbo].[OrganizationEvents]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OrganizationEvents];
 GO
-IF OBJECT_ID(N'[dbo].[GroupMessagers]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[GroupMessagers];
+IF OBJECT_ID(N'[dbo].[sys_GroupMessager]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_GroupMessager];
 GO
-IF OBJECT_ID(N'[dbo].[Groups]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Groups];
+IF OBJECT_ID(N'[dbo].[sys_Group]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_Group];
 GO
-IF OBJECT_ID(N'[dbo].[CustomerGoups]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CustomerGoups];
+IF OBJECT_ID(N'[dbo].[sys_CustomerGoup]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_CustomerGoup];
 GO
 IF OBJECT_ID(N'[dbo].[DllFileStreams]', 'U') IS NOT NULL
     DROP TABLE [dbo].[DllFileStreams];
@@ -598,8 +595,8 @@ GO
 IF OBJECT_ID(N'[dbo].[OperationEvents]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OperationEvents];
 GO
-IF OBJECT_ID(N'[dbo].[CustomerGoupUser]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CustomerGoupUser];
+IF OBJECT_ID(N'[dbo].[sys_CustomGroupUser]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_CustomGroupUser];
 GO
 
 -- --------------------------------------------------
@@ -646,18 +643,21 @@ CREATE TABLE [dbo].[Positions] (
 );
 GO
 
--- Creating table 'Users'
-CREATE TABLE [dbo].[Users] (
+-- Creating table 'sys_User'
+CREATE TABLE [dbo].[sys_User] (
     [ID] int IDENTITY(1,1) NOT NULL,
-    [UserName] nvarchar(max)  NOT NULL,
-    [Password] nvarchar(max)  NOT NULL,
-    [ActualName] nvarchar(max)  NULL,
-    [Status] nvarchar(max)  NOT NULL,
-    [LimiteTime] datetime  NOT NULL,
-    [Note] nvarchar(max)  NOT NULL,
+    [UserName] nvarchar(50)  NOT NULL,
+    [Password] nvarchar(50)  NOT NULL,
+    [ActualName] nvarchar(50)  NULL,
+    [LimitTime] datetime  NOT NULL,
     [Domain] nvarchar(max)  NOT NULL,
     [DomainId] nvarchar(max)  NOT NULL,
-    [EventTime] bigint  NOT NULL
+    [State] int  NOT NULL,
+    [Notes] nvarchar(max)  NOT NULL,
+    [CreateTime] datetime  NULL,
+    [CreateUserId] int  NULL,
+    [UpdateTime] datetime  NULL,
+    [UpdateUserId] int  NULL
 );
 GO
 
@@ -725,30 +725,37 @@ CREATE TABLE [dbo].[DocumentManages] (
 );
 GO
 
--- Creating table 'UserMessages'
-CREATE TABLE [dbo].[UserMessages] (
-    [ID] int IDENTITY(1,1) NOT NULL,
-    [Content] nvarchar(max)  NOT NULL,
-    [ParentId] int  NULL,
-    [CreateTime] datetime  NOT NULL,
-    [State] nvarchar(max)  NOT NULL,
-    [SenderID] int  NOT NULL,
-    [EventTime] bigint  NOT NULL,
-    [UserID] int  NOT NULL,
-    [ReplyId] int  NULL
+-- Creating table 'sys_UserMessage'
+CREATE TABLE [dbo].[sys_UserMessage] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [FromUserId] int  NULL,
+    [ToUserId] int  NULL,
+    [MessageType] int  NOT NULL,
+    [Content] nvarchar(max)  NULL,
+    [State] int  NULL,
+    [Notes] nvarchar(max)  NULL,
+    [CreateTime] datetime  NULL,
+    [CreateUserId] int  NULL,
+    [UpdateTime] datetime  NULL,
+    [UpdateUserId] nvarchar(max)  NULL
 );
 GO
 
--- Creating table 'GroupMembers'
-CREATE TABLE [dbo].[GroupMembers] (
-    [ID] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [ReferenceUserId] int  NOT NULL,
-    [UserID] int  NOT NULL,
-    [JoinTime] datetime  NOT NULL,
-    [State] nvarchar(max)  NOT NULL,
-    [GroupRole] nvarchar(max)  NOT NULL,
-    [GroupID] int  NULL
+-- Creating table 'sys_GroupMember'
+CREATE TABLE [dbo].[sys_GroupMember] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [GroupId] int  NULL,
+    [UserId] int  NULL,
+    [Name] nvarchar(50)  NULL,
+    [ReferenceUserId] int  NULL,
+    [ApproveUserId] int  NULL,
+    [GroupRole] nvarchar(max)  NULL,
+    [State] int  NULL,
+    [Notes] nvarchar(max)  NULL,
+    [CreateUserId] int  NULL,
+    [CreateTime] datetime  NULL,
+    [UpdateTiime] datetime  NULL,
+    [UpdateUserId] int  NULL
 );
 GO
 
@@ -1048,36 +1055,47 @@ CREATE TABLE [dbo].[OrganizationEvents] (
 );
 GO
 
--- Creating table 'GroupMessagers'
-CREATE TABLE [dbo].[GroupMessagers] (
-    [ID] int IDENTITY(1,1) NOT NULL,
-    [Type] nvarchar(max)  NOT NULL,
-    [Content] nvarchar(max)  NOT NULL,
-    [SendTime] nvarchar(max)  NOT NULL,
-    [GroupMemberID] int  NULL,
-    [GroupID] int  NULL
+-- Creating table 'sys_GroupMessager'
+CREATE TABLE [dbo].[sys_GroupMessager] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [GroupId] int  NULL,
+    [GroupMemberId] int  NULL,
+    [MessageType] int  NULL,
+    [Content] nvarchar(max)  NULL,
+    [Notes] nvarchar(max)  NULL,
+    [CrateTime] datetime  NULL,
+    [CrateUseId] int  NULL,
+    [UpdateTime] datetime  NULL,
+    [UpdateUserId] int  NULL
 );
 GO
 
--- Creating table 'Groups'
-CREATE TABLE [dbo].[Groups] (
-    [ID] int IDENTITY(1,1) NOT NULL,
-    [Name] nvarchar(max)  NOT NULL,
-    [CreatTime] datetime  NOT NULL,
-    [UserID] int  NOT NULL,
-    [GroupNumber] nvarchar(max)  NOT NULL,
-    [State] nvarchar(max)  NOT NULL,
-    [Notes] nvarchar(max)  NOT NULL,
-    [Type] nvarchar(max)  NOT NULL,
-    [Validate] nvarchar(max)  NOT NULL
+-- Creating table 'sys_Group'
+CREATE TABLE [dbo].[sys_Group] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [UserId] int  NULL,
+    [GroupNo] nvarchar(max)  NULL,
+    [Name] nvarchar(50)  NULL,
+    [Category] nvarchar(50)  NULL,
+    [ValidattionPattern] int  NULL,
+    [State] smallint  NULL,
+    [Notes] nvarchar(max)  NULL,
+    [CreatTime] datetime  NULL,
+    [CreateUserId] int  NULL,
+    [UpdateTime] datetime  NULL,
+    [UpdateUserId] int  NULL
 );
 GO
 
--- Creating table 'CustomerGoups'
-CREATE TABLE [dbo].[CustomerGoups] (
-    [ID] int IDENTITY(1,1) NOT NULL,
-    [GroupName] nvarchar(max)  NOT NULL,
-    [CreatID] int  NOT NULL
+-- Creating table 'sys_CustomerGoup'
+CREATE TABLE [dbo].[sys_CustomerGoup] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [GroupName] nvarchar(max)  NULL,
+    [Notes] nvarchar(max)  NULL,
+    [CreatTime] datetime  NULL,
+    [CreateUserId] int  NULL,
+    [UpdateTime] datetime  NULL,
+    [UpdateUserId] int  NULL
 );
 GO
 
@@ -1461,10 +1479,16 @@ CREATE TABLE [dbo].[OperationEvents] (
 );
 GO
 
--- Creating table 'CustomerGoupUser'
-CREATE TABLE [dbo].[CustomerGoupUser] (
-    [Belongs_ID] int  NOT NULL,
-    [Members_ID] int  NOT NULL
+-- Creating table 'sys_CustomGroupUser'
+CREATE TABLE [dbo].[sys_CustomGroupUser] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [GroupId] int  NULL,
+    [UserId] int  NULL,
+    [Notes] nvarchar(max)  NULL,
+    [CreateTime] datetime  NULL,
+    [CreateUserId] int  NULL,
+    [UpdateTime] datetime  NULL,
+    [UpdateUserId] int  NULL
 );
 GO
 
@@ -1490,9 +1514,9 @@ ADD CONSTRAINT [PK_Positions]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'Users'
-ALTER TABLE [dbo].[Users]
-ADD CONSTRAINT [PK_Users]
+-- Creating primary key on [ID] in table 'sys_User'
+ALTER TABLE [dbo].[sys_User]
+ADD CONSTRAINT [PK_sys_User]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
@@ -1526,16 +1550,16 @@ ADD CONSTRAINT [PK_DocumentManages]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'UserMessages'
-ALTER TABLE [dbo].[UserMessages]
-ADD CONSTRAINT [PK_UserMessages]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
+-- Creating primary key on [Id] in table 'sys_UserMessage'
+ALTER TABLE [dbo].[sys_UserMessage]
+ADD CONSTRAINT [PK_sys_UserMessage]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [ID] in table 'GroupMembers'
-ALTER TABLE [dbo].[GroupMembers]
-ADD CONSTRAINT [PK_GroupMembers]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
+-- Creating primary key on [Id] in table 'sys_GroupMember'
+ALTER TABLE [dbo].[sys_GroupMember]
+ADD CONSTRAINT [PK_sys_GroupMember]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- Creating primary key on [ID] in table 'OrganizationOtherNames'
@@ -1682,22 +1706,22 @@ ADD CONSTRAINT [PK_OrganizationEvents]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'GroupMessagers'
-ALTER TABLE [dbo].[GroupMessagers]
-ADD CONSTRAINT [PK_GroupMessagers]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
+-- Creating primary key on [Id] in table 'sys_GroupMessager'
+ALTER TABLE [dbo].[sys_GroupMessager]
+ADD CONSTRAINT [PK_sys_GroupMessager]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [ID] in table 'Groups'
-ALTER TABLE [dbo].[Groups]
-ADD CONSTRAINT [PK_Groups]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
+-- Creating primary key on [Id] in table 'sys_Group'
+ALTER TABLE [dbo].[sys_Group]
+ADD CONSTRAINT [PK_sys_Group]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [ID] in table 'CustomerGoups'
-ALTER TABLE [dbo].[CustomerGoups]
-ADD CONSTRAINT [PK_CustomerGoups]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
+-- Creating primary key on [Id] in table 'sys_CustomerGoup'
+ALTER TABLE [dbo].[sys_CustomerGoup]
+ADD CONSTRAINT [PK_sys_CustomerGoup]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- Creating primary key on [ID] in table 'DllFileStreams'
@@ -1898,10 +1922,10 @@ ADD CONSTRAINT [PK_OperationEvents]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Belongs_ID], [Members_ID] in table 'CustomerGoupUser'
-ALTER TABLE [dbo].[CustomerGoupUser]
-ADD CONSTRAINT [PK_CustomerGoupUser]
-    PRIMARY KEY CLUSTERED ([Belongs_ID], [Members_ID] ASC);
+-- Creating primary key on [Id] in table 'sys_CustomGroupUser'
+ALTER TABLE [dbo].[sys_CustomGroupUser]
+ADD CONSTRAINT [PK_sys_CustomGroupUser]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -1912,7 +1936,7 @@ GO
 ALTER TABLE [dbo].[LoginLogs]
 ADD CONSTRAINT [FK_UserLoginLog]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -2002,7 +2026,7 @@ GO
 ALTER TABLE [dbo].[User_ContactTable]
 ADD CONSTRAINT [FK_UserUser_ContacTable]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -2107,7 +2131,7 @@ GO
 ALTER TABLE [dbo].[UserRelateTables]
 ADD CONSTRAINT [FK_UserUserRelateTable]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -2122,7 +2146,7 @@ GO
 ALTER TABLE [dbo].[UserRelateTables]
 ADD CONSTRAINT [FK_UserUserRelateTable1]
     FOREIGN KEY ([UserID1])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -2388,79 +2412,64 @@ ON [dbo].[OrganicInvestors]
     ([Investor]);
 GO
 
--- Creating foreign key on [UserID] in table 'GroupMembers'
-ALTER TABLE [dbo].[GroupMembers]
+-- Creating foreign key on [UserId] in table 'sys_GroupMember'
+ALTER TABLE [dbo].[sys_GroupMember]
 ADD CONSTRAINT [FK_UserMessageGroup]
-    FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserMessageGroup'
 CREATE INDEX [IX_FK_UserMessageGroup]
-ON [dbo].[GroupMembers]
-    ([UserID]);
+ON [dbo].[sys_GroupMember]
+    ([UserId]);
 GO
 
--- Creating foreign key on [ParentId] in table 'UserMessages'
-ALTER TABLE [dbo].[UserMessages]
-ADD CONSTRAINT [FK_UserMessageUserMessage]
-    FOREIGN KEY ([ParentId])
-    REFERENCES [dbo].[UserMessages]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_UserMessageUserMessage'
-CREATE INDEX [IX_FK_UserMessageUserMessage]
-ON [dbo].[UserMessages]
-    ([ParentId]);
-GO
-
--- Creating foreign key on [UserID] in table 'Groups'
-ALTER TABLE [dbo].[Groups]
+-- Creating foreign key on [UserId] in table 'sys_Group'
+ALTER TABLE [dbo].[sys_Group]
 ADD CONSTRAINT [FK_UserGroupName]
-    FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserGroupName'
 CREATE INDEX [IX_FK_UserGroupName]
-ON [dbo].[Groups]
-    ([UserID]);
+ON [dbo].[sys_Group]
+    ([UserId]);
 GO
 
--- Creating foreign key on [CreatID] in table 'CustomerGoups'
-ALTER TABLE [dbo].[CustomerGoups]
+-- Creating foreign key on [CreateUserId] in table 'sys_CustomerGoup'
+ALTER TABLE [dbo].[sys_CustomerGoup]
 ADD CONSTRAINT [FK_UserCustomerGoup]
-    FOREIGN KEY ([CreatID])
-    REFERENCES [dbo].[Users]
+    FOREIGN KEY ([CreateUserId])
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserCustomerGoup'
 CREATE INDEX [IX_FK_UserCustomerGoup]
-ON [dbo].[CustomerGoups]
-    ([CreatID]);
+ON [dbo].[sys_CustomerGoup]
+    ([CreateUserId]);
 GO
 
--- Creating foreign key on [SenderID] in table 'UserMessages'
-ALTER TABLE [dbo].[UserMessages]
+-- Creating foreign key on [FromUserId] in table 'sys_UserMessage'
+ALTER TABLE [dbo].[sys_UserMessage]
 ADD CONSTRAINT [FK_UserUserMessage]
-    FOREIGN KEY ([SenderID])
-    REFERENCES [dbo].[Users]
+    FOREIGN KEY ([FromUserId])
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserUserMessage'
 CREATE INDEX [IX_FK_UserUserMessage]
-ON [dbo].[UserMessages]
-    ([SenderID]);
+ON [dbo].[sys_UserMessage]
+    ([FromUserId]);
 GO
 
 -- Creating foreign key on [OrganizationID] in table 'OrganizationCustomTypes'
@@ -2752,7 +2761,7 @@ GO
 ALTER TABLE [dbo].[Employees1]
 ADD CONSTRAINT [FK_UserEmployee]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3097,7 +3106,7 @@ GO
 ALTER TABLE [dbo].[WorkSpaceRoles]
 ADD CONSTRAINT [FK_UserWorkSpaceRole]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3112,7 +3121,7 @@ GO
 ALTER TABLE [dbo].[Authorizations]
 ADD CONSTRAINT [FK_UserAuthorization]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3127,7 +3136,7 @@ GO
 ALTER TABLE [dbo].[Authorizations]
 ADD CONSTRAINT [FK_UserAuthorization1]
     FOREIGN KEY ([UserID1])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3217,7 +3226,7 @@ GO
 ALTER TABLE [dbo].[DocReaders]
 ADD CONSTRAINT [FK_UserDocReader]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3262,7 +3271,7 @@ GO
 ALTER TABLE [dbo].[DocSenders]
 ADD CONSTRAINT [FK_UserDocSender]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3618,34 +3627,34 @@ ON [dbo].[OperationEvents]
     ([LoginLogID]);
 GO
 
--- Creating foreign key on [GroupMemberID] in table 'GroupMessagers'
-ALTER TABLE [dbo].[GroupMessagers]
+-- Creating foreign key on [GroupMemberId] in table 'sys_GroupMessager'
+ALTER TABLE [dbo].[sys_GroupMessager]
 ADD CONSTRAINT [FK_GroupMemberGroupMessager]
-    FOREIGN KEY ([GroupMemberID])
-    REFERENCES [dbo].[GroupMembers]
-        ([ID])
+    FOREIGN KEY ([GroupMemberId])
+    REFERENCES [dbo].[sys_GroupMember]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GroupMemberGroupMessager'
 CREATE INDEX [IX_FK_GroupMemberGroupMessager]
-ON [dbo].[GroupMessagers]
-    ([GroupMemberID]);
+ON [dbo].[sys_GroupMessager]
+    ([GroupMemberId]);
 GO
 
--- Creating foreign key on [GroupID] in table 'GroupMembers'
-ALTER TABLE [dbo].[GroupMembers]
+-- Creating foreign key on [GroupId] in table 'sys_GroupMember'
+ALTER TABLE [dbo].[sys_GroupMember]
 ADD CONSTRAINT [FK_GroupGroupMember]
-    FOREIGN KEY ([GroupID])
-    REFERENCES [dbo].[Groups]
-        ([ID])
+    FOREIGN KEY ([GroupId])
+    REFERENCES [dbo].[sys_Group]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GroupGroupMember'
 CREATE INDEX [IX_FK_GroupGroupMember]
-ON [dbo].[GroupMembers]
-    ([GroupID]);
+ON [dbo].[sys_GroupMember]
+    ([GroupId]);
 GO
 
 -- Creating foreign key on [EmployeeId] in table 'Posts'
@@ -3678,43 +3687,49 @@ ON [dbo].[Posts]
     ([PositionID]);
 GO
 
--- Creating foreign key on [GroupID] in table 'GroupMessagers'
-ALTER TABLE [dbo].[GroupMessagers]
+-- Creating foreign key on [GroupId] in table 'sys_GroupMessager'
+ALTER TABLE [dbo].[sys_GroupMessager]
 ADD CONSTRAINT [FK_GroupGroupMessager]
-    FOREIGN KEY ([GroupID])
-    REFERENCES [dbo].[Groups]
-        ([ID])
+    FOREIGN KEY ([GroupId])
+    REFERENCES [dbo].[sys_Group]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GroupGroupMessager'
 CREATE INDEX [IX_FK_GroupGroupMessager]
-ON [dbo].[GroupMessagers]
-    ([GroupID]);
+ON [dbo].[sys_GroupMessager]
+    ([GroupId]);
 GO
 
--- Creating foreign key on [Belongs_ID] in table 'CustomerGoupUser'
-ALTER TABLE [dbo].[CustomerGoupUser]
-ADD CONSTRAINT [FK_CustomerGoupUser_CustomerGoup]
-    FOREIGN KEY ([Belongs_ID])
-    REFERENCES [dbo].[CustomerGoups]
+-- Creating foreign key on [UserId] in table 'sys_CustomGroupUser'
+ALTER TABLE [dbo].[sys_CustomGroupUser]
+ADD CONSTRAINT [FK_UserCustomGroupUser]
+    FOREIGN KEY ([UserId])
+    REFERENCES [dbo].[sys_User]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating foreign key on [Members_ID] in table 'CustomerGoupUser'
-ALTER TABLE [dbo].[CustomerGoupUser]
-ADD CONSTRAINT [FK_CustomerGoupUser_User]
-    FOREIGN KEY ([Members_ID])
-    REFERENCES [dbo].[Users]
-        ([ID])
+-- Creating non-clustered index for FOREIGN KEY 'FK_UserCustomGroupUser'
+CREATE INDEX [IX_FK_UserCustomGroupUser]
+ON [dbo].[sys_CustomGroupUser]
+    ([UserId]);
+GO
+
+-- Creating foreign key on [GroupId] in table 'sys_CustomGroupUser'
+ALTER TABLE [dbo].[sys_CustomGroupUser]
+ADD CONSTRAINT [FK_CustomGroupCustomGroupUser]
+    FOREIGN KEY ([GroupId])
+    REFERENCES [dbo].[sys_CustomerGoup]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_CustomerGoupUser_User'
-CREATE INDEX [IX_FK_CustomerGoupUser_User]
-ON [dbo].[CustomerGoupUser]
-    ([Members_ID]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_CustomGroupCustomGroupUser'
+CREATE INDEX [IX_FK_CustomGroupCustomGroupUser]
+ON [dbo].[sys_CustomGroupUser]
+    ([GroupId]);
 GO
 
 -- --------------------------------------------------

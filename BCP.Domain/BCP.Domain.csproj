@@ -75,7 +75,10 @@
     <Compile Include="Edmx\CustomCategory.cs">
       <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
-    <Compile Include="Edmx\CustomerGoup.cs">
+    <Compile Include="Edmx\CustomGroup.cs">
+      <DependentUpon>DataContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Edmx\CustomGroupUser.cs">
       <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
     <Compile Include="Edmx\CustomTabData.cs">
@@ -295,7 +298,8 @@
     <Compile Include="Implementation\Repository\Base\Repository.cs" />
     <Compile Include="Implementation\Repository\BussnessVerRepository.CS" />
     <Compile Include="Implementation\Repository\CustomCategoryRepository.CS" />
-    <Compile Include="Implementation\Repository\CustomerGoupRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomGroupRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomGroupUserRepository.CS" />
     <Compile Include="Implementation\Repository\CustomTabDataRepository.CS" />
     <Compile Include="Implementation\Repository\CustomTableRepository.CS" />
     <Compile Include="Implementation\Repository\DllFileStreamRepository.CS" />
@@ -368,7 +372,8 @@
     <Compile Include="Interface\Repostiory\IAuthorizationRepository.CS" />
     <Compile Include="Interface\Repostiory\IBussnessVerRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomCategoryRepository.CS" />
-    <Compile Include="Interface\Repostiory\ICustomerGoupRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomGroupRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomGroupUserRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomTabDataRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomTableRepository.CS" />
     <Compile Include="Interface\Repostiory\IDllFileStreamRepository.CS" />
@@ -434,7 +439,7 @@
     <Compile Include="Interface\Repostiory\IZipCodeRepository.CS" />
     <Compile Include="Interface\Service\IUserService.cs" />
     <Compile Include="Mapping\AutoMapperBootStrapper.cs" />
-    <Compile Include="Mapping\CustomerGroupMapper.cs" />
+    <Compile Include="Mapping\CustomGroupMapper.cs" />
     <Compile Include="Mapping\GroupMapper.cs" />
     <Compile Include="Mapping\MapperHelper.cs" />
     <Compile Include="Mapping\UserMapper.cs" />
@@ -445,7 +450,8 @@
     <Compile Include="Model\Authorization.CS" />
     <Compile Include="Model\BussnessVer.CS" />
     <Compile Include="Model\CustomCategory.CS" />
-    <Compile Include="Model\CustomerGoup.CS" />
+    <Compile Include="Model\CustomGroup.CS" />
+    <Compile Include="Model\CustomGroupUser.CS" />
     <Compile Include="Model\CustomTabData.CS" />
     <Compile Include="Model\CustomTable.CS" />
     <Compile Include="Model\DllFileStream.CS" />

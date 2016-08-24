@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using System.Text;
 using BCP.WebAPI.Helpers;
 using BCP.WebAPI.Controllers.Filters;
+using BCP.WebAPI.SignalR;
 
 namespace BCP.WebAPI.Controllers
 {
@@ -24,8 +25,9 @@ namespace BCP.WebAPI.Controllers
         public HttpResponseMessage RegisterUser(String userName,String userPwd,String actualName)
         {
             UserDTO user = new UserDTO() { 
-                ActualName = actualName, UserName = userName, Password = userPwd, EventTime = 1,Domain="",DomainId="",
-                LimiteTime = DateTime.Now, Note = "", Status = "false" };
+                ActualName = actualName, UserName = userName, Password = userPwd, Domain="",DomainId="",
+                CreateTime=DateTime.Now,
+                LimitTime = DateTime.Now, Notes = "", State = 0 };
             if (UserService.RegisterUser(user))
             {
                 //String str=JsonConvert.SerializeObject(UserService.GetUser(user.UserName));
@@ -44,7 +46,9 @@ namespace BCP.WebAPI.Controllers
         {
             if (UserService.UpdateUserPwd(Convert.ToInt32(id), userPwd))
             {
-                return JsonHelper.GetResponseMessage(true, "修改成功", typeof(UserDTO), false, UserService.GetUser(Convert.ToInt32(id)));
+                var user=UserService.GetUser(Convert.ToInt32(id));
+                MyHub.UpdateOnLineUser(user);
+                return JsonHelper.GetResponseMessage(true, "修改成功", typeof(UserDTO), false, user);
             }
             else
                 throw new Exception("修改失败");
@@ -78,10 +82,10 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage AddCustomerGroup(String userId,String groupName)
         {
-            if (UserService.AddCustomerGroup(new CustomerGoupDTO() { CreatID = Convert.ToInt32(userId), GroupName = groupName }))
+            if (UserService.AddCustomGroup(new CustomGroupDTO() { CreateUserId = Convert.ToInt32(userId), GroupName = groupName,CreatTime=DateTime.Now }))
             {
-                return JsonHelper.GetResponseMessage(true, "创建分组成功", typeof(CustomerGoupDTO), false, 
-                    UserService.GetCustomerGroup(Convert.ToInt32(userId),true).Where(it=>it.GroupName==groupName).FirstOrDefault());
+                return JsonHelper.GetResponseMessage(true, "创建分组成功", typeof(CustomGroupDTO), false, 
+                    UserService.GetCustomGroup(Convert.ToInt32(userId),true).Where(it=>it.GroupName==groupName).FirstOrDefault());
             }
             else
                 throw new Exception("创建分组失败");
@@ -96,9 +100,9 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage UpdateCustomerGroupName(String groupId,String groupName)
         {
-            if (UserService.UpdateCustomerGroupName(Convert.ToInt32(groupId), groupName))
+            if (UserService.UpdateCustomGroupName(Convert.ToInt32(groupId), groupName))
             {
-                return JsonHelper.GetResponseMessage(true, "修改分组名称成功", typeof(CustomerGoupDTO), false, UserService.GetCustomerGroupById(Convert.ToInt32(groupId)));
+                return JsonHelper.GetResponseMessage(true, "修改分组名称成功", typeof(CustomGroupDTO), false, UserService.GetCustomGroupById(Convert.ToInt32(groupId)));
             }
             else
                 throw new Exception("修改分组名称失败");
@@ -112,7 +116,7 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage DeleteCustomerGroup(String groupId)
         {
-            if (UserService.DeleteCustomerGroup(Convert.ToInt32(groupId)))
+            if (UserService.DeleteCustomGroup(Convert.ToInt32(groupId)))
             {
                 return JsonHelper.GetResponseMessage(true, "删除分组成功", null, false, null);
             }
@@ -128,7 +132,7 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetAllCustomerGroupWithUser(String userId)
         {
-            return JsonHelper.GetResponseMessage(true, "获取用户所有分组数据", typeof(CustomerGoupDTO), true, UserService.GetCustomerGroup(Convert.ToInt32(userId), true));
+            return JsonHelper.GetResponseMessage(true, "获取用户所有分组数据", typeof(CustomGroupDTO), true, UserService.GetCustomGroup(Convert.ToInt32(userId), true));
         }
 
         /// <summary>
@@ -139,7 +143,7 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetAllCustomerGroupWithoutUser(String userId)
         {
-            return JsonHelper.GetResponseMessage(true, "获取用户所有分组数据", typeof(CustomerGoupDTO), true, UserService.GetCustomerGroup(Convert.ToInt32(userId), false));
+            return JsonHelper.GetResponseMessage(true, "获取用户所有分组数据", typeof(CustomGroupDTO), true, UserService.GetCustomGroup(Convert.ToInt32(userId), false));
         }
 
         /// <summary>
@@ -150,7 +154,7 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetUserFromCustomerGroup(String groupId)
         {
-            return JsonHelper.GetResponseMessage(true, "获取用户所有分组数据", typeof(UserDTO), true, UserService.GetUserByCustomerGroupId(Convert.ToInt32(groupId)));
+            return JsonHelper.GetResponseMessage(true, "获取用户所有分组数据", typeof(UserDTO), true, UserService.GetUserByCustomGroupId(Convert.ToInt32(groupId)));
         }
 
         /// <summary>
@@ -162,10 +166,10 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage AddUserToCustomerGroup(String userId,String groupId)
         {
-            if (UserService.AddUserToCustomerGroup(Convert.ToInt32(userId), Convert.ToInt32(groupId)))
+            if (UserService.AddUserToCustomGroup(Convert.ToInt32(userId), Convert.ToInt32(groupId)))
             {
-                return JsonHelper.GetResponseMessage(true, "添加用户到分组成功", typeof(CustomerGoupDTO), false,
-                    UserService.GetCustomerGroupById(Convert.ToInt32(groupId)));
+                return JsonHelper.GetResponseMessage(true, "添加用户到分组成功", typeof(CustomGroupDTO), false,
+                    UserService.GetCustomGroupById(Convert.ToInt32(groupId)));
             }
             else
                 throw new Exception("添加用户到分组失败");
@@ -180,7 +184,7 @@ namespace BCP.WebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage RemoveUserFromCustomerGroup(String userId,String groupId)
         {
-            if (UserService.RemoveUserFromCustomerGroup(Convert.ToInt32(userId), Convert.ToInt32(groupId)))
+            if (UserService.RemoveUserFromCustomGroup(Convert.ToInt32(userId), Convert.ToInt32(groupId)))
             {
                 return JsonHelper.GetResponseMessage(true, "从分组删除用户成功", null, false, null);
             }
@@ -203,22 +207,24 @@ namespace BCP.WebAPI.Controllers
         /// <param name="groupValidate">？</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage RegisterGroup(String userId,String groupNumber,String groupName,String groupNotes,String groupType,String groupValidate)
+        public HttpResponseMessage RegisterGroup(String userId,String groupNumber,String groupName,String groupNotes,String groupType,int groupValidate)
         {
             if (UserService.RegisterGroup(new GroupDTO()
             {
                 CreatTime = DateTime.Now,
-                GroupNumber = groupNumber,
+                GroupNo = groupNumber,
                 Name = groupName,
                 Notes = groupNotes,
-                State = "ture",
-                Type = groupType,
-                UserID = Convert.ToInt32(userId),
-                Validate = groupValidate
+                State = 0,
+                Category = groupType,
+                UserId = Convert.ToInt32(userId),
+                CreateUserId = Convert.ToInt32(userId),
+                ValidattionPattern = groupValidate
             }))
             {
+                MyHub.UpdateOnLineUser(UserService.GetUser(userId));
                 return JsonHelper.GetResponseMessage(true, "创建群组成功", typeof(GroupDTO), false, 
-                    UserService.GetAllGroupByUserId(Convert.ToInt32(userId),true).Where(it=>it.UserID.ToString().Equals(userId)).ToList());
+                    UserService.GetAllGroupByUserId(Convert.ToInt32(userId),true).Where(it=>it.UserId.ToString().Equals(userId)).ToList());
             }
             throw new Exception("创建群组失败");
         }
@@ -323,12 +329,12 @@ namespace BCP.WebAPI.Controllers
         /// <param name="memberUserId">待添加成员userId</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage AddUserToGroup(String userId,String groupId,String memberUserId)
+        public HttpResponseMessage AddUserToGroup(String userId,String groupId,String memberUserId,String referenceUserId)
         {
-            if (UserService.AddUserToGroup(Convert.ToInt32(memberUserId), Convert.ToInt32(groupId), Convert.ToInt32(userId)))
+            if (UserService.AddUserToGroup(Convert.ToInt32(memberUserId), Convert.ToInt32(groupId), Convert.ToInt32(userId),Convert.ToInt32(referenceUserId)))
             {
                 return JsonHelper.GetResponseMessage(true, "添加用户到群组成功", typeof(GroupDTO), false, 
-                    UserService.GetAllGroupByUserId(Convert.ToInt32(userId),true).Where(it=>it.ID.ToString().Equals(groupId)).FirstOrDefault());
+                    UserService.GetAllGroupByUserId(Convert.ToInt32(userId),true).Where(it=>it.Id.ToString().Equals(groupId)).FirstOrDefault());
             }
             throw new Exception("无法添加用户到群组");
         }
