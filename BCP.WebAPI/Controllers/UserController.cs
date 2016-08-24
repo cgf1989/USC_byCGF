@@ -222,7 +222,7 @@ namespace BCP.WebAPI.Controllers
                 ValidattionPattern = groupValidate
             }))
             {
-                MyHub.UpdateOnLineUser(UserService.GetUser(userId));
+                MyHub.UpdateOnLineUser(UserService.GetUser(Convert.ToInt32(userId)));
                 return JsonHelper.GetResponseMessage(true, "创建群组成功", typeof(GroupDTO), false, 
                     UserService.GetAllGroupByUserId(Convert.ToInt32(userId),true).Where(it=>it.UserId.ToString().Equals(userId)).ToList());
             }
@@ -327,6 +327,7 @@ namespace BCP.WebAPI.Controllers
         /// <param name="userId">登录用户</param>
         /// <param name="groupId">群组</param>
         /// <param name="memberUserId">待添加成员userId</param>
+        /// <param name="referenceUserId">推荐人Id</param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage AddUserToGroup(String userId,String groupId,String memberUserId,String referenceUserId)
