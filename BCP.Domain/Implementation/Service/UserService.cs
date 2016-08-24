@@ -396,7 +396,7 @@ namespace BCP.Domain
 
             //判断登录用户是否拥有操作权限
             var refer = _groupMemberRepository.GetAll().Where(it => it.UserId == userId).FirstOrDefault();
-            if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator) && !refer.GroupRole.Equals(GroupRole.GroupManager)))
+            if (refer == null || (!refer.GroupRole.Equals(GroupRole.GroupCreator.ToString()) && !refer.GroupRole.Equals(GroupRole.GroupManager.ToString())))
                 throw new Exception("用户没有操作权限");
 
             //判断带加入用户是否已经加入群组
