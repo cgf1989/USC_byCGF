@@ -119,6 +119,7 @@
     <Compile Include="Model\workTaskDTO.CS" />
     <Compile Include="Model\ZipCodeDTO.CS" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SignalR\SignalRMessagePackage.cs" />
     <Compile Include="UserDTO.cs" />
   </ItemGroup>
   <ItemGroup />
