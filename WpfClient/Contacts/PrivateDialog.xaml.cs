@@ -1,4 +1,6 @@
 ﻿using BCP.ViewModel;
+using BCP.WebAPI.SignalR;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,7 +49,7 @@ namespace WpfClient.Contacts
         /// </summary>
         public String Self { get; set; }
 
-        private BackGroundType mBackGroundType = BackGroundType.Blue; 
+        private BackGroundType mBackGroundType = BackGroundType.Blue;
 
         public PrivateDialog()
         {
@@ -64,7 +66,7 @@ namespace WpfClient.Contacts
             this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             mBackGroundType = BackGroundType.Blue;
-            Init();
+            //Init();
         }
 
         private void WindowBase_Loaded(object sender, RoutedEventArgs e)
@@ -137,18 +139,21 @@ namespace WpfClient.Contacts
             //{
             //    hwndSource.AddHook(new HwndSourceHook(WndProc));
             //}
-        }  
+        }
 
         void InputBtn_Click(object sender, RoutedEventArgs e)
         {
             String message = this.InputTBox.Text.Trim();
             try
             {
-                SignalRProxy.PTPSendMessage(this.ReplyId, message);
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage(message, MainClient.CurrentUser.ID, ReplyId);
+                //SignalRMessagePackage srmp = new SignalRMessagePackage(message, MainClient.CurrentUser.ID, ReplyId);
+                string json_srmp = JsonConvert.SerializeObject(srmp);
+                SignalRProxy.SendMessage(json_srmp);
 
-                
+
                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                rightMessageBoxUControl.Init(Self, new UserMessageDTO() { Content=message});
+                rightMessageBoxUControl.Init(Self, new UserMessageDTO() { Content = message });
                 this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
 
             }
@@ -220,22 +225,24 @@ namespace WpfClient.Contacts
             //}
             #endregion
 
-            if (SignalRProxy.AddUserMessage == null)
+            if (SignalRProxy.ReceviceMessage == null)
             {
-                SignalRProxy.AddUserMessage = (from, umd) =>
+                SignalRProxy.ReceviceMessage = (package) =>
                   {
                       this.Dispatcher.Invoke(() =>
                       {
-                          if (from.ActualName.Equals(To))
+                          if (package.SMType == SignalRMessageType.StateMessage) { return; }
+
+                          if (package.FromUserId.Equals(package.ToUserId))
                           {
                               LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                              leftMessageBoxUControl.Init(To, umd);
+                              leftMessageBoxUControl.Init(To, package.Context.ToString());
                               this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
                           }
                           else
                           {
                               RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                              rightMessageBoxUControl.Init(Self, umd);
+                              rightMessageBoxUControl.Init(Self, package.Context.ToString());
                               this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                           }
                       }
@@ -260,5 +267,5 @@ namespace WpfClient.Contacts
         /// 背景图片  
         /// </summary>  
         Image
-    } 
+    }
 }

@@ -1,5 +1,7 @@
 ﻿using BCP.ViewModel;
+using BCP.WebAPI.SignalR;
 using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 using SignalCore;
 using System;
 using System.Collections.Generic;
@@ -19,8 +21,10 @@ namespace WpfClient.Contacts
         public String _serverURI { get; set; }
         private HubConnection _hubConnection = null;
         private IHubProxy _hubProxy = null;
-        public Action<UserDTO, UserMessageDTO> AddUserMessage { get; set; }
+        //public Action<UserDTO, UserMessageDTO> AddUserMessage { get; set; }
         public Action<UserDTO, String, CommunitcationPackage> AddPTGMessage { get; set; }
+
+        public Action<SignalRMessagePackage> ReceviceMessage { get; set; }
 
         //public Action<String> ReceviceFialureMessage { get; set; }
         //public Action<List<UserInfo>> UpdateContacts { get; set; }
@@ -99,15 +103,27 @@ namespace WpfClient.Contacts
             }
         }
 
-        public void PTPSendMessage(int replyId, String message)
+        //public void PTPSendMessage(int replyId, String message)
+        //{
+        //    if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
+        //        _hubProxy.Invoke("PTPSendMessage",
+        //            replyId, message);
+        //}
+        public void SendMessage(String packageJson)
         {
-            if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
-                _hubProxy.Invoke("PTPSendMessage",
-                    replyId, message);
+            try
+            {               
+                if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
+                    _hubProxy.Invoke("SendMessage",
+                        packageJson);
+            }
+            catch (Exception ex)
+            { }
         }
+        
 
 
-        public void InitPTP(string srmp)
+        public void InitPTP(String srmp)
         {
             if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
                 _hubProxy.Invoke("InitClient",
@@ -133,6 +149,12 @@ namespace WpfClient.Contacts
                 _hubProxy.Invoke("InitPTG");
         }
 
+        public void GetAllMessage(String package,DateTime date)
+        {
+            if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
+                _hubProxy.Invoke("GetAllMessage",package,date);
+        }
+
         public async void ConnectAsync()
         {
             if (_hubConnection != null && _hubConnection.State != ConnectionState.Disconnected) return;
@@ -142,11 +164,16 @@ namespace WpfClient.Contacts
             /*
              * 注册客户端方法
              * ***/
-
-            _hubProxy.On<UserDTO, UserMessageDTO>("AddUserMessage", (from, umd) =>
+            
+            //_hubProxy.On<UserDTO, UserMessageDTO>("AddUserMessage", (from, umd) =>
+            //{
+            //    if (AddUserMessage != null)
+            //        AddUserMessage(from, umd);
+            //});
+            _hubProxy.On<SignalRMessagePackage>("ReceviceMessage", (package) =>
             {
-                if (AddUserMessage != null)
-                    AddUserMessage(from, umd);
+                if (ReceviceMessage != null)
+                    ReceviceMessage(package);
             });
             _hubProxy.On<UserDTO, String, CommunitcationPackage>("AddPTGMessage", (sender, groupId, cp) =>
              {
