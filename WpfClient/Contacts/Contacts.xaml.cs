@@ -184,13 +184,12 @@ namespace WpfClient.Contacts
 
                 pd1.Show();
 
-                //SignalRMessagePackage srmp = new PTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
-                
-                //pd1.SignalRProxy.InitPTP(srmp);
-                //pd1.SignalRProxy.GetAllMessage(srmp, System.DateTime.Now);
+                SignalRMessagePackage srmp =SignalRMessagePackageFactory.GetPTGTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
+                String json_srmp = JsonConvert.SerializeObject(srmp);
+                pd1.SignalRProxy.InitPTP(json_srmp);
+                pd1.SignalRProxy.GetAllMessage(json_srmp, System.DateTime.Now);
 
 
-                //pd1.SignalRProxy.InitPTP(Convert.ToInt32((sender as ListViewItem).Tag.ToString()));
 
             }
             catch (Exception ex)
