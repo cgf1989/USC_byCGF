@@ -184,11 +184,11 @@ namespace WpfClient.Contacts
 
                 pd1.Show();
 
-                SignalRMessagePackage srmp =SignalRMessagePackageFactory.GetPTGTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
+                SignalRMessagePackage srmp =SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
                 String json_srmp = JsonConvert.SerializeObject(srmp);
-                pd1.SignalRProxy.InitPTP(json_srmp);
-                pd1.SignalRProxy.GetAllMessage(json_srmp, System.DateTime.Now);
-
+                pd1.SignalRProxy.InitPTP(json_srmp);//InitPTP里面已经有获取数据，不过只获取未读数据
+                //pd1.SignalRProxy.GetAllMessage(json_srmp, System.DateTime.Now);//该方法获取所有数据不论有读未读，不过要指定日期
+                //所以上面2个不用一起用。
 
 
             }

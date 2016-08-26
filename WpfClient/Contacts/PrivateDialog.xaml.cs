@@ -233,7 +233,7 @@ namespace WpfClient.Contacts
                       {
                           if (package.SMType == SignalRMessageType.StateMessage) { return; }
 
-                          if (package.FromUserId.Equals(package.ToUserId))
+                          if (MainClient.CurrentUser.ID.Equals(package.ToUserId))
                           {
                               LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
                               leftMessageBoxUControl.Init(To, package.Context.ToString());

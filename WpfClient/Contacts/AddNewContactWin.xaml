@@ -18,31 +18,31 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
-            <GroupBox Margin="10" Header="联系人信息:" Grid.Row="0">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Label Content="姓名:" Grid.Row="0" Grid.Column="0"/>
-                    <Label Height="30" Content=""  Name="lbl_userName" Grid.Row="0" Grid.Column="1"/>
-                    <Label Content="公司:" Grid.Row="1" Grid.Column="0"/>
-                    <Label Content="XXXX有限公司" Grid.Row="1" Grid.Column="1"/>
-                    <Label Content="手机:" Grid.Row="2" Grid.Column="0"/>
-                    <Label Content="XXX-XXXX-XXXX" Grid.Row="2" Grid.Column="1"/>
-                    <Label Content="地址:" Grid.Row="3" Grid.Column="0"/>
-                    <Label Content="XXX省XXX市XXX区XXX路XXX号" Grid.Row="3" Grid.Column="1"/>
-                </Grid>
-            </GroupBox>
-                <Border Grid.Row="1" Margin="5" Background="#C4D8ED" BorderThickness="2" BorderBrush="Black">
+                <GroupBox Margin="10" Header="联系人信息:" Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="50"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="姓名:" Grid.Row="0" Grid.Column="0"/>
+                        <Label Height="30" Content=""  Name="lbl_userName" Grid.Row="0" Grid.Column="1"/>
+                        <Label Content="公司:" Grid.Row="1" Grid.Column="0"/>
+                        <Label Content="XXXX有限公司" Grid.Row="1" Grid.Column="1"/>
+                        <Label Content="手机:" Grid.Row="2" Grid.Column="0"/>
+                        <Label Content="XXX-XXXX-XXXX" Grid.Row="2" Grid.Column="1"/>
+                        <Label Content="地址:" Grid.Row="3" Grid.Column="0"/>
+                        <Label Content="XXX省XXX市XXX区XXX路XXX号" Grid.Row="3" Grid.Column="1"/>
+                    </Grid>
+                </GroupBox>
+                <Border Grid.Row="1" Margin="5" Background="#C4D8ED" >
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50"/>
@@ -53,12 +53,12 @@
                             <ColumnDefinition Width="8*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="选择分组:" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <ComboBox Name="cbb_Groups" Grid.Row="0" Grid.Column="1" Height="30" Width="180" Margin="5" Loaded="cbb_Groups_Loaded"></ComboBox>
-                        <Button Name="btn_AddNewContact" Grid.Row="1" Grid.Column="1" Width="90" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" Content="添加" Click="btn_AddNewContact_Click" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White"/>
+                        <ComboBox Name="cbb_Groups" Grid.Row="0" Grid.Column="1" Height="30" Margin="10,10,20,10" Loaded="cbb_Groups_Loaded"></ComboBox>
+                        <Button HorizontalAlignment="Right" Name="btn_AddNewContact" Grid.Row="1" Grid.Column="1" Width="90" Height="30" VerticalAlignment="Top" Margin="10,0,20,10" Content="添加" Click="btn_AddNewContact_Click" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White"/>
                     </Grid>
                 </Border>
             </Grid>
         </Border>
-        
+
     </Grid>
 </scr:MyMacClass_noneMaxBtn>
