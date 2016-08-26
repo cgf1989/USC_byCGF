@@ -1,5 +1,4 @@
 ﻿using BCP.ViewModel;
-using BCP.WebAPI.SignalR;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -184,8 +183,10 @@ namespace WpfClient.Contacts
 
                 pd1.Show();
 
-                SignalRMessagePackage srmp = new PTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
-                pd1.SignalRProxy.InitPTP(srmp);
+                //SignalRMessagePackage srmp = new PTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
+                //pd1.SignalRProxy.InitPTP(srmp);
+
+
                 //pd1.SignalRProxy.InitPTP(Convert.ToInt32((sender as ListViewItem).Tag.ToString()));
 
             }

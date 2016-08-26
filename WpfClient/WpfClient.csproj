@@ -528,10 +528,6 @@
       <Project>{71a0a4fb-2a11-4cff-95e6-37d0c07cb40d}</Project>
       <Name>BCP.ViewModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BCP.WebAPI\BCP.WebAPI.csproj">
-      <Project>{63B4C3F6-3C91-4D74-B0B6-5720BBBB428A}</Project>
-      <Name>BCP.WebAPI</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SignalCore\SignalCore.csproj">
       <Project>{3c9927e4-1008-4a8f-a0d9-0dbcfe8c6570}</Project>
       <Name>SignalCore</Name>

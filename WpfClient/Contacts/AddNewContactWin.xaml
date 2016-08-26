@@ -6,21 +6,21 @@
         xmlns:local="clr-namespace:WpfClient.Contacts"
         xmlns:scr="clr-namespace:WpfClient"
         mc:Ignorable="d"
-        Title="添加联系人" Height="300" Width="600" WindowStartupLocation="CenterScreen" Style="{DynamicResource WindowStyle2}">
+        Title="添加联系人" Height="400" Width="400" WindowStartupLocation="CenterScreen" Style="{DynamicResource WindowStyle2}">
     <Grid Background="#EBF2F9">
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="250"/>
-        </Grid.ColumnDefinitions>
-        <TextBox Name="tb_userId" Grid.ColumnSpan="2" Height="30" Width="400" HorizontalAlignment="Left" Margin="10"/>
-        <Button Name="btn_searchUser" Margin="20,0,0,0" Foreground="White" IsDefault="True" Content="查找" Height="30" Width="90" Grid.Column="1" Click="btn_searchUser_Click" Template="{DynamicResource ButtonControlTemplate1}"/>
+        <TextBox Name="tb_userId" Grid.ColumnSpan="2" Height="30" Width="280" HorizontalAlignment="Left" Margin="10"/>
+        <Button Name="btn_searchUser" Margin="20,0,10,0" Foreground="White" IsDefault="True" Content="查找" Height="30" Width="80" HorizontalAlignment="Right" Click="btn_searchUser_Click" Template="{DynamicResource ButtonControlTemplate1}"/>
         <Border Grid.Row="1" Grid.Column="0" Margin="5" Background="#9DBEE1" BorderThickness="2" BorderBrush="Black">
-
-            <GroupBox Margin="10" Header="联系人信息:" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+            <GroupBox Margin="10" Header="联系人信息:" Grid.Row="0">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="50"/>
@@ -42,19 +42,23 @@
                     <Label Content="XXX省XXX市XXX区XXX路XXX号" Grid.Row="3" Grid.Column="1"/>
                 </Grid>
             </GroupBox>
-
-        </Border>
-        <Border Grid.Row="1" Grid.Column="1" Margin="5" Background="#C4D8ED" BorderThickness="2" BorderBrush="Black">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="选择分组:" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                <ComboBox Name="cbb_Groups" Grid.Row="1" Height="30" Width="180" Margin="20" VerticalAlignment="Top" Loaded="cbb_Groups_Loaded"></ComboBox>
-                <Button Name="btn_AddNewContact" Grid.Row="2" Width="90" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" Content="添加" Click="btn_AddNewContact_Click" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White"/>
+                <Border Grid.Row="1" Margin="5" Background="#C4D8ED" BorderThickness="2" BorderBrush="Black">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="8*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="选择分组:" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <ComboBox Name="cbb_Groups" Grid.Row="0" Grid.Column="1" Height="30" Width="180" Margin="5" Loaded="cbb_Groups_Loaded"></ComboBox>
+                        <Button Name="btn_AddNewContact" Grid.Row="1" Grid.Column="1" Width="90" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" Content="添加" Click="btn_AddNewContact_Click" Template="{DynamicResource ButtonControlTemplate1}" Foreground="White"/>
+                    </Grid>
+                </Border>
             </Grid>
         </Border>
+        
     </Grid>
 </scr:MyMacClass_noneMaxBtn>
