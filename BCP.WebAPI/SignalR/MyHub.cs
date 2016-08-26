@@ -437,7 +437,7 @@ namespace BCP.WebAPI.SignalR
             if (package == null)
             {
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
             package.Get().MarkMessage(Clients, Context, this);
         }
@@ -453,7 +453,7 @@ namespace BCP.WebAPI.SignalR
             if (package == null)
             {
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
             package.Get().GetAllMessage(Clients, Context, this, date);
         }
@@ -468,7 +468,7 @@ namespace BCP.WebAPI.SignalR
             if (package == null)
             {
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
             package.Get().InitClient(Clients, Context, this);
         }
