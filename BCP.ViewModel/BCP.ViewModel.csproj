@@ -44,7 +44,7 @@
     <Compile Include="GroupDTO.cs" />
     <Compile Include="GroupMemberDTO.cs" />
     <Compile Include="GroupRole.cs" />
-    <Compile Include="CustomerGroupDTO.cs" />
+    <Compile Include="CustomGroupDTO.cs" />
     <Compile Include="Model\AdministrativecodeDTO.CS" />
     <Compile Include="Model\AssetBaseTypeDTO.CS" />
     <Compile Include="Model\AssetMaintenanceDTO.CS" />

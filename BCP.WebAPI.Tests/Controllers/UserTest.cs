@@ -6,6 +6,8 @@ using BCP.WebAPI.Controllers;
 using Newtonsoft.Json;
 using BCP.ViewModel;
 using System.Net.Http;
+using Microsoft.Practices.Unity;
+using BCP.Domain.Service;
 
 namespace BCP.WebAPI.Tests.Controllers
 {
@@ -21,7 +23,11 @@ namespace BCP.WebAPI.Tests.Controllers
             //
             //TODO: 在此处添加构造函数逻辑
             //
+            if (UnityBootStrapper == null) UnityBootStrapper = new UnityBootStrapper();
+            UnityBootStrapper.Bindings();
         }
+
+        public UnityBootStrapper UnityBootStrapper = new UnityBootStrapper();
 
         private TestContext testContextInstance;
 
@@ -63,28 +69,11 @@ namespace BCP.WebAPI.Tests.Controllers
         //
         #endregion
 
-        [TestMethod]
-        public void UserCurd()
-        {
-            UserController userController = new UserController();
-            
-
-
-
-
-            HttpResponseMessage response = userController.RegisterUser("hy", "polan", "hy");
-
-            var user = JsonConvert.DeserializeObject<UserDTO>(JsonConvert.DeserializeObject<CustomMessage>(response.Content.ToString()).Data);
-
-            Assert.IsNotNull(user);
-
-            response = userController.UpdateUser(user.ID.ToString(), user.UserName, "hy");
-
-            Assert.IsTrue(JsonConvert.DeserializeObject<CustomMessage>(response.Content.ToString()).Success);
-
-            response = userController.DeleteUser(user.ID.ToString());
-
-            Assert.IsTrue(JsonConvert.DeserializeObject<CustomMessage>(response.Content.ToString()).Success);
-        }
+        //[TestMethod]
+        //public void UserCurd()
+        //{
+        //    UserController userController = new UserController();
+        //    userController.UserService = (IUserService)UnityBootStrapper.UnityContainer.Resolve(typeof(IUserService));
+        //}
     }
 }
