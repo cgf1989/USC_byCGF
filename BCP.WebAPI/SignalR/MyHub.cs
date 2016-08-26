@@ -11,6 +11,7 @@ using System.Web.Providers.Entities;
 using Microsoft.Practices.Unity;
 using System.ComponentModel;
 using Microsoft.AspNet.SignalR.Hubs;
+using Newtonsoft.Json;
 
 namespace BCP.WebAPI.SignalR
 {
@@ -298,7 +299,7 @@ namespace BCP.WebAPI.SignalR
     public class MyHub : Hub
     {
         public static List<UserDTO> OnLineUser = new List<UserDTO>();
-        public static object _lockObject = new object();
+        private static object _lockObject = new object();
 
         #region ApiInterface
 
@@ -414,45 +415,62 @@ namespace BCP.WebAPI.SignalR
         /// 服务器方法 用户发送信息
         /// </summary>
         /// <param name="package">package 为SignalRMessagePackage的子类</param>
-        public void SendMessage(SignalRMessagePackage package)
+        public void SendMessage(String packageJson)
         {
+            SignalRMessagePackage package = JsonConvert.DeserializeObject<SignalRMessagePackage>(packageJson);
             //数据验证
             if (package == null)
             {
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
-            SignalRMessagePackeFactory.Get(package).SendMessage(Clients, Context, this);
+            package.Get().SendMessage(Clients, Context, this);
         }
 
-        public void MarkMessage(SignalRMessagePackage package)
+        /// <summary>
+        /// 服务器方法 标记已读信息
+        /// </summary>
+        /// <param name="package"></param>
+        public void MarkMessage(string packageJson)
         {
+            SignalRMessagePackage package = JsonConvert.DeserializeObject<SignalRMessagePackage>(packageJson);
             if (package == null)
             {
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
-            SignalRMessagePackeFactory.Get(package).MarkMessage(Clients, Context, this);
+            package.Get().MarkMessage(Clients, Context, this);
         }
 
-        public void GetAllMessage(SignalRMessagePackage package,DateTime date)
+        /// <summary>
+        /// 服务器方法 按日期获取聊天记录
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="date"></param>
+        public void GetAllMessage(string packageJson,DateTime date)
         {
+            SignalRMessagePackage package = JsonConvert.DeserializeObject<SignalRMessagePackage>(packageJson);
             if (package == null)
             {
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
-            SignalRMessagePackeFactory.Get(package).GetAllMessage(Clients, Context, this, date);
+            package.Get().GetAllMessage(Clients, Context, this, date);
         }
 
-        public void InitClient(SignalRMessagePackage package)
+        /// <summary>
+        /// 服务器方法 获取未读信息初始化客户端
+        /// </summary>
+        /// <param name="package"></param>
+        public void InitClient(string packageJson)
         {
+            SignalRMessagePackage package = JsonConvert.DeserializeObject<SignalRMessagePackage>(packageJson);
             if (package == null)
             {
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
-            SignalRMessagePackeFactory.Get(package).InitClient(Clients, Context, this);
+            package.Get().InitClient(Clients, Context, this);
         }
 
         #endregion

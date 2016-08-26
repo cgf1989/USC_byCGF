@@ -32,7 +32,7 @@ namespace BCP.WebAPI.SignalR
     /// <summary>
     /// 通讯包 虚类
     /// </summary>
-    public abstract class SignalRMessagePackage
+    public class SignalRMessagePackage
     {
         /// <summary>
         /// 通信类型 PersonToPerson PersonToGroup
@@ -76,9 +76,9 @@ namespace BCP.WebAPI.SignalR
     }
 
     /// <summary>
-    /// 点对点 文字通讯包类
+    /// 工厂方法 构造不同的通讯包
     /// </summary>
-    public class PTPTextPackage : SignalRMessagePackage
+    public class SignalRMessagePackageFactory
     {
         /// <summary>
         /// 点对点文字通信
@@ -86,23 +86,18 @@ namespace BCP.WebAPI.SignalR
         /// <param name="context">信息字符串</param>
         /// <param name="fromUserId">发送者Id</param>
         /// <param name="toUserId">接受者Id</param>
-        public PTPTextPackage(String context, int fromUserId, int toUserId)
+        public static SignalRMessagePackage GetPTPTextPackage(String context, int fromUserId, int toUserId)
         {
-            this.Context = context;
-            this.Title = String.Empty;
-            this.FromUserId = fromUserId;
-            this.ToUserId = toUserId;
-            this.SCType = SignalRCommunicationType.PersonToPerson;
-            this.SMType = SignalRMessageType.Text;
+            SignalRMessagePackage srm = new SignalRMessagePackage();
+            srm.Context = context;
+            srm.Title = String.Empty;
+            srm.FromUserId = fromUserId;
+            srm.ToUserId = toUserId;
+            srm.SCType = SignalRCommunicationType.PersonToPerson;
+            srm.SMType = SignalRMessageType.Text;
+            return srm;
         }
-    }
 
-    /// <summary>
-    /// 信息状态通讯包类
-    /// 用途：发送信息时，验证信息是否发送成功；
-    /// </summary>
-    public class StatePackage : SignalRMessagePackage
-    {
         /// <summary>
         /// 创建状态信息
         /// </summary>
@@ -111,30 +106,35 @@ namespace BCP.WebAPI.SignalR
         /// <param name="toId">接受者Id</param>
         /// <param name="sCType">通信方式</param>
         /// <param name="state">状态</param>
-        public StatePackage(String context, int fromId, int toId, SignalRCommunicationType sCType, bool state)
+        public static SignalRMessagePackage GetStatePackage(String context, int fromId, int toId, SignalRCommunicationType sCType, bool state)
         {
-            this.Context = context;
-            this.FromUserId = fromId;
-            this.ToUserId = toId;
-            this.SCType = sCType;
-            this.SMType = SignalRMessageType.StateMessage;
-            this.State = state;
-            this.Title = String.Empty;
+            SignalRMessagePackage srm = new SignalRMessagePackage();
+            srm.Context = context;
+            srm.FromUserId = fromId;
+            srm.ToUserId = toId;
+            srm.SCType = sCType;
+            srm.SMType = SignalRMessageType.StateMessage;
+            srm.State = state;
+            srm.Title = String.Empty;
+            return srm;
         }
-    }
 
-    /// <summary>
-    /// 点对群组文字通讯包
-    /// </summary>
-    public class PTGTextPackage : SignalRMessagePackage
-    {
-        public PTGTextPackage(String context, int fromUserId, int groupId)
+        /// <summary>
+        /// 点对群通讯包
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="fromUserId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public static SignalRMessagePackage GetPTGTextPackage(String context, int fromUserId, int groupId)
         {
-            this.Context = context;
-            this.FromUserId = fromUserId;
-            this.SCType = SignalRCommunicationType.PersonToGroup;
-            this.SMType = SignalRMessageType.Text;
-            this.ToUserId = groupId;
+            SignalRMessagePackage srm = new SignalRMessagePackage();
+            srm.Context = context;
+            srm.FromUserId = fromUserId;
+            srm.SCType = SignalRCommunicationType.PersonToGroup;
+            srm.SMType = SignalRMessageType.Text;
+            srm.ToUserId = groupId;
+            return srm;
         }
     }
 }
