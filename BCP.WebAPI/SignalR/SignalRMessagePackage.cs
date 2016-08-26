@@ -438,23 +438,29 @@ namespace BCP.WebAPI.SignalR
     //    }
     //}
 
-    public class SignalRMessagePackeFactory
+    /// <summary>
+    /// SignalRMessagePackage 类扩展方法
+    /// </summary>
+    public static class SignalRMessagePackageExtension
     {
-        public static ISignalRMessagePacke Get(SignalRMessagePackage srp)
+        public static ISignalRMessagePacke Get(this SignalRMessagePackage srp)
         {
-            if (srp.GetType() == typeof(PTPTextPackage))
-                return (ISignalRMessagePacke)new PTPTextPackageAdapter() { PTPTextPackage = (PTPTextPackage)srp };
-            if (srp.GetType() == typeof(StatePackage))
-                return (ISignalRMessagePacke)new StatePackageAdapter() { StatePackage = (StatePackage)srp };
-            if (srp.GetType() == typeof(PTGTextPackage))
-                return (ISignalRMessagePacke)new PTGTextPackageAdapter() { PTGTextPackage = (PTGTextPackage)srp };
+            //if (srp.GetType() == typeof(PTPTextPackage))
+            if(srp.SCType==SignalRCommunicationType.PersonToPerson&&srp.SMType==SignalRMessageType.Text)
+                return (ISignalRMessagePacke)new PTPTextPackage() { SignalRMessagePackage = srp };
+            //if (srp.GetType() == typeof(StatePackage))
+            if ( srp.SMType == SignalRMessageType.StateMessage)
+                return (ISignalRMessagePacke)new StatePackage() { SignalRMessagePackage = srp };
+            //if (srp.GetType() == typeof(PTGTextPackage))
+            if (srp.SCType == SignalRCommunicationType.PersonToGroup && srp.SMType == SignalRMessageType.Text)
+                return (ISignalRMessagePacke)new PTGTextPackage() { SignalRMessagePackage = srp };
             return null;
         }
     }
 
-    public class PTPTextPackageAdapter : ISignalRMessagePacke
+    public class PTPTextPackage : ISignalRMessagePacke
     {
-        public PTPTextPackage PTPTextPackage { get; set; }
+        public SignalRMessagePackage SignalRMessagePackage { get; set; }
 
         public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
@@ -462,42 +468,42 @@ namespace BCP.WebAPI.SignalR
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             var from = hub.Get();
-            var to = hub.Get(PTPTextPackage.ToUserId);
+            var to = hub.Get(SignalRMessagePackage.ToUserId);
             //数据验证
             if (from == null || to == null)
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(new StatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
-                        PTPTextPackage.FromUserId, PTPTextPackage.ToUserId, PTPTextPackage.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
+                        SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
 
             try
             {
                 //存储发送信息
                 if (userService.AddPTPMessage(new UserMessageDTO()
                 {
-                    Content = PTPTextPackage.Context.ToString(),
+                    Content = SignalRMessagePackage.Context.ToString(),
                     CreateTime = DateTime.Now,
                     ToUserId = to.ID,
                     FromUserId = from.ID,
                     State = 0,
-                    MessageType = (int)PTPTextPackage.SMType
+                    MessageType = (int)SignalRMessagePackage.SMType
                 }))
                 {
                     //将信息发送给接受者 如果接受者在线
                     //to = OnLineUser.Where(it => it.ID == recevier.ID && String.IsNullOrWhiteSpace(it.ContextId)).FirstOrDefault();
-                    to = hub.Get(PTPTextPackage.ToUserId);
+                    to = hub.Get(SignalRMessagePackage.ToUserId);
                     if (to != null && !String.IsNullOrWhiteSpace(to.ContextId)) Clients.Client(to.ContextId)
-                          .ReceviceMessage(new PTPTextPackage(PTPTextPackage.Context.ToString(), PTPTextPackage.FromUserId, PTPTextPackage.ToUserId));
+                          .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(SignalRMessagePackage.Context.ToString(), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
 
                     //通知发送者 信息发送成功
                     Clients.Client(Context.ConnectionId)
-                        .ReceviceMessage(new StatePackage("", PTPTextPackage.FromUserId, PTPTextPackage.ToUserId, PTPTextPackage.SCType, true));
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("", SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, true));
                 }
             }
             catch (Exception ex)
             {
                 //通知发送者 信息发送失败
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(new StatePackage(ex.Message, PTPTextPackage.FromUserId, PTPTextPackage.ToUserId, PTPTextPackage.SCType, false));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(ex.Message, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
             }
         }
 
@@ -509,7 +515,7 @@ namespace BCP.WebAPI.SignalR
             //var from = hub.Get();
             try
             {
-                userService.MarkPTPMessage(PTPTextPackage.FromUserId, PTPTextPackage.ToUserId);
+                userService.MarkPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId);
             }
             catch (Exception ex)
             { }
@@ -521,19 +527,19 @@ namespace BCP.WebAPI.SignalR
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             var from = hub.Get();
-            List<UserMessageDTO> message = userService.GetPTPMessage(PTPTextPackage.FromUserId, PTPTextPackage.ToUserId).Where(it => it.State == 0).ToList();
+            List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId).Where(it => it.State == 0).ToList();
             foreach (var node in message)
             {
                 if (node.MessageType != (int)SignalRMessageType.Text) continue;
-                if (node.FromUserId == PTPTextPackage.FromUserId)
+                if (node.FromUserId == SignalRMessagePackage.FromUserId)
                 {
                     Clients.Client(from.ContextId)
-                        .ReceviceMessage(new PTPTextPackage(node.Content, PTPTextPackage.FromUserId, PTPTextPackage.ToUserId));
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
                 }
                 else
                 {
                     Clients.Client(from.ContextId)
-                        .ReceviceMessage(new PTPTextPackage(node.Content, PTPTextPackage.ToUserId, PTPTextPackage.FromUserId));
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
                 }
             }
         }
@@ -544,27 +550,27 @@ namespace BCP.WebAPI.SignalR
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             var from = hub.Get();
-            List<UserMessageDTO> message = userService.GetPTPMessage(PTPTextPackage.FromUserId, PTPTextPackage.ToUserId).Where(it => it.CreateTime != null && it.CreateTime.Value.Year ==                                                   date.Year && it.CreateTime.Value.Month == date.Month && it.CreateTime.Value.Day == date.Day).ToList();
+            List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId).Where(it => it.CreateTime != null && it.CreateTime.Value.Year ==                                                   date.Year && it.CreateTime.Value.Month == date.Month && it.CreateTime.Value.Day == date.Day).ToList();
             foreach (var node in message)
             {
                 if (node.MessageType != (int)SignalRMessageType.Text) continue;
-                if (node.FromUserId == PTPTextPackage.FromUserId)
+                if (node.FromUserId == SignalRMessagePackage.FromUserId)
                 {
                     Clients.Client(from.ContextId)
-                        .ReceviceMessage(new PTPTextPackage(node.Content, PTPTextPackage.FromUserId, PTPTextPackage.ToUserId));
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
                 }
                 else
                 {
                     Clients.Client(from.ContextId)
-                        .ReceviceMessage(new PTPTextPackage(node.Content, PTPTextPackage.ToUserId, PTPTextPackage.FromUserId));
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
                 }
             }
         }
     }
 
-    public class StatePackageAdapter : ISignalRMessagePacke
+    public class StatePackage : ISignalRMessagePacke
     {
-        public StatePackage StatePackage { get; set; }
+        public SignalRMessagePackage SignalRMessagePackage { get; set; }
 
         public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
@@ -587,9 +593,9 @@ namespace BCP.WebAPI.SignalR
         }
     }
 
-    public class PTGTextPackageAdapter : ISignalRMessagePacke
+    public class PTGTextPackage : ISignalRMessagePacke
     {
-        public PTGTextPackage PTGTextPackage { get; set; }
+        public SignalRMessagePackage SignalRMessagePackage { get; set; }
 
         public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
@@ -600,44 +606,44 @@ namespace BCP.WebAPI.SignalR
             {
                 //数据验证
                 var from = hub.Get();
-                var to = userService.GetGroupById(PTGTextPackage.ToUserId);
+                var to = userService.GetGroupById(SignalRMessagePackage.ToUserId);
                 if (from == null || to == null)
                     Clients.Client(Context.ConnectionId)
-                        .ReceviceMessage(new StatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
-                        PTGTextPackage.FromUserId, PTGTextPackage.ToUserId, PTGTextPackage.SCType, false));
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
+                        SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
 
                 //信息处理
                 GroupMessagerDTO gmd = new GroupMessagerDTO()
                 {
-                    Content = PTGTextPackage.Context.ToString(),
+                    Content = SignalRMessagePackage.Context.ToString(),
                     GroupId = to.Id,
-                    MessageType = (int)PTGTextPackage.SMType,
+                    MessageType = (int)SignalRMessagePackage.SMType,
                     CrateTime = DateTime.Now,
-                    CrateUseId = PTGTextPackage.FromUserId
+                    CrateUseId = SignalRMessagePackage.FromUserId
                 };
-                if (userService.AddGroupMessage(gmd, PTGTextPackage.FromUserId))
+                if (userService.AddGroupMessage(gmd, SignalRMessagePackage.FromUserId))
                 {
                     foreach (var node in hub.GetAllOnLineUser())
                     {
-                        if (node.Groups != null && node.Groups.Where(it => it.Id == PTGTextPackage.ToUserId).FirstOrDefault() != null && !String.IsNullOrWhiteSpace(node.ContextId))
+                        if (node.Groups != null && node.Groups.Where(it => it.Id == SignalRMessagePackage.ToUserId).FirstOrDefault() != null && !String.IsNullOrWhiteSpace(node.ContextId))
                         {
                             Clients.Client(node.ContextId)
-                            .ReceviceMessage(new PTGTextPackage(PTGTextPackage.Context.ToString(), PTGTextPackage.FromUserId, PTGTextPackage.ToUserId));
+                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(SignalRMessagePackage.Context.ToString(), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
                         }
                     }
                 }
 
                 //通知发送方 信息发送成功
                 Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(new StatePackage("",
-                    PTGTextPackage.FromUserId, PTGTextPackage.ToUserId, PTGTextPackage.SCType, true));
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("",
+                    SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, true));
             }
             catch (Exception ex)
             {
                 //通知发送方 信息发送失败
                 Clients.Client(Context.ConnectionId)
-                .ReceviceMessage(new StatePackage(ex.Message,
-                PTGTextPackage.FromUserId, PTGTextPackage.ToUserId, PTGTextPackage.SCType, false));
+                .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(ex.Message,
+                SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
             }
         }
 
@@ -660,7 +666,7 @@ namespace BCP.WebAPI.SignalR
                     if (node.MessageType == (int)SignalRMessageType.Text)
                     {
                         Clients.Client(Context.ConnectionId)
-                            .ReceviceMessage(new PTGTextPackage(node.Content, PTGTextPackage.FromUserId, (int)node.GroupId));
+                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, SignalRMessagePackage.FromUserId, (int)node.GroupId));
                     }
                 }
             }
@@ -682,7 +688,7 @@ namespace BCP.WebAPI.SignalR
                     if (node.MessageType == (int)SignalRMessageType.Text)
                     {
                         Clients.Client(Context.ConnectionId)
-                            .ReceviceMessage(new PTGTextPackage(node.Content, PTGTextPackage.FromUserId, (int)node.GroupId));
+                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, SignalRMessagePackage.FromUserId, (int)node.GroupId));
                     }
                 }
             }
