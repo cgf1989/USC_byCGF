@@ -468,7 +468,8 @@ namespace BCP.WebAPI.SignalR
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             var from = hub.Get();
-            var to = hub.Get(SignalRMessagePackage.ToUserId);
+            //var to = hub.Get(SignalRMessagePackage.ToUserId);
+            var to = userService.GetUser(SignalRMessagePackage.ToUserId);
             //数据验证
             if (from == null || to == null)
                 Clients.Client(Context.ConnectionId)
