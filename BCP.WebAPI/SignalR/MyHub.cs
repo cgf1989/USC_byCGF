@@ -422,7 +422,7 @@ namespace BCP.WebAPI.SignalR
                 Clients.Client(Context.ConnectionId)
                     .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
-            package.SendMessage(Clients, Context, this);
+            SignalRMessagePackeFactory.Get(package).SendMessage(Clients, Context, this);
         }
 
         public void MarkMessage(SignalRMessagePackage package)
@@ -432,7 +432,7 @@ namespace BCP.WebAPI.SignalR
                 Clients.Client(Context.ConnectionId)
                     .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
-            package.MarkMessage(Clients, Context, this);
+            SignalRMessagePackeFactory.Get(package).MarkMessage(Clients, Context, this);
         }
 
         public void GetAllMessage(SignalRMessagePackage package,DateTime date)
@@ -442,7 +442,7 @@ namespace BCP.WebAPI.SignalR
                 Clients.Client(Context.ConnectionId)
                     .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
-            package.GetAllMessage(Clients, Context, this, date);
+            SignalRMessagePackeFactory.Get(package).GetAllMessage(Clients, Context, this, date);
         }
 
         public void InitClient(SignalRMessagePackage package)
@@ -452,32 +452,9 @@ namespace BCP.WebAPI.SignalR
                 Clients.Client(Context.ConnectionId)
                     .ReceviceMessage(new StatePackage("数据包为空", package.FromUserId, package.ToUserId, package.SCType, false));
             }
-            package.InitClient(Clients, Context, this);
+            SignalRMessagePackeFactory.Get(package).InitClient(Clients, Context, this);
         }
 
         #endregion
-    }
-
-    /// <summary>
-    /// 信息类型 
-    /// </summary>
-    public enum SignalRMessageType
-    {
-        Doc,
-        Pic, 
-        Text,
-        [Description("状态信息")]
-        StateMessage
-    }
-
-    /// <summary>
-    /// 通讯方式
-    /// </summary>
-    public enum SignalRCommunicationType
-    {
-        [Description("点对点通讯")]
-        PersonToPerson, 
-        [Description("点对群通讯")]
-        PersonToGroup
     }
 }

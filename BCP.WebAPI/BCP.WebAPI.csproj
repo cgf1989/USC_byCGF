@@ -229,9 +229,11 @@
     </Compile>
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignalR\SignalRMessagePackage.cs" />
     <Compile Include="SignalR\MyHub.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="SignalR\SignalRMessagePackage.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
