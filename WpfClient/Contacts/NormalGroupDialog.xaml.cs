@@ -87,7 +87,7 @@ namespace WpfClient.Contacts
             if (input.ToolTip.Equals("发送"))
             {
                 CommunitcationPackage cp = new CommunitcationPackage() {  Content = InputNoticeTBox.Text.Trim(),MType=MessageType.Text,CType=CommunitcationType.PersonToGroup, SendTime = System.DateTime.Now };
-                SignalRProxy.PTGSenderMessage(CurrentGroup.ID, cp);
+                SignalRProxy.PTGSenderMessage(CurrentGroup.Id, cp);
 
 
                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
@@ -406,11 +406,10 @@ namespace WpfClient.Contacts
             Win_NewUserToNormalGroup Win_nutg = new Win_NewUserToNormalGroup();
             Win_nutg.CurGroup = CurrentGroup;
             Win_nutg.ShowDialog();
-            if (Win_nutg.AddedUsers.Count > 0)
+            if (Win_nutg.AddedUser.Members.Count > 0)
             {
-                //这里应该是获取登录用户的所有群组，所以应该要遍历一下，找到当前组再把组员放进去,可以考虑用loadgroupmember()
-                GroupDTO groupSource = Win_nutg.AddedUsers.First();
-                lbox_GroupMember.ItemsSource = groupSource.Members;
+                lbox_GroupMember.ItemsSource = null;              
+                lbox_GroupMember.ItemsSource = Win_nutg.AddedUser.Members;
             }
         }
 
@@ -422,31 +421,38 @@ namespace WpfClient.Contacts
         /// <param name="e"></param>
         private async void btn_RemoveGroupMember_Click(object sender, RoutedEventArgs e)
         {
-            if (lbox_GroupMember.SelectedItem != null)
+            try
             {
-                UserDTO selectedContact = lbox_GroupMember.SelectedItem as UserDTO;
-
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:37768/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.GetAsync("api/User/RemoveUserFromGroup?userId=" + MainClient.CurrentUser.ID + "&groupId=" + CurrentGroup.ID + "&memberUserId=" + selectedContact.ID);
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
+                if (lbox_GroupMember.SelectedItem != null)
                 {
-                    string ds = await response.Content.ReadAsStringAsync();
-                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
-                    if (result.Success)
+                    GroupMemberDTO selectedContact = lbox_GroupMember.SelectedItem as GroupMemberDTO;
+
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:37768/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.GetAsync("api/User/RemoveUserFromGroup?userId=" + MainClient.CurrentUser.ID + "&groupId=" + CurrentGroup.Id + "&groupMemberId=" + selectedContact.Id);
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
                     {
-                        //成功移除,刷新界面
-                        LoadGroupMembers();
+                        string ds = await response.Content.ReadAsStringAsync();
+                        CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                        if (result.Success)
+                        {
+                            //成功移除,刷新界面
+                            LoadGroupMembers();
+                        }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("请选择要移除的成员");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("请选择要移除的成员");
+                MessageBox.Show("移除失败");
             }
         }
 
@@ -462,7 +468,7 @@ namespace WpfClient.Contacts
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/User/GetGroupMember?&groupId=" + CurrentGroup.ID);
+                HttpResponseMessage response = await client.GetAsync("api/User/GetGroupMember?groupId=" + CurrentGroup.Id);
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
@@ -470,7 +476,7 @@ namespace WpfClient.Contacts
                     CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
                     if (result.Success)
                     {
-                        List<GroupMemberDTO> groupMembers = JsonConvert.DeserializeObject<List<GroupMemberDTO>>(ds);
+                        List<GroupMemberDTO> groupMembers = JsonConvert.DeserializeObject<List<GroupMemberDTO>>(result.Data);
                         lbox_GroupMember.ItemsSource = null;
                         lbox_GroupMember.ItemsSource = groupMembers;
                         lbox_GroupMember.DisplayMemberPath = "Name";

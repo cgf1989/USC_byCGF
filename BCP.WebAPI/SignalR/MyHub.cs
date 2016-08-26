@@ -459,7 +459,7 @@ namespace BCP.WebAPI.SignalR
     }
 
     /// <summary>
-    /// 信息类型
+    /// 信息类型 
     /// </summary>
     public enum SignalRMessageType
     {

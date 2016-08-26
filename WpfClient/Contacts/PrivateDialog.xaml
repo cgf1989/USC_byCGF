@@ -24,7 +24,7 @@
         </ScrollViewer>        
         <DockPanel Grid.Row="2" Background="#ebf2f9">
             <TextBox TextWrapping="Wrap" Name="InputTBox" DockPanel.Dock="Left" Width="430px"></TextBox>
-            <Button   Name="InputBtn" Width="50px" Content="发送" Height="25" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}">
+            <Button IsDefault="True"   Name="InputBtn" Width="50px" Content="发送" Height="25" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}">
                 <Button.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="文档"></MenuItem>

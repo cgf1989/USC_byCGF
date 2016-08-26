@@ -24,13 +24,13 @@ namespace WpfClient.Contacts
     public partial class RemoveGroupWin : MyMacClass_noneMaxBtn
     {
 
-        public List<CustomerGoupDTO> GroupWitoutUserList { set; get; }
+        public List<CustomGroupDTO> GroupWitoutUserList { set; get; }
         public bool IsRefresh { set; get; }
 
         public RemoveGroupWin()
         {
             InitializeComponent();
-            GroupWitoutUserList = new List<CustomerGoupDTO>();
+            GroupWitoutUserList = new List<CustomGroupDTO>();
             IsRefresh = false;
         }
 
@@ -40,14 +40,14 @@ namespace WpfClient.Contacts
             {
                 if (cbb_NormalGroup.SelectedItem != null)
                 {
-                    CustomerGoupDTO selectedGroup = cbb_NormalGroup.SelectedItem as CustomerGoupDTO;
+                    CustomGroupDTO selectedGroup = cbb_NormalGroup.SelectedItem as CustomGroupDTO;
 
                     HttpClient client = new HttpClient();
                     client.BaseAddress = new Uri("http://localhost:37768/");
                     client.DefaultRequestHeaders.Accept.Clear();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                    HttpResponseMessage response = await client.GetAsync("api/User/DeleteCustomerGroup?groupId=" + selectedGroup.ID);
+                    HttpResponseMessage response = await client.GetAsync("api/User/DeleteCustomerGroup?groupId=" + selectedGroup.Id);
                     response.EnsureSuccessStatusCode();
                     if (response.IsSuccessStatusCode)
                     {

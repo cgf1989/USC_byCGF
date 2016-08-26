@@ -266,7 +266,7 @@ namespace WpfClient.Teams
 
 
                 //pd.Init(MainClient.currentUser.UserName, MainClient.currentUser.Department, s);
-                pd.Init(MainClient.CurrentUser.ActualName,group.ID.ToString());
+                pd.Init(MainClient.CurrentUser.ActualName,group.Id.ToString());
 
                 System.Threading.Thread.Sleep(1000);
 

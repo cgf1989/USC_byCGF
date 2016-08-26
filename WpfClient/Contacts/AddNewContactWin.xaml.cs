@@ -23,7 +23,7 @@ namespace WpfClient.Contacts
     /// </summary>
     public partial class AddNewContactWin : MyMacClass_noneMaxBtn
     {
-        public List<CustomerGoupDTO> userGroupList = new List<CustomerGoupDTO>();
+        public List<CustomGroupDTO> userGroupList = new List<CustomGroupDTO>();
         /// <summary>
         /// 搜索后选中的好友
         /// </summary>
@@ -87,7 +87,7 @@ namespace WpfClient.Contacts
                 {
                     if (cbb_Groups.SelectedItem != null)
                     {
-                        CustomerGoupDTO selectedGroup = cbb_Groups.SelectedItem as CustomerGoupDTO;
+                        CustomGroupDTO selectedGroup = cbb_Groups.SelectedItem as CustomGroupDTO;
                         GroupName = selectedGroup.GroupName;
                         userName = lbl_userName.Content.ToString();
 
@@ -97,7 +97,7 @@ namespace WpfClient.Contacts
                         client.DefaultRequestHeaders.Accept.Clear();
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                        HttpResponseMessage response = await client.GetAsync("api/user/AddUserToCustomerGroup?userId=" + SelectedUser.ID + "&groupId=" + selectedGroup.ID);
+                        HttpResponseMessage response = await client.GetAsync("api/user/AddUserToCustomerGroup?userId=" + SelectedUser.ID + "&groupId=" + selectedGroup.Id);
                         response.EnsureSuccessStatusCode();
                         if (response.IsSuccessStatusCode)
                         {

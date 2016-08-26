@@ -52,8 +52,8 @@ namespace WpfClient.Contacts
 
 
                 UserDTO selectedUser = lbox_GroupMember.SelectedItem as UserDTO;
-                CustomerGoupDTO selectedGroup = cbb_UserGroups.SelectedItem as CustomerGoupDTO;
-                HttpResponseMessage response = await client.GetAsync("api/User/RemoveUserFromCustomerGroup?userId=" + selectedUser.ID + "&groupId=" + selectedGroup.ID);
+                CustomGroupDTO selectedGroup = cbb_UserGroups.SelectedItem as CustomGroupDTO;
+                HttpResponseMessage response = await client.GetAsync("api/User/RemoveUserFromCustomerGroup?userId=" + selectedUser.ID + "&groupId=" + selectedGroup.Id);
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
@@ -104,7 +104,7 @@ namespace WpfClient.Contacts
                 if (cbb_UserGroups.SelectedItem == null) { }
                 else
                 {
-                    List<UserDTO> userlist = (cbb_UserGroups.SelectedItem as CustomerGoupDTO).Members;
+                    List<UserDTO> userlist = (cbb_UserGroups.SelectedItem as CustomGroupDTO).Members;
                     lbox_GroupMember.ItemsSource = userlist;
                     lbox_GroupMember.DisplayMemberPath = "ActualName";
                 }
@@ -130,7 +130,7 @@ namespace WpfClient.Contacts
                 CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
                 if (result.Success)
                 {
-                    List<CustomerGoupDTO> listGroups = JsonConvert.DeserializeObject<List<CustomerGoupDTO>>(result.Data);
+                    List<CustomGroupDTO> listGroups = JsonConvert.DeserializeObject<List<CustomGroupDTO>>(result.Data);
                     cbb_UserGroups.ItemsSource = listGroups;
                     cbb_UserGroups.DisplayMemberPath = "GroupName";
                 }

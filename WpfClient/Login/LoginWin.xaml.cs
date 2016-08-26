@@ -69,8 +69,11 @@ namespace WpfClient.Login
                             UserDTO currentUser = JsonConvert.DeserializeObject<UserDTO>(result.Data);
                             MainClient.CurrentUser = currentUser;  //返回当前用户
                             MainClient mainWin = new MainClient();
-                            this.Close();
 
+                            //登录服务器（聊天模块相关）
+
+
+                            this.Close();
                             mainWin.ShowDialog();
                         }
                         else

@@ -1,4 +1,5 @@
 ﻿using BCP.ViewModel;
+using BCP.WebAPI.SignalR;
 using Microsoft.AspNet.SignalR.Client;
 using SignalCore;
 using System;
@@ -106,12 +107,19 @@ namespace WpfClient.Contacts
                     replyId, message);
         }
 
-        public void InitPTP(int replyId)
+
+        public void InitPTP(SignalRMessagePackage srmp)
         {
             if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
-                _hubProxy.Invoke("InitPTP",
-                    replyId);
+                _hubProxy.Invoke("InitClient",
+                    srmp);
         }
+        //public void InitPTP(int replyId)
+        //{
+        //    if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
+        //        _hubProxy.Invoke("InitPTP",
+        //            replyId);
+        //}
 
         public void PTGSenderMessage(int groupId, CommunitcationPackage cp)
         {

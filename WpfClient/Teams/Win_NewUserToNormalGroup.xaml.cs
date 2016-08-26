@@ -28,7 +28,7 @@ namespace WpfClient.Teams
         /// </summary>
         public GroupDTO CurGroup { set; get; }
 
-        public List<GroupDTO> AddedUsers { set; get; }
+        public GroupDTO AddedUser { set; get; }
 
         public Win_NewUserToNormalGroup()
         {
@@ -45,7 +45,7 @@ namespace WpfClient.Teams
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await client.GetAsync("api/User/GetAllCustomerGroupWithUser?userId=" + MainClient.CurrentUser.ID );
+            HttpResponseMessage response = await client.GetAsync("api/User/GetAllCustomerGroupWithUser?userId=" + MainClient.CurrentUser.ID);
             response.EnsureSuccessStatusCode();
             if (response.IsSuccessStatusCode)
             {
@@ -53,8 +53,8 @@ namespace WpfClient.Teams
                 CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
                 if (result.Success)
                 {
-                   
-                    List<CustomerGoupDTO> usergroupList = JsonConvert.DeserializeObject<List<CustomerGoupDTO>>(result.Data);
+
+                    List<CustomGroupDTO> usergroupList = JsonConvert.DeserializeObject<List<CustomGroupDTO>>(result.Data);
                     if (usergroupList.Count > 0)
                     {
                         foreach (var item in usergroupList)
@@ -76,34 +76,39 @@ namespace WpfClient.Teams
         /// <param name="e"></param>
         private async void btn_AddToGroup_Click(object sender, RoutedEventArgs e)
         {
-            AddedUsers = new List<GroupDTO>();
-            if (lbox_Contacts.SelectedItem != null)
+            try
             {
-                UserDTO selectedContact = lbox_Contacts.SelectedItem as UserDTO;
-
-                HttpClient client = new HttpClient();
-                client.BaseAddress = new Uri("http://localhost:37768/");
-                client.DefaultRequestHeaders.Accept.Clear();
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.GetAsync("api/User/AddUserToGroup?userId=" + MainClient.CurrentUser.ID + "&groupId="+CurGroup.ID+"&memberUserId="+selectedContact.ID);
-                response.EnsureSuccessStatusCode();
-                if (response.IsSuccessStatusCode)
+                AddedUser = new GroupDTO();
+                if (lbox_Contacts.SelectedItem != null)
                 {
-                    string ds = await response.Content.ReadAsStringAsync();
-                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
-                    if (result.Success)
-                    {
+                    UserDTO selectedContact = lbox_Contacts.SelectedItem as UserDTO;
 
-                        List<GroupDTO> usergroupList = JsonConvert.DeserializeObject<List<GroupDTO>>(result.Data);
-                        if (usergroupList.Count > 0)
+                    HttpClient client = new HttpClient();
+                    client.BaseAddress = new Uri("http://localhost:37768/");
+                    client.DefaultRequestHeaders.Accept.Clear();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage response = await client.GetAsync("api/User/AddUserToGroup?userId=" + MainClient.CurrentUser.ID + "&groupId=" + CurGroup.Id + "&memberUserId=" + selectedContact.ID + "&referenceUserId=" + "0");
+                    response.EnsureSuccessStatusCode();
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string ds = await response.Content.ReadAsStringAsync();
+                        CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                        if (result.Success)
                         {
-                            AddedUsers = usergroupList;                
+
+                            GroupDTO usergroup = JsonConvert.DeserializeObject<GroupDTO>(result.Data);
+                            //if (usergroupList.Count > 0)
+                            //{
+                            AddedUser = usergroup;
+                            //}
+                            this.Close();
                         }
-                        this.Close();
                     }
                 }
             }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
         }
     }
 }

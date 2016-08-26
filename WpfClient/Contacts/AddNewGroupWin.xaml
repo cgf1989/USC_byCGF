@@ -18,7 +18,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10"  Text="分组名:" Grid.Column="0"/>
         <TextBox Name="tb_GroupName" Height="30" Margin="10" Grid.Column="1"/>
-        <Button Width="80" Grid.Row="1" Grid.Column="1" Name="btn_Confirm" Foreground="White" Height="28" Content="确定" HorizontalAlignment="Right" Margin="0,0,10,0"  VerticalAlignment="Center" Click="btn_Confirm_Click" Template="{DynamicResource ButtonControlTemplate1}"/>
+        <Button IsDefault="True" Width="80" Grid.Row="1" Grid.Column="1" Name="btn_Confirm" Foreground="White" Height="28" Content="确定" HorizontalAlignment="Right" Margin="0,0,10,0"  VerticalAlignment="Center" Click="btn_Confirm_Click" Template="{DynamicResource ButtonControlTemplate1}"/>
 
 
     </Grid>

@@ -50,7 +50,7 @@ namespace WpfClient.Teams
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.GetAsync("api/User/DeleteGroup?userId=" + MainClient.CurrentUser.ID+ "&groupId="+gdto.ID);
+                HttpResponseMessage response = await client.GetAsync("api/User/DeleteGroup?userId=" + MainClient.CurrentUser.ID+ "&groupId="+gdto.Id);
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {

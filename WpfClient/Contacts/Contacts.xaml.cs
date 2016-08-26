@@ -1,4 +1,5 @@
 ﻿using BCP.ViewModel;
+using BCP.WebAPI.SignalR;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -98,7 +99,7 @@ namespace WpfClient.Contacts
                 CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
                 if (result.Success)
                 {
-                    List<CustomerGoupDTO> userGroups = JsonConvert.DeserializeObject<List<CustomerGoupDTO>>(result.Data);
+                    List<CustomGroupDTO> userGroups = JsonConvert.DeserializeObject<List<CustomGroupDTO>>(result.Data);
 
 
                     AddNewContactWin anc_win = new AddNewContactWin();
@@ -151,74 +152,46 @@ namespace WpfClient.Contacts
 
         }
 
+        /// <summary>
+        ///  点开聊天框（点对点）
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
-
-            PrivateDialog pd1 = new PrivateDialog();
-            pd1.SignalRProxy = new SignalRProxy();
-            pd1.SignalRProxy.ConnectAsync();
-            pd1.To = (sender as ListViewItem).Name.ToString();
-            pd1.Self = MainClient.CurrentUser.UserName;
-            pd1.ReplyId = Convert.ToInt32((sender as ListViewItem).Tag.ToString());
-
-            //PrivateDialog pd2 = new PrivateDialog();
-            //pd2.SignalRProxy = new SignalRProxy();
-            //pd2.SignalRProxy.ConnectAsync();
-            //pd2.To = "hy";
-            //pd2.Self = "cgf";
-            //pd2.ReplyId = 1;
-
-            pd1.Closed += (sen, er) =>
+            try
             {
-                //pd1.SignalRProxy.Logout(MainClient.currentUser.UserName);
-                pd1.SignalRProxy.Dispose();
-            };
-            //pd2.Closed += (sen, er) =>
-            //{
-            //    //pd2.SignalRProxy.Logout((sender as ListViewItem).Name.ToString());
-            //    pd2.SignalRProxy.Dispose();
-            //};
-
-            pd1.Init();
-            //pd2.Init();
-
-            System.Threading.Thread.Sleep(1000);
-
-            //string pwd1 = "";
-            //string pwd2 = "";
-            //foreach (SignalCore.UserInfo item in Login.LoginWin.userList)
-            //{
-            //    if (item.UserName == MainClient.currentUser.UserName)
-            //    {
-            //        pwd1 = item.UserPwd;
-            //    }
-            //    //if (item.UserName == (sender as ListViewItem).Name.ToString())
-            //    //{
-            //    //    pwd2 = item.UserPwd;
-            //    //}
-            //}
-
-            //if (pd1.SignalRProxy.Login(MainClient.currentUser.UserName, pwd1))
-            //{
-            //    pd1.SignalRProxy.GetContactRecord(MainClient.currentUser.UserName, (sender as ListViewItem).Name.ToString());
-            //    pd1.Show();
-            //}
-            //if (pd2.SignalRProxy.Login((sender as ListViewItem).Name.ToString(), pwd2))
-            //{
-            //    pd2.SignalRProxy.GetContactRecord((sender as ListViewItem).Name.ToString(), MainClient.currentUser.UserName);
-            //    pd2.Show();
-            //}
-
-            pd1.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
-
-            pd1.Show();
-            pd1.SignalRProxy.InitPTP(Convert.ToInt32((sender as ListViewItem).Tag.ToString()));
+                PrivateDialog pd1 = new PrivateDialog();
+                pd1.SignalRProxy = new SignalRProxy();
+                pd1.SignalRProxy.ConnectAsync();
+                pd1.To = (sender as ListViewItem).Name.ToString();
+                pd1.Self = MainClient.CurrentUser.UserName;
+                pd1.ReplyId = Convert.ToInt32((sender as ListViewItem).Tag.ToString());
 
 
-            //pd2.SignalRProxy.Login("cgf","cgf");
-            //pd2.SignalRProxy.InitPTP(1);
-            //pd2.Show();
+                pd1.Closed += (sen, er) =>
+                {
+                    pd1.SignalRProxy.Dispose();
+                };
+
+                pd1.Init();
+
+                System.Threading.Thread.Sleep(1000);
+
+
+
+                pd1.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
+
+                pd1.Show();
+
+                SignalRMessagePackage srmp = new PTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
+                pd1.SignalRProxy.InitPTP(srmp);
+                //pd1.SignalRProxy.InitPTP(Convert.ToInt32((sender as ListViewItem).Tag.ToString()));
+
+            }
+            catch (Exception ex)
+            { MessageBox.Show(ex.ToString()); }
+     
 
         }
 
@@ -240,7 +213,7 @@ namespace WpfClient.Contacts
                 CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
                 if (result.Success)
                 {
-                    List<CustomerGoupDTO> listUserGroup = JsonConvert.DeserializeObject<List<CustomerGoupDTO>>(result.Data);
+                    List<CustomGroupDTO> listUserGroup = JsonConvert.DeserializeObject<List<CustomGroupDTO>>(result.Data);
                     foreach (var item in listUserGroup)
                     {
                         Expander exp = new Expander() { Header = item.GroupName, Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#ebf2f9")) };
@@ -296,7 +269,7 @@ namespace WpfClient.Contacts
         /// <summary>
         /// 不包含用户内容的用户组list
         /// </summary>
-        List<CustomerGoupDTO> listUserGroupWithoutUser = new List<CustomerGoupDTO>();
+        List<CustomGroupDTO> listUserGroupWithoutUser = new List<CustomGroupDTO>();
         /// <summary>
         /// 获取分组，不包含用户内容
         /// </summary>
@@ -316,7 +289,7 @@ namespace WpfClient.Contacts
                 CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
                 if (result.Success)
                 {
-                    listUserGroupWithoutUser = JsonConvert.DeserializeObject<List<CustomerGoupDTO>>(result.Data);
+                    listUserGroupWithoutUser = JsonConvert.DeserializeObject<List<CustomGroupDTO>>(result.Data);
                 }
             }
         }
