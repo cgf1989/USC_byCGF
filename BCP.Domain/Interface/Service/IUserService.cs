@@ -212,9 +212,9 @@ namespace BCP.Domain.Service
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        bool MarkPTGMessage(int userId);
+        bool MarkPTGMessage(int userId, int groupId);
 
-        List<GroupMessagerDTO> GetPTGMessage(int userId);
+        List<GroupMessagerDTO> GetPTGMessage(int userId, int groupId);
 
         #endregion
     }

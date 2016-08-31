@@ -487,18 +487,21 @@ namespace BCP.Domain
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public bool MarkPTGMessage(int userId)
+        public bool MarkPTGMessage(int userId,int groupId)
         {
             //var groupMessage = _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserID == userId).FirstOrDefault();
             return true;
         }
 
-        public List<GroupMessagerDTO> GetPTGMessage(int userId)
+        public List<GroupMessagerDTO> GetPTGMessage(int userId,int groupId)
         {
-            return _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserId == userId)
+            //return _groupMessagerRepository.GetAll().Where(it => it.GroupMember != null && it.GroupMember.UserId == userId)
+            //    .MapperTo<GroupMessager, GroupMessagerDTO>()
+            //    .ToList();
+            //return null;
+            return _groupMessagerRepository.GetAll().Where(it => it.GroupId == groupId).OrderBy(it => it.Id)
                 .MapperTo<GroupMessager, GroupMessagerDTO>()
                 .ToList();
-            return null;
         }
 
         #endregion

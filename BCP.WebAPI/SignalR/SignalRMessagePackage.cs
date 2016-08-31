@@ -661,7 +661,7 @@ namespace BCP.WebAPI.SignalR
             try
             {
                 var from = hub.Get();
-                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == DateTime.Now.Year && it.CrateTime.Value.Month == DateTime.Now.Month && it.CrateTime.Value.Day == DateTime.Now.Day).ToList();
+                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID,SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == DateTime.Now.Year && it.CrateTime.Value.Month == DateTime.Now.Month && it.CrateTime.Value.Day == DateTime.Now.Day).ToList();
                 foreach (var node in list)
                 {
                     if (node.MessageType == (int)SignalRMessageType.Text)
@@ -683,7 +683,7 @@ namespace BCP.WebAPI.SignalR
             try
             {
                 var from = hub.Get();
-                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == date.Year && it.CrateTime.Value.Month == date.Month && it.CrateTime.Value.Day == date.Day).ToList();
+                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID,SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == date.Year && it.CrateTime.Value.Month == date.Month && it.CrateTime.Value.Day == date.Day).ToList();
                 foreach (var node in list)
                 {
                     if (node.MessageType == (int)SignalRMessageType.Text)
