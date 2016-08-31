@@ -472,9 +472,12 @@ namespace BCP.WebAPI.SignalR
             var to = userService.GetUser(SignalRMessagePackage.ToUserId);
             //数据验证
             if (from == null || to == null)
+            {
                 Clients.Client(Context.ConnectionId)
                     .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
                         SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+                return;
+            }
 
             try
             {
@@ -609,9 +612,12 @@ namespace BCP.WebAPI.SignalR
                 var from = hub.Get();
                 var to = userService.GetGroupById(SignalRMessagePackage.ToUserId);
                 if (from == null || to == null)
+                {
                     Clients.Client(Context.ConnectionId)
                         .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
                         SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+                    return;
+                }
 
                 //信息处理
                 GroupMessagerDTO gmd = new GroupMessagerDTO()
@@ -626,6 +632,7 @@ namespace BCP.WebAPI.SignalR
                 {
                     foreach (var node in hub.GetAllOnLineUser())
                     {
+                        if (node.ID == SignalRMessagePackage.FromUserId) continue;
                         if (node.Groups != null && node.Groups.Where(it => it.Id == SignalRMessagePackage.ToUserId).FirstOrDefault() != null && !String.IsNullOrWhiteSpace(node.ContextId))
                         {
                             Clients.Client(node.ContextId)
