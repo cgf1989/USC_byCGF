@@ -28,7 +28,7 @@
         <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <StackPanel  Name="NoticeStackPanel" Background="WhiteSmoke"></StackPanel>
         </ScrollViewer>
-        <Expander Name="Expander_Range" FlowDirection="RightToLeft" Grid.RowSpan="2" Margin="10,20,0,0"   MinHeight="100" Header="所有内容" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" >
+        <Expander Name="Expander_Range" FlowDirection="RightToLeft" Grid.RowSpan="2" Margin="10,20,0,0"   MinHeight="100" Header="所有内容" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">
             <TreeView FlowDirection="LeftToRight" Width="auto" Name="TreeView_range">
                 <TreeViewItem Header="所有内容" Selected="Tvi_Range_Selected"/>
                 <TreeViewItem Name="Tvi_Range" Header="黄蜂岗高架一桥" Selected="Tvi_Range_Selected">
