@@ -667,7 +667,7 @@ namespace BCP.WebAPI.SignalR
                     if (node.MessageType == (int)SignalRMessageType.Text)
                     {
                         Clients.Client(Context.ConnectionId)
-                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, SignalRMessagePackage.FromUserId, (int)node.GroupId));
+                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, (int)node.CrateUseId, (int)node.GroupId));
                     }
                 }
             }
