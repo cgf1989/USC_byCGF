@@ -14,8 +14,24 @@ namespace BCP.Domain.Service
         bool Logout(int userId);
 
         bool RegisterUser(UserDTO user);
+        /// <summary>
+        /// 获取用户信息 包括用户创建的group
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         UserDTO GetUser(int id);
+
+        /// <summary>
+        /// 获取用户信息 包括用户创建的group
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
         UserDTO GetUser(String userName);
+
+        /// <summary>
+        /// 获取用户信息 包括用户创建的group
+        /// </summary>
+        /// <returns></returns>
         List<UserDTO> GetUser();
         bool DeleteUser(int id);
         bool UpdateUserPwd(int id, String userPwd);
@@ -135,7 +151,7 @@ namespace BCP.Domain.Service
         bool DeleteGroup(int groupId, int userId);
 
         /// <summary>
-        /// 获取群组数据
+        /// 获取所有用户参与的群组数据
         /// </summary>
         /// <param name="userId">登录用户</param>
         /// <param name="IsCacasde">是否取得成员数据</param>

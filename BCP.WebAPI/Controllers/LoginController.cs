@@ -33,6 +33,7 @@ namespace BCP.WebAPI.Controllers
                 //HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(str, Encoding.GetEncoding("UTF-8"), "application/json") };
                 //return result;
                 var userDto = UserService.GetUser(userName);
+                userDto.Groups = UserService.GetAllGroupByUserId(userDto.ID, false);
                 MyHub.Login(userDto);
                 return JsonHelper.GetResponseMessage(true, "登录成功", typeof(UserDTO), false, userDto);
             }
