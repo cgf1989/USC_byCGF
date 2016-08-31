@@ -71,6 +71,17 @@ namespace BCP.WebAPI.Controllers
             return JsonHelper.GetResponseMessage(true, "获取成功", typeof(UserDTO), true, UserService.GetUser());
         }
 
+        /// <summary>
+        /// 根据用户名获取Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetUserById(String id)
+        {
+            return JsonHelper.GetResponseMessage(true, "获取成功", typeof(UserDTO), false, UserService.GetUser(Convert.ToInt32(id)));
+        }
+
         #region customerGroup
 
         /// <summary>
