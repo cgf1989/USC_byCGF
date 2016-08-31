@@ -1,4 +1,5 @@
 ﻿using BCP.ViewModel;
+using BCP.WebAPI.SignalR;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -275,7 +276,9 @@ namespace WpfClient.Teams
                 //s.Login(MainClient.currentUser.UserName, MainClient.currentUser.Password);
                 //s.GetContactRecord(MainClient.currentUser.Department);
                 pd.Show();
-                pd.SignalRProxy.InitPTG();
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage("", MainClient.CurrentUser.ID, group.Id);
+                String json_srmp = JsonConvert.SerializeObject(srmp);
+                pd.SignalRProxy.InitPTP(json_srmp);
             }
 
         }

@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" dslVersion="1.0.0.0" Id="31ede164-b092-40e1-aba6-732b8160b723" name="系统间协作" linkedPackageId="fa9c15fa-d975-4be9-8290-53c72848352e" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="31786936-70b2-4c59-9ed3-63be4354c59a" name="系统间协作" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="11ba4f4a-9632-44e9-9109-2d3e6165b67e" />
+        <nodes>
+          <objectNode Id="d8287e71-83be-42b1-aa95-69eb72da217c" name="管理者" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="4f910f05-7efa-4714-9ea0-ae20e08a123d" />
+            <upperBound>
+              <literalInteger Id="79629576-6ad0-41d2-bbce-d0b961c885e8" name="2147483647" value="2147483647">
+                <elementDefinition Id="70460149-2f1b-4548-a703-439759d87bea" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <objectNode Id="319ca405-5056-4fd4-bcd6-bac8082c46ca" name="使用者" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="567118ca-fd10-4204-8a42-8666e1d566bb" />
+            <upperBound>
+              <literalInteger Id="7262f444-8315-42f6-9e70-779498068743" name="2147483647" value="2147483647">
+                <elementDefinition Id="5271ad81-d586-42a9-a8fe-2ca6455d4aea" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <opaqueAction Id="d56ed5d6-c86c-4b90-9c28-854842e9fd4b" name="创建工作空间" isLeaf="false">
+            <elementDefinition Id="36f1fdf6-cf77-4863-9ec8-edfc983d16f8" />
+            <flowNodeTargets>
+              <controlFlow Id="d1f5c1dd-51ec-47fd-b564-bd8c0452b9a4" isLeaf="false">
+                <opaqueActionMoniker Id="2b226890-32d0-458e-9f94-3f979fd68409" LastKnownName="选择软件系统" />
+                <elementDefinition Id="562f8796-d2d5-41a4-a120-7d2bce1c7f31" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="2b226890-32d0-458e-9f94-3f979fd68409" name="选择软件系统" isLeaf="false">
+            <elementDefinition Id="58c325f6-e9ac-44be-b30d-4ae6e6dcc73c" />
+            <flowNodeTargets>
+              <controlFlow Id="05dd33a5-0c81-4ac2-9739-75c94f9628aa" isLeaf="false">
+                <opaqueActionMoniker Id="449fcb16-1771-4f85-90d4-de3b8b3b8e9e" LastKnownName="邀请和授权配置" />
+                <elementDefinition Id="f4306a96-6ddf-4ee1-82be-5234db8c05cd" />
+              </controlFlow>
+            </flowNodeTargets>
+            <objectFlowTargets>
+              <objectFlow Id="6e79b72d-7610-422f-b929-c5308c1ae288" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="85726670-4a1d-4cdd-9d90-55c06fbf5a28" LastKnownName="软件商店" />
+                <elementDefinition Id="84796bff-87cd-41fb-8319-a4d8145f35e4" />
+              </objectFlow>
+            </objectFlowTargets>
+          </opaqueAction>
+          <opaqueAction Id="449fcb16-1771-4f85-90d4-de3b8b3b8e9e" name="邀请和授权配置" isLeaf="false">
+            <elementDefinition Id="c487baff-60c8-4675-a8f7-a81e37e26904" />
+            <flowNodeTargets>
+              <controlFlow Id="561c66a8-f0fc-4837-b752-65af845ca0da" isLeaf="false">
+                <opaqueActionMoniker Id="449fcb16-1771-4f85-90d4-de3b8b3b8e9e" LastKnownName="邀请和授权配置" />
+                <elementDefinition Id="5d61ebaf-eb16-430e-b6b5-b8a5c1dd293b" />
+              </controlFlow>
+              <controlFlow Id="a83690e1-c27a-4468-8c34-f521293a73cd" isLeaf="false">
+                <activityFinalNodeMoniker Id="18d33ee3-5483-4278-814a-4de5702478cd" LastKnownName="ActivityFinal1" />
+                <elementDefinition Id="1eb1c734-1605-4b76-97a8-e6f14b3c2eba" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <initialNode Id="db34d079-da84-40b2-b12a-02823ff4973b" name="Initial1" isLeaf="false">
+            <elementDefinition Id="39d12647-26e5-4e6f-b298-1b689f4a49c7" />
+            <flowNodeTargets>
+              <controlFlow Id="06252d8e-4dac-4c34-b680-c5b7ae04d7da" isLeaf="false">
+                <opaqueActionMoniker Id="d56ed5d6-c86c-4b90-9c28-854842e9fd4b" LastKnownName="创建工作空间" />
+                <elementDefinition Id="49c4c3da-e922-4afe-b403-a4f86de6062d" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <activityFinalNode Id="18d33ee3-5483-4278-814a-4de5702478cd" name="ActivityFinal1" isLeaf="false">
+            <elementDefinition Id="f51de0d7-7a23-4e79-8b66-70ad9e0ed793" />
+          </activityFinalNode>
+          <initialNode Id="c3e627af-0ccf-477e-8a6c-268076d2ad64" name="Initial3" isLeaf="false">
+            <elementDefinition Id="899b2e5c-0a50-42e0-b1ba-7536662d07c1" />
+            <flowNodeTargets>
+              <controlFlow Id="d513ccee-990e-4e1a-a60a-c5f865542032" isLeaf="false">
+                <opaqueActionMoniker Id="32ff9fdf-f147-4d40-be48-44218ffdb66a" LastKnownName="进入工作" />
+                <elementDefinition Id="04486f88-5954-4c17-818c-26221e3aedc6" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <opaqueAction Id="32ff9fdf-f147-4d40-be48-44218ffdb66a" name="进入工作" isLeaf="false">
+            <elementDefinition Id="758e2cb1-c1f0-4f03-babb-43fe31c5dac2" />
+            <flowNodeTargets>
+              <controlFlow Id="b38d5c28-5944-4d09-94a3-fba93820ce9d" isLeaf="false">
+                <opaqueActionMoniker Id="d0392683-1b20-4b7a-aebf-c5187113c47e" LastKnownName="根据职责工作" />
+                <elementDefinition Id="0a40ec35-8451-4dac-afdd-979070e319d3" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="d0392683-1b20-4b7a-aebf-c5187113c47e" name="根据职责工作" isLeaf="false">
+            <elementDefinition Id="6f9ead51-4a78-40e8-a0e2-94f85fdcd4c2" />
+            <flowNodeTargets>
+              <controlFlow Id="abbe0528-1f08-4e1a-9ebf-ee412c981583" isLeaf="false">
+                <activityFinalNodeMoniker Id="db8f5dc8-4886-42ce-97e9-893ab6ef1f41" LastKnownName="ActivityFinal3" />
+                <elementDefinition Id="af3dbe14-fb0d-4b40-8e34-7f0a853021d6" />
+              </controlFlow>
+              <controlFlow Id="cf0cfc26-e91c-4884-b461-6ec8e9b9b90f" isLeaf="false">
+                <opaqueActionMoniker Id="449fcb16-1771-4f85-90d4-de3b8b3b8e9e" LastKnownName="邀请和授权配置" />
+                <elementDefinition Id="9597cbe3-b18a-4160-878f-5091a621b3c1" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode Id="db8f5dc8-4886-42ce-97e9-893ab6ef1f41" name="ActivityFinal3" isLeaf="false">
+            <elementDefinition Id="212c3f8e-29df-45a8-a131-43aa70e6b1b6" />
+          </activityFinalNode>
+          <objectNode Id="85726670-4a1d-4cdd-9d90-55c06fbf5a28" name="软件商店" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="8e947d16-897f-412f-855e-f821b45cee68" />
+            <objectFlowTargets>
+              <objectFlow Id="86c4511a-6c34-471a-a79c-d19937460f2f" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <opaqueActionMoniker Id="168bf80c-7277-46a3-bafd-31987e6d54ba" LastKnownName=" 迭代维护" />
+                <elementDefinition Id="898d477f-91b1-4073-b80d-b73880123084" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger Id="94dd11d2-6ea1-435c-b432-0be16b5f6652" name="2147483647" value="2147483647">
+                <elementDefinition Id="75d3f6cf-3f8b-4d25-82e0-71a7e573f7fe" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <opaqueAction Id="1fe0f8bb-2535-4843-afc3-29b28c14fedb" name="软件开发及发布" isLeaf="false">
+            <elementDefinition Id="3996da9a-a904-4265-a390-96b4927b99fe" />
+            <objectFlowTargets>
+              <objectFlow Id="201e5fec-1e0b-456d-aee9-511cb9558004" isLeaf="false" isMulticast="false" isMultireceive="false">
+                <objectNodeMoniker Id="85726670-4a1d-4cdd-9d90-55c06fbf5a28" LastKnownName="软件商店" />
+                <elementDefinition Id="a601cc33-f078-424d-a05f-4b479b7ab941" />
+              </objectFlow>
+            </objectFlowTargets>
+          </opaqueAction>
+          <objectNode Id="4add714a-3d79-4b35-a297-1fbc1dc32e16" name="第三方开发者" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="e1da86bc-afa2-4e45-b646-317493b953ee" />
+            <upperBound>
+              <literalInteger Id="972c309b-ccd3-4c1f-b8d9-84d69dbecc81" name="2147483647" value="2147483647">
+                <elementDefinition Id="4b88c356-6ba7-4c18-94e6-bad9f7fce383" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+          <opaqueAction Id="168bf80c-7277-46a3-bafd-31987e6d54ba" name=" 迭代维护" isLeaf="false">
+            <elementDefinition Id="1e434a5b-84ee-4c07-9fa4-b44b2353a0dd" />
+            <flowNodeTargets>
+              <controlFlow Id="14eaa4d4-3c4a-486c-82c2-0386ab740438" isLeaf="false">
+                <activityFinalNodeMoniker Id="ab2ca975-f305-45ab-a0f5-85b845b07b36" LastKnownName="ActivityFinal4" />
+                <elementDefinition Id="e7e23061-5e3f-4705-bcd4-c68cd25d886b" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode Id="ab2ca975-f305-45ab-a0f5-85b845b07b36" name="ActivityFinal4" isLeaf="false">
+            <elementDefinition Id="ddf5d7a7-c584-4bf7-ae3b-64562ca93551" />
+          </activityFinalNode>
+          <initialNode Id="cc2b62bb-93fe-4e88-a472-7498f2cc9cc4" name="Initial31" isLeaf="false">
+            <elementDefinition Id="de36c1e0-b721-49f3-a1e0-f145bc9fea34" />
+            <flowNodeTargets>
+              <controlFlow Id="78edd892-2a74-4b9d-b846-1b3dfbc255c5" isLeaf="false">
+                <opaqueActionMoniker Id="1fe0f8bb-2535-4843-afc3-29b28c14fedb" LastKnownName="软件开发及发布" />
+                <elementDefinition Id="3887fab6-574e-40e1-ad23-36a8294db063" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="fa9c15fa-d975-4be9-8290-53c72848352e" name="SocialSystem">
+    <elementDefinition Id="d913d8dc-9f90-4e0f-a17d-95bc38ccdb4c" />
+    <profileInstances>
+      <packageHasProfileInstances Id="ad515b4d-7258-4934-88e4-577dbebf629e">
+        <profileInstance Id="befe85b7-dc3d-414e-83d1-8128466998c0" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="598e5178-f80e-4927-a594-0dce3e373025">
+        <profileInstance Id="851ed396-2dd1-4072-ae4f-33e8d0408c88" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</activityRootModel>

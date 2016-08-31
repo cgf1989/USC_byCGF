@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<useCaseModelRoot xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="e0bd3f3e-0d50-4e49-b4cc-4364d15a718c" name="普通用户功能" linkedPackageId="0bd07f49-549e-4abf-a25e-d0442525265e" xmlns="http://schemas.microsoft.com/dsltools/UseCaseModel">
+  <profileInstances>
+    <packageHasProfileInstances Id="cb20b2ed-184c-425d-a8f9-5e7ff4673ec0">
+      <profileInstance Id="839dd4d8-1b1a-4b14-8b0f-9fa2dd244d5b" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="62f84ef8-c4ae-46e5-8353-7f0669be4f0d">
+      <profileInstance Id="e31e0f83-2b39-4748-a09c-73fa6a792d73" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <useCaseModelRootHasTypes>
+      <useCase Id="2f33399f-30e7-4670-a5e0-cd920990a8df" name="用户注册" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="67f4cf86-057f-4c85-ab31-f7ef2e408bad" />
+        <subjects>
+          <subsystemMoniker Id="e8775979-e9fc-4505-a9ad-fb38950cab56" LastKnownName="Subsystem1" />
+        </subjects>
+      </useCase>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="36ea0ad9-8575-4420-b668-789bd9d3f63f" name="newActor" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1acc42d2-ab90-42f3-b869-5a79b4d2bbd7" />
+        <targetEnds>
+          <association Id="18c8c0d6-3a4b-49fa-8853-5cbbc08ca57f" isDerived="false" sourceEndRoleName="Actor1" targetEndRoleName="用户注册" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="2f33399f-30e7-4670-a5e0-cd920990a8df" LastKnownName="用户注册" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="231decc6-e532-4170-a688-7121f23d587e" name="Actor1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="b1d67ae0-ef48-4d29-8fa1-00e3b2771803" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e4086807-3d41-4ae6-a6d6-292006684716" name="用户注册" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="e97ef84e-ad4d-4cbf-9fe2-e39be10102df" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="544a7a9b-1ad1-4203-a8b8-54b51936ef94" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="e8775979-e9fc-4505-a9ad-fb38950cab56" name="Subsystem1" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="722ba733-c16d-4ca2-89fb-96dff5e1e786" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="1a1b2aaf-a4ab-4e5c-9580-550fc0abb916" name="Subsystem2" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="d9cb8053-4d3e-465f-b7de-2d7c195a3b89" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="653b0c73-2848-4af6-84a2-ef6be6bb1b96" name="新建组织" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="26dbfa4b-0e08-46f3-ba89-65eefed8a782" />
+        <subjects>
+          <subsystemMoniker Id="1a1b2aaf-a4ab-4e5c-9580-550fc0abb916" LastKnownName="Subsystem2" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="dffebbc9-0e4f-4fa7-8ef6-1f697da032fe" name="进入工作空间" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="3cdd26bd-2fdd-4ef5-b9ed-a58a26f0d504" />
+        <subjects>
+          <subsystemMoniker Id="1a1b2aaf-a4ab-4e5c-9580-550fc0abb916" LastKnownName="Subsystem2" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="00bb971a-24e1-4995-8f16-7f65bfa66c67" name="用户登录" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="fca61283-686e-49cd-af05-e0df59adeacc" />
+        <subjects>
+          <subsystemMoniker Id="1a1b2aaf-a4ab-4e5c-9580-550fc0abb916" LastKnownName="Subsystem2" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <actor Id="48b55ed9-4921-4d51-8049-ec2de5a9a552" name="OldActor" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="e99afa33-46c8-4857-860e-815750a32458" />
+        <targetEnds>
+          <association Id="53b77df3-316f-4fca-951d-62a5987ccbe8" isDerived="false" sourceEndRoleName="Actor1" targetEndRoleName="用户登录" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="00bb971a-24e1-4995-8f16-7f65bfa66c67" LastKnownName="用户登录" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="5729c713-790e-4d42-a809-af522c4fb410" name="Actor1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="16eab8fa-e0fc-4a47-86fe-f7daa330a1fb" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e4636564-7dd4-464f-a24c-6a528ca6ff3e" name="用户登录" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="582a09e9-7e30-485f-9b64-d8f7660fd531" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="4443488e-de56-4cdf-a7a5-35c374829432" />
+          </association>
+          <association Id="4497cdc4-ab09-49c4-be4b-7441579cc876" isDerived="false" sourceEndRoleName="Actor1" targetEndRoleName="新建组织" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="653b0c73-2848-4af6-84a2-ef6be6bb1b96" LastKnownName="新建组织" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="1cd50150-8439-4950-9a7c-8c5572d2466f" name="Actor1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="434f609b-51b0-4fa6-ae79-5f0bbe27b19d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="1210b260-2741-489f-860b-eb6e99b97ee6" name="新建组织" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="1c16de97-6cb7-4d0e-9bfb-d953cb284844" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="c07bdb61-614a-4624-be15-3d1e8180a183" />
+          </association>
+          <association Id="79b2ac6a-4513-4ca4-bd35-11324c709e2b" isDerived="false" sourceEndRoleName="Actor1" targetEndRoleName="创建工作空间" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="dffebbc9-0e4f-4fa7-8ef6-1f697da032fe" LastKnownName="进入工作空间" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b07530b1-3559-4580-bcc4-38ba42086cc8" name="Actor1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="905a3e3e-c550-404e-9dac-e89b74cc92c2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b6ad18b8-5977-4fef-8634-39f57983a6f3" name="创建工作空间" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="a94ddaf9-7a74-4773-8290-79156377778d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="cb5ab135-3123-4a42-ad6f-2131c641ff83" />
+          </association>
+          <association Id="d64117f0-8bb6-4a76-a16b-b33fe3331eb1" isDerived="false" sourceEndRoleName="OldActor" targetEndRoleName="管理联系人" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="7925c6a8-e8fe-42cd-97ba-85983dcc82de" LastKnownName="管理联系人" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c6b8fb20-613c-4b30-98d5-3bc742f03a95" name="OldActor" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="0dc945b6-564b-4125-bb6f-16bc05d1fd0a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="65b9b8be-398c-4791-b56e-ce79af51374f" name="管理联系人" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="d276485f-0829-41ff-a633-474f9555bf8b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="5f7ee766-4a6b-4c72-9d4d-62ccc431225b" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="7bed12ce-8e5c-406b-ac1e-31a1fccabf98" name="Subsystem3" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="eada0bde-8eac-4cca-bfa7-82634fc0f734" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="b3020626-cfb7-4b98-963f-66bffd942460" name="ManageActor" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="68d5dc3d-9ecd-415d-85da-ce90280d3822" />
+        <targetEnds>
+          <association Id="ee92d49c-ee26-459e-98d4-0c4edd58b7dd" isDerived="false" sourceEndRoleName="Actor1" targetEndRoleName="组织管理" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="66fbf772-32c9-4cad-96a6-a2c5cb2b81e7" LastKnownName="组织管理" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="be72e808-c46d-4d23-a37f-4d9cc90a20b0" name="Actor1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="680b3c98-6a97-4a1c-8d74-3ba8bab4a341" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0e98d5dc-ed4c-4ed8-a04b-b06d526eed9f" name="组织管理" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="618f44d8-47ae-4af5-999e-1bb643e9152b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="dc56b6e8-0209-489f-b544-91fa15bb127c" />
+          </association>
+          <association Id="c05199cb-7a36-4e8c-b22b-bdfd0c6e1633" isDerived="false" sourceEndRoleName="Actor1" targetEndRoleName="空间管理" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="6150e209-11cf-4e3d-91fd-c822eee2bdaf" LastKnownName="空间管理" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="76a4994a-6569-45bc-af2f-94eea1267690" name="Actor1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="5e308c0c-b367-46f7-9ef1-d23f68890be7" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="33aa1c9c-f46d-4fe4-82dc-1d7481534fa3" name="空间管理" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="5b9e267a-1ad4-40db-ab2a-34dafcd7447a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a4f84d7f-05a4-4e51-93f6-99fb26fe7bf4" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="66fbf772-32c9-4cad-96a6-a2c5cb2b81e7" name="组织管理" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="25e45756-ffa6-4838-a823-f8a6313a122e" />
+        <subjects>
+          <subsystemMoniker Id="7bed12ce-8e5c-406b-ac1e-31a1fccabf98" LastKnownName="Subsystem3" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="6150e209-11cf-4e3d-91fd-c822eee2bdaf" name="空间管理" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="07ddf627-d48f-4e3b-963b-19032a22e0ce" />
+        <subjects>
+          <subsystemMoniker Id="7bed12ce-8e5c-406b-ac1e-31a1fccabf98" LastKnownName="Subsystem3" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="7925c6a8-e8fe-42cd-97ba-85983dcc82de" name="管理联系人" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="1ed11256-baaf-4b49-8634-3f60543405f9" />
+        <subjects>
+          <subsystemMoniker Id="1a1b2aaf-a4ab-4e5c-9580-550fc0abb916" LastKnownName="Subsystem2" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <useCaseModelRootHasTypes>
+      <subsystem Id="b3b505d8-1e8e-4793-bdca-29e19f24b73e" name="Subsystem4" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="b4ff6d92-fbf1-4e7b-a2d4-8fb2d2f37459" />
+      </subsystem>
+    </useCaseModelRootHasTypes>
+    <useCaseModelRootHasTypes>
+      <actor Id="b85cd23d-1f82-45b0-9526-7cec28ee2428" name="DevelopActor" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="f512e0c9-9538-432f-9cd9-6025e5d33cc1" />
+        <targetEnds>
+          <association Id="d4d664cd-377c-470b-a45d-685d121b814c" isDerived="false" sourceEndRoleName="DevelopActor" targetEndRoleName="UseCase1" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="3b3aeda9-56c2-491c-8c0a-a6af290f308d" LastKnownName="开发配置文件" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b76ff508-d9d3-4f5d-892a-3d255f69830d" name="DevelopActor" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="4c751043-569c-433c-83cc-adc4a18d10c3" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b1678c2b-93b6-4d46-a6df-a584757de398" name="UseCase1" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="e026b1d2-492d-4eb1-9e51-b96905778bac" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="a4b8178f-f431-4a71-bfca-b14d0b8a589f" />
+          </association>
+          <association Id="a171b989-858c-4461-b128-8e300723af9c" isDerived="false" sourceEndRoleName="DevelopActor" targetEndRoleName="UseCase2" isLeaf="false" isAbstract="false">
+            <useCaseMoniker Id="44fa7f7f-7747-464c-9217-570f046b1da9" LastKnownName="发布" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6c81a89b-8658-4d19-bc53-92398e5bb8da" name="DevelopActor" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c5d307ed-ec7e-4878-8f8c-5517859cb4ff" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="e7bd3259-0302-4755-abf3-03fee8f4b922" name="UseCase2" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="71d0d439-c2e2-4232-85b5-438ccd31d69f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="89a4c2ac-a12b-4fa7-a917-375bd6e6d989" />
+          </association>
+        </targetEnds>
+      </actor>
+    </useCaseModelRootHasTypes>
+    <packageHasNamedElement>
+      <useCase Id="3b3aeda9-56c2-491c-8c0a-a6af290f308d" name="开发配置文件" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="6c6b2e3b-8f19-4bbe-bd56-9d23213c8dab" />
+        <subjects>
+          <subsystemMoniker Id="b3b505d8-1e8e-4793-bdca-29e19f24b73e" LastKnownName="Subsystem4" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase Id="44fa7f7f-7747-464c-9217-570f046b1da9" name="发布" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="871cb00c-8368-4bf9-82ce-8632d97af283" />
+        <subjects>
+          <subsystemMoniker Id="b3b505d8-1e8e-4793-bdca-29e19f24b73e" LastKnownName="Subsystem4" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="0bd07f49-549e-4abf-a25e-d0442525265e" name="SocialSystem">
+    <elementDefinition Id="d913d8dc-9f90-4e0f-a17d-95bc38ccdb4c" />
+  </package>
+</useCaseModelRoot>

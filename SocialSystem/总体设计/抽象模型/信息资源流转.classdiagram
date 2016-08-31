@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="f07183a1-5273-4b7c-9c0b-7c8c60a11abf" name="信息资源流转" linkedPackageId="44e0a15e-60db-478b-bdc8-316595c9b056" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="fef62e5f-2768-4c38-b477-300fed872221" name="信息资源" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9edec0f3-e11a-4271-b1e4-35f426377980" />
+        <targetEnds>
+          <association Id="bb42eb12-f668-474f-8c69-93a8707b5c0d" isDerived="false" sourceEndRoleName="信息资源" targetEndRoleName="具体资源" isLeaf="false" isAbstract="false">
+            <classMoniker Id="8bcb6dc4-e1e3-49ef-81fb-043fa79ddeeb" LastKnownName="抽象信息" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6b50afcb-b4dc-4688-8431-b78ffc054825" name="信息资源" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="a26b9dda-00f0-437d-a59d-f70d45a359e8" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="a297797e-b84f-4bf2-8018-0d9a4e12d89d" name="具体资源" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="bdc591ab-44b2-48de-9adc-2c97526e6d86" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="1720a65b-ef7e-43cd-9385-c92741929f80" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="8bcb6dc4-e1e3-49ef-81fb-043fa79ddeeb" name="抽象信息" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="b09d3558-c003-4c36-b30c-615bd20031aa" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="7cfc21b3-ae2e-44c3-b8a5-5a752000e7b0" name="文档信息" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="6ec06e4e-02bb-4d4a-b8f4-d59c33263b8d" />
+        <generalsInternal>
+          <generalization Id="69d83186-6625-4670-9a7d-3a3043980bbe" isSubstitutable="false">
+            <classMoniker Id="8bcb6dc4-e1e3-49ef-81fb-043fa79ddeeb" LastKnownName="抽象信息" />
+            <elementDefinition Id="18d4bcb3-cfa4-4e5f-9764-4182a74debee" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f8d87465-50af-4553-b5d9-b5ec08602cb6" name="多媒体信息" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="cd62b82a-597c-4135-ba52-4447f6f931c3" />
+        <generalsInternal>
+          <generalization Id="b11f7cba-1668-4301-ba90-968ffc0426d0" isSubstitutable="false">
+            <classMoniker Id="8bcb6dc4-e1e3-49ef-81fb-043fa79ddeeb" LastKnownName="抽象信息" />
+            <elementDefinition Id="ce599a8c-0ccb-4a98-9ec1-a0c59ba699b2" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="aefdcec6-bb9d-4be2-bb0b-2f81719e4a59" name="任务信息" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3ded6cb4-5a34-4f6c-b705-07ca91692294" />
+        <generalsInternal>
+          <generalization Id="e7038072-4e70-40f3-a15c-70e07da10e0e" isSubstitutable="false">
+            <classMoniker Id="8bcb6dc4-e1e3-49ef-81fb-043fa79ddeeb" LastKnownName="抽象信息" />
+            <elementDefinition Id="1f1eebdd-4114-4403-a432-88d703aa4e6f" />
+          </generalization>
+        </generalsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4606465b-1a2d-47d7-898f-9fbce5aa080c" name="多维空间" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="edde9604-0d1b-42d2-9d65-cc2c3b3fbf86" />
+        <targetEnds>
+          <association Id="e407922e-5843-4cee-9eeb-fcc2bed64c2b" isDerived="false" sourceEndRoleName="多维空间" targetEndRoleName="信息资源" isLeaf="false" isAbstract="false">
+            <classMoniker Id="fef62e5f-2768-4c38-b477-300fed872221" LastKnownName="信息资源" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="16261051-46df-4fe7-ae51-a526faf58b02" name="多维空间" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="0370a660-8c1b-4eef-a29d-37872ad92218" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="84215015-a2d2-4df2-8c6c-c1ace5d336bc" name="信息资源" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="12cbcd31-d2c4-441c-a579-a25146795a37" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="26761d5b-7f92-4afe-8b5b-bb9546f6c6b7" />
+          </association>
+          <association Id="15aae2fa-cd40-4fb9-a87f-6317861e5c11" isDerived="false" sourceEndRoleName="多维空间" targetEndRoleName="组织空间" isLeaf="false" isAbstract="false">
+            <classMoniker Id="b4106632-559f-4fe6-8b31-5bedba13ffbf" LastKnownName="组织空间" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f7d80036-2429-4a14-bda1-363f77d2b0ef" name="多维空间" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="fdb5d717-ef21-4b21-b283-32d90ff021d1" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="cc38418a-f111-40f6-8b2f-6522fc1a9bcb" name="组织空间" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="31a9a6bf-b9d6-4be1-8858-b07f4685d96d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="61bbf73c-6c0b-46d3-ae7c-6ba72a0c3136" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="b4106632-559f-4fe6-8b31-5bedba13ffbf" name="组织空间" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c68a7d73-3d98-481a-87f3-dee155edad0c" />
+        <targetEnds>
+          <association Id="6cda20b5-274a-451f-83dc-9ea9d7c288d7" isDerived="false" sourceEndRoleName="组织空间" targetEndRoleName="组织空间" isLeaf="false" isAbstract="false">
+            <classMoniker Id="b4106632-559f-4fe6-8b31-5bedba13ffbf" LastKnownName="组织空间" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7be0a6da-c3a0-4f8b-9694-2138035ffcaf" name="组织空间" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="7b473909-6b54-4faa-b1e8-e980aee8259a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="92550555-05c9-47df-a045-ea0110f3dd21" name="组织空间" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="8cbfd4d9-a813-4359-a00a-a58877970132" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="db9d9dd9-da18-4d96-9f2a-74771c016df3" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="44e0a15e-60db-478b-bdc8-316595c9b056" name="SocialSystem">
+    <elementDefinition Id="d913d8dc-9f90-4e0f-a17d-95bc38ccdb4c" />
+    <profileInstances>
+      <packageHasProfileInstances Id="c1d94753-31ae-42a6-9f3a-d4c03205d684">
+        <profileInstance Id="79d7833d-53e6-4509-88f6-7a925a1900d8" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="66356f2c-0e7c-4d79-975d-5ceb1887acfc">
+        <profileInstance Id="50e8a7f7-5608-4d66-8e38-ade4d3c91f6c" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>

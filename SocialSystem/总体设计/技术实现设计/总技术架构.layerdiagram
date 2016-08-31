@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="23cff34e-138f-4996-954f-01e7bc0b6bc9" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="f8ecf4c5-89c5-4568-af74-2e1d68b720ad" name="DataLayout" />
+    <layer Id="4a501863-1050-46a8-a230-a5676f6ad0f9" name="SqlServer">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="c20ceead-2785-4856-8806-58998a60715a" direction="Forward">
+          <layerMoniker Id="f8ecf4c5-89c5-4568-af74-2e1d68b720ad" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="8fdb970d-e56f-444b-aa4f-b07d85f9aea8" name="Pc_Server">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="006bf970-790c-41e5-bd7e-3f674ad86a45" direction="Forward">
+          <layerMoniker Id="30b41019-7bc8-4b6a-9f35-1093a1e19d97" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="34ad5c0a-9590-4448-9587-2085512fe1fb" name="Application">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="6a9660e1-2495-4ab8-af33-15a34d2700bb" direction="Forward">
+          <layerMoniker Id="f8ecf4c5-89c5-4568-af74-2e1d68b720ad" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="744762b7-a344-4fe3-ac9b-11e2d7b7eb20" direction="Bidirectional">
+          <layerMoniker Id="d0443aaf-9afb-4023-883c-0881ca1deb4a" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="48d1b18e-ca60-40b5-bcea-b0c536b05199" name="AppClient" />
+        <layer Id="0b2305e5-8df8-45e3-a878-e8d9c1b92db4" name="WebClient" />
+        <layer Id="efd7e140-763e-4315-ae13-25e9217a1eda" name="WpfClient" />
+      </childLayers>
+    </layer>
+    <layer Id="d0443aaf-9afb-4023-883c-0881ca1deb4a" name="       NetCore">
+      <childLayers>
+        <layer Id="1ca36e57-1f28-4506-8c34-b63022ced689" name="SingalR&#xD;&#xA;&#xD;&#xA;MiddleWare" />
+        <layer Id="82c23cc3-8f2e-489a-b6f8-115b7788f39f" name="WebApi&#xD;&#xA;&#xD;&#xA;MiddleWare" />
+        <layer Id="03d3a835-81db-4822-9680-ab4cfbde092e" name="Service">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="c8303ea1-efe4-43b0-8f8e-e0ac5c2f66aa" direction="Forward">
+              <layerMoniker Id="82c23cc3-8f2e-489a-b6f8-115b7788f39f" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="73f04377-956d-4820-a787-059c36a58b5f" direction="Forward">
+              <layerMoniker Id="1ca36e57-1f28-4506-8c34-b63022ced689" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="544848d0-242f-4c33-b92a-418dacb65520" name="service&#xD;&#xA;&#xD;&#xA;(third Dll)" />
+        <layer Id="30b41019-7bc8-4b6a-9f35-1093a1e19d97" name="WebHost&#xD;&#xA;&#xD;&#xA;(.NetCore)">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="d8331a49-7a64-4c02-afd7-7d0e01cadffd" direction="Bidirectional">
+              <layerMoniker Id="f8ecf4c5-89c5-4568-af74-2e1d68b720ad" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="2e6acf12-a99e-4c8d-bbca-1c8faaaf7211" direction="Forward">
+              <layerMoniker Id="03d3a835-81db-4822-9680-ab4cfbde092e" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="edf3ab21-1704-4b9c-811a-041c8faa89d6" direction="Forward">
+              <layerMoniker Id="544848d0-242f-4c33-b92a-418dacb65520" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+        </layer>
+        <layer Id="73e9e9ca-9ad7-4603-a148-2e54f754a4f9" name="Asp.net MVC&#xD;&#xA;&#xD;&#xA;MiddleWare" />
+      </childLayers>
+    </layer>
+  </layers>
+</layerModel>

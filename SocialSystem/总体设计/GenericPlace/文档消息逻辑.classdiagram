@@ -1,0 +1,245 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="0b7a60b7-0152-4f23-b828-574a69ee4f04" name="文档消息逻辑" linkedPackageId="5460e972-0868-4041-a8b5-33a9982e0160" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="702341af-5d13-4518-b654-6cd1c054e6a0">
+      <profileInstance Id="a304933d-9657-4aca-8272-43c349d1a79a" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="65cd719e-c688-4c40-a018-6c228124863d">
+      <profileInstance Id="56c23601-db73-44ad-a997-e6e4ab79d0c7" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="47c9423a-e204-4d35-a5b8-405c41d39519" name="DocManage" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="fbc6a943-8f11-4d2e-ab95-33898387b9fe" />
+        <targetEnds>
+          <association Id="b69fdf12-f31e-47ef-bc2a-ba2607e9e257" isDerived="false" sourceEndRoleName="DocManage" targetEndRoleName="ImessgeDoc" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="a24bfe4c-e927-4c42-9c09-d86b71d2d0c2" LastKnownName="ImessgeDoc" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="605ae324-1f06-4906-ab9a-b59b2b02c275" name="DocManage" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="1f9e681b-931a-42b3-a3dc-27f535009932" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="dce4ac21-2b5c-4ab6-8376-3230fe8d9e42" name="ImessgeDoc" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="948a3b9b-2797-4f87-830d-ea54c662ed8a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="2beb072f-d43f-4524-b520-3f7ff062a4e2" />
+          </association>
+          <association Id="449b59da-55aa-46a6-8f45-c794140dfa40" isDerived="false" sourceEndRoleName="DocManage" targetEndRoleName="secrate" isLeaf="false" isAbstract="false">
+            <classMoniker Id="49fe8fac-145d-470e-b012-a3798ad35c41" LastKnownName="secrate" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7a76505a-197a-4db7-9a38-ff8823d9a394" name="DocManage" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="7e4b5e6b-3cc5-4226-8a00-de1218097a6a" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="1f9f1c2f-aee0-4209-9396-4a09910b5162" name="secrate" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="4cf44c80-886b-4557-ac1c-30c1a497c569" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="cb584ef6-ed89-43f2-81a0-71b99ae91cfd" />
+          </association>
+          <association Id="d3132e1c-89c4-47c3-8dde-7b6b80b138e7" isDerived="false" sourceEndRoleName="DocManage" targetEndRoleName="消息分类表" isLeaf="false" isAbstract="false">
+            <classMoniker Id="cfbd1214-b270-49e3-96dd-dd73b33b1bf9" LastKnownName="消息分类表" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="aebc0953-e46c-4c48-a066-bfc7595a0007" name="DocManage" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="5f21852f-ab21-4855-940a-8cfffa32ebe5" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ddae66c7-de59-4b2c-8efd-76b1398dfc69" name="消息分类表" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="03bba358-c3c2-4586-aff9-7e8d84a6c7d9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="cbd06ba9-c40c-4fce-8ea5-a2e920b4acba" />
+          </association>
+          <association Id="8cb89580-6edd-43ed-9578-0969a331d41f" isDerived="false" sourceEndRoleName="DocManage" targetEndRoleName="文档位置" isLeaf="false" isAbstract="false">
+            <classMoniker Id="84378685-dbff-46e0-b926-d06b7c429e01" LastKnownName="文档位置" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="4e17c4db-1d37-4f22-94a3-1192f12e4d35" name="DocManage" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c784fece-490a-4412-b2fb-34e02f11a32f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="709a3201-9d3c-4203-8ba4-e21d5e7a2592" name="文档位置" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="37338aa7-ee27-49bd-aa77-ebd19465cd6f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="1020fb13-634b-41e6-89d7-fc7612439f4b" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="07cdcdc3-d648-4f35-964b-e14a14a6a670" name="docFile" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3eb96512-6538-41c7-a3c9-60f7dd3237e3" />
+        <suppliersInternal>
+          <interfaceRealization Id="f5cd8e22-ff94-4295-a026-355c08a96d64">
+            <interfaceMoniker Id="a24bfe4c-e927-4c42-9c09-d86b71d2d0c2" LastKnownName="ImessgeDoc" />
+            <elementDefinition Id="380638ba-7f00-4e96-abb5-d69c301c0557" />
+          </interfaceRealization>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="a24bfe4c-e927-4c42-9c09-d86b71d2d0c2" name="ImessgeDoc" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="21ba88aa-7f1e-4f26-9e48-817eee40c9b3" />
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="3ca24055-e2ee-4663-aaa0-65f281c57c07" name="message" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="141a20fb-b1aa-49c1-845f-43a0c8efb6c4" />
+        <suppliersInternal>
+          <interfaceRealization Id="40186c2a-c662-485d-8156-59ca633123b2">
+            <interfaceMoniker Id="a24bfe4c-e927-4c42-9c09-d86b71d2d0c2" LastKnownName="ImessgeDoc" />
+            <elementDefinition Id="e01ce521-9f8f-4fec-af72-17293b83e3b8" />
+          </interfaceRealization>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="8957432b-b561-44d3-b4dc-26895b0705b4" name="Media" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="6fa7778a-1a77-49c0-aa1e-5acef0b6b059" />
+        <suppliersInternal>
+          <interfaceRealization Id="ac08cbb5-e05a-4fad-87d2-c427a5918c33">
+            <interfaceMoniker Id="a24bfe4c-e927-4c42-9c09-d86b71d2d0c2" LastKnownName="ImessgeDoc" />
+            <elementDefinition Id="3de16ca9-4571-4904-b64b-942aa1ef3670" />
+          </interfaceRealization>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="49fe8fac-145d-470e-b012-a3798ad35c41" name="secrate" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="be69a356-d5ca-4bc7-8f9c-44f207fe8d3f" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="cfbd1214-b270-49e3-96dd-dd73b33b1bf9" name="消息分类表" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="721b085e-0611-4f3b-9982-eebfd3d41f0b" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="84378685-dbff-46e0-b926-d06b7c429e01" name="文档位置" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="062f84b6-d35c-4e19-981e-afe578474b44" />
+        <targetEnds>
+          <association Id="62e207fd-0c4a-4fa7-bb58-bc0f1e0d5ec3" isDerived="false" sourceEndRoleName="文档位置" targetEndRoleName="文档位置" isLeaf="false" isAbstract="false">
+            <classMoniker Id="84378685-dbff-46e0-b926-d06b7c429e01" LastKnownName="文档位置" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="68e1f3ab-cccc-4798-ba4e-0fd06a104cda" name="文档位置" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="038824af-459b-48c7-992f-5730afb13632" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="ef1beda4-dc52-4112-b507-0382cb26ce60" name="文档位置" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="2a86ab7d-6b2b-4ec3-b68f-d8e17a613ac3" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="7c6eebf7-55ca-43b3-a71b-b2379c158b91" />
+          </association>
+          <association Id="1adeb64b-be05-4d39-8391-5d848fbcaea2" isDerived="false" sourceEndRoleName="文档位置" targetEndRoleName="阅读者" isLeaf="false" isAbstract="false">
+            <classMoniker Id="37c318a2-0314-4b78-8ce9-8ce2cd30d009" LastKnownName="阅读者" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="18c23a19-b9e8-4775-98f9-023bd53603bc" name="文档位置" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f8b31b65-86f4-4451-9773-ce5cf06ca454" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="fc2a7d5c-55ce-4113-85a7-0bbc4447ad35" name="阅读者" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="7817dd21-b45f-417d-9a46-b74071cda40d" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="f9e7473f-d394-4d3c-9379-6f52abdda8dd" />
+          </association>
+          <association Id="88706be1-27ed-4759-a998-5ff292c188bb" isDerived="false" sourceEndRoleName="文档位置" targetEndRoleName="发送者" isLeaf="false" isAbstract="false">
+            <classMoniker Id="48cea451-5259-4400-8ec0-8e75450e1cda" LastKnownName="发送者" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="c35228a2-8af0-43e8-a9cd-0de673a4da84" name="文档位置" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="7df5d561-3fc1-47b2-a1ce-27b1baa2e4bd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="90313c3f-fef7-40f7-907b-4479300ae36d" name="发送者" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="9a8af943-3b2b-45fe-9d64-1f8e907b4ebe" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="acb384ee-63d7-4495-b252-8382c96345f7" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="37c318a2-0314-4b78-8ce9-8ce2cd30d009" name="阅读者" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8a2de6d3-d645-453a-9741-6d72ad0c8e5c" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="48cea451-5259-4400-8ec0-8e75450e1cda" name="发送者" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3ad6f0c2-7d6d-4131-8250-3e519b7eedc3" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f7f2fdf2-860e-44e5-9083-fc13d505820c" name="文档评论" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="191bd62f-29d1-4303-a6d2-d8113cd31e0e" />
+        <targetEnds>
+          <association Id="df6ab32e-6232-4dac-896e-df3038301846" isDerived="false" sourceEndRoleName="文档评论" targetEndRoleName="文档位置" isLeaf="false" isAbstract="false">
+            <classMoniker Id="84378685-dbff-46e0-b926-d06b7c429e01" LastKnownName="文档位置" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0f655981-b7a4-4329-938e-f132dfb7b035" name="文档评论" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="42619be6-6e44-4da7-a9b6-d3f8a3266046" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="1c66bc90-f8cf-4ab1-9211-8442810e7c7e" name="文档位置" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="0e846072-e2a9-4aff-ba8a-ac5d7807cf3c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="74305b7b-4708-476c-8784-d039fd1c9579" />
+          </association>
+          <association Id="e0c719d3-52c3-4902-ab20-583b39f14de2" isDerived="false" sourceEndRoleName="文档评论" targetEndRoleName="发送者" isLeaf="false" isAbstract="false">
+            <classMoniker Id="48cea451-5259-4400-8ec0-8e75450e1cda" LastKnownName="发送者" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="9f53a614-9d72-40cb-854a-4afbbb0a5bbc" name="文档评论" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="f024b377-c532-4cc8-9b59-52e73a60f094" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0974f1de-b9dd-4481-9f6d-0484424a8faf" name="发送者" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="fa00658c-0133-4eb2-9d62-7d5e6a0322bd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="1975e879-fe0a-47d4-a52b-26ffb1a84a64" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="5460e972-0868-4041-a8b5-33a9982e0160" name="SocialSystem">
+    <elementDefinition Id="d913d8dc-9f90-4e0f-a17d-95bc38ccdb4c" />
+  </package>
+</logicalClassDesignerModel>

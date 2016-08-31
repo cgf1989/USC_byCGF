@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="9cf1e9ff-068c-4bc2-a1d2-912b150304f7" name="业务流程模型" linkedPackageId="b2f36409-413d-443a-8e9b-22837d093cae" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="9a2573ba-9171-4538-9336-9cc2f6ae4b65">
+      <profileInstance Id="246b7a11-a88f-434f-a812-bf74a98fa332" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="8535e4ce-a1c5-4e86-9559-b00b257c1ccd">
+      <profileInstance Id="b97104ae-68f6-4019-97e9-09d1a83d32c9" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="60b46f17-63a5-4a18-a2f6-5388080c8f91" name="业务角色" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="d8b1af31-4f1f-4226-95ce-04dcc88410a5" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f011bc38-820e-4be1-b77a-382e8104d98a" name="业务实体" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="39f17133-0a9a-4f4f-8d5a-84f72411f472" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="fc62d5fc-1b68-46cd-abce-f2252a911c2d" name="业务活动" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="729d2667-0792-4af2-ba87-346a0f0eb44d" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="cca4c017-fde7-45da-a75c-ad842c1b11de" name="业务流程" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="30beff05-3d49-4005-8660-3c377b487f42" />
+        <targetEnds>
+          <association Id="52fa2027-e01f-4916-b318-1cbb5cc7093f" isDerived="false" sourceEndRoleName="业务流程" targetEndRoleName="业务流程活动图" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="5ef0a1af-5e2a-4894-ae26-af612f5f7409" LastKnownName="业务流程活动图" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7f835470-463d-4740-9ee9-f939b608fdc2" name="业务流程" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Composite" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="e619386a-7737-44fd-a42e-dbb6880f72fb" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="2fd33cfa-0b6f-4868-8397-bed55c73a350" name="业务流程活动图" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="true">
+                  <elementDefinition Id="30ac14ef-69b8-4ce2-90d1-707dc7bdab7c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="15b7a72f-1d6a-4b9d-932a-a016bba72f3c" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="08023cb7-576f-4e89-ae7b-67315d7c6c29" name="业务实体关系图" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="a7a591a9-1f5a-47ea-86d2-20c9c44e303b" />
+        <suppliersInternal>
+          <dependency Id="47ec7f44-4b30-443f-9fa9-0b58c4715ab8">
+            <classMoniker Id="f011bc38-820e-4be1-b77a-382e8104d98a" LastKnownName="业务实体" />
+            <elementDefinition Id="2371d51d-4a39-4821-b7d8-1f72bb25cf2c" />
+          </dependency>
+        </suppliersInternal>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="5ef0a1af-5e2a-4894-ae26-af612f5f7409" name="业务流程活动图" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="c543cca1-298e-44f0-9125-248cf0ffcae9" />
+        <suppliersInternal>
+          <dependency Id="b3bcefdb-98b8-4f50-9b81-cf5fb4e90a74">
+            <classMoniker Id="fc62d5fc-1b68-46cd-abce-f2252a911c2d" LastKnownName="业务活动" />
+            <elementDefinition Id="9fd0c799-6fc6-44f5-880f-b5e79473948c" />
+          </dependency>
+          <dependency Id="edd408f6-80c4-4437-942f-82b7d7eb9f89">
+            <classMoniker Id="60b46f17-63a5-4a18-a2f6-5388080c8f91" LastKnownName="业务角色" />
+            <elementDefinition Id="fd6a6e48-07e8-4695-8d8e-c83458fe1d3b" />
+          </dependency>
+          <dependency Id="2025aed8-e3d4-438c-a1ed-319c438ec9f0">
+            <classMoniker Id="f011bc38-820e-4be1-b77a-382e8104d98a" LastKnownName="业务实体" />
+            <elementDefinition Id="f836e5a0-02af-4725-b37b-19e5e6aa492e" />
+          </dependency>
+        </suppliersInternal>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="6a3c4c0d-cbf4-4ef1-8257-8128b30f52e3" name="业务流程状态图" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="a1ab4fde-029f-4a5c-a0a4-d4290c8f482d" />
+        <suppliersInternal>
+          <dependency Id="3bfc72ff-5de7-42f2-833a-9a32e4ff37c9">
+            <classMoniker Id="cca4c017-fde7-45da-a75c-ad842c1b11de" LastKnownName="业务流程" />
+            <elementDefinition Id="b21b366f-fb81-43cf-97d0-0c0fbf7c34a0" />
+          </dependency>
+        </suppliersInternal>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="b2f36409-413d-443a-8e9b-22837d093cae" name="SocialSystem">
+    <elementDefinition Id="d913d8dc-9f90-4e0f-a17d-95bc38ccdb4c" />
+  </package>
+</logicalClassDesignerModel>

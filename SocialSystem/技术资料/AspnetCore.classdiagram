@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" xmlns:dm12="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" dslVersion="1.0.0.0" Id="8f1bf6e7-34ff-4771-a1c9-1aad0d993077" name="AspnetCore" linkedPackageId="f3ca15e0-16f9-4ede-b57e-b97cb673a16c" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="273b972d-ffec-4c71-a47c-6c0917f9c5c7">
+      <elementDefinition Id="404e6d90-78da-40aa-b2b8-a252eb1397bf" />
+      <body>configureServices()定义服务
+configure,定义中间件</body>
+      <annotatedElements>
+        <classMoniker Id="a2c79caf-6d76-44e4-90ad-1eb7e1da4c91" LastKnownName="Startup" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <profileInstances>
+    <packageHasProfileInstances Id="1c63e448-6568-44db-896b-39af39c1e6af">
+      <profileInstance Id="ce311d74-5f07-4432-bc20-b510bd9dfaa7" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="e3e268ae-a142-4dd7-9bfb-a2f63a67fa6a">
+      <profileInstance Id="96c41210-ec1b-4400-8e36-f4c0e2ebe129" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="8314678f-dc88-4612-9c98-9983138046dd" name="WebHostBuilder" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="2bd010fa-6b56-41fb-bd93-870eddbfd4ac" />
+        <suppliersInternal>
+          <dependency Id="a8903c85-4ee6-45f8-af2f-020102d0afca">
+            <classMoniker Id="a2c79caf-6d76-44e4-90ad-1eb7e1da4c91" LastKnownName="Startup" />
+            <elementDefinition Id="1b4d3c76-3dd5-44f1-8380-477b2fb62091" />
+          </dependency>
+        </suppliersInternal>
+        <targetEnds>
+          <association Id="0dce4ce8-d0b9-4948-a387-d9c2f75496eb" isDerived="false" sourceEndRoleName="WebHostBuilder" targetEndRoleName="WebHost" isLeaf="false" isAbstract="false">
+            <classMoniker Id="4a20a2f6-544d-43ae-99dd-d89e809772ae" LastKnownName="WebHost" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f94d2abd-5e8c-4e40-a029-a0bacd363518" name="WebHostBuilder" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="048d03ea-c429-4e34-b8bd-93ef8b56f53f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="027d51bb-d74d-4a10-9055-4ecc827b3423" name="WebHost" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="5fc36050-fdf7-48e0-b8f4-8790888b8a74" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="cd0b146b-17fd-4808-a7b0-2df3b9a4df08" />
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation Id="81056fa4-ba36-4b8e-a346-ad6c31d172aa" name="Build" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c88956a7-e3f4-4300-9639-a0bcc3139b8e" />
+          </operation>
+          <operation Id="2e96eec9-5232-4015-bea9-075d5d834e60" name="AddService" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b8087964-802e-405d-a83c-b28449e87910" />
+          </operation>
+          <operation Id="5145303b-a5aa-4cea-b333-8dca06c788f6" name="UseStartup" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2cd787bf-e074-4a09-a4a2-2a4f670c628d" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4a20a2f6-544d-43ae-99dd-d89e809772ae" name="WebHost" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="e586c6ed-04e7-4a95-8f5f-b544cfa62fff" />
+        <targetEnds>
+          <association Id="f851fef0-5d46-4834-80fb-1e0eb0d7d2a5" isDerived="false" sourceEndRoleName="WebHost" targetEndRoleName="Iservice" isLeaf="false" isAbstract="false">
+            <classMoniker Id="8a93d731-1410-493b-999e-0939823d5550" LastKnownName="Iservice" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="0d100f18-0ab3-4e84-81ae-645cc5dfef03" name="WebHost" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="d7702e9d-f53b-4c6b-ab13-1aa967699182" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6deead43-0a79-4079-bc3a-a6b43faf8888" name="Iservice" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="d47ff511-131e-4925-98f0-2a2a8a61fa76" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="bd791c86-e706-4dc5-a1dd-39ca9cadb4f6" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="8a93d731-1410-493b-999e-0939823d5550" name="Iservice" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="99aa9e57-4c96-4980-996d-11e301aef9bd" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="a2c79caf-6d76-44e4-90ad-1eb7e1da4c91" name="Startup" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="25e6d679-93e7-4f0a-8cab-fce97b0dab7a" />
+        <suppliersInternal>
+          <dependency Id="e7ca7862-bc80-4027-961b-175759076f53">
+            <classMoniker Id="8a93d731-1410-493b-999e-0939823d5550" LastKnownName="Iservice" />
+            <elementDefinition Id="ec509ead-a29e-41df-8cd4-f8f47c65dbd8" />
+          </dependency>
+        </suppliersInternal>
+        <targetEnds>
+          <association Id="67d34645-7794-48fc-8a63-56f263b13abc" isDerived="false" sourceEndRoleName="Startup" targetEndRoleName="IApplicationBuilder" isLeaf="false" isAbstract="false">
+            <classMoniker Id="7458b00d-7773-46f1-9f8d-0d1f8bf0ae47" LastKnownName="IApplicationBuilder" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="bda107b4-951f-418c-9e11-37c6b9d7801a" name="Startup" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="03b79dba-3236-4482-877c-fa5b4d4b5622" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="6014a11c-9d42-4a55-9bd1-d41431bddb32" name="IApplicationBuilder" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="e3852532-2352-4ac8-b423-baf1e4e62582" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="bf417a99-c56f-4324-8b62-e49c8e0c80e2" />
+          </association>
+        </targetEnds>
+        <ownedOperationsInternal>
+          <operation Id="c290eb2a-37c9-411e-9556-7aca53454117" name="ConfigureServices" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b9b82f6e-1a4b-4478-9fdb-82be0a571a97" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b042b205-7de0-441f-805b-78566ebc5e4f" name="IServiceCollection services" direction="In" isUnique="false">
+                  <elementDefinition Id="b21bf44d-18f5-4968-8668-ef16b954f7b6" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="197be63f-fe27-4ae1-90a1-752008a086ed" name="Configure" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a01910fb-e41d-479b-a7b8-98c23c62ff00" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="98332ae8-7c50-468d-af58-7a5813d25d5f" name="IApplicationBuilder app" direction="In" isUnique="false">
+                  <elementDefinition Id="40ff13ea-772f-4433-ba67-b01c999814e7" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="7458b00d-7773-46f1-9f8d-0d1f8bf0ae47" name="IApplicationBuilder" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f94e48d0-9a5e-4ef7-830e-8b1f97d2f6cb" />
+        <suppliersInternal>
+          <dependency Id="76642e95-31e4-4101-a362-ad33c5554d02">
+            <classMoniker Id="ccbd99ff-04fe-4cb9-972d-26e578abfddd" LastKnownName="MiddleWare" />
+            <elementDefinition Id="1c7109af-82ec-4088-8cd8-c2b6e77a7ab1" />
+          </dependency>
+        </suppliersInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="ccbd99ff-04fe-4cb9-972d-26e578abfddd" name="MiddleWare" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="00442859-77f1-4f97-83d7-a31bbd40ab8a" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="f3ca15e0-16f9-4ede-b57e-b97cb673a16c" name="SocialSystem">
+    <elementDefinition Id="d913d8dc-9f90-4e0f-a17d-95bc38ccdb4c" />
+  </package>
+</logicalClassDesignerModel>

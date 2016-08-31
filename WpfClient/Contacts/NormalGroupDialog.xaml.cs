@@ -1,4 +1,5 @@
 ﻿using BCP.ViewModel;
+using BCP.WebAPI.SignalR;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -86,16 +87,16 @@ namespace WpfClient.Contacts
 
             if (input.ToolTip.Equals("发送"))
             {
-                CommunitcationPackage cp = new CommunitcationPackage() {  Content = InputNoticeTBox.Text.Trim(),MType=MessageType.Text,CType=CommunitcationType.PersonToGroup, SendTime = System.DateTime.Now };
-                SignalRProxy.PTGSenderMessage(CurrentGroup.Id, cp);
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage(InputNoticeTBox.Text.Trim(), MainClient.CurrentUser.ID, CurrentGroup.Id);
+                string json_srmp = JsonConvert.SerializeObject(srmp);
+                SignalRProxy.SendMessage(json_srmp);
 
 
                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, cp.Content.ToString());
+                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, InputNoticeTBox.Text.Trim());
                 this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
 
 
-                //SignalRProxy.PublicSend(Group, false, String.Empty, System.Guid.Empty,keyword, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
 
             }
             else
@@ -103,21 +104,7 @@ namespace WpfClient.Contacts
                 //SignalRProxy.PublicSend(Group, true, String.Empty, CommentId,keyword, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
             }
 
-            //String message = this.InputTBox.Text.Trim();
-            //try
-            //{
-            //    SignalRProxy.PTPSendMessage(this.ReplyId, message);
-
-
-            //    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-            //    rightMessageBoxUControl.Init(Self, new UserMessageDTO() { Content = message });
-            //    this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
-
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show("发生未知错误！");
-            //}
+       
         }
 
         private void WindowBase_Loaded(object sender, RoutedEventArgs e)
@@ -142,68 +129,52 @@ namespace WpfClient.Contacts
             this.Group = group;
             this.UserName = userName;
 
-            if (SignalRProxy.AddPTGMessage == null)
+            if (SignalRProxy.ReceviceMessage == null)
             {
-                //Label lb123 = new Label() { Content = "123" };
-                //this.NoticeStackPanel.Children.Add(lb123);
-                SignalRProxy.AddPTGMessage = (sender, groupid, cp) =>
-                {
-            
-                    this.Dispatcher.Invoke(() =>
-                    {                        
-                        if (MainClient.CurrentUser.ActualName.Equals(sender.ActualName))
+                SignalRProxy.ReceviceMessage = (package) =>
+                {                   
+
+                    this.Dispatcher.Invoke( () =>
+                    {
+                        //string userActualName = "";
+                        //HttpClient client = new HttpClient();
+                        //client.BaseAddress = new Uri("http://localhost:37768/");
+                        //client.DefaultRequestHeaders.Accept.Clear();
+                        //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                        //HttpResponseMessage response = await client.GetAsync("api/User/GetUserById?id=" + package.FromUserId);
+                        //response.EnsureSuccessStatusCode();
+                        //if (response.IsSuccessStatusCode)
+                        //{
+                        //    string ds = await response.Content.ReadAsStringAsync();
+                        //    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                        //    if (result.Success)
+                        //    {
+                        //        userActualName = JsonConvert.DeserializeObject<UserDTO>(result.Data).ActualName;
+                        //    }
+                        //    else
+                        //    { MessageBox.Show("用户名获取失败"); }
+                        //}
+
+                        if (package.SMType == SignalRMessageType.StateMessage) { return; }
+                        if (MainClient.CurrentUser.ID.Equals(package.FromUserId))
                         {
-                            LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                            leftMessageBoxUControl.Init(sender.ActualName, cp.Content.ToString());
-                            this.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
+                            RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                            rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString());
+                            this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                         
                         }
                         else
                         {
-                            RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                            rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, cp.Content.ToString());
-                            this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                            LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                            leftMessageBoxUControl.Init("", package.Context.ToString());
+                            this.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
                         }
                     });
                 };
             }
 
-            //if (SignalRProxy.ReceviceNotice == null)
-            //{
-            //    SignalRProxy.ReceviceNotice = (username, notice) => {
-            //        this.Dispatcher.Invoke(() => {
-            //            //bool isExistence = false;
-            //            //foreach (var node in NoticeStackPanel.Children)
-            //            //{
-            //            //    if ((node as PLeftMessageBoxUControl).Id == notice.Id)
-            //            //    {
-            //            //        var item = node as PLeftMessageBoxUControl;
-            //            //        item.UpdateListBox(notice.Comments);
-            //            //        isExistence = true;
-            //            //        break;
-            //            //    }
-            //            //}
-
-            //            //if (!isExistence)
-            //            //{
-            //            //    if (notice.KeyWord == Expander_Range.Header.ToString())
-            //            //    {
-            //            //        PLeftMessageBoxUControl pLeftMessage = new PLeftMessageBoxUControl();
-            //            //        pLeftMessage.Init(notice.Belongs, notice.Comments, notice.DateTime,
-            //            //            notice.From, notice.Id, notice.Message);
-            //            //        pLeftMessage.Comment = (id) =>
-            //            //        {
-            //            //            this.CommentId = id;
-            //            //            this.input.ToolTip = "评论";
-            //            //            this.InputNoticeTBox.Text = userName + ":";
-            //            //        };
-            //            //        NoticeStackPanel.Children.Add(pLeftMessage);
-            //            //    }
-            //            //}
-            //SaveMessage(notice, userName);
-            //        });
-            //    };
-            //}
-
+    
 
         }
 
@@ -304,6 +275,8 @@ namespace WpfClient.Contacts
                         wrap2.Visibility = Visibility.Visible;
                         //InputNoticeTBox.IsEnabled = false;
                         //this.RenderTransform = new TranslateTransform(0, -120);
+
+
                     }
 
                     else

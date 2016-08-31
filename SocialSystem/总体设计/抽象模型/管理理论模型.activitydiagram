@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<activityRootModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm11="http://schemas.microsoft.com/dsltools/UseCaseModel" dslVersion="1.0.0.0" Id="19e473db-ce3c-4563-b9af-eac8235298bc" name="管理理论模型" linkedPackageId="4de5b415-fb80-4fb5-868a-13ac81263b41" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="6964f7c1-0ee5-45b5-bb7b-4068b3345e80">
+      <profileInstance Id="d0ef61d7-a4b1-4919-808f-0577dabef2e6" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="fc22255c-44be-4e17-90d0-3ccf99517997">
+      <profileInstance Id="5d144a6b-b862-47ef-9093-a3352eef1969" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <activityRootModelHasActivity>
+      <activity Id="ec67c653-dfb4-4622-af14-853561c81088" name="管理理论模型" isAbstract="false" isLeaf="false" isActiveClass="false" isReentrant="false" isReadOnly="false" isSingleExecution="false">
+        <elementDefinition Id="82ea2aaa-4066-474d-97da-c78966295194" />
+        <nodes>
+          <opaqueAction Id="0bbc49a1-3bd2-4e3c-8d19-170e6720dac6" name="业务目标或战略" isLeaf="false">
+            <elementDefinition Id="edf7cd44-4d22-48f9-851f-272ee6736a45" />
+            <flowNodeTargets>
+              <controlFlow Id="6417bc53-1bd4-407a-90b8-c9809700f162" isLeaf="false">
+                <opaqueActionMoniker Id="ce7b25f6-9b77-4c94-bb05-5936fce9e4ca" LastKnownName="组织机构" />
+                <elementDefinition Id="f7720050-e0fc-48e2-80ed-0504c7029c80" />
+              </controlFlow>
+              <controlFlow Id="9eb9495b-b4eb-4d7f-b746-ea558aa15cd5" isLeaf="false">
+                <opaqueActionMoniker Id="93a09f5c-f45d-4d36-8f82-e1d54ff532de" LastKnownName="职能分解" />
+                <elementDefinition Id="c81111c4-4dd2-45ab-8a9d-60e1c2e8ac22" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="93a09f5c-f45d-4d36-8f82-e1d54ff532de" name="职能分解" isLeaf="false">
+            <elementDefinition Id="e4924ce4-b28e-4f94-8edc-13619056b8a1" />
+            <flowNodeTargets>
+              <controlFlow Id="e5b05d73-4a0c-4c84-9b7e-c2fed56a0d18" isLeaf="false">
+                <opaqueActionMoniker Id="0ab879a2-50ce-4c83-8a0d-ec0e63d26e34" LastKnownName="部门" />
+                <elementDefinition Id="81d2c0f8-f5da-4ee8-a12b-51d2b2d30596" />
+              </controlFlow>
+              <controlFlow Id="d4120a52-2ab4-4954-a57e-f60bd873db28" isLeaf="false">
+                <opaqueActionMoniker Id="7a4870c0-257f-47ee-96b3-b345b3fecad4" LastKnownName="职责或目标细化" />
+                <elementDefinition Id="98ac50ce-19e3-48fa-8106-bc4fcbf6f536" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="7a4870c0-257f-47ee-96b3-b345b3fecad4" name="职责或目标细化" isLeaf="false">
+            <elementDefinition Id="92438fb1-fc82-4a94-b359-99fab7b97c7a" />
+            <flowNodeTargets>
+              <controlFlow Id="27470918-e52e-422c-b324-5659e3cbc420" isLeaf="false">
+                <forkNodeMoniker Id="f6ca92ee-3d65-43cf-9a06-b1e9504da946" LastKnownName="Fork1" />
+                <elementDefinition Id="6a180546-ac8f-4c69-8fa5-eee557e7a2ce" />
+              </controlFlow>
+              <controlFlow Id="b0aa26af-1b45-40b0-bffe-00b680382916" isLeaf="false">
+                <opaqueActionMoniker Id="06d46b4f-e7b7-492b-9ba7-4a0d009e817f" LastKnownName="岗位" />
+                <elementDefinition Id="76cc7f1f-9188-44ef-9f61-894fb3634f05" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="ce7b25f6-9b77-4c94-bb05-5936fce9e4ca" name="组织机构" isLeaf="false">
+            <elementDefinition Id="021295f9-86a1-497b-af38-f849033dec99" />
+            <flowNodeTargets>
+              <controlFlow Id="b523a373-86d7-45d8-9da1-0ab6e0a3f494" isLeaf="false">
+                <opaqueActionMoniker Id="0ab879a2-50ce-4c83-8a0d-ec0e63d26e34" LastKnownName="部门" />
+                <elementDefinition Id="8cfb2509-50f7-4942-af5a-0b893dc34af0" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="0ab879a2-50ce-4c83-8a0d-ec0e63d26e34" name="部门" isLeaf="false">
+            <elementDefinition Id="a7592d53-5a76-434c-b05e-7ff2802950c9" />
+            <flowNodeTargets>
+              <controlFlow Id="3b8b2e69-4768-469d-af46-9b49f012b292" isLeaf="false">
+                <opaqueActionMoniker Id="06d46b4f-e7b7-492b-9ba7-4a0d009e817f" LastKnownName="岗位" />
+                <elementDefinition Id="c0b75a18-7f90-4b99-9d07-d43753d2a07c" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="06d46b4f-e7b7-492b-9ba7-4a0d009e817f" name="岗位" isLeaf="false">
+            <elementDefinition Id="195c1030-ae33-4278-a6aa-977e8d34a6fc" />
+          </opaqueAction>
+          <forkNode Id="f6ca92ee-3d65-43cf-9a06-b1e9504da946" name="Fork1" isLeaf="false">
+            <elementDefinition Id="088d096b-5de7-4fc5-a385-282a93c74e66" />
+            <flowNodeTargets>
+              <controlFlow Id="45d7fe1e-04e1-4e91-b97b-cf6b2fd4896f" isLeaf="false">
+                <opaqueActionMoniker Id="06d46b4f-e7b7-492b-9ba7-4a0d009e817f" LastKnownName="岗位" />
+                <elementDefinition Id="9efd9187-a60a-4847-95d3-22abe583db83" />
+              </controlFlow>
+            </flowNodeTargets>
+          </forkNode>
+          <opaqueAction Id="a24401b7-bdbf-41be-b028-e385eefc90bf" name="项目规划" isLeaf="false">
+            <elementDefinition Id="2d88ccbe-136b-4f07-9e22-e83303283958" />
+            <flowNodeTargets>
+              <controlFlow Id="dd7f1f3c-d519-400b-8076-123910a418e0" isLeaf="false">
+                <opaqueActionMoniker Id="abba5d35-4fdc-4a8b-83d6-ff08c7bd5333" LastKnownName="质量保证" />
+                <elementDefinition Id="aba64ed8-9481-45d1-955c-47c6a56e6c46" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="abba5d35-4fdc-4a8b-83d6-ff08c7bd5333" name="质量保证" isLeaf="false">
+            <elementDefinition Id="7a0de60e-85c5-4cc7-8963-383f8d85bc8f" />
+            <flowNodeTargets>
+              <controlFlow Id="34fb6f51-3270-4765-84e0-2c9737c022dd" isLeaf="false">
+                <opaqueActionMoniker Id="3f02ff80-b835-4a80-b6df-98d592889b4e" LastKnownName="监督控制" />
+                <elementDefinition Id="d8728035-b80c-4ff6-acaa-154212bc0e30" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="3f02ff80-b835-4a80-b6df-98d592889b4e" name="监督控制" isLeaf="false">
+            <elementDefinition Id="b218f5af-2ef7-496a-8d87-c51c82a098db" />
+            <flowNodeTargets>
+              <controlFlow Id="8cbdea74-0366-4b76-9c4a-cc0fa6f92b27" isLeaf="false">
+                <opaqueActionMoniker Id="fd04dcd1-f887-49bc-823d-506878172680" LastKnownName="收尾" />
+                <elementDefinition Id="2d01dad6-e5d3-4ff0-89ee-26d143b9b852" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="6fd6c1e1-0d43-4c94-b894-188731c83b63" name="启动" isLeaf="false">
+            <elementDefinition Id="16bd29be-d665-4611-8618-283d57959b10" />
+            <flowNodeTargets>
+              <controlFlow Id="4ca03262-c1d3-4353-84c8-4f7b18297e75" isLeaf="false">
+                <opaqueActionMoniker Id="a24401b7-bdbf-41be-b028-e385eefc90bf" LastKnownName="项目规划" />
+                <elementDefinition Id="cd46a5cf-1827-46aa-a878-60f558a7ecba" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction Id="fd04dcd1-f887-49bc-823d-506878172680" name="收尾" isLeaf="false">
+            <elementDefinition Id="b7c3b493-23f6-4541-9cf2-21ba6bd423bd" />
+            <flowNodeTargets>
+              <controlFlow Id="4a7f0954-525a-4df1-9538-2b91bf510c0d" isLeaf="false">
+                <activityFinalNodeMoniker Id="2d420bed-d0b4-4b50-b5d8-b1789f35df4e" LastKnownName="ActivityFinal1" />
+                <elementDefinition Id="8ac4c251-776a-4201-aeb9-bcf94636f502" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <activityFinalNode Id="2d420bed-d0b4-4b50-b5d8-b1789f35df4e" name="ActivityFinal1" isLeaf="false">
+            <elementDefinition Id="78fe3320-60a6-4e12-b7d4-12c48c34ee47" />
+          </activityFinalNode>
+          <initialNode Id="61df4527-96b1-4e85-bc69-8c1abe81973f" name="Initial1" isLeaf="false">
+            <elementDefinition Id="47798e7b-feb3-49e4-b483-f89e179696ac" />
+            <flowNodeTargets>
+              <controlFlow Id="328a685d-8fc5-468a-8b8c-ae7f1079fff9" isLeaf="false">
+                <opaqueActionMoniker Id="6fd6c1e1-0d43-4c94-b894-188731c83b63" LastKnownName="启动" />
+                <elementDefinition Id="859093e7-77de-481b-a281-1ca8895d0018" />
+              </controlFlow>
+            </flowNodeTargets>
+          </initialNode>
+          <objectNode Id="ea53346b-3d22-4fd7-ba59-ef941cce3d8e" name="项目管理" isLeaf="false" ordering="Unordered" isControlType="false">
+            <elementDefinition Id="3590ace2-b25e-494c-937e-995d3501af56" />
+            <upperBound>
+              <literalInteger Id="95f2b966-07b7-41db-afd4-3ace34a3c63c" name="2147483647" value="2147483647">
+                <elementDefinition Id="569572ad-8aa4-4951-8542-a4cb5eb587a0" />
+              </literalInteger>
+            </upperBound>
+          </objectNode>
+        </nodes>
+      </activity>
+    </activityRootModelHasActivity>
+  </packagedElements>
+  <package Id="4de5b415-fb80-4fb5-868a-13ac81263b41" name="SocialSystem">
+    <elementDefinition Id="d913d8dc-9f90-4e0f-a17d-95bc38ccdb4c" />
+  </package>
+</activityRootModel>

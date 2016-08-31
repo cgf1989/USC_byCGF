@@ -22,7 +22,7 @@ namespace WpfClient.Contacts
         private HubConnection _hubConnection = null;
         private IHubProxy _hubProxy = null;
         //public Action<UserDTO, UserMessageDTO> AddUserMessage { get; set; }
-        public Action<UserDTO, String, CommunitcationPackage> AddPTGMessage { get; set; }
+        //public Action<UserDTO, String, CommunitcationPackage> AddPTGMessage { get; set; }
 
         public Action<SignalRMessagePackage> ReceviceMessage { get; set; }
 
@@ -143,11 +143,11 @@ namespace WpfClient.Contacts
                     groupId, cp);
         }
 
-        public void InitPTG()
-        {
-            if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
-                _hubProxy.Invoke("InitPTG");
-        }
+        //public void InitPTG()
+        //{
+        //    if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
+        //        _hubProxy.Invoke("InitPTG");
+        //}
 
         public void GetAllMessage(String package,DateTime date)
         {
@@ -175,11 +175,12 @@ namespace WpfClient.Contacts
                 if (ReceviceMessage != null)
                     ReceviceMessage(package);
             });
-            _hubProxy.On<UserDTO, String, CommunitcationPackage>("AddPTGMessage", (sender, groupId, cp) =>
-             {
-                 if (AddPTGMessage != null)
-                     AddPTGMessage(sender, groupId, cp);
-             });
+            //_hubProxy.On<UserDTO, String, CommunitcationPackage>("AddPTGMessage", (sender, groupId, cp) =>
+            // {
+            //     if (AddPTGMessage != null)
+            //         AddPTGMessage(sender, groupId, cp);
+            // });
+
             //_hubProxy.On<String>("AddFailureMessage",(message)=>{
             //    if (ReceviceFialureMessage != null)
             //        ReceviceFialureMessage(message);
