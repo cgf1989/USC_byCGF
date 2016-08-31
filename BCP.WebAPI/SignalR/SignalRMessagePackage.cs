@@ -483,8 +483,8 @@ namespace BCP.WebAPI.SignalR
                 {
                     Content = SignalRMessagePackage.Context.ToString(),
                     CreateTime = DateTime.Now,
-                    ToUserId = to.ID,
-                    FromUserId = from.ID,
+                    ToUserId = SignalRMessagePackage.ToUserId,
+                    FromUserId = SignalRMessagePackage.FromUserId,
                     State = 0,
                     MessageType = (int)SignalRMessagePackage.SMType
                 }))
@@ -617,7 +617,7 @@ namespace BCP.WebAPI.SignalR
                 GroupMessagerDTO gmd = new GroupMessagerDTO()
                 {
                     Content = SignalRMessagePackage.Context.ToString(),
-                    GroupId = to.Id,
+                    GroupId = SignalRMessagePackage.ToUserId,
                     MessageType = (int)SignalRMessagePackage.SMType,
                     CrateTime = DateTime.Now,
                     CrateUseId = SignalRMessagePackage.FromUserId

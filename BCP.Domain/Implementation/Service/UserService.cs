@@ -471,7 +471,7 @@ namespace BCP.Domain
 
         public bool AddGroupMessage(GroupMessagerDTO gmt,int userid)
         {
-            GroupMember gm = _groupMemberRepository.GetAll().Where(it => it.UserId == userid).FirstOrDefault();
+            GroupMember gm = _groupMemberRepository.GetAll().Where(it => it.UserId == userid&&it.GroupId==gmt.GroupId).FirstOrDefault();
             if (gm == null) throw new Exception("不存在的群成员");
             GroupMessager groupMessage = gmt.MapperTo<GroupMessagerDTO, GroupMessager>();
             groupMessage.GroupId = gm.GroupId;
