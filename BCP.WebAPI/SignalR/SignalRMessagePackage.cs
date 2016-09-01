@@ -761,7 +761,7 @@ namespace BCP.WebAPI.SignalR
 
 
                 //图片处理
-                Regex regex=new Regex(@"\w+\\.(jpg|gif|bmp|png)");
+                Regex regex=new Regex(@"\w+\.(jpg|gif|bmp|png)");
                 String path = SignalRMessagePackage.FromUserId + SignalRMessagePackage.ToUserId + DateTime.Now.ToString("yyyyMMddHHmmssffff") + SignalRMessagePackage.Title;
                 if (regex.IsMatch(SignalRMessagePackage.Title))
                 {
