@@ -13,7 +13,9 @@ namespace BCP.WebAPI.SignalR
     public enum SignalRMessageType
     {
         Doc,
-        Pic,
+        [Description("图片")]
+        Img,
+        [Description("纯文本")]
         Text,
         [Description("状态信息")]
         StateMessage
@@ -129,6 +131,26 @@ namespace BCP.WebAPI.SignalR
         public static SignalRMessagePackage GetPTGTextPackage(String context, int fromUserId, int groupId)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
+            srm.Context = context;
+            srm.FromUserId = fromUserId;
+            srm.SCType = SignalRCommunicationType.PersonToGroup;
+            srm.SMType = SignalRMessageType.Text;
+            srm.ToUserId = groupId;
+            return srm;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="title">文件名（包括后缀）</param>
+        /// <param name="fromUserId">发送者Id</param>
+        /// <param name="groupId">接受者Id</param>
+        /// <returns></returns>
+        public static SignalRMessagePackage GetPTGImgPackage(String context, String title, int fromUserId, int groupId)
+        {
+            SignalRMessagePackage srm = new SignalRMessagePackage();
+            srm.Title = title;
             srm.Context = context;
             srm.FromUserId = fromUserId;
             srm.SCType = SignalRCommunicationType.PersonToGroup;

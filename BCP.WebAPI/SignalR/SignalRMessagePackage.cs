@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web;
+using System.Drawing;
+using System.IO;
+using System.Text.RegularExpressions;
 
 namespace BCP.WebAPI.SignalR
 {
@@ -454,6 +457,10 @@ namespace BCP.WebAPI.SignalR
             //if (srp.GetType() == typeof(PTGTextPackage))
             if (srp.SCType == SignalRCommunicationType.PersonToGroup && srp.SMType == SignalRMessageType.Text)
                 return (ISignalRMessagePacke)new PTGTextPackage() { SignalRMessagePackage = srp };
+            if (srp.SCType == SignalRCommunicationType.PersonToPerson && srp.SMType == SignalRMessageType.Img)
+                return (ISignalRMessagePacke)new PTPImgPackage() { SignalRMessagePackage = srp };
+            if (srp.SCType == SignalRCommunicationType.PersonToGroup && srp.SMType == SignalRMessageType.Img)
+                return (ISignalRMessagePacke)new PTGImgPackage() { SignalRMessagePackage = srp };
             return null;
         }
     }
@@ -702,6 +709,121 @@ namespace BCP.WebAPI.SignalR
             }
             catch (Exception ex)
             { }
+        }
+    }
+
+    public class PTPImgPackage : ISignalRMessagePacke
+    {
+        public SignalRMessagePackage SignalRMessagePackage{get;set;}
+
+        public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PTGImgPackage : ISignalRMessagePacke
+    {
+        public SignalRMessagePackage SignalRMessagePackage{get;set;}
+
+        public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            UnityBootStrapper ubs = new UnityBootStrapper();
+            ubs.Bindings();
+            IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+            try
+            {
+                //数据验证
+                var from = hub.Get();
+                var to = userService.GetGroupById(SignalRMessagePackage.ToUserId);
+                if (from == null || to == null)
+                {
+                    Clients.Client(Context.ConnectionId)
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
+                        SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+                    return;
+                }
+
+
+                //图片处理
+                Regex regex=new Regex(@"\w+\\.(jpg|gif|bmp|png)");
+                String path = SignalRMessagePackage.FromUserId + SignalRMessagePackage.ToUserId + DateTime.Now.ToString("yyyyMMddHHmmssffff") + SignalRMessagePackage.Title;
+                if (regex.IsMatch(SignalRMessagePackage.Title))
+                {
+                    byte[] img = Convert.FromBase64String(SignalRMessagePackage.Context.ToString());
+                    using (var sw = new MemoryStream(img))
+                    {
+                        Bitmap bitmap = new Bitmap(sw);
+                        bitmap.Save(@"C:\" + path);
+                    }
+                }
+                else
+                    return;//非图片类型
+
+                //信息处理
+                GroupMessagerDTO gmd = new GroupMessagerDTO()
+                {
+                    Content = path,
+                    GroupId = SignalRMessagePackage.ToUserId,
+                    MessageType = (int)SignalRMessagePackage.SMType,
+                    CrateTime = DateTime.Now,
+                    CrateUseId = SignalRMessagePackage.FromUserId
+                };
+                if (userService.AddGroupMessage(gmd, SignalRMessagePackage.FromUserId))
+                {
+                    foreach (var node in hub.GetAllOnLineUser())
+                    {
+                        if (node.ID == SignalRMessagePackage.FromUserId) continue;
+                        if (node.Groups != null && node.Groups.Where(it => it.Id == SignalRMessagePackage.ToUserId).FirstOrDefault() != null && !String.IsNullOrWhiteSpace(node.ContextId))
+                        {
+                            Clients.Client(node.ContextId)
+                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGImgPackage(SignalRMessagePackage.Context.ToString(),SignalRMessagePackage.Title, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                        }
+                    }
+                }
+
+                //通知发送方 信息发送成功
+                Clients.Client(Context.ConnectionId)
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("",
+                    SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, true));
+            }
+            catch (Exception ex)
+            {
+                //通知发送方 信息发送失败
+                Clients.Client(Context.ConnectionId)
+                .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(ex.Message,
+                SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+            }
+        }
+
+        public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
+        {
+            throw new NotImplementedException();
         }
     }
 }
