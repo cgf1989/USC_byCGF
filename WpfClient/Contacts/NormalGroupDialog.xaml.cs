@@ -41,7 +41,7 @@ namespace WpfClient.Contacts
 
             input.Click += InputNoticeBtn_Click;
             InputNoticeTBox.TextChanged += InputNoticeTBox_TextChanged;
-
+            groupMembers = new List<GroupMemberDTO>();
             
             //Init(MainClient.CurrentUser.ActualName, CurrentGroup.ID.ToString());
             //this.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
@@ -68,7 +68,7 @@ namespace WpfClient.Contacts
         private String UserName { get; set; }
         private System.Guid CommentId { get; set; }
         public GroupDTO CurrentGroup { get; set; }
-
+        List<GroupMemberDTO> groupMembers { get; set; }
 
         void InputNoticeTBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -166,8 +166,10 @@ namespace WpfClient.Contacts
                         }
                         else
                         {
+                            string actualName= groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
+
                             LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                            leftMessageBoxUControl.Init("", package.Context.ToString());
+                            leftMessageBoxUControl.Init(actualName, package.Context.ToString());
                             this.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
                         }
                     });
@@ -449,7 +451,7 @@ namespace WpfClient.Contacts
                     CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
                     if (result.Success)
                     {
-                        List<GroupMemberDTO> groupMembers = JsonConvert.DeserializeObject<List<GroupMemberDTO>>(result.Data);
+                        groupMembers = JsonConvert.DeserializeObject<List<GroupMemberDTO>>(result.Data);
                         lbox_GroupMember.ItemsSource = null;
                         lbox_GroupMember.ItemsSource = groupMembers;
                         lbox_GroupMember.DisplayMemberPath = "Name";
