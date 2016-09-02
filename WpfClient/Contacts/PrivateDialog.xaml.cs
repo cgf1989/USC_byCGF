@@ -242,7 +242,7 @@ namespace WpfClient.Contacts
                           else
                           {
                               RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                              rightMessageBoxUControl.Init(Self, package.Context.ToString());
+                              rightMessageBoxUControl.Init(Self, package.Context.ToString(),null,"Text");
                               this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                           }
                       }
