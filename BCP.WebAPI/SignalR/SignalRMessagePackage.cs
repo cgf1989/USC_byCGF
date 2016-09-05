@@ -765,6 +765,7 @@ namespace BCP.WebAPI.SignalR
                 String path = SignalRMessagePackage.FromUserId + SignalRMessagePackage.ToUserId + DateTime.Now.ToString("yyyyMMddHHmmssffff") + SignalRMessagePackage.Title;
                 if (regex.IsMatch(SignalRMessagePackage.Title))
                 {
+                    //组合Content
                     byte[] img = Convert.FromBase64String(SignalRMessagePackage.Context.ToString());
                     using (var sw = new MemoryStream(img))
                     {

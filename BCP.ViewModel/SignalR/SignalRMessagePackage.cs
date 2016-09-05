@@ -147,7 +147,7 @@ namespace BCP.WebAPI.SignalR
         /// <param name="fromUserId">发送者Id</param>
         /// <param name="groupId">接受者Id</param>
         /// <returns></returns>
-        public static SignalRMessagePackage GetPTGImgPackage(String context, String title, int fromUserId, int groupId)
+        public static SignalRMessagePackage GetPTGImgPackage(List<String> context, String title, int fromUserId, int groupId)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
             srm.Title = title;
