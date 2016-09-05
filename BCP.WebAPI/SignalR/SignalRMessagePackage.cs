@@ -804,7 +804,7 @@ namespace BCP.WebAPI.SignalR
                         if (node.Groups != null && node.Groups.Where(it => it.Id == SignalRMessagePackage.ToUserId).FirstOrDefault() != null && !String.IsNullOrWhiteSpace(node.ContextId))
                         {
                             Clients.Client(node.ContextId)
-                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGImgPackage(SignalRMessagePackage.Context.ToString(),SignalRMessagePackage.Title, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGImgPackage((List<String>)SignalRMessagePackage.Context,SignalRMessagePackage.Title, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
                         }
                     }
                 }
