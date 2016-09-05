@@ -132,6 +132,9 @@
     <Compile Include="Contacts\NormalGroupDialog.xaml.cs">
       <DependentUpon>NormalGroupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contacts\PictureBrower.xaml.cs">
+      <DependentUpon>PictureBrower.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contacts\PLeftMessageBoxUControl.xaml.cs">
       <DependentUpon>PLeftMessageBoxUControl.xaml</DependentUpon>
     </Compile>
@@ -281,6 +284,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Contacts\NormalGroupDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Contacts\PictureBrower.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

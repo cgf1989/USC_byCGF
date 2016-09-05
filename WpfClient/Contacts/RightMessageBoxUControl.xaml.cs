@@ -27,16 +27,38 @@ namespace WpfClient.Contacts
             InitializeComponent();
         }
 
-        public void Init(String userName, String message)
+        public void Init(String userName, String message, Image img, string msgType)
         {
             this.UserNameLable.Content = userName;
-            this.UserMessageLable.Text = message;
+            if (msgType == "Image")
+            {
+                UserMessageImg.Source = img.Source;
+                UserMessageLable.Visibility = Visibility.Hidden;
+                UserMessageImg.Visibility = Visibility.Visible;
+            }
+            else if (msgType == "Text")
+            {
+                this.UserMessageLable.Text = message;
+                UserMessageImg.Visibility = Visibility.Hidden;
+                UserMessageLable.Visibility = Visibility.Visible;
+            }
         }
 
         public void Init(String userName, UserMessageDTO record)
         {
             this.UserNameLable.Content = userName;
             this.UserMessageLable.Text = record == null ? "" : record.Content;
+        }
+
+        private void UserMessageImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                PictureBrower pb = new PictureBrower();
+                pb.PicSource = (BitmapImage)UserMessageImg.Source;
+                pb.ShowDialog();
+            }
+            
         }
     }
 }

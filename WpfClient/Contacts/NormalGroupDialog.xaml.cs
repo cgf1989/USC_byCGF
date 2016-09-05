@@ -1,8 +1,11 @@
 ﻿using BCP.ViewModel;
 using BCP.WebAPI.SignalR;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -42,7 +45,7 @@ namespace WpfClient.Contacts
             input.Click += InputNoticeBtn_Click;
             InputNoticeTBox.TextChanged += InputNoticeTBox_TextChanged;
             groupMembers = new List<GroupMemberDTO>();
-            
+
             //Init(MainClient.CurrentUser.ActualName, CurrentGroup.ID.ToString());
             //this.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
         }
@@ -57,7 +60,7 @@ namespace WpfClient.Contacts
 
         private const int CORNER_WIDTH = 12; //拐角宽度  
         private const int MARGIN_WIDTH = 4; // 边框宽度  
-        private Point mMousePoint = new Point(); //鼠标坐标  
+        //private Point mMousePoint = new Point(); //鼠标坐标  
         private Button mMaxButton;
         private bool mIsShowMax = true;
         private bool IsShowMax = false;
@@ -93,7 +96,7 @@ namespace WpfClient.Contacts
 
 
                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, InputNoticeTBox.Text.Trim());
+                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, InputNoticeTBox.Text.Trim(), null, "Text");
                 this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
 
 
@@ -104,7 +107,7 @@ namespace WpfClient.Contacts
                 //SignalRProxy.PublicSend(Group, true, String.Empty, CommentId,keyword, this.InputNoticeTBox.Text.Trim(), SignalCore.MessageType.Text);
             }
 
-       
+
         }
 
         private void WindowBase_Loaded(object sender, RoutedEventArgs e)
@@ -132,10 +135,10 @@ namespace WpfClient.Contacts
             if (SignalRProxy.ReceviceMessage == null)
             {
                 SignalRProxy.ReceviceMessage = (package) =>
-                {                   
+                {
 
-                    this.Dispatcher.Invoke( () =>
-                    {
+                    this.Dispatcher.Invoke(() =>
+                   {
                         //string userActualName = "";
                         //HttpClient client = new HttpClient();
                         //client.BaseAddress = new Uri("http://localhost:37768/");
@@ -157,26 +160,26 @@ namespace WpfClient.Contacts
                         //}
 
                         if (package.SMType == SignalRMessageType.StateMessage) { return; }
-                        if (MainClient.CurrentUser.ID.Equals(package.FromUserId))
-                        {
-                            RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                            rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString());
-                            this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
-                         
-                        }
-                        else
-                        {
-                            string actualName= groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
+                       if (MainClient.CurrentUser.ID.Equals(package.FromUserId))
+                       {
+                           RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                           rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString(), null, "Text");
+                           this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
 
-                            LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                            leftMessageBoxUControl.Init(actualName, package.Context.ToString());
-                            this.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
-                        }
-                    });
+                       }
+                       else
+                       {
+                           string actualName = groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
+
+                           LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                           leftMessageBoxUControl.Init(actualName, package.Context.ToString());
+                           this.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
+                       }
+                   });
                 };
             }
 
-    
+
 
         }
 
@@ -383,7 +386,7 @@ namespace WpfClient.Contacts
             Win_nutg.ShowDialog();
             if (Win_nutg.AddedUser.Members.Count > 0)
             {
-                lbox_GroupMember.ItemsSource = null;              
+                lbox_GroupMember.ItemsSource = null;
                 lbox_GroupMember.ItemsSource = Win_nutg.AddedUser.Members;
             }
         }
@@ -462,6 +465,48 @@ namespace WpfClient.Contacts
             {
                 MessageBox.Show("成员获取失败");
             }
+        }
+
+        /// <summary>
+        /// 发送图片按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_Image_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "图片文件|*.jpg;*.jpeg;*.bmp;*.ico;*.png";
+            if (ofd.ShowDialog() == true)
+            {
+
+                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);//可以是其他重载方法 
+                byte[] byData = new byte[fs.Length];
+                fs.Read(byData, 0, byData.Length);
+                fs.Close();
+
+                //string context = Convert.ToBase64String(byData);
+                //SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(context, ofd.SafeFileName, MainClient.CurrentUser.ID,CurrentGroup.Id);
+                //srmp.SMType = SignalRMessageType.Img;
+                //string json_srmp = JsonConvert.SerializeObject(srmp);
+                //SignalRProxy.SendMessage(json_srmp);
+
+
+                //用流的方式来读取图片不会占用图片，直接用uri的方式则会
+                BitmapImage myBitmapImage = new BitmapImage();
+                myBitmapImage.BeginInit();
+                myBitmapImage.StreamSource = new MemoryStream(byData);
+                myBitmapImage.EndInit();
+
+                System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                img.Source = myBitmapImage;
+                if (img != null)
+                {
+                    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                    rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                    this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                }
+            }
+
         }
     }
 }

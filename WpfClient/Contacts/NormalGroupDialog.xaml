@@ -4,7 +4,7 @@
         WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" 
         xmlns:scr="clr-namespace:WpfClient"
         xmlns:teamInput="clr-namespace:WpfClient.Teams.Control" Style="{DynamicResource WindowStyle1}" 
-         Width="420" Height="400">
+         Width="480" Height="450">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -59,23 +59,23 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <WrapPanel Grid.Row="0" >
-                    <TextBox x:Name="InputNoticeTBox" Width="260" Margin="3,3,0,0" TextChanged="TextBox_TextChanged"/>
-                    <Button Name="input" Height="30" Width="30" Margin="10,5,2,2" FontSize="18" Content="+" Click="input_Click" ToolTip="发送" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}"/>
+                    <TextBox x:Name="InputNoticeTBox" Width="300" Margin="3,3,0,0" TextChanged="TextBox_TextChanged"/>
+                    <Button Name="input" Height="30" Width="30" Margin="12,5,2,2" FontSize="18" Content="+" Click="input_Click" ToolTip="发送" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}"/>
                     <!--<Button Name="InputNoticeBtn" Width="40" Content="发布" />-->
                 </WrapPanel>
                 <WrapPanel x:Name="wrap1" Grid.Row="1" Visibility="Collapsed">
-                    <Button Width="50" Height="50" Content="文件" Margin="5" x:Name="docButton" Click="docButton_Click"/>
-                    <Button Width="50" Height="50" Content="视频" Margin="5" x:Name="videoButton" Click="videoButton_Click"/>
-                    <Button Width="50" Height="50" Content="语音" Margin="5"/>
-                    <Button Width="50" Height="50" Content="影像" Margin="5"/>
-                    <Button Width="50" Height="50" Content="图片" Margin="5"/>
+                    <Button Width="50" Height="50" Content="文件" Margin="5,5,15,5" x:Name="docButton" Click="docButton_Click"/>
+                    <Button Width="50" Height="50" Content="视频" Margin="5,5,15,5" x:Name="videoButton" Click="videoButton_Click"/>
+                    <Button Width="50" Height="50" Content="语音" Margin="5,5,15,5"/>
+                    <Button Width="50" Height="50" Content="影像" Margin="5,5,15,5"/>
+                    <Button Name="btn_Image" Width="50" Height="50" Content="图片" Margin="5,5,15,5" Click="btn_Image_Click"/>
                 </WrapPanel>
                 <WrapPanel x:Name="wrap2" Grid.Row="2" Visibility="Collapsed">
-                    <Button Width="50" Height="50" Content="任务" Margin="5" x:Name="taskButton" Click="taskButton_Click"/>
-                    <Button Width="50" Height="50" Content="名片" Margin="5"/>
-                    <Button Width="50" Height="50" Content="收藏" Margin="5"/>
-                    <Button Width="50" Height="50" Content="位置" Margin="5"/>
-                    <Button Width="50" Height="50" Content="动画" Margin="5"/>
+                    <Button Width="50" Height="50" Content="任务" Margin="5,5,15,5" x:Name="taskButton" Click="taskButton_Click"/>
+                    <Button Width="50" Height="50" Content="名片" Margin="5,5,15,5"/>
+                    <Button Width="50" Height="50" Content="收藏" Margin="5,5,15,5"/>
+                    <Button Width="50" Height="50" Content="位置" Margin="5,5,15,5"/>
+                    <Button Width="50" Height="50" Content="动画" Margin="5,5,15,5"/>
                 </WrapPanel>
             </Grid>
             <!--<TextBox Name="InputNoticeTBox" DockPanel.Dock="Left" Width="430"></TextBox>
@@ -88,12 +88,12 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Border BorderThickness="0.5" BorderBrush="Blue">
-            <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" >
-                <Button Name="btn_AddGroupMember" Content="+" Width="20" Height="20" Margin="5" Click="btn_AddGroupMember_Click"/>
-                <Button Name="btn_RemoveGroupMember" Content="-" Width="20" Height="20" Margin="5" Click="btn_RemoveGroupMember_Click"/>
-            </StackPanel>
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" >
+                    <Button Name="btn_AddGroupMember" Content="+" Width="20" Height="20" Margin="5" Click="btn_AddGroupMember_Click"/>
+                    <Button Name="btn_RemoveGroupMember" Content="-" Width="20" Height="20" Margin="5" Click="btn_RemoveGroupMember_Click"/>
+                </StackPanel>
             </Border>
-            <ListBox Name="lbox_GroupMember" Grid.Row="1"/>            
+            <ListBox Name="lbox_GroupMember" Grid.Row="1"/>
         </Grid>
     </Grid>
 </scr:MyMacClass>
