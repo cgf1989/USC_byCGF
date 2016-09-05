@@ -11,6 +11,7 @@ using System.Web;
 using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace BCP.WebAPI.SignalR
 {
@@ -766,7 +767,17 @@ namespace BCP.WebAPI.SignalR
                 if (regex.IsMatch(SignalRMessagePackage.Title))
                 {
                     //组合Content
-                    byte[] img = Convert.FromBase64String(SignalRMessagePackage.Context.ToString());
+                    List<String> list = SignalRMessagePackage.Context as List<String>;
+
+                    if (list == null) throw new Exception("错误的数据类型");
+                    StringBuilder sb = new StringBuilder();
+                    sb.Clear();
+                    foreach (var item in list)
+                    {
+                        sb.Append(item);
+                    }
+
+                    byte[] img = Convert.FromBase64String(sb.ToString());
                     using (var sw = new MemoryStream(img))
                     {
                         Bitmap bitmap = new Bitmap(sw);
