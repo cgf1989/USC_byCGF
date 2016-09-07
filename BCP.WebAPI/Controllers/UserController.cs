@@ -12,12 +12,21 @@ using System.Text;
 using BCP.WebAPI.Helpers;
 using BCP.WebAPI.Controllers.Filters;
 using BCP.WebAPI.SignalR;
+using System.Threading.Tasks;
+using System.Web;
+using System.Diagnostics;
+using System.IO;
+using BCP.Common.Helper;
+using System.Web.Hosting;
+using System.Net.Http.Headers;
 
 namespace BCP.WebAPI.Controllers
 {
     [WebApiFilter]
     public class UserController : ApiController
     {
+        private static readonly object _lockObject = new object();
+
         [Dependency]
         public IUserService UserService { get; set; }
 
@@ -404,9 +413,89 @@ namespace BCP.WebAPI.Controllers
             throw new Exception("修改群组名片失败"); 
         }
 
-        public HttpResponseMessage GetGroupMessage()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="fileName">传输文件全名 包括后缀 不含路径</param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<HttpResponseMessage> UpLoadFile(String fileName)
         {
-            return null;
+
+            if (!Request.Content.IsMimeMultipartContent())
+            {
+                throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
+            }
+            //Dictionary<string, string> dic = new Dictionary<string, string>();
+            //string root = HttpContext.Current.Server.MapPath("~/App_Data/File/" + DateTime.Now.ToString("yyyyMMddHHmmssffff")+"fromId"+fromId+"toId"+toId+"_path");//指定要将文件存入的服务器物理位置
+            string root = HttpContext.Current.Server.MapPath("~/App_Data/Temp");
+            var provider = new MultipartFormDataStreamProvider(root);
+            try
+            {
+                //// Read the form data.  
+                //给文件的读写操作加锁，防止在上传同名文件的时候出现问题 
+                //lock (_lockObject)
+                //{
+                //var task = 
+                //Request.Content.ReadAsMultipartAsync(provider).ContinueWith(t =>
+                //    {
+                //        //String path = HttpContext.Current.Server.MapPath("~/app_Data/File");
+                //        if (t.IsFaulted || t.IsCanceled)
+                //            throw new Exception("文件未上传");
+                //        //var fileInfo = provider.FileData.Select(it =>
+                //        //{
+                //        //    var info = new FileInfo(it.LocalFileName);
+                //        //    info.CopyTo(path);
+                //        //    info.Delete();
+                //        //    return "";
+                //        //}
+                //        //);
+                //        //return path;
+                //    });
+                var info= await Request.Content.ReadAsMultipartAsync(provider);
+                String path = HttpContext.Current.Server.MapPath("~/App_Data/File/");
+                //provider.FileData.Select(it => {
+                //    FileInfo fileInfo = new FileInfo(it.LocalFileName);
+                //    fileInfo.CopyTo(path + FileHelper.Encrept(fileName));
+                //    fileInfo.Delete();
+                //    return "";
+                //});
+                FileInfo fileInfo = new FileInfo(provider.FileData[0].LocalFileName);
+                fileInfo.CopyTo(path + FileHelper.Encrept(fileName));
+                fileInfo.Delete();
+
+                return JsonHelper.GetResponseMessage(true, "文件传输成功", typeof(String), false, path + FileHelper.Encrept(fileName));
+                //}
+            }
+            catch(Exception ex)
+            {
+                return JsonHelper.GetResponseMessage(false, ex.Message, null, false, null);
+            } 
+        }
+
+        [HttpGet]
+        public HttpResponseMessage DownloadFile(String fileName)
+        {
+            HttpResponseMessage result = null;
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(HostingEnvironment.MapPath("~/App_Data/File/"));
+            FileInfo foundFileInfo = directoryInfo.GetFiles().Where(x => x.Name == fileName).FirstOrDefault();
+            if (foundFileInfo != null)
+            {
+                FileStream fs = new FileStream(foundFileInfo.FullName, FileMode.Open);
+
+                result = new HttpResponseMessage(HttpStatusCode.OK);
+                result.Content = new StreamContent(fs);
+                result.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/octet-stream");
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                result.Content.Headers.ContentDisposition.FileName = foundFileInfo.Name;
+            }
+            else
+            {
+                result = new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+
+            return result;
         }
 
         #endregion

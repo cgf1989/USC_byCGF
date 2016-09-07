@@ -8,6 +8,7 @@ using BCP.ViewModel;
 using System.Net.Http;
 using Microsoft.Practices.Unity;
 using BCP.Domain.Service;
+using BCP.Domain.Mapping;
 
 namespace BCP.WebAPI.Tests.Controllers
 {
@@ -69,11 +70,20 @@ namespace BCP.WebAPI.Tests.Controllers
         //
         #endregion
 
-        //[TestMethod]
-        //public void UserCurd()
-        //{
-        //    UserController userController = new UserController();
-        //    userController.UserService = (IUserService)UnityBootStrapper.UnityContainer.Resolve(typeof(IUserService));
-        //}
+        [TestMethod]
+        public void FileUpLoad()
+        {
+            try
+            {
+                UserController userController = new UserController();
+                userController.UserService = (IUserService)UnityBootStrapper.UnityContainer.Resolve(typeof(IUserService));
+                AutoMapperBootStrapper.Start();
+                
+                var message = userController.UserService.GetPTGMessage(2, 2);
+            }
+            catch (Exception ex)
+            { }
+
+        }
     }
 }

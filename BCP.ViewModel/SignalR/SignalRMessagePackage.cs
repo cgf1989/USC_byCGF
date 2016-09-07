@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Web;
+using BCP.Common.Helper;
+using BCP.ViewModel;
 
 namespace BCP.WebAPI.SignalR
 {
@@ -12,7 +14,7 @@ namespace BCP.WebAPI.SignalR
     /// </summary>
     public enum SignalRMessageType
     {
-        Doc,
+        File,
         [Description("图片")]
         Img,
         [Description("纯文本")]
@@ -147,16 +149,116 @@ namespace BCP.WebAPI.SignalR
         /// <param name="fromUserId">发送者Id</param>
         /// <param name="groupId">接受者Id</param>
         /// <returns></returns>
-        public static SignalRMessagePackage GetPTGImgPackage(List<String> context, String title, int fromUserId, int groupId)
+        public static SignalRMessagePackage GetPTGImgPackage(String context, String title, int fromUserId, int groupId)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
             srm.Title = title;
             srm.Context = context;
             srm.FromUserId = fromUserId;
             srm.SCType = SignalRCommunicationType.PersonToGroup;
-            srm.SMType = SignalRMessageType.Text;
+            srm.SMType = SignalRMessageType.Img;
             srm.ToUserId = groupId;
             return srm;
+        }
+
+        /// <summary>
+        /// 点对点图片通讯包
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="title"></param>
+        /// <param name="fromUserId"></param>
+        /// <param name="toUserId"></param>
+        /// <returns></returns>
+        public static SignalRMessagePackage GetPTPImgPackage(String context, String title, int fromUserId, int toUserId)
+        {
+            SignalRMessagePackage srm = new SignalRMessagePackage();
+            srm.Title = title;
+            srm.Context = context;
+            srm.FromUserId = fromUserId;
+            srm.SCType = SignalRCommunicationType.PersonToPerson;
+            srm.SMType = SignalRMessageType.Img;
+            srm.ToUserId = toUserId;
+            return srm;
+        }
+
+        /// <summary>
+        /// 点对点文件通讯包
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="title"></param>
+        /// <param name="fromUserId"></param>
+        /// <param name="toUserId"></param>
+        /// <returns></returns>
+        public static SignalRMessagePackage GetPTPFilePackage(String context, String title, int fromUserId, int toUserId)
+        {
+            SignalRMessagePackage srm = new SignalRMessagePackage();
+            srm.Title = title;
+            srm.Context = context;
+            srm.FromUserId = fromUserId;
+            srm.SCType = SignalRCommunicationType.PersonToPerson;
+            srm.SMType = SignalRMessageType.File;
+            srm.ToUserId = toUserId;
+            return srm;
+        }
+
+        /// <summary>
+        /// 点对群文件通讯包
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="title"></param>
+        /// <param name="fromUserId"></param>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public static SignalRMessagePackage GetPTGFilePackage(String context, String title, int fromUserId, int groupId)
+        {
+            SignalRMessagePackage srm = new SignalRMessagePackage();
+            srm.Title = title;
+            srm.Context = context;
+            srm.FromUserId = fromUserId;
+            srm.SCType = SignalRCommunicationType.PersonToGroup;
+            srm.SMType = SignalRMessageType.File;
+            srm.ToUserId = groupId;
+            return srm;
+        }
+
+        public static SignalRMessagePackage GetPackage(UserMessageDTO node)
+        {
+            if (node.MessageType == (int)SignalRMessageType.Text)
+            {
+                return SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, (int)node.ToUserId, (int)node.FromUserId);
+            }
+            else if (node.MessageType == (int)SignalRMessageType.File)
+            {
+                return SignalRMessagePackageFactory.GetPTPFilePackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId);
+            }
+            else if (node.MessageType == (int)SignalRMessageType.Img)
+            {
+                return SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static SignalRMessagePackage GetPackage(GroupMessagerDTO node)
+        {
+            if (node.MessageType == (int)SignalRMessageType.Text)
+            {
+                return SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, (int)node.CrateUseId, (int)node.GroupId);
+            }
+            else if (node.MessageType == (int)SignalRMessageType.File)
+            {
+                return SignalRMessagePackageFactory.GetPTGFilePackage(node.Content, FileHelper.Decrept(node.Content), (int)node.CrateUseId, (int)node.GroupId);
+            }
+            else if (node.MessageType == (int)SignalRMessageType.Img)
+            {
+                return SignalRMessagePackageFactory.GetPTGImgPackage(node.Content, FileHelper.Decrept(node.Content), (int)node.CrateUseId, (int)node.GroupId);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
