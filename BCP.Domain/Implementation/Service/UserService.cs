@@ -167,6 +167,12 @@ namespace BCP.Domain
             _unitOfWork.Commit();
         }
 
+        public List<Int32> GetAllCommunitcatedUserByUserId(int userId)
+        {
+            return _userMessageRepository.GetAll().Where(it => it.FromUserId == userId || it.ToUserId == userId)
+                .Select(it => (Int32)(it.FromUserId == userId ? it.ToUserId : it.FromUserId)).Distinct().ToList();
+        }
+
         #endregion
 
         #region customergroup
@@ -481,7 +487,6 @@ namespace BCP.Domain
             return true;
         }
 
-
         /// <summary>
         /// 暂时无法使用
         /// </summary>
@@ -505,5 +510,6 @@ namespace BCP.Domain
         }
 
         #endregion
+
     }
 }

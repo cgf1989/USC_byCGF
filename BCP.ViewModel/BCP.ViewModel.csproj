@@ -122,7 +122,12 @@
     <Compile Include="SignalR\SignalRMessagePackage.cs" />
     <Compile Include="UserDTO.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\BCP.Common\BCP.Common.csproj">
+      <Project>{1bf111f0-1a5f-47fe-bd3c-dc272cd3982b}</Project>
+      <Name>BCP.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

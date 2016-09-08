@@ -12,6 +12,8 @@ using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Text;
+using BCP.WebAPI.Helpers;
+using BCP.Common.Helper;
 
 namespace BCP.WebAPI.SignalR
 {
@@ -458,19 +460,291 @@ namespace BCP.WebAPI.SignalR
             //if (srp.GetType() == typeof(PTGTextPackage))
             if (srp.SCType == SignalRCommunicationType.PersonToGroup && srp.SMType == SignalRMessageType.Text)
                 return (ISignalRMessagePacke)new PTGTextPackage() { SignalRMessagePackage = srp };
+
             if (srp.SCType == SignalRCommunicationType.PersonToPerson && srp.SMType == SignalRMessageType.Img)
                 return (ISignalRMessagePacke)new PTPImgPackage() { SignalRMessagePackage = srp };
+
             if (srp.SCType == SignalRCommunicationType.PersonToGroup && srp.SMType == SignalRMessageType.Img)
                 return (ISignalRMessagePacke)new PTGImgPackage() { SignalRMessagePackage = srp };
+
+            if (srp.SCType == SignalRCommunicationType.PersonToPerson && srp.SMType == SignalRMessageType.File)
+                return (ISignalRMessagePacke)new PTPFilePackage() { SignalRMessagePackage = srp };
+
+            if (srp.SCType == SignalRCommunicationType.PersonToGroup && srp.SMType == SignalRMessageType.File)
+                return (ISignalRMessagePacke)new PTGFilePackage() { SignalRMessagePackage = srp };
             return null;
         }
     }
 
-    public class PTPTextPackage : ISignalRMessagePacke
+    public class PTPTextPackage :PTPPackage, ISignalRMessagePacke
+    {
+        //public SignalRMessagePackage SignalRMessagePackage { get; set; }
+
+        //public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        //{
+        //    UnityBootStrapper ubs = new UnityBootStrapper();
+        //    ubs.Bindings();
+        //    IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+        //    var from = hub.Get();
+        //    //var to = hub.Get(SignalRMessagePackage.ToUserId);
+        //    var to = userService.GetUser(SignalRMessagePackage.ToUserId);
+        //    //数据验证
+        //    if (from == null || to == null)
+        //    {
+        //        Clients.Client(Context.ConnectionId)
+        //            .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
+        //                SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+        //        return;
+        //    }
+
+        //    try
+        //    {
+        //        //存储发送信息
+        //        if (userService.AddPTPMessage(new UserMessageDTO()
+        //        {
+        //            Content = SignalRMessagePackage.Context.ToString(),
+        //            CreateTime = DateTime.Now,
+        //            ToUserId = SignalRMessagePackage.ToUserId,
+        //            FromUserId = SignalRMessagePackage.FromUserId,
+        //            State = 0,
+        //            MessageType = (int)SignalRMessagePackage.SMType
+        //        }))
+        //        {
+        //            //将信息发送给接受者 如果接受者在线
+        //            //to = OnLineUser.Where(it => it.ID == recevier.ID && String.IsNullOrWhiteSpace(it.ContextId)).FirstOrDefault();
+        //            to = hub.Get(SignalRMessagePackage.ToUserId);
+        //            if (to != null && !String.IsNullOrWhiteSpace(to.ContextId)) Clients.Client(to.ContextId)
+        //                  .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(SignalRMessagePackage.Context.ToString(), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+
+        //            //通知发送者 信息发送成功
+        //            Clients.Client(Context.ConnectionId)
+        //                .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("", SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, true));
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //通知发送者 信息发送失败
+        //        Clients.Client(Context.ConnectionId)
+        //            .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(ex.Message, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+        //    }
+        //}
+
+        //public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        //{
+        //    UnityBootStrapper ubs = new UnityBootStrapper();
+        //    ubs.Bindings();
+        //    IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+        //    //var from = hub.Get();
+        //    try
+        //    {
+        //        userService.MarkPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId);
+        //    }
+        //    catch (Exception ex)
+        //    { }
+        //}
+
+        //public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        //{
+        //    UnityBootStrapper ubs = new UnityBootStrapper();
+        //    ubs.Bindings();
+        //    IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+        //    var from = hub.Get();
+        //    List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId).Where(it => it.State == 0).ToList();
+        //    foreach (var node in message)
+        //    {
+        //        if (node.MessageType != (int)SignalRMessageType.Text) continue;
+        //        if (node.FromUserId == SignalRMessagePackage.FromUserId)
+        //        {
+        //            Clients.Client(from.ContextId)
+        //                .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+        //        }
+        //        else
+        //        {
+        //            Clients.Client(from.ContextId)
+        //                .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
+        //        }
+        //    }
+        //}
+
+        //public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
+        //{
+        //    UnityBootStrapper ubs = new UnityBootStrapper();
+        //    ubs.Bindings();
+        //    IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+        //    var from = hub.Get();
+        //    List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId).Where(it => it.CreateTime != null && it.CreateTime.Value.Year ==                                                   date.Year && it.CreateTime.Value.Month == date.Month && it.CreateTime.Value.Day == date.Day).ToList();
+        //    foreach (var node in message)
+        //    {
+        //        if (node.MessageType != (int)SignalRMessageType.Text) continue;
+        //        if (node.FromUserId == SignalRMessagePackage.FromUserId)
+        //        {
+        //            Clients.Client(from.ContextId)
+        //                .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+        //        }
+        //        else
+        //        {
+        //            Clients.Client(from.ContextId)
+        //                .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
+        //        }
+        //    }
+        //}
+    }
+
+    public class StatePackage : ISignalRMessagePacke
     {
         public SignalRMessagePackage SignalRMessagePackage { get; set; }
 
         public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class PTGTextPackage :PTGPackage, ISignalRMessagePacke
+    {
+        //public SignalRMessagePackage SignalRMessagePackage { get; set; }
+
+        //public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        //{
+        //    UnityBootStrapper ubs = new UnityBootStrapper();
+        //    ubs.Bindings();
+        //    IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+        //    try
+        //    {
+        //        //数据验证
+        //        var from = hub.Get();
+        //        var to = userService.GetGroupById(SignalRMessagePackage.ToUserId);
+        //        if (from == null || to == null)
+        //        {
+        //            Clients.Client(Context.ConnectionId)
+        //                .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
+        //                SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+        //            return;
+        //        }
+
+        //        //信息处理
+        //        GroupMessagerDTO gmd = new GroupMessagerDTO()
+        //        {
+        //            Content = SignalRMessagePackage.Context.ToString(),
+        //            GroupId = SignalRMessagePackage.ToUserId,
+        //            MessageType = (int)SignalRMessagePackage.SMType,
+        //            CrateTime = DateTime.Now,
+        //            CrateUseId = SignalRMessagePackage.FromUserId
+        //        };
+        //        if (userService.AddGroupMessage(gmd, SignalRMessagePackage.FromUserId))
+        //        {
+        //            foreach (var node in hub.GetAllOnLineUser())
+        //            {
+        //                if (node.ID == SignalRMessagePackage.FromUserId) continue;
+        //                if (node.Groups != null && node.Groups.Where(it => it.Id == SignalRMessagePackage.ToUserId).FirstOrDefault() != null && !String.IsNullOrWhiteSpace(node.ContextId))
+        //                {
+        //                    Clients.Client(node.ContextId)
+        //                    .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(SignalRMessagePackage.Context.ToString(), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+        //                }
+        //            }
+        //        }
+
+        //        //通知发送方 信息发送成功
+        //        Clients.Client(Context.ConnectionId)
+        //            .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("",
+        //            SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, true));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        //通知发送方 信息发送失败
+        //        Clients.Client(Context.ConnectionId)
+        //        .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(ex.Message,
+        //        SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+        //    }
+        //}
+
+        //public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        //{
+
+        //}
+
+        //public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        //{
+        //    UnityBootStrapper ubs = new UnityBootStrapper();
+        //    ubs.Bindings();
+        //    IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+        //    try
+        //    {
+        //        var from = hub.Get();
+        //        List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID,SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == DateTime.Now.Year && it.CrateTime.Value.Month == DateTime.Now.Month && it.CrateTime.Value.Day == DateTime.Now.Day).ToList();
+        //        foreach (var node in list)
+        //        {
+        //            if (node.MessageType == (int)SignalRMessageType.Text)
+        //            {
+        //                Clients.Client(Context.ConnectionId)
+        //                    .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, (Int32)node.CrateUseId, (int)node.GroupId));
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    { }
+        //}
+
+        //public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
+        //{
+        //    UnityBootStrapper ubs = new UnityBootStrapper();
+        //    ubs.Bindings();
+        //    IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+        //    try
+        //    {
+        //        var from = hub.Get();
+        //        List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID,SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == date.Year && it.CrateTime.Value.Month == date.Month && it.CrateTime.Value.Day == date.Day).ToList();
+        //        foreach (var node in list)
+        //        {
+        //            if (node.MessageType == (int)SignalRMessageType.Text)
+        //            {
+        //                Clients.Client(Context.ConnectionId)
+        //                    .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, SignalRMessagePackage.FromUserId, (int)node.GroupId));
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    { }
+        //}
+    }
+
+    public class PTPImgPackage :PTPPackage, ISignalRMessagePacke
+    {
+    }
+
+    public class PTGImgPackage :PTGPackage, ISignalRMessagePacke
+    {
+    }
+
+    public class PTPFilePackage : PTPPackage, ISignalRMessagePacke
+    { }
+
+    public class PTGFilePackage : PTGPackage, ISignalRMessagePacke
+    { }
+
+    /// <summary>
+    /// 点对点通讯包基类
+    /// </summary>
+    public class PTPPackage 
+    {
+        public SignalRMessagePackage SignalRMessagePackage { get; set; }
+
+        public virtual void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
@@ -503,8 +777,10 @@ namespace BCP.WebAPI.SignalR
                     //将信息发送给接受者 如果接受者在线
                     //to = OnLineUser.Where(it => it.ID == recevier.ID && String.IsNullOrWhiteSpace(it.ContextId)).FirstOrDefault();
                     to = hub.Get(SignalRMessagePackage.ToUserId);
-                    if (to != null && !String.IsNullOrWhiteSpace(to.ContextId)) Clients.Client(to.ContextId)
-                          .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(SignalRMessagePackage.Context.ToString(), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                    if (to != null && !String.IsNullOrWhiteSpace(to.ContextId))
+                        Clients.Client(to.ContextId)
+                            //.ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(SignalRMessagePackage.Context.ToString(), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                          .ReceviceMessage(SignalRMessagePackage);
 
                     //通知发送者 信息发送成功
                     Clients.Client(Context.ConnectionId)
@@ -519,7 +795,7 @@ namespace BCP.WebAPI.SignalR
             }
         }
 
-        public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        public virtual void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
@@ -533,7 +809,7 @@ namespace BCP.WebAPI.SignalR
             { }
         }
 
-        public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        public virtual void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
@@ -542,74 +818,89 @@ namespace BCP.WebAPI.SignalR
             List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId).Where(it => it.State == 0).ToList();
             foreach (var node in message)
             {
-                if (node.MessageType != (int)SignalRMessageType.Text) continue;
-                if (node.FromUserId == SignalRMessagePackage.FromUserId)
-                {
-                    Clients.Client(from.ContextId)
-                        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
-                }
-                else
-                {
-                    Clients.Client(from.ContextId)
-                        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
-                }
+                //if (node.MessageType != (int)SignalRMessageType.Text) continue;
+
+                //if (node.MessageType == (int)SignalRMessageType.Text)
+                //{
+                //    if (node.FromUserId == SignalRMessagePackage.FromUserId)
+                //    {
+                //        Clients.Client(from.ContextId)
+                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                //    }
+                //    else
+                //    {
+                //        Clients.Client(from.ContextId)
+                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
+                //    }
+                //}
+                //else if (node.MessageType == (int)SignalRMessageType.File)
+                //{
+                //    if (node.FromUserId == SignalRMessagePackage.FromUserId)
+                //    {
+                //        Clients.Client(from.ContextId)
+                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPFilePackage(node.Content,FileHelper.GetRealFileName(node.Content), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                //    }
+                //    else
+                //    {
+                //        Clients.Client(from.ContextId)
+                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPFilePackage(node.Content, FileHelper.GetRealFileName(node.Content), SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
+                //    }
+                //}
+                //else if (node.MessageType == (int)SignalRMessageType.Img)
+                //{
+                //    if (node.FromUserId == SignalRMessagePackage.FromUserId)
+                //    {
+                //        Clients.Client(from.ContextId)
+                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.GetRealFileName(node.Content), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                //    }
+                //    else
+                //    {
+                //        Clients.Client(from.ContextId)
+                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.GetRealFileName(node.Content), SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
+                //    }
+                //}
+                //else
+                //{ }
+
+                Clients.Client(from.ContextId)
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetPackage(node));
             }
         }
 
-        public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
+        public virtual void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
         {
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             var from = hub.Get();
-            List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId).Where(it => it.CreateTime != null && it.CreateTime.Value.Year ==                                                   date.Year && it.CreateTime.Value.Month == date.Month && it.CreateTime.Value.Day == date.Day).ToList();
+            List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId).Where(it => it.CreateTime != null && it.CreateTime.Value.Year == date.Year && it.CreateTime.Value.Month == date.Month && it.CreateTime.Value.Day == date.Day).ToList();
             foreach (var node in message)
             {
-                if (node.MessageType != (int)SignalRMessageType.Text) continue;
-                if (node.FromUserId == SignalRMessagePackage.FromUserId)
-                {
-                    Clients.Client(from.ContextId)
-                        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
-                }
-                else
-                {
-                    Clients.Client(from.ContextId)
-                        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
-                }
+                //if (node.MessageType != (int)SignalRMessageType.Text) continue;
+                //if (node.FromUserId == SignalRMessagePackage.FromUserId)
+                //{
+                //    Clients.Client(from.ContextId)
+                //        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                //}
+                //else
+                //{
+                //    Clients.Client(from.ContextId)
+                //        .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
+                //}
+                Clients.Client(from.ContextId)
+                    .ReceviceMessage(SignalRMessagePackageFactory.GetPackage(node));
             }
         }
     }
 
-    public class StatePackage : ISignalRMessagePacke
+    /// <summary>
+    /// 点对全通讯包基类
+    /// </summary>
+    public class PTGPackage 
     {
         public SignalRMessagePackage SignalRMessagePackage { get; set; }
 
-        public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class PTGTextPackage : ISignalRMessagePacke
-    {
-        public SignalRMessagePackage SignalRMessagePackage { get; set; }
-
-        public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        public virtual void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
@@ -643,8 +934,10 @@ namespace BCP.WebAPI.SignalR
                         if (node.ID == SignalRMessagePackage.FromUserId) continue;
                         if (node.Groups != null && node.Groups.Where(it => it.Id == SignalRMessagePackage.ToUserId).FirstOrDefault() != null && !String.IsNullOrWhiteSpace(node.ContextId))
                         {
+                            //Clients.Client(node.ContextId)
+                            //.ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(SignalRMessagePackage.Context.ToString(), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
                             Clients.Client(node.ContextId)
-                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(SignalRMessagePackage.Context.ToString(), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
+                                .ReceviceMessage(SignalRMessagePackage);
                         }
                     }
                 }
@@ -663,12 +956,12 @@ namespace BCP.WebAPI.SignalR
             }
         }
 
-        public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        public virtual void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
 
         }
 
-        public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
+        public virtual void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
         {
             UnityBootStrapper ubs = new UnityBootStrapper();
             ubs.Bindings();
@@ -676,166 +969,44 @@ namespace BCP.WebAPI.SignalR
             try
             {
                 var from = hub.Get();
-                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID,SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == DateTime.Now.Year && it.CrateTime.Value.Month == DateTime.Now.Month && it.CrateTime.Value.Day == DateTime.Now.Day).ToList();
+                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID, SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == DateTime.Now.Year && it.CrateTime.Value.Month == DateTime.Now.Month && it.CrateTime.Value.Day == DateTime.Now.Day).ToList();
                 foreach (var node in list)
                 {
-                    if (node.MessageType == (int)SignalRMessageType.Text)
-                    {
-                        Clients.Client(Context.ConnectionId)
-                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, (Int32)node.CrateUseId, (int)node.GroupId));
-                    }
-                }
-            }
-            catch (Exception ex)
-            { }
-        }
-
-        public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
-        {
-            UnityBootStrapper ubs = new UnityBootStrapper();
-            ubs.Bindings();
-            IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
-            try
-            {
-                var from = hub.Get();
-                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID,SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == date.Year && it.CrateTime.Value.Month == date.Month && it.CrateTime.Value.Day == date.Day).ToList();
-                foreach (var node in list)
-                {
-                    if (node.MessageType == (int)SignalRMessageType.Text)
-                    {
-                        Clients.Client(Context.ConnectionId)
-                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, SignalRMessagePackage.FromUserId, (int)node.GroupId));
-                    }
-                }
-            }
-            catch (Exception ex)
-            { }
-        }
-    }
-
-    public class PTPImgPackage : ISignalRMessagePacke
-    {
-        public SignalRMessagePackage SignalRMessagePackage{get;set;}
-
-        public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class PTGImgPackage : ISignalRMessagePacke
-    {
-        public SignalRMessagePackage SignalRMessagePackage{get;set;}
-
-        public void SendMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            UnityBootStrapper ubs = new UnityBootStrapper();
-            ubs.Bindings();
-            IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
-            try
-            {
-                //数据验证
-                var from = hub.Get();
-                var to = userService.GetGroupById(SignalRMessagePackage.ToUserId);
-                if (from == null || to == null)
-                {
+                    //if (node.MessageType == (int)SignalRMessageType.Text)
+                    //{
+                    //    Clients.Client(Context.ConnectionId)
+                    //        .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, (Int32)node.CrateUseId, (int)node.GroupId));
+                    //}
                     Clients.Client(Context.ConnectionId)
-                        .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(from == null ? "发送者不在线" : to == null ? "接收方不存在" : "",
-                        SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
-                    return;
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetPackage(node));
                 }
-
-
-                //图片处理
-                Regex regex=new Regex(@"\w+\.(jpg|gif|bmp|png)");
-                String path = SignalRMessagePackage.FromUserId + SignalRMessagePackage.ToUserId + DateTime.Now.ToString("yyyyMMddHHmmssffff") + SignalRMessagePackage.Title;
-                if (regex.IsMatch(SignalRMessagePackage.Title))
-                {
-                    //组合Content
-                    List<String> list = SignalRMessagePackage.Context as List<String>;
-
-                    if (list == null) throw new Exception("错误的数据类型");
-                    StringBuilder sb = new StringBuilder();
-                    sb.Clear();
-                    foreach (var item in list)
-                    {
-                        sb.Append(item);
-                    }
-
-                    byte[] img = Convert.FromBase64String(sb.ToString());
-                    using (var sw = new MemoryStream(img))
-                    {
-                        Bitmap bitmap = new Bitmap(sw);
-                        bitmap.Save(@"C:\" + path);
-                    }
-                }
-                else
-                    return;//非图片类型
-
-                //信息处理
-                GroupMessagerDTO gmd = new GroupMessagerDTO()
-                {
-                    Content = path,
-                    GroupId = SignalRMessagePackage.ToUserId,
-                    MessageType = (int)SignalRMessagePackage.SMType,
-                    CrateTime = DateTime.Now,
-                    CrateUseId = SignalRMessagePackage.FromUserId
-                };
-                if (userService.AddGroupMessage(gmd, SignalRMessagePackage.FromUserId))
-                {
-                    foreach (var node in hub.GetAllOnLineUser())
-                    {
-                        if (node.ID == SignalRMessagePackage.FromUserId) continue;
-                        if (node.Groups != null && node.Groups.Where(it => it.Id == SignalRMessagePackage.ToUserId).FirstOrDefault() != null && !String.IsNullOrWhiteSpace(node.ContextId))
-                        {
-                            Clients.Client(node.ContextId)
-                            .ReceviceMessage(SignalRMessagePackageFactory.GetPTGImgPackage((List<String>)SignalRMessagePackage.Context,SignalRMessagePackage.Title, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
-                        }
-                    }
-                }
-
-                //通知发送方 信息发送成功
-                Clients.Client(Context.ConnectionId)
-                    .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage("",
-                    SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, true));
             }
             catch (Exception ex)
+            { }
+        }
+
+        public virtual void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
+        {
+            UnityBootStrapper ubs = new UnityBootStrapper();
+            ubs.Bindings();
+            IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
+            try
             {
-                //通知发送方 信息发送失败
-                Clients.Client(Context.ConnectionId)
-                .ReceviceMessage(SignalRMessagePackageFactory.GetStatePackage(ex.Message,
-                SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId, SignalRMessagePackage.SCType, false));
+                var from = hub.Get();
+                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID, SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == date.Year && it.CrateTime.Value.Month == date.Month && it.CrateTime.Value.Day == date.Day).ToList();
+                foreach (var node in list)
+                {
+                    //if (node.MessageType == (int)SignalRMessageType.Text)
+                    //{
+                    //    Clients.Client(Context.ConnectionId)
+                    //        .ReceviceMessage(SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, SignalRMessagePackage.FromUserId, (int)node.GroupId));
+                    //}
+                    Clients.Client(Context.ConnectionId)
+                        .ReceviceMessage(SignalRMessagePackageFactory.GetPackage(node));
+                }
             }
-        }
-
-        public void MarkMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InitClient(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void GetAllMessage(IHubCallerConnectionContext<dynamic> Clients, HubCallerContext Context, MyHub hub, DateTime date)
-        {
-            throw new NotImplementedException();
+            catch (Exception ex)
+            { }
         }
     }
 }

@@ -121,7 +121,6 @@ namespace BCP.Domain.Service
 
         #endregion
 
-
         #region group
         /// <summary>
         /// 修改群组数据
@@ -233,5 +232,12 @@ namespace BCP.Domain.Service
         List<GroupMessagerDTO> GetPTGMessage(int userId, int groupId);
 
         #endregion
+
+        /// <summary>
+        /// 获取所有已联系过的用户
+        /// </summary>
+        /// <param name="userId">登录用户Id</param>
+        /// <returns></returns>
+        List<Int32> GetAllCommunitcatedUserByUserId(int userId);
     }
 }
