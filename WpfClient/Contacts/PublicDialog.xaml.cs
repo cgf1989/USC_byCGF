@@ -76,7 +76,7 @@ namespace WpfClient.Contacts
             if (input.Content.Equals("+"))      //防止点击"+"直接发送消息了
                 return;
 
-            String keyWord = "";
+            //String keyWord = "";
 
             if (input.ToolTip.Equals("发送"))
             {

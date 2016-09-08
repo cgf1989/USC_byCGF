@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded" >
     <UserControl.Resources>
         <Style x:Key="ListViewItemStyle1" TargetType="{x:Type ListViewItem}">
             <Setter Property="Background" Value="Transparent"/>
@@ -100,10 +100,10 @@
             </ComboBox>
         </Grid>
 
-        <StackPanel Grid.Row="1" Background="AliceBlue"  VerticalAlignment="Stretch">
+        <Grid Grid.Row="1" Background="AliceBlue"  VerticalAlignment="Stretch" >
 
             <!--<Label HorizontalContentAlignment="Center" Content="还没有消息哟"/>-->
-            <ListView BorderBrush="Transparent" Name="Lv_message">
+            <ListView BorderBrush="Transparent"  Name="Lv_message" >
                 <ListViewItem Style="{DynamicResource ListViewItemStyle1}" ToolTip="14:33" Name="小贾" Uid="1" Tag="您好">
                     <Image Source="/WpfClient;component/Images/profileIcon23.jpg"/>
                 </ListViewItem>
@@ -115,6 +115,6 @@
                 </ListViewItem>
             </ListView>
 
-        </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

@@ -17,6 +17,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfClient.Contacts;
+using WpfClient.Login;
 
 namespace WpfClient.Teams
 {
@@ -29,6 +31,7 @@ namespace WpfClient.Teams
         {
             InitializeComponent();
 
+            NormalGroupDialogList = new List<NormalGroupDialog>();
             LoadNormalGroup();
         }
 
@@ -183,6 +186,7 @@ namespace WpfClient.Teams
         }
 
 
+        public static List<NormalGroupDialog> NormalGroupDialogList { set; get; }
         /// <summary>
         /// 存储用户的普通群组
         /// </summary>
@@ -253,32 +257,30 @@ namespace WpfClient.Teams
                 //selectTreeViewParent(curTv);
 
 
-                Contacts.NormalGroupDialog pd = new Contacts.NormalGroupDialog();
-                pd.SignalRProxy = new Contacts.SignalRProxy();
-                pd.SignalRProxy.ConnectAsync();
+                NormalGroupDialog pd = new NormalGroupDialog();
+                NormalGroupDialogList.Add(pd);
+
                 pd.TitleLable = lbName;
                 pd.CurrentGroup = group;
-                //Contacts.SignalRProxy s = new Contacts.SignalRProxy();
                 pd.Closed += (sen, er) =>
                 {
-                    //s.Logout(MainClient.currentUser.UserName);
-                    pd.SignalRProxy.Dispose();
+                    //LoginWin.SignalRProxy.Dispose();
+                    NormalGroupDialogList.Remove(pd);
                 };
 
 
-                //pd.Init(MainClient.currentUser.UserName, MainClient.currentUser.Department, s);
                 pd.Init(MainClient.CurrentUser.ActualName,group.Id.ToString());
 
-                System.Threading.Thread.Sleep(1000);
+                //System.Threading.Thread.Sleep(1000);
 
 
-                pd.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
-                //s.Login(MainClient.currentUser.UserName, MainClient.currentUser.Password);
-                //s.GetContactRecord(MainClient.currentUser.Department);
                 pd.Show();
+
+                System.Threading.Thread.Sleep(500);
+
                 SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage("", MainClient.CurrentUser.ID, group.Id);
                 String json_srmp = JsonConvert.SerializeObject(srmp);
-                pd.SignalRProxy.InitPTP(json_srmp);
+                LoginWin.SignalRProxy.InitPTP(json_srmp);
             }
 
         }

@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BCP.ViewModel;
+using WpfClient.Contacts;
+using BCP.WebAPI.SignalR;
 
 namespace WpfClient.Login
 {
@@ -23,15 +25,12 @@ namespace WpfClient.Login
     /// </summary>
     public partial class LoginWin : MyMacClass_noneMaxBtn
     {
-        /// <summary>
-        /// 所有用户信息都存在该列表（deomo用）
-        /// </summary>
-        public static List<SignalCore.UserInfo> userList = new List<SignalCore.UserInfo>();
+        public static SignalRProxy SignalRProxy { get; set; }
+        public static SignalRMessagePackage SignalR_MsgPackage { get; set; }
 
         public LoginWin()
         {
             InitializeComponent();
-            userList = SignalCore.Data.InitUserInfo();
         }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -56,7 +55,7 @@ namespace WpfClient.Login
                 response.EnsureSuccessStatusCode();
                 if (response.IsSuccessStatusCode)
                 {
-                    string  ds = await response.Content.ReadAsStringAsync();
+                    string ds = await response.Content.ReadAsStringAsync();
                     if (ds.ToString() == "false")
                     {
                         MessageBox.Show("用户名或密码错误");
@@ -69,12 +68,125 @@ namespace WpfClient.Login
                             UserDTO currentUser = JsonConvert.DeserializeObject<UserDTO>(result.Data);
                             MainClient.CurrentUser = currentUser;  //返回当前用户
                             MainClient mainWin = new MainClient();
+                            
+                            MessageTab.MessageBox mb = new MessageTab.MessageBox();//消息页面
 
-                            //登录服务器（聊天模块相关）
+                            //登录服务器（聊天模块相关,160905新增）
+                            SignalRProxy = new SignalRProxy();
+                            SignalRProxy.ConnectAsync();
+                            System.Threading.Thread.Sleep(10000);
+
+                            SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
+
+                            if (SignalRProxy.ReceviceMessage == null)
+                            {
+
+                                SignalRProxy.ReceviceMessage = (package) =>
+                                {
+
+                                    this.Dispatcher.Invoke(() =>
+                                    {
+                                      
+                                        if (package.SMType == SignalRMessageType.StateMessage) { return; }
 
 
+                                        if (package.SCType == SignalRCommunicationType.PersonToPerson)
+                                        {
+                                            if (Contacts.Contacts.PrivateDialogList.Count > 0)
+                                            {
+                                                foreach (var item in Contacts.Contacts.PrivateDialogList)
+                                                {
+
+                                                    if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
+                                                    {
+                                                        LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                                                        leftMessageBoxUControl.Init(item.To, package.Context.ToString());
+                                                        item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+                                                    }
+                                                    else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
+                                                    {
+                                                        RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                                        rightMessageBoxUControl.Init(item.Self, package.Context.ToString(), null, "Text");
+                                                        item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                                                    }
+
+                                                }
+                                            }
+                                            else     //接收消息加载到消息页面
+                                            {
+
+                                                //加载到界面
+                                                Image img = new Image();
+                                                BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                img.Source = bitImg;
+                                                ListViewItem lvi = new ListViewItem();
+
+                                                ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+
+                                                lvi.Name = "_"+package.FromUserId.ToString();
+                                                lvi.Uid = "1";
+                                                lvi.ToolTip = "10:02";
+                                                lvi.Tag = package.Context;
+                                                lvi.Content = img;
+
+                                                mb.Lv_message.Items.Add(lvi);
+
+                                            }
+                                        }
+                                        else if (package.SCType == SignalRCommunicationType.PersonToGroup)
+                                        {
+                                           
+                                            if (Teams.organizationPanel.NormalGroupDialogList.Count > 0)
+                                            {
+                                                
+
+                                                foreach (var item in Teams.organizationPanel.NormalGroupDialogList)
+                                                {
+                                                                                                        
+                                                    if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.CurrentGroup.Id)
+                                                    {
+                                                        RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                                        rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString(), null, "Text");
+                                                        item.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                                                    }
+                                                    else 
+                                                    {
+                                                        string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
+                                                        LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                                                        leftMessageBoxUControl.Init(actualName, package.Context.ToString());
+                                                        item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
+                                                    }
+
+
+                                                }
+                                              
+
+                                            }
+
+                                        }
+
+
+                                    }
+                                    );
+
+
+
+                                };
+                            }
+
+                        
+
+                            mainWin.MsgPanel.Children.Add(mb);//消息页面加到主窗体
+                            //后台绑定
+                           
                             this.Close();
+                           
                             mainWin.ShowDialog();
+
+                       
                         }
                         else
                         {
@@ -106,13 +218,20 @@ namespace WpfClient.Login
                 //    }
 
                 //}
-                
+
                 //MessageBox.Show("该账户不存在");
             }
 
 
 
         }
+
+        //private void MainWin_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    Binding MsgBinding = new Binding("ActualHeigh");
+        //    MsgBinding.ElementName = "mainWin.MsgPanel";
+        //    mb.SetBinding(MessageTab.MessageBox.HeightProperty, MsgBinding);
+        //}
 
 
         /// <summary>
@@ -134,7 +253,7 @@ namespace WpfClient.Login
         /// <param name="e"></param>
         private void hpLink_findPassword_Click(object sender, RoutedEventArgs e)
         {
-            UserManageWin umw=new UserManageWin();
+            UserManageWin umw = new UserManageWin();
             umw.ShowDialog();
         }
     }

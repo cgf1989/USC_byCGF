@@ -143,8 +143,8 @@
                             <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
                                 <Grid>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <Image x:Name="TabItemImage" Grid.Row="0" Height="30" Width="30" Source="Images/infomation.png"/>
                                     <!--<ContentPresenter Grid.Row="1" x:Name="Content" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>-->
@@ -596,8 +596,8 @@
         </Grid>
         <Grid Name="Head_Grid" Grid.Row="1">
             <TabControl Style="{DynamicResource TabControlStyle1}" >
-                <TabItem Grid.Column="0" ToolTip="消息"  Style="{DynamicResource TabItemStyle1}" xmlns:Message="clr-namespace:WpfClient.MessageTab">
-                    <Message:MessageBox/>
+                <TabItem Name="aaa" VerticalAlignment="Stretch"  Grid.Column="0" ToolTip="消息" Style="{DynamicResource TabItemStyle1}" xmlns:Message="clr-namespace:WpfClient.MessageTab">
+                    <Grid Name="MsgPanel" ></Grid><!--<Message:MessageBox/>-->
                 </TabItem>
                 <TabItem Grid.Column="1" ToolTip="联系人" Style="{DynamicResource TabItemStyle2}" xmlns:Contacts="clr-namespace:WpfClient.Contacts">
                     <Contacts:Contacts/>                

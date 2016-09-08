@@ -19,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfClient.Login;
 using WpfClient.Teams;
 
 namespace WpfClient.Contacts
@@ -66,12 +67,12 @@ namespace WpfClient.Contacts
         private bool IsShowMax = false;
         private BackGroundType mBackGroundType = BackGroundType.Blue;
 
-        public SignalRProxy SignalRProxy { get; set; }
+        //public SignalRProxy SignalRProxy { get; set; }
         private String Group { get; set; }
         private String UserName { get; set; }
         private System.Guid CommentId { get; set; }
         public GroupDTO CurrentGroup { get; set; }
-        List<GroupMemberDTO> groupMembers { get; set; }
+        public List<GroupMemberDTO> groupMembers { get; set; }
 
         void InputNoticeTBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -92,7 +93,7 @@ namespace WpfClient.Contacts
             {
                 SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage(InputNoticeTBox.Text.Trim(), MainClient.CurrentUser.ID, CurrentGroup.Id);
                 string json_srmp = JsonConvert.SerializeObject(srmp);
-                SignalRProxy.SendMessage(json_srmp);
+                LoginWin.SignalRProxy.SendMessage(json_srmp);
 
 
                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
@@ -123,61 +124,38 @@ namespace WpfClient.Contacts
 
         public void Init(String userName, String group)
         {
-            if (SignalRProxy == null)
-            {
-                SignalRProxy = new SignalRProxy();
-            }
-            SignalRProxy.ConnectAsync();
+  
 
             this.Group = group;
             this.UserName = userName;
 
-            if (SignalRProxy.ReceviceMessage == null)
-            {
-                SignalRProxy.ReceviceMessage = (package) =>
-                {
+            //if (LoginWin.SignalRProxy.ReceviceMessage == null)
+            //{
+            //    LoginWin.SignalRProxy.ReceviceMessage = (package) =>
+            //    {
 
-                    this.Dispatcher.Invoke(() =>
-                   {
-                        //string userActualName = "";
-                        //HttpClient client = new HttpClient();
-                        //client.BaseAddress = new Uri("http://localhost:37768/");
-                        //client.DefaultRequestHeaders.Accept.Clear();
-                        //client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            //        this.Dispatcher.Invoke(() =>
+            //       {         
 
-                        //HttpResponseMessage response = await client.GetAsync("api/User/GetUserById?id=" + package.FromUserId);
-                        //response.EnsureSuccessStatusCode();
-                        //if (response.IsSuccessStatusCode)
-                        //{
-                        //    string ds = await response.Content.ReadAsStringAsync();
-                        //    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
-                        //    if (result.Success)
-                        //    {
-                        //        userActualName = JsonConvert.DeserializeObject<UserDTO>(result.Data).ActualName;
-                        //    }
-                        //    else
-                        //    { MessageBox.Show("用户名获取失败"); }
-                        //}
+            //            if (package.SMType == SignalRMessageType.StateMessage) { return; }
+            //if (MainClient.CurrentUser.ID.Equals(package.FromUserId))
+            //{
+            //    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+            //    rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString(), null, "Text");
+            //    this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
 
-                        if (package.SMType == SignalRMessageType.StateMessage) { return; }
-                       if (MainClient.CurrentUser.ID.Equals(package.FromUserId))
-                       {
-                           RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                           rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString(), null, "Text");
-                           this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+            //}
+            //else
+            //{
+            //    string actualName = groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
 
-                       }
-                       else
-                       {
-                           string actualName = groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
-
-                           LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                           leftMessageBoxUControl.Init(actualName, package.Context.ToString());
-                           this.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
-                       }
-                   });
-                };
-            }
+            //    LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+            //    leftMessageBoxUControl.Init(actualName, package.Context.ToString());
+            //    this.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
+            //}
+            //       });
+            //    };
+            //}
 
 
 
@@ -484,12 +462,21 @@ namespace WpfClient.Contacts
                 fs.Read(byData, 0, byData.Length);
                 fs.Close();
 
-                //string context = Convert.ToBase64String(byData);
-                //SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(context, ofd.SafeFileName, MainClient.CurrentUser.ID,CurrentGroup.Id);
-                //srmp.SMType = SignalRMessageType.Img;
-                //string json_srmp = JsonConvert.SerializeObject(srmp);
-                //SignalRProxy.SendMessage(json_srmp);
-
+                string context1 = Convert.ToBase64String(byData);
+                List<string> aaa = new List<string>();
+                for (int i = 0; i < context1.Length; i=i+1000)
+                {
+                    if (i + 1000 >=  context1.Length)
+                        aaa.Add(context1.Substring(i, context1.Length-i));
+                    else
+                        aaa.Add(context1.Substring(i, 1000));
+                }
+                //int aaaa = context.Length;
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(aaa, ofd.SafeFileName, MainClient.CurrentUser.ID, CurrentGroup.Id);
+                srmp.SMType = SignalRMessageType.Img;
+                string json_srmp = JsonConvert.SerializeObject(srmp);
+                LoginWin.SignalRProxy.SendMessage(json_srmp);
+                
 
                 //用流的方式来读取图片不会占用图片，直接用uri的方式则会
                 BitmapImage myBitmapImage = new BitmapImage();

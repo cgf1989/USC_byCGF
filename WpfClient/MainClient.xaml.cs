@@ -54,6 +54,11 @@ namespace WpfClient
             Login.ModifyPwdWin mdfPwdWin = new Login.ModifyPwdWin();
             mdfPwdWin.currentUser = CurrentUser;
             mdfPwdWin.ShowDialog();
+
+            MessageBox.Show(aaa.Height.ToString()+"--"+aaa.ActualHeight.ToString()+ "-"+MsgPanel.Height.ToString()+"-"+ MsgPanel.ActualHeight.ToString());
+           
+            
+            
         }
 
         async void getAllUser()

@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfClient.Login;
 
 namespace WpfClient.Contacts
 {
@@ -28,6 +29,7 @@ namespace WpfClient.Contacts
         public Contacts()
         {
             InitializeComponent();
+            PrivateDialogList = new List<PrivateDialog>();
 
             LoadUserGroup();
             LoadGroupWihtoutUsers(); //分组改动时要重新加载，如添加分组，删除分组时
@@ -152,6 +154,8 @@ namespace WpfClient.Contacts
 
         }
 
+
+        public static List<PrivateDialog> PrivateDialogList { get; set;}
         /// <summary>
         ///  点开聊天框（点对点）
         /// </summary>
@@ -162,8 +166,7 @@ namespace WpfClient.Contacts
             try
             {
                 PrivateDialog pd1 = new PrivateDialog();
-                pd1.SignalRProxy = new SignalRProxy();
-                pd1.SignalRProxy.ConnectAsync();
+                PrivateDialogList.Add(pd1);
                 pd1.To = (sender as ListViewItem).Name.ToString();
                 pd1.Self = MainClient.CurrentUser.UserName;
                 pd1.ReplyId = Convert.ToInt32((sender as ListViewItem).Tag.ToString());
@@ -171,22 +174,20 @@ namespace WpfClient.Contacts
 
                 pd1.Closed += (sen, er) =>
                 {
-                    pd1.SignalRProxy.Dispose();
+                    //LoginWin.SignalRProxy.Dispose();
+                    PrivateDialogList.Remove(pd1);
                 };
 
                 pd1.Init();
-
                 System.Threading.Thread.Sleep(1000);
 
 
-
-                pd1.SignalRProxy.Login(MainClient.CurrentUser.UserName, MainClient.CurrentUser.Password);
-
                 pd1.Show();
+
 
                 SignalRMessagePackage srmp =SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
                 String json_srmp = JsonConvert.SerializeObject(srmp);
-                pd1.SignalRProxy.InitPTP(json_srmp);//InitPTP里面已经有获取数据，不过只获取未读数据
+                LoginWin.SignalRProxy.InitPTP(json_srmp);//InitPTP里面已经有获取数据，不过只获取未读数据
                 //pd1.SignalRProxy.GetAllMessage(json_srmp, System.DateTime.Now);//该方法获取所有数据不论有读未读，不过要指定日期
                 //所以上面2个不用一起用。
 

@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WpfClient.Login;
 
 namespace WpfClient.Contacts
 {
@@ -35,7 +36,7 @@ namespace WpfClient.Contacts
         private bool mIsShowMax = true;
         private bool IsShowMax = false;
 
-        public SignalRProxy SignalRProxy { get; set; }
+        //public SignalRProxy SignalRProxy { get; set; }
 
         /// <summary>
         /// 聊天对象
@@ -149,7 +150,7 @@ namespace WpfClient.Contacts
                 SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage(message, MainClient.CurrentUser.ID, ReplyId);
                 //SignalRMessagePackage srmp = new SignalRMessagePackage(message, MainClient.CurrentUser.ID, ReplyId);
                 string json_srmp = JsonConvert.SerializeObject(srmp);
-                SignalRProxy.SendMessage(json_srmp);
+                LoginWin.SignalRProxy.SendMessage(json_srmp);
 
 
                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
@@ -169,11 +170,28 @@ namespace WpfClient.Contacts
             this.Title = "与 " + this.To + " 聊天中";
 
 
-            if (SignalRProxy == null)
-            {
-                SignalRProxy = new SignalRProxy();
-            }
-            SignalRProxy.ConnectAsync();
+            //if (LoginWin.SignalR_MsgPackage.FromUserId == MainClient.CurrentUser.ID && LoginWin.SignalR_MsgPackage.ToUserId == ReplyId)
+            //{
+            //    if (MainClient.CurrentUser.ID.Equals(LoginWin.SignalR_MsgPackage.ToUserId))
+            //    {
+            //        LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+            //        leftMessageBoxUControl.Init(To, LoginWin.SignalR_MsgPackage.Context.ToString());
+            //        this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+            //    }
+            //    else
+            //    {
+            //        RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+            //        rightMessageBoxUControl.Init(Self, LoginWin.SignalR_MsgPackage.Context.ToString(), null, "Text");
+            //        this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+            //    }
+            //}
+
+
+            //if (LoginWin.SignalRProxy == null)
+            //{
+            //    LoginWin.SignalRProxy = new SignalRProxy();
+            //}
+            //LoginWin.SignalRProxy.ConnectAsync();
 
 
             #region //注册SignalR客户端方法
@@ -225,31 +243,31 @@ namespace WpfClient.Contacts
             //}
             #endregion
 
-            if (SignalRProxy.ReceviceMessage == null)
-            {
-                SignalRProxy.ReceviceMessage = (package) =>
-                  {
-                      this.Dispatcher.Invoke(() =>
-                      {
-                          if (package.SMType == SignalRMessageType.StateMessage) { return; }
+            //if (LoginWin.SignalRProxy.ReceviceMessage == null)
+            //{
+            //    LoginWin.SignalRProxy.ReceviceMessage = (package) =>
+            //      {
+            //          this.Dispatcher.Invoke(() =>
+            //          {
+            //              if (package.SMType == SignalRMessageType.StateMessage) { return; }
 
-                          if (MainClient.CurrentUser.ID.Equals(package.ToUserId))
-                          {
-                              LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                              leftMessageBoxUControl.Init(To, package.Context.ToString());
-                              this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
-                          }
-                          else
-                          {
-                              RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                              rightMessageBoxUControl.Init(Self, package.Context.ToString(),null,"Text");
-                              this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
-                          }
-                      }
-                      );
+            //              if (MainClient.CurrentUser.ID.Equals(package.ToUserId))
+            //              {
+            //                  LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+            //                  leftMessageBoxUControl.Init(To, package.Context.ToString());
+            //                  this.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+            //              }
+            //              else
+            //              {
+            //                  RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+            //                  rightMessageBoxUControl.Init(Self, package.Context.ToString(),null,"Text");
+            //                  this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+            //              }
+            //          }
+            //          );
 
-                  };
-            }
+            //      };
+            //}
         }
     }
 
