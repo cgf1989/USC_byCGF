@@ -596,8 +596,8 @@
         </Grid>
         <Grid Name="Head_Grid" Grid.Row="1">
             <TabControl Style="{DynamicResource TabControlStyle1}" >
-                <TabItem Name="aaa" VerticalAlignment="Stretch"  Grid.Column="0" ToolTip="消息" Style="{DynamicResource TabItemStyle1}" xmlns:Message="clr-namespace:WpfClient.MessageTab">
-                    <Grid Name="MsgPanel" ></Grid><!--<Message:MessageBox/>-->
+                <TabItem Name="MsgPanel"  Grid.Column="0" ToolTip="消息" Style="{DynamicResource TabItemStyle1}" xmlns:Message="clr-namespace:WpfClient.MessageTab">
+                    <!--<Message:MessageBox/>-->
                 </TabItem>
                 <TabItem Grid.Column="1" ToolTip="联系人" Style="{DynamicResource TabItemStyle2}" xmlns:Contacts="clr-namespace:WpfClient.Contacts">
                     <Contacts:Contacts/>                

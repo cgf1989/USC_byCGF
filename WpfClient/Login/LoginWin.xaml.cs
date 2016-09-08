@@ -179,7 +179,7 @@ namespace WpfClient.Login
 
                         
 
-                            mainWin.MsgPanel.Children.Add(mb);//消息页面加到主窗体
+                            mainWin.MsgPanel.Content=mb;//消息页面加到主窗体
                             //后台绑定
                            
                             this.Close();

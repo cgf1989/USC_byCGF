@@ -462,17 +462,8 @@ namespace WpfClient.Contacts
                 fs.Read(byData, 0, byData.Length);
                 fs.Close();
 
-                string context1 = Convert.ToBase64String(byData);
-                List<string> aaa = new List<string>();
-                for (int i = 0; i < context1.Length; i=i+1000)
-                {
-                    if (i + 1000 >=  context1.Length)
-                        aaa.Add(context1.Substring(i, context1.Length-i));
-                    else
-                        aaa.Add(context1.Substring(i, 1000));
-                }
-                //int aaaa = context.Length;
-                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(aaa, ofd.SafeFileName, MainClient.CurrentUser.ID, CurrentGroup.Id);
+                string context1 = Convert.ToBase64String(byData);              
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(context1, ofd.SafeFileName, MainClient.CurrentUser.ID, CurrentGroup.Id);
                 srmp.SMType = SignalRMessageType.Img;
                 string json_srmp = JsonConvert.SerializeObject(srmp);
                 LoginWin.SignalRProxy.SendMessage(json_srmp);

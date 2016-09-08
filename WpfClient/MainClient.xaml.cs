@@ -55,9 +55,6 @@ namespace WpfClient
             mdfPwdWin.currentUser = CurrentUser;
             mdfPwdWin.ShowDialog();
 
-            MessageBox.Show(aaa.Height.ToString()+"--"+aaa.ActualHeight.ToString()+ "-"+MsgPanel.Height.ToString()+"-"+ MsgPanel.ActualHeight.ToString());
-           
-            
             
         }
 
