@@ -91,6 +91,7 @@ namespace BCP.WebAPI.Controllers
             return JsonHelper.GetResponseMessage(true, "获取成功", typeof(UserDTO), false, UserService.GetUser(Convert.ToInt32(id)));
         }
 
+
         #region customerGroup
 
         /// <summary>
@@ -499,5 +500,11 @@ namespace BCP.WebAPI.Controllers
         }
 
         #endregion
+
+        [HttpGet]
+        public HttpResponseMessage GetAllCommunitcatedUserByUserId(String userId)
+        {
+            return JsonHelper.GetResponseMessage(true, "获取成功", typeof(Int32), true, UserService.GetAllCommunitcatedUserByUserId(Convert.ToInt32(userId)));
+        }
     }
 }

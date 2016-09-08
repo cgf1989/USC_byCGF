@@ -80,6 +80,7 @@ namespace BCP.WebAPI.Tests.Controllers
                 AutoMapperBootStrapper.Start();
                 
                 var message = userController.UserService.GetPTGMessage(2, 2);
+                var list = userController.UserService.GetAllCommunitcatedUserByUserId(2);
             }
             catch (Exception ex)
             { }
