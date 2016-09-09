@@ -465,7 +465,7 @@ namespace BCP.WebAPI.Controllers
                 fileInfo.CopyTo(path + FileHelper.Encrept(fileName));
                 fileInfo.Delete();
 
-                return JsonHelper.GetResponseMessage(true, "文件传输成功", typeof(String), false, path + FileHelper.Encrept(fileName));
+                return JsonHelper.GetResponseMessage(true, "文件传输成功", typeof(String), false, FileHelper.Encrept(fileName));
                 //}
             }
             catch(Exception ex)
