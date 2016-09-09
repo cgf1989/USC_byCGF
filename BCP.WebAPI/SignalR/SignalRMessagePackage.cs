@@ -815,7 +815,9 @@ namespace BCP.WebAPI.SignalR
             ubs.Bindings();
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             var from = hub.Get();
-            List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId).Where(it => it.State == 0).ToList();
+            List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId)
+                .Where(it => it.State == 0)
+                .ToList();
             foreach (var node in message)
             {
                 //if (node.MessageType != (int)SignalRMessageType.Text) continue;

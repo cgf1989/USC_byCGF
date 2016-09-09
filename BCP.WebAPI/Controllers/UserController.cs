@@ -415,10 +415,10 @@ namespace BCP.WebAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// 文件上传
         /// </summary>
         /// <param name="fileName">传输文件全名 包括后缀 不含路径</param>
-        /// <returns></returns>
+        /// <returns>返回文件名 用户SignalR通讯</returns>
         [HttpPost]
         public async Task<HttpResponseMessage> UpLoadFile(String fileName)
         {
@@ -474,6 +474,11 @@ namespace BCP.WebAPI.Controllers
             } 
         }
 
+        /// <summary>
+        /// 文件下载
+        /// </summary>
+        /// <param name="fileName">文件全名 包含后缀</param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage DownloadFile(String fileName)
         {
@@ -501,6 +506,11 @@ namespace BCP.WebAPI.Controllers
 
         #endregion
 
+        /// <summary>
+        /// 返回所有已联系过的用户Id
+        /// </summary>
+        /// <param name="userId">登录用户</param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetAllCommunitcatedUserByUserId(String userId)
         {
