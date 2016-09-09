@@ -225,7 +225,7 @@ namespace BCP.WebAPI.SignalR
         {
             if (node.MessageType == (int)SignalRMessageType.Text)
             {
-                return SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, (int)node.ToUserId, (int)node.FromUserId);
+                return SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, (int)node.FromUserId, (int)node.ToUserId);
             }
             else if (node.MessageType == (int)SignalRMessageType.File)
             {
