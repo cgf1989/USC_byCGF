@@ -463,7 +463,7 @@ namespace BCP.WebAPI.Controllers
                 //});
                 String newFileName= FileHelper.Encrept(fileName);
                 FileInfo fileInfo = new FileInfo(provider.FileData[0].LocalFileName);
-                fileInfo.CopyTo(path);
+                fileInfo.CopyTo(path+newFileName);
                 fileInfo.Delete();
 
                 return JsonHelper.GetResponseMessage(true, "文件传输成功", typeof(String), false, newFileName);
