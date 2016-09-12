@@ -129,9 +129,19 @@ namespace WpfClient.Login
                                                             img.Source = myBitmapImage;
                                                             if (img != null)
                                                             {
-                                                                RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
-                                                                item.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                                                                if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.CurrentGroup.Id)
+                                                                {
+                                                                    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                                                    rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                                                    item.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                                                                }
+                                                                else
+                                                                {
+                                                                    string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
+                                                                    LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                                                                    leftMessageBoxUControl.Init(actualName, "",img,"Image");
+                                                                    item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
+                                                                }
                                                             }
 
                                                         }
@@ -142,6 +152,7 @@ namespace WpfClient.Login
                                         }
                                         else if (package.SMType == SignalRMessageType.Text)
                                         {
+                                            #region 点对点接收文本信息
                                             if (package.SCType == SignalRCommunicationType.PersonToPerson)
                                             {
                                                 if (Contacts.Contacts.PrivateDialogList.Count > 0)
@@ -152,7 +163,7 @@ namespace WpfClient.Login
                                                         if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
                                                         {
                                                             LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                            leftMessageBoxUControl.Init(item.To, package.Context.ToString());
+                                                            leftMessageBoxUControl.Init(item.To, package.Context.ToString(),null,"Text");
                                                             item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
                                                         }
                                                         else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
@@ -190,6 +201,8 @@ namespace WpfClient.Login
 
                                                 }
                                             }
+                                            #endregion
+                                            #region 点对群接收文本
                                             else if (package.SCType == SignalRCommunicationType.PersonToGroup)
                                             {
 
@@ -210,7 +223,7 @@ namespace WpfClient.Login
                                                         {
                                                             string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
                                                             LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                            leftMessageBoxUControl.Init(actualName, package.Context.ToString());
+                                                            leftMessageBoxUControl.Init(actualName, package.Context.ToString(),null,"Text");
                                                             item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
                                                         }
 
@@ -221,7 +234,7 @@ namespace WpfClient.Login
                                                 }
 
                                             }
-
+                                            #endregion
 
                                         }
                                     }

@@ -34,6 +34,7 @@
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Name="UserNameLable" FontSize="8" Foreground="Gray" MaxWidth="50" HorizontalAlignment="Left" >用户名</Label>
             <TextBox Template="{StaticResource CornerTextBox}" Grid.Row="1" TextWrapping="Wrap" Name="UserMessageLable" IsEnabled="False" MaxWidth="200" HorizontalAlignment="Left" Margin="5 0 5 0"></TextBox>
+            <Image Grid.Row="1" Name="UserMessageImg" IsEnabled="False" MaxWidth="200" HorizontalAlignment="Left" Margin="5 0 5 0" ></Image>
         </Grid>
     </Grid>
 </UserControl>
