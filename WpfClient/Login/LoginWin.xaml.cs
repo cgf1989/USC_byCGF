@@ -102,7 +102,7 @@ namespace WpfClient.Login
                                                         //Uri server = new Uri(String.Format("{0}?filename={1}", api, ServerFileName));
                                                         HttpClient httpClient = new HttpClient();
 
-                                                        string p = System.IO.Path.GetDirectoryName(@"D:\Adobe_Photoshop_CS5.zip");
+                                                        string p = System.IO.Path.GetDirectoryName(@"D:\Adobe_Photoshop_CS5.jpg");
 
                                                         if (!Directory.Exists(p))
                                                             Directory.CreateDirectory(p);
