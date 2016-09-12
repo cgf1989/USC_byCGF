@@ -240,6 +240,7 @@ namespace WpfClient.Teams
             }
         }
 
+
         /// <summary>
         /// 打开普通群聊天框
         /// </summary>

@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using BCP.ViewModel;
 using WpfClient.Contacts;
 using BCP.WebAPI.SignalR;
+using System.IO;
 
 namespace WpfClient.Login
 {
@@ -86,89 +87,141 @@ namespace WpfClient.Login
 
                                     this.Dispatcher.Invoke(() =>
                                     {
-                                      
-                                        if (package.SMType == SignalRMessageType.StateMessage) { return; }
 
+                                        if (package.SMType == SignalRMessageType.StateMessage || package.SMType == SignalRMessageType.File) { return; }  //文件的显示没做好，暂时忽略
 
-                                        if (package.SCType == SignalRCommunicationType.PersonToPerson)
+                                        if (package.SMType == SignalRMessageType.Img)
                                         {
-                                            if (Contacts.Contacts.PrivateDialogList.Count > 0)
+                                            if (package.SCType == SignalRCommunicationType.PersonToGroup)
                                             {
-                                                foreach (var item in Contacts.Contacts.PrivateDialogList)
+                                                if (Teams.organizationPanel.NormalGroupDialogList.Count > 0)
                                                 {
 
-                                                    if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
+                                                    foreach (var item in Teams.organizationPanel.NormalGroupDialogList)
                                                     {
-                                                        LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                        leftMessageBoxUControl.Init(item.To, package.Context.ToString());
-                                                        item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
-                                                    }
-                                                    else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
-                                                    {
-                                                        RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                                        rightMessageBoxUControl.Init(item.Self, package.Context.ToString(), null, "Text");
-                                                        item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                                                        //Uri server = new Uri(String.Format("{0}?filename={1}", api, ServerFileName));
+                                                        HttpClient httpClient = new HttpClient();
+
+                                                        string p = System.IO.Path.GetDirectoryName(@"D:\Adobe_Photoshop_CS5.zip");
+
+                                                        if (!Directory.Exists(p))
+                                                            Directory.CreateDirectory(p);
+
+                                                        HttpResponseMessage responseMessage = httpClient.GetAsync("http://localhost:37768/api/User/DownloadFile?fileName="+package.Context.ToString()).Result;
+
+                                                        if (responseMessage.IsSuccessStatusCode)
+                                                        {
+                                                            using (FileStream fs = File.Create(@"D:\Adobe_Photoshop_CS5.jpg"))
+                                                            {
+                                                                Stream streamFromService = responseMessage.Content.ReadAsStreamAsync().Result;
+                                                                streamFromService.CopyTo(fs);
+
+
+                                                                BitmapImage myBitmapImage = new BitmapImage();
+                                                                myBitmapImage.BeginInit();
+                                                                myBitmapImage.StreamSource = fs;
+                                                                myBitmapImage.EndInit();
+
+                                                                System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                                                                img.Source = myBitmapImage;
+                                                                if (img != null)
+                                                                {
+                                                                    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                                                    rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                                                    item.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                                                                }
+                                                            }
+
+                                                        }
                                                     }
 
                                                 }
                                             }
-                                            else     //接收消息加载到消息页面
-                                            {
-
-                                                //加载到界面
-                                                Image img = new Image();
-                                                BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
-                                                img.Source = bitImg;
-                                                ListViewItem lvi = new ListViewItem();
-
-                                                ResourceDictionary mWindowResouce = new ResourceDictionary();
-                                                mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
-                                                this.Resources.MergedDictionaries.Add(mWindowResouce);
-                                                lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
-
-                                                lvi.Name = "_"+package.FromUserId.ToString();
-                                                lvi.Uid = "1";
-                                                lvi.ToolTip = "10:02";
-                                                lvi.Tag = package.Context;
-                                                lvi.Content = img;
-
-                                                mb.Lv_message.Items.Add(lvi);
-
-                                            }
                                         }
-                                        else if (package.SCType == SignalRCommunicationType.PersonToGroup)
+                                        else if (package.SMType == SignalRMessageType.Text)
                                         {
-                                           
-                                            if (Teams.organizationPanel.NormalGroupDialogList.Count > 0)
+                                            if (package.SCType == SignalRCommunicationType.PersonToPerson)
                                             {
-                                                
-
-                                                foreach (var item in Teams.organizationPanel.NormalGroupDialogList)
+                                                if (Contacts.Contacts.PrivateDialogList.Count > 0)
                                                 {
-                                                                                                        
-                                                    if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.CurrentGroup.Id)
+                                                    foreach (var item in Contacts.Contacts.PrivateDialogList)
                                                     {
-                                                        RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                                        rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString(), null, "Text");
-                                                        item.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+
+                                                        if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
+                                                        {
+                                                            LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                                                            leftMessageBoxUControl.Init(item.To, package.Context.ToString());
+                                                            item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+                                                        }
+                                                        else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
+                                                        {
+                                                            RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                                            rightMessageBoxUControl.Init(item.Self, package.Context.ToString(), null, "Text");
+                                                            item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                                                        }
+
                                                     }
-                                                    else 
+                                                }
+                                                else     //接收消息加载到消息页面
+                                                {
+
+                                                    //加载到界面
+                                                    Image img = new Image();
+                                                    BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                    img.Source = bitImg;
+                                                    ListViewItem lvi = new ListViewItem();
+
+                                                    ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                    mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                    this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                    lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+
+
+                                                    UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
+                                                    lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
+                                                    lvi.Uid = "1";
+                                                    lvi.ToolTip = "10:02";
+                                                    lvi.Tag = package.Context;
+                                                    lvi.Content = img;
+
+                                                    mb.Lv_message.Items.Add(lvi);
+
+                                                }
+                                            }
+                                            else if (package.SCType == SignalRCommunicationType.PersonToGroup)
+                                            {
+
+                                                if (Teams.organizationPanel.NormalGroupDialogList.Count > 0)
+                                                {
+
+
+                                                    foreach (var item in Teams.organizationPanel.NormalGroupDialogList)
                                                     {
-                                                        string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
-                                                        LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                        leftMessageBoxUControl.Init(actualName, package.Context.ToString());
-                                                        item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
+
+                                                        if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.CurrentGroup.Id)
+                                                        {
+                                                            RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                                            rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString(), null, "Text");
+                                                            item.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                                                        }
+                                                        else
+                                                        {
+                                                            string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
+                                                            LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                                                            leftMessageBoxUControl.Init(actualName, package.Context.ToString());
+                                                            item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
+                                                        }
+
+
                                                     }
 
 
                                                 }
-                                              
 
                                             }
 
+
                                         }
-
-
                                     }
                                     );
 

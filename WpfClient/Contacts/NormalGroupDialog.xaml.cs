@@ -124,7 +124,7 @@ namespace WpfClient.Contacts
 
         public void Init(String userName, String group)
         {
-  
+
 
             this.Group = group;
             this.UserName = userName;
@@ -452,40 +452,116 @@ namespace WpfClient.Contacts
         /// <param name="e"></param>
         private void btn_Image_Click(object sender, RoutedEventArgs e)
         {
+            string filePath = "";
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "图片文件|*.jpg;*.jpeg;*.bmp;*.ico;*.png";
             if (ofd.ShowDialog() == true)
             {
-
-                FileStream fs = new FileStream(ofd.FileName, FileMode.Open);//可以是其他重载方法 
-                byte[] byData = new byte[fs.Length];
-                fs.Read(byData, 0, byData.Length);
-                fs.Close();
-
-                string context1 = Convert.ToBase64String(byData);              
-                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(context1, ofd.SafeFileName, MainClient.CurrentUser.ID, CurrentGroup.Id);
-                srmp.SMType = SignalRMessageType.Img;
-                string json_srmp = JsonConvert.SerializeObject(srmp);
-                LoginWin.SignalRProxy.SendMessage(json_srmp);
-                
-
-                //用流的方式来读取图片不会占用图片，直接用uri的方式则会
-                BitmapImage myBitmapImage = new BitmapImage();
-                myBitmapImage.BeginInit();
-                myBitmapImage.StreamSource = new MemoryStream(byData);
-                myBitmapImage.EndInit();
-
-                System.Windows.Controls.Image img = new System.Windows.Controls.Image();
-                img.Source = myBitmapImage;
-                if (img != null)
+                using (var client = new HttpClient())
+                using (var content = new MultipartFormDataContent())
                 {
-                    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                    rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
-                    this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                    // Make sure to change API address  
+                    client.BaseAddress = new Uri("http://localhost:37768/");
+
+                    // Add first file content   
+                    byte[] b = File.ReadAllBytes(ofd.FileName);
+                    Console.WriteLine(b.Length);
+                    var fileContent1 = new ByteArrayContent(b);
+                    fileContent1.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = ofd.SafeFileName
+                    };
+
+                    content.Add(fileContent1);
+
+                    // Make a call to Web API  
+                    client.Timeout = new TimeSpan(1, 1, 1);
+                    var result = client.PostAsync("/api/User/UpLoadFile?fileName=" + ofd.SafeFileName, content).Result;
+                    result.EnsureSuccessStatusCode();
+                    if (result.IsSuccessStatusCode)
+                    {
+                        Task<string> ds = result.Content.ReadAsStringAsync();
+                        CustomMessage result1 = JsonConvert.DeserializeObject<CustomMessage>(ds.Result);
+                        if (result1.Success)
+                        {
+                            filePath = result1.Data;
+
+
+                            //FileStream fs = new FileStream(ofd.FileName, FileMode.Open);//可以是其他重载方法 
+                            //byte[] byData = new byte[fs.Length];
+                            //fs.Read(byData, 0, byData.Length);
+                            //fs.Close();
+
+                            //string context1 = Convert.ToBase64String(byData);              
+                            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(filePath, ofd.SafeFileName, MainClient.CurrentUser.ID, CurrentGroup.Id);
+                            srmp.SMType = SignalRMessageType.Img;
+                            string json_srmp = JsonConvert.SerializeObject(srmp);
+                            LoginWin.SignalRProxy.SendMessage(json_srmp);
+
+
+                            //用流的方式来读取图片不会占用图片，直接用uri的方式则会
+                            BitmapImage myBitmapImage = new BitmapImage();
+                            myBitmapImage.BeginInit();
+                            myBitmapImage.StreamSource = new MemoryStream(b);
+                            myBitmapImage.EndInit();
+
+                            System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                            img.Source = myBitmapImage;
+                            if (img != null)
+                            {
+                                RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("图片上传失败");//上传失败
+                        }
+                    }
+                        
+                    
+             
                 }
             }
 
         }
+
+
+        //-----------------------------------胡勇代码begin-------------------------------------------
+        //static void Main(string[] args)
+        //{
+        //    DownLoad(@"D:\Adobe_Photoshop_CS5.zip");
+        //}
+
+
+
+        //static bool DownLoad(string SaveFileName)
+        //{
+        //Uri server = new Uri(String.Format("{0}?filename={1}", api, ServerFileName));
+        //        HttpClient httpClient = new HttpClient();
+
+        //        string p = Path.GetDirectoryName(SaveFileName);
+
+        //            if (!Directory.Exists(p))
+        //                Directory.CreateDirectory(p);
+
+        //            HttpResponseMessage responseMessage = httpClient.GetAsync("http://localhost:37768/api/User/DownloadFile?fileName=Adobe_Photoshop_CS5_path201609071626546900.zip").Result;
+
+        //            if (responseMessage.IsSuccessStatusCode)
+        //            {
+        //                using (FileStream fs = File.Create(SaveFileName))
+        //                {
+        //                    Stream streamFromService = responseMessage.Content.ReadAsStreamAsync().Result;
+        //        streamFromService.CopyTo(fs);
+        //                    return true;
+        //                }
+        //}
+        //            else
+        //                return false;
+        //}
+
+        //-------------------------------胡勇代码END------------------------------------------------
     }
 }
 
