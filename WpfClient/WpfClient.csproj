@@ -531,6 +531,10 @@
       <Project>{350347c0-7f84-4a3f-b2d2-d775ac54451b}</Project>
       <Name>BaseDataLayout</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BCP.Common\BCP.Common.csproj">
+      <Project>{1BF111F0-1A5F-47FE-BD3C-DC272CD3982B}</Project>
+      <Name>BCP.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BCP.ViewModel\BCP.ViewModel.csproj">
       <Project>{71a0a4fb-2a11-4cff-95e6-37d0c07cb40d}</Project>
       <Name>BCP.ViewModel</Name>
