@@ -767,7 +767,7 @@ namespace BCP.WebAPI.SignalR
                 if (userService.AddPTPMessage(new UserMessageDTO()
                 {
                     Content = SignalRMessagePackage.Context.ToString(),
-                    CreateTime = DateTime.Now,
+                    CreateTime = SignalRMessagePackage.SenderTime,
                     ToUserId = SignalRMessagePackage.ToUserId,
                     FromUserId = SignalRMessagePackage.FromUserId,
                     State = 0,
@@ -803,7 +803,8 @@ namespace BCP.WebAPI.SignalR
             //var from = hub.Get();
             try
             {
-                userService.MarkPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId);
+                //将接收到的消息设为已读
+                userService.MarkPTPMessage(SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId);
             }
             catch (Exception ex)
             { }
@@ -816,54 +817,20 @@ namespace BCP.WebAPI.SignalR
             IUserService userService = (IUserService)ubs.UnityContainer.Resolve(typeof(IUserService));
             var from = hub.Get();
             List<UserMessageDTO> message = userService.GetPTPMessage(SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId)
-                .Where(it => it.State == 0)
+                //.Where(it => it.State == 0)
                 .ToList();
-            foreach (var node in message)
+            List<UserMessageDTO> selectedMessage = null;
+            if (message.Where(it => it.FromUserId == SignalRMessagePackage.ToUserId && it.State == 0).Count() > 3)
             {
-                //if (node.MessageType != (int)SignalRMessageType.Text) continue;
-
-                //if (node.MessageType == (int)SignalRMessageType.Text)
-                //{
-                //    if (node.FromUserId == SignalRMessagePackage.FromUserId)
-                //    {
-                //        Clients.Client(from.ContextId)
-                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
-                //    }
-                //    else
-                //    {
-                //        Clients.Client(from.ContextId)
-                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
-                //    }
-                //}
-                //else if (node.MessageType == (int)SignalRMessageType.File)
-                //{
-                //    if (node.FromUserId == SignalRMessagePackage.FromUserId)
-                //    {
-                //        Clients.Client(from.ContextId)
-                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPFilePackage(node.Content,FileHelper.GetRealFileName(node.Content), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
-                //    }
-                //    else
-                //    {
-                //        Clients.Client(from.ContextId)
-                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPFilePackage(node.Content, FileHelper.GetRealFileName(node.Content), SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
-                //    }
-                //}
-                //else if (node.MessageType == (int)SignalRMessageType.Img)
-                //{
-                //    if (node.FromUserId == SignalRMessagePackage.FromUserId)
-                //    {
-                //        Clients.Client(from.ContextId)
-                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.GetRealFileName(node.Content), SignalRMessagePackage.FromUserId, SignalRMessagePackage.ToUserId));
-                //    }
-                //    else
-                //    {
-                //        Clients.Client(from.ContextId)
-                //            .ReceviceMessage(SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.GetRealFileName(node.Content), SignalRMessagePackage.ToUserId, SignalRMessagePackage.FromUserId));
-                //    }
-                //}
-                //else
-                //{ }
-
+                var id = message.Where(it => it.State == 0).OrderBy(it => it.Id).First().Id;
+                selectedMessage = message.Where(it => it.Id>=id).ToList();
+            }
+            else
+            {
+                selectedMessage = message.Skip(message.Count - 3).ToList();
+            }
+            foreach (var node in selectedMessage)
+            {
                 Clients.Client(from.ContextId)
                     .ReceviceMessage(SignalRMessagePackageFactory.GetPackage(node));
             }
@@ -971,7 +938,10 @@ namespace BCP.WebAPI.SignalR
             try
             {
                 var from = hub.Get();
-                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID, SignalRMessagePackage.ToUserId).Where(it => it.CrateTime != null && it.CrateTime.Value.Year == DateTime.Now.Year && it.CrateTime.Value.Month == DateTime.Now.Month && it.CrateTime.Value.Day == DateTime.Now.Day).ToList();
+                List<GroupMessagerDTO> list = userService.GetPTGMessage(from.ID, SignalRMessagePackage.ToUserId)
+                    //.Where(it => it.CrateTime != null && it.CrateTime.Value.Year == DateTime.Now.Year && it.CrateTime.Value.Month == DateTime.Now.Month && it.CrateTime.Value.Day == DateTime.Now.Day)
+                    .ToList();
+                list = list.Skip(list.Count - 3).ToList();
                 foreach (var node in list)
                 {
                     //if (node.MessageType == (int)SignalRMessageType.Text)
