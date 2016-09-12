@@ -32,5 +32,19 @@ namespace BCP.Common.Helper
             String last = fileName.Substring(fileName.LastIndexOf('.') + 1);
             return first + "_path" + DateTime.Now.ToString("yyyyMMddHHmmssffff")+"." + last;
         }
+
+
+        /// <summary>
+        /// 重组文件名 cgf用的，！！！勿删除！！！！！
+        /// </summary>
+        /// <param name="fileName">原文件名</param>
+        /// <returns></returns>
+        public static String Encrept_byCgf(String fileName)
+        {
+
+            String first = fileName.Substring(0, fileName.LastIndexOf('.'));
+            String last = fileName.Substring(fileName.LastIndexOf('.') + 1);
+            return first + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "." + last;
+        }
     }
 }

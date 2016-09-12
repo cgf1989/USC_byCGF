@@ -484,7 +484,7 @@ namespace WpfClient.Contacts
                         CustomMessage result1 = JsonConvert.DeserializeObject<CustomMessage>(ds.Result);
                         if (result1.Success)
                         {
-                            filePath = result1.Data;
+                            filePath =JsonConvert.DeserializeObject<String>(result1.Data);
 
 
                             //FileStream fs = new FileStream(ofd.FileName, FileMode.Open);//可以是其他重载方法 
