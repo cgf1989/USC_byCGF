@@ -461,11 +461,12 @@ namespace BCP.WebAPI.Controllers
                 //    fileInfo.Delete();
                 //    return "";
                 //});
+                String newFileName= FileHelper.Encrept(fileName);
                 FileInfo fileInfo = new FileInfo(provider.FileData[0].LocalFileName);
-                fileInfo.CopyTo(path + FileHelper.Encrept(fileName));
+                fileInfo.CopyTo(path);
                 fileInfo.Delete();
 
-                return JsonHelper.GetResponseMessage(true, "文件传输成功", typeof(String), false, FileHelper.Encrept(fileName));
+                return JsonHelper.GetResponseMessage(true, "文件传输成功", typeof(String), false, newFileName);
                 //}
             }
             catch(Exception ex)
