@@ -181,7 +181,6 @@ namespace WpfClient.Contacts
                 pd1.Init();
                 System.Threading.Thread.Sleep(1000);
 
-
                 pd1.Show();
 
 
@@ -198,6 +197,7 @@ namespace WpfClient.Contacts
      
 
         }
+
 
         /// <summary>
         /// 读取联系人分组，包含联系人

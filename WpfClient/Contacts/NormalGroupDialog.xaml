@@ -25,7 +25,7 @@
 
         </Grid>
 
-        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="MsgScroll">
             <StackPanel  Name="NoticeStackPanel" Background="WhiteSmoke"></StackPanel>
         </ScrollViewer>
         <Expander Name="Expander_Range" FlowDirection="RightToLeft" Grid.RowSpan="2" Margin="10,20,0,0"   MinHeight="100" Header="所有内容" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden">

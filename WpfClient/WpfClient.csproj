@@ -117,6 +117,7 @@
     <Compile Include="Contacts\DocManage.xaml.cs">
       <DependentUpon>DocManage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contacts\KeyDownEvent.cs" />
     <Compile Include="Contacts\LeftMessageBoxUControl.xaml.cs">
       <DependentUpon>LeftMessageBoxUControl.xaml</DependentUpon>
     </Compile>

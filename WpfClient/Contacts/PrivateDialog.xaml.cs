@@ -1,9 +1,13 @@
 ﻿using BCP.ViewModel;
 using BCP.WebAPI.SignalR;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -64,11 +68,114 @@ namespace WpfClient.Contacts
             //this.Template = windowTemplate;
             //mTemplate = windowTemplate;
             this.Loaded += new RoutedEventHandler(WindowBase_Loaded);
+            this.KeyDown += PrivateDialog_KeyDown; ; //窗口CTRL+C事件
+            //InputTBox.KeyDown += InputTBox_KeyDown;  //文本输入框按键事件
             this.MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
             this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
             mBackGroundType = BackGroundType.Blue;
             //Init();
         }
+
+      
+
+        /// <summary>
+        /// 键盘按下事件，CTRL+V 复制粘贴文本、图片、文件用,窗口用
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PrivateDialog_KeyDown(object sender, KeyEventArgs e)
+        {
+            object clipboardType = KeyDownExtension.Window_KeyDown(sender, e);
+            if (clipboardType != null)
+            {
+
+                if (clipboardType.GetType() == typeof(String)) //文本信息
+                {
+                    InputTBox.Text = clipboardType.ToString();
+                }
+                else if (clipboardType.GetType() == typeof(System.String[])) //文件
+                {
+                    MessageBox.Show("剪切板内容为文件，暂不支持");
+                }
+                else if (clipboardType.GetType() == typeof(System.Drawing.Bitmap)) //图片，与文件不同，比如截图这些，而不是图片文件
+                {
+                    System.Drawing.Bitmap clipboardImg = clipboardType as System.Drawing.Bitmap;
+                    
+                    string filePath = "";
+
+                    using (var client = new HttpClient())
+                    using (var content = new MultipartFormDataContent())
+                    {
+                        // Make sure to change API address  
+                        client.BaseAddress = new Uri("http://localhost:37768/");
+
+                        // Add first file content   
+                        byte[] b = File.ReadAllBytes(clipboardType.ToString());
+                        Console.WriteLine(b.Length);
+                        var fileContent1 = new ByteArrayContent(b);
+
+                        content.Add(fileContent1);
+
+                        // Make a call to Web API  
+                        client.Timeout = new TimeSpan(1, 1, 1);
+                        var result = client.PostAsync("/api/User/UpLoadFile?fileName=" + clipboardType.ToString().Split('\\').LastOrDefault(), content).Result;
+                        result.EnsureSuccessStatusCode();
+                        if (result.IsSuccessStatusCode)
+                        {
+                            Task<string> ds = result.Content.ReadAsStringAsync();
+                            CustomMessage result1 = JsonConvert.DeserializeObject<CustomMessage>(ds.Result);
+                            if (result1.Success)
+                            {
+                                filePath = JsonConvert.DeserializeObject<String>(result1.Data);
+
+
+                                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPImgPackage(filePath, clipboardType.ToString().Split('\\').LastOrDefault(), MainClient.CurrentUser.ID, ReplyId);
+                                srmp.SMType = SignalRMessageType.Img;
+                                string json_srmp = JsonConvert.SerializeObject(srmp);
+                                LoginWin.SignalRProxy.SendMessage(json_srmp);
+
+
+                                //用流的方式来读取图片不会占用图片，直接用uri的方式则会
+                                BitmapImage myBitmapImage = new BitmapImage(); 
+                                myBitmapImage.BeginInit();
+                                myBitmapImage.StreamSource = new MemoryStream(b);
+                                myBitmapImage.EndInit();
+
+                                System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                                img.Source = myBitmapImage;
+                                if (img != null)
+                                {
+                                    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                    rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                    this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("图片发送失败");//发送失败
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+        /// <summary>
+        /// 键盘按下事件，CTRL+V 复制粘贴文本、图片、文件用，文本框用
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void InputTBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            object clipboardType = KeyDownExtension.Window_KeyDown(sender, e);
+            if (clipboardType != null)
+            {
+                MessageBox.Show(clipboardType.ToString());
+            }
+        }
+
 
         private void WindowBase_Loaded(object sender, RoutedEventArgs e)
         {
@@ -168,7 +275,8 @@ namespace WpfClient.Contacts
         {
             this.TitleLabel.Content = this.To;
             this.Title = "与 " + this.To + " 聊天中";
-
+     
+            InputTBox.Focus();
 
             //if (LoginWin.SignalR_MsgPackage.FromUserId == MainClient.CurrentUser.ID && LoginWin.SignalR_MsgPackage.ToUserId == ReplyId)
             //{
@@ -268,6 +376,86 @@ namespace WpfClient.Contacts
 
             //      };
             //}
+        }
+
+
+        /// <summary>
+        /// 测试用，发送图片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            string filePath = "";
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "图片文件|*.jpg;*.jpeg;*.bmp;*.ico;*.png";
+            if (ofd.ShowDialog() == true)
+            {
+                using (var client = new HttpClient())
+                using (var content = new MultipartFormDataContent())
+                {
+                    // Make sure to change API address  
+                    client.BaseAddress = new Uri("http://localhost:37768/");
+
+                    // Add first file content   
+                    byte[] b = File.ReadAllBytes(ofd.FileName);
+                    Console.WriteLine(b.Length);
+                    var fileContent1 = new ByteArrayContent(b);
+                    fileContent1.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = ofd.SafeFileName
+                    };
+
+                    content.Add(fileContent1);
+
+                    // Make a call to Web API  
+                    client.Timeout = new TimeSpan(1, 1, 1);
+                    var result = client.PostAsync("/api/User/UpLoadFile?fileName=" + ofd.SafeFileName, content).Result;
+                    result.EnsureSuccessStatusCode();
+                    if (result.IsSuccessStatusCode)
+                    {
+                        Task<string> ds = result.Content.ReadAsStringAsync();
+                        CustomMessage result1 = JsonConvert.DeserializeObject<CustomMessage>(ds.Result);
+                        if (result1.Success)
+                        {
+                            filePath = JsonConvert.DeserializeObject<String>(result1.Data);
+
+
+                            //FileStream fs = new FileStream(ofd.FileName, FileMode.Open);//可以是其他重载方法 
+                            //byte[] byData = new byte[fs.Length];
+                            //fs.Read(byData, 0, byData.Length);
+                            //fs.Close();
+
+                            //string context1 = Convert.ToBase64String(byData);              
+                            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPImgPackage(filePath, ofd.SafeFileName, MainClient.CurrentUser.ID, ReplyId);
+                            srmp.SMType = SignalRMessageType.Img;
+                            string json_srmp = JsonConvert.SerializeObject(srmp);
+                            LoginWin.SignalRProxy.SendMessage(json_srmp);
+
+
+                            //用流的方式来读取图片不会占用图片，直接用uri的方式则会
+                            BitmapImage myBitmapImage = new BitmapImage();
+                            myBitmapImage.BeginInit();
+                            myBitmapImage.StreamSource = new MemoryStream(b);
+                            myBitmapImage.EndInit();
+
+                            System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                            img.Source = myBitmapImage;
+                            if (img != null)
+                            {
+                                RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("图片上传失败");//上传失败
+                        }
+                    }
+
+                }
+            }
         }
     }
 

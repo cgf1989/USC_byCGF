@@ -32,7 +32,10 @@ namespace WpfClient.Login
 
         public LoginWin()
         {
+
             InitializeComponent();
+
+
         }
 
         private async void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -93,6 +96,7 @@ namespace WpfClient.Login
 
                                         if (package.SMType == SignalRMessageType.Img)
                                         {
+                                            #region 点对群接收图片信息
                                             if (package.SCType == SignalRCommunicationType.PersonToGroup)
                                             {
                                                 if (Teams.organizationPanel.NormalGroupDialogList.Count > 0)
@@ -101,24 +105,25 @@ namespace WpfClient.Login
                                                     foreach (var item in Teams.organizationPanel.NormalGroupDialogList)
                                                     {
                                                         //Uri server = new Uri(String.Format("{0}?filename={1}", api, ServerFileName));
+
+
                                                         HttpClient httpClient = new HttpClient();
                                                         string picName = FileHelper.Encrept_byCgf(package.Title);
-                                                        string p = System.IO.Path.GetDirectoryName(@"D:\"+picName);
-
-                                                        if (!Directory.Exists(p))
-                                                            Directory.CreateDirectory(p);
+                                                        //string p = System.IO.Path.GetDirectoryName(@"D:\MiniU_tempImg\" + picName);
+                                                        //if (!Directory.Exists(p))
+                                                        //    Directory.CreateDirectory(p);
                                                         string pathPic = package.Context.ToString();
                                                         HttpResponseMessage responseMessage = httpClient.GetAsync("http://localhost:37768/api/User/DownloadFile?fileName=" + pathPic).Result;
 
                                                         if (responseMessage.IsSuccessStatusCode)
                                                         {
-                                                            using (FileStream fs = File.Create(@"D:\" + picName))
+                                                            using (FileStream fs = File.Create(@"D:\MiniU_tempImg\" + picName))
                                                             {
                                                                 Stream streamFromService = responseMessage.Content.ReadAsStreamAsync().Result;
                                                                 streamFromService.CopyTo(fs);
                                                             }
 
-                                                            byte[] b = File.ReadAllBytes(@"D:\" + picName);
+                                                            byte[] b = File.ReadAllBytes(@"D:\MiniU_tempImg\" + picName);
 
                                                             BitmapImage myBitmapImage = new BitmapImage();
                                                             myBitmapImage.BeginInit();
@@ -139,16 +144,74 @@ namespace WpfClient.Login
                                                                 {
                                                                     string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
                                                                     LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                                    leftMessageBoxUControl.Init(actualName, "",img,"Image");
+                                                                    leftMessageBoxUControl.Init(actualName, "", img, "Image");
                                                                     item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
                                                                 }
                                                             }
-
                                                         }
+                                                        item.MsgScroll.ScrollToBottom();
                                                     }
 
                                                 }
                                             }
+                                            #endregion
+                                            #region 点对点接收图片信息 (界面未完善，16.9.14注)
+                                            else if (package.SCType == SignalRCommunicationType.PersonToPerson)
+                                            {
+                                                if (Contacts.Contacts.PrivateDialogList.Count > 0)
+                                                {
+
+                                                    foreach (var item in Contacts.Contacts.PrivateDialogList)
+                                                    {
+                                                        //Uri server = new Uri(String.Format("{0}?filename={1}", api, ServerFileName));
+                                                        HttpClient httpClient = new HttpClient();
+                                                        string picName = FileHelper.Encrept_byCgf(package.Title);
+                                                        //string p = System.IO.Path.GetDirectoryName(@"D:\MiniU_tempImg\" + picName);
+                                                        //if (!Directory.Exists(p))
+                                                        //    Directory.CreateDirectory(p);
+                                                        string pathPic = package.Context.ToString();
+                                                        HttpResponseMessage responseMessage = httpClient.GetAsync("http://localhost:37768/api/User/DownloadFile?fileName=" + pathPic).Result;
+
+                                                        if (responseMessage.IsSuccessStatusCode)
+                                                        {
+                                                            using (FileStream fs = File.Create(@"D:\MiniU_tempImg\" + picName))
+                                                            {
+                                                                Stream streamFromService = responseMessage.Content.ReadAsStreamAsync().Result;
+                                                                streamFromService.CopyTo(fs);
+                                                            }
+
+                                                            byte[] b = File.ReadAllBytes(@"D:\MiniU_tempImg\" + picName);
+
+                                                            BitmapImage myBitmapImage = new BitmapImage();
+                                                            myBitmapImage.BeginInit();
+                                                            myBitmapImage.StreamSource = new MemoryStream(b);
+                                                            myBitmapImage.EndInit();
+
+                                                            System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                                                            img.Source = myBitmapImage;
+                                                            if (img != null)
+                                                            {
+                                                                if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
+                                                                {
+                                                                    LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                                                                    leftMessageBoxUControl.Init(item.To, "", img, "Image");
+                                                                    item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+                                                                }
+                                                                else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
+                                                                {
+                                                                    RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                                                    rightMessageBoxUControl.Init(item.Self, "", img, "Image");
+                                                                    item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                                                                }
+                                                            }
+
+                                                        }
+                                                        item.MsgScroll.ScrollToBottom();
+                                                    }
+
+                                                }
+                                            }
+                                            #endregion 
                                         }
                                         else if (package.SMType == SignalRMessageType.Text)
                                         {
@@ -163,7 +226,7 @@ namespace WpfClient.Login
                                                         if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
                                                         {
                                                             LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                            leftMessageBoxUControl.Init(item.To, package.Context.ToString(),null,"Text");
+                                                            leftMessageBoxUControl.Init(item.To, package.Context.ToString(), null, "Text");
                                                             item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
                                                         }
                                                         else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
@@ -173,6 +236,7 @@ namespace WpfClient.Login
                                                             item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                                                         }
 
+                                                        item.MsgScroll.ScrollToBottom();
                                                     }
                                                 }
                                                 else     //接收消息加载到消息页面
@@ -198,11 +262,11 @@ namespace WpfClient.Login
                                                     lvi.Content = img;
 
                                                     mb.Lv_message.Items.Add(lvi);
-
+                                                    mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
                                                 }
                                             }
                                             #endregion
-                                            #region 点对群接收文本
+                                            #region 点对群接收文本信息
                                             else if (package.SCType == SignalRCommunicationType.PersonToGroup)
                                             {
 
@@ -223,11 +287,11 @@ namespace WpfClient.Login
                                                         {
                                                             string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
                                                             LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                            leftMessageBoxUControl.Init(actualName, package.Context.ToString(),null,"Text");
+                                                            leftMessageBoxUControl.Init(actualName, package.Context.ToString(), null, "Text");
                                                             item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
                                                         }
 
-
+                                                        item.MsgScroll.ScrollToBottom();
                                                     }
 
 
@@ -235,7 +299,6 @@ namespace WpfClient.Login
 
                                             }
                                             #endregion
-
                                         }
                                     }
                                     );
@@ -249,6 +312,11 @@ namespace WpfClient.Login
 
                             mainWin.MsgPanel.Content = mb;//消息页面加到主窗体
                                                           //后台绑定
+
+
+                            //创建存放临时图片的文件夹
+                            if (!Directory.Exists(@"D:\MiniU_tempImg"))
+                                Directory.CreateDirectory(@"D:\MiniU_tempImg");
 
                             this.Close();
 
