@@ -69,6 +69,11 @@ namespace BCP.WebAPI.SignalR
         public int ToUserId { get; set; }
 
         /// <summary>
+        /// 发送时间
+        /// </summary>
+        public DateTime SenderTime { get; set; }
+
+        /// <summary>
         /// 信息发送是否成功
         /// </summary>
         public bool State { get; set; }
@@ -90,7 +95,7 @@ namespace BCP.WebAPI.SignalR
         /// <param name="context">信息字符串</param>
         /// <param name="fromUserId">发送者Id</param>
         /// <param name="toUserId">接受者Id</param>
-        public static SignalRMessagePackage GetPTPTextPackage(String context, int fromUserId, int toUserId)
+        public static SignalRMessagePackage GetPTPTextPackage(String context, int fromUserId, int toUserId,DateTime date)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
             srm.Context = context;
@@ -99,6 +104,7 @@ namespace BCP.WebAPI.SignalR
             srm.ToUserId = toUserId;
             srm.SCType = SignalRCommunicationType.PersonToPerson;
             srm.SMType = SignalRMessageType.Text;
+            srm.SenderTime = date;
             return srm;
         }
 
@@ -120,6 +126,7 @@ namespace BCP.WebAPI.SignalR
             srm.SMType = SignalRMessageType.StateMessage;
             srm.State = state;
             srm.Title = String.Empty;
+            srm.SenderTime = DateTime.Now;
             return srm;
         }
 
@@ -130,7 +137,7 @@ namespace BCP.WebAPI.SignalR
         /// <param name="fromUserId"></param>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public static SignalRMessagePackage GetPTGTextPackage(String context, int fromUserId, int groupId)
+        public static SignalRMessagePackage GetPTGTextPackage(String context, int fromUserId, int groupId,DateTime date)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
             srm.Context = context;
@@ -138,6 +145,7 @@ namespace BCP.WebAPI.SignalR
             srm.SCType = SignalRCommunicationType.PersonToGroup;
             srm.SMType = SignalRMessageType.Text;
             srm.ToUserId = groupId;
+            srm.SenderTime = date;
             return srm;
         }
 
@@ -149,7 +157,7 @@ namespace BCP.WebAPI.SignalR
         /// <param name="fromUserId">发送者Id</param>
         /// <param name="groupId">接受者Id</param>
         /// <returns></returns>
-        public static SignalRMessagePackage GetPTGImgPackage(String context, String title, int fromUserId, int groupId)
+        public static SignalRMessagePackage GetPTGImgPackage(String context, String title, int fromUserId, int groupId,DateTime date)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
             srm.Title = title;
@@ -158,6 +166,7 @@ namespace BCP.WebAPI.SignalR
             srm.SCType = SignalRCommunicationType.PersonToGroup;
             srm.SMType = SignalRMessageType.Img;
             srm.ToUserId = groupId;
+            srm.SenderTime = date;
             return srm;
         }
 
@@ -169,7 +178,7 @@ namespace BCP.WebAPI.SignalR
         /// <param name="fromUserId"></param>
         /// <param name="toUserId"></param>
         /// <returns></returns>
-        public static SignalRMessagePackage GetPTPImgPackage(String context, String title, int fromUserId, int toUserId)
+        public static SignalRMessagePackage GetPTPImgPackage(String context, String title, int fromUserId, int toUserId,DateTime date)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
             srm.Title = title;
@@ -178,6 +187,7 @@ namespace BCP.WebAPI.SignalR
             srm.SCType = SignalRCommunicationType.PersonToPerson;
             srm.SMType = SignalRMessageType.Img;
             srm.ToUserId = toUserId;
+            srm.SenderTime = date;
             return srm;
         }
 
@@ -189,7 +199,7 @@ namespace BCP.WebAPI.SignalR
         /// <param name="fromUserId"></param>
         /// <param name="toUserId"></param>
         /// <returns></returns>
-        public static SignalRMessagePackage GetPTPFilePackage(String context, String title, int fromUserId, int toUserId)
+        public static SignalRMessagePackage GetPTPFilePackage(String context, String title, int fromUserId, int toUserId,DateTime date)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
             srm.Title = title;
@@ -198,6 +208,7 @@ namespace BCP.WebAPI.SignalR
             srm.SCType = SignalRCommunicationType.PersonToPerson;
             srm.SMType = SignalRMessageType.File;
             srm.ToUserId = toUserId;
+            srm.SenderTime = date;
             return srm;
         }
 
@@ -209,7 +220,7 @@ namespace BCP.WebAPI.SignalR
         /// <param name="fromUserId"></param>
         /// <param name="groupId"></param>
         /// <returns></returns>
-        public static SignalRMessagePackage GetPTGFilePackage(String context, String title, int fromUserId, int groupId)
+        public static SignalRMessagePackage GetPTGFilePackage(String context, String title, int fromUserId, int groupId,DateTime date)
         {
             SignalRMessagePackage srm = new SignalRMessagePackage();
             srm.Title = title;
@@ -218,6 +229,7 @@ namespace BCP.WebAPI.SignalR
             srm.SCType = SignalRCommunicationType.PersonToGroup;
             srm.SMType = SignalRMessageType.File;
             srm.ToUserId = groupId;
+            srm.SenderTime = date;
             return srm;
         }
 
@@ -225,15 +237,15 @@ namespace BCP.WebAPI.SignalR
         {
             if (node.MessageType == (int)SignalRMessageType.Text)
             {
-                return SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, (int)node.FromUserId, (int)node.ToUserId);
+                return SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, (int)node.FromUserId, (int)node.ToUserId,node.CreateTime==null?DateTime.Now:(DateTime)node.CreateTime);
             }
             else if (node.MessageType == (int)SignalRMessageType.File)
             {
-                return SignalRMessagePackageFactory.GetPTPFilePackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId);
+                return SignalRMessagePackageFactory.GetPTPFilePackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId, node.CreateTime == null ? DateTime.Now : (DateTime)node.CreateTime);
             }
             else if (node.MessageType == (int)SignalRMessageType.Img)
             {
-                return SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId);
+                return SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId, node.CreateTime == null ? DateTime.Now : (DateTime)node.CreateTime);
             }
             else
             {
@@ -245,15 +257,15 @@ namespace BCP.WebAPI.SignalR
         {
             if (node.MessageType == (int)SignalRMessageType.Text)
             {
-                return SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, (int)node.CrateUseId, (int)node.GroupId);
+                return SignalRMessagePackageFactory.GetPTGTextPackage(node.Content, (int)node.CrateUseId, (int)node.GroupId, node.CrateTime == null ? DateTime.Now : (DateTime)node.CrateTime);
             }
             else if (node.MessageType == (int)SignalRMessageType.File)
             {
-                return SignalRMessagePackageFactory.GetPTGFilePackage(node.Content, FileHelper.Decrept(node.Content), (int)node.CrateUseId, (int)node.GroupId);
+                return SignalRMessagePackageFactory.GetPTGFilePackage(node.Content, FileHelper.Decrept(node.Content), (int)node.CrateUseId, (int)node.GroupId, node.CrateTime == null ? DateTime.Now : (DateTime)node.CrateTime);
             }
             else if (node.MessageType == (int)SignalRMessageType.Img)
             {
-                return SignalRMessagePackageFactory.GetPTGImgPackage(node.Content, FileHelper.Decrept(node.Content), (int)node.CrateUseId, (int)node.GroupId);
+                return SignalRMessagePackageFactory.GetPTGImgPackage(node.Content, FileHelper.Decrept(node.Content), (int)node.CrateUseId, (int)node.GroupId, node.CrateTime == null ? DateTime.Now : (DateTime)node.CrateTime);
             }
             else
             {
