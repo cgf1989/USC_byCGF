@@ -129,7 +129,7 @@ namespace WpfClient.Contacts
                                 filePath = JsonConvert.DeserializeObject<String>(result1.Data);
 
 
-                                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPImgPackage(filePath, clipboardType.ToString().Split('\\').LastOrDefault(), MainClient.CurrentUser.ID, ReplyId);
+                                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPImgPackage(filePath, clipboardType.ToString().Split('\\').LastOrDefault(), MainClient.CurrentUser.ID, ReplyId, System.DateTime.Now);
                                 srmp.SMType = SignalRMessageType.Img;
                                 string json_srmp = JsonConvert.SerializeObject(srmp);
                                 LoginWin.SignalRProxy.SendMessage(json_srmp);
@@ -254,7 +254,7 @@ namespace WpfClient.Contacts
             String message = this.InputTBox.Text.Trim();
             try
             {
-                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage(message, MainClient.CurrentUser.ID, ReplyId);
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage(message, MainClient.CurrentUser.ID, ReplyId, System.DateTime.Now);
                 //SignalRMessagePackage srmp = new SignalRMessagePackage(message, MainClient.CurrentUser.ID, ReplyId);
                 string json_srmp = JsonConvert.SerializeObject(srmp);
                 LoginWin.SignalRProxy.SendMessage(json_srmp);
@@ -379,12 +379,19 @@ namespace WpfClient.Contacts
         }
 
 
+     
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+
         /// <summary>
-        /// 测试用，发送图片
+        /// 发送图片
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void btn_sendImage_Click(object sender, RoutedEventArgs e)
         {
             string filePath = "";
             OpenFileDialog ofd = new OpenFileDialog();
@@ -427,7 +434,7 @@ namespace WpfClient.Contacts
                             //fs.Close();
 
                             //string context1 = Convert.ToBase64String(byData);              
-                            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPImgPackage(filePath, ofd.SafeFileName, MainClient.CurrentUser.ID, ReplyId);
+                            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPImgPackage(filePath, ofd.SafeFileName, MainClient.CurrentUser.ID, ReplyId, System.DateTime.Now);
                             srmp.SMType = SignalRMessageType.Img;
                             string json_srmp = JsonConvert.SerializeObject(srmp);
                             LoginWin.SignalRProxy.SendMessage(json_srmp);
@@ -455,6 +462,37 @@ namespace WpfClient.Contacts
                     }
 
                 }
+            }
+        }
+
+
+        /// <summary>
+        /// 历史信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_HistoryMsg_Click(object sender, RoutedEventArgs e)
+        {
+            if (btn_HistoryMsg.IsChecked==true)
+            {              
+                //界面
+                grid_historyMsg.Visibility = Visibility.Visible;
+                grid_historyMsg.Width = 300;
+                this.Width += 300;
+
+                //数据
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, ReplyId, System.DateTime.Now);
+                String json_srmp = JsonConvert.SerializeObject(srmp);
+                LoginWin.SignalRProxy.GetAllMessage(json_srmp,System.DateTime.Now);
+
+            }
+            else if (btn_HistoryMsg.IsChecked == false)
+            {
+                grid_historyMsg.Visibility = Visibility.Collapsed;
+                grid_historyMsg.Width = 0;
+                this.Width -= 300;
+
+                fdoc_historyMsg.Blocks.Clear();//清空内容
             }
         }
     }

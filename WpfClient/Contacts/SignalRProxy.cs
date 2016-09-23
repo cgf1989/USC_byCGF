@@ -143,6 +143,13 @@ namespace WpfClient.Contacts
                     groupId, cp);
         }
 
+        //16.9.19_cgf添加
+        public void MarkMessage(string packageJson)
+        {
+            if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)
+                _hubProxy.Invoke("MarkMessage",
+                    packageJson);
+        }
         //public void InitPTG()
         //{
         //    if (_hubProxy != null && _hubConnection.State == ConnectionState.Connected)

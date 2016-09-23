@@ -165,10 +165,18 @@ namespace WpfClient.Contacts
         {
             try
             {
+
+                //检查窗口是否已经打开
+                foreach (var item in PrivateDialogList)
+                {
+                    if (item.ReplyId == Convert.ToInt32((sender as ListViewItem).Tag.ToString()))
+                        return;
+                }
+
                 PrivateDialog pd1 = new PrivateDialog();
                 PrivateDialogList.Add(pd1);
                 pd1.To = (sender as ListViewItem).Name.ToString();
-                pd1.Self = MainClient.CurrentUser.UserName;
+                pd1.Self = MainClient.CurrentUser.ActualName;
                 pd1.ReplyId = Convert.ToInt32((sender as ListViewItem).Tag.ToString());
 
 
@@ -184,13 +192,13 @@ namespace WpfClient.Contacts
                 pd1.Show();
 
 
-                SignalRMessagePackage srmp =SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId);
+                SignalRMessagePackage srmp =SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId, System.DateTime.Now);
                 String json_srmp = JsonConvert.SerializeObject(srmp);
                 LoginWin.SignalRProxy.InitPTP(json_srmp);//InitPTP里面已经有获取数据，不过只获取未读数据
                 //pd1.SignalRProxy.GetAllMessage(json_srmp, System.DateTime.Now);//该方法获取所有数据不论有读未读，不过要指定日期
                 //所以上面2个不用一起用。
 
-
+                LoginWin.SignalRProxy.MarkMessage(json_srmp);//标记已读
             }
             catch (Exception ex)
             { MessageBox.Show(ex.ToString()); }

@@ -35,6 +35,12 @@ namespace WpfClient.MessageTab
         {
             try
             {
+                Lv_message.Items.Clear();
+                LoginWin.userMsgBoxs.Clear();
+                LoginWin.userMsgCount.Clear();
+                LoginWin.groupMsgBoxs.Clear();
+                LoginWin.groupMsgCount.Clear();
+
                 List<int> userIdList = new List<int>(); //有发送给登录者的用户ID
 
                 HttpClient client = new HttpClient();
@@ -54,12 +60,13 @@ namespace WpfClient.MessageTab
                     }
                 }
 
-
+                List<GroupDTO> userGroupList=MainClient.SysUserGroupCollection;
                 //获取聊天信息
-                if (userIdList.Count > 0)
-                {
-                    ConnectServer(userIdList);
-                }
+                ConnectServer(userIdList,userGroupList);
+           
+
+                
+
             }
             catch (Exception ex)
             {
@@ -67,15 +74,32 @@ namespace WpfClient.MessageTab
             }
         }
 
-
-        void ConnectServer(List<int> userList)
+        /// <summary>
+        /// 获取信息盒内容，包括个人和群聊
+        /// </summary>
+        /// <param name="userList"></param>
+        /// <param name="userGroupList"></param>
+        void ConnectServer(List<int> userList, List<GroupDTO> userGroupList)
         {
-            foreach (var item in userList)
+            if (userList.Count > 0)
             {
-                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, item);
-                String json_srmp = JsonConvert.SerializeObject(srmp);
-                LoginWin.SignalRProxy.InitPTP(json_srmp);
-            }            
+                foreach (var item in userList)
+                {
+                    SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage("", item, MainClient.CurrentUser.ID , System.DateTime.Now);
+                    String json_srmp = JsonConvert.SerializeObject(srmp);
+                    LoginWin.SignalRProxy.InitPTP(json_srmp);
+                }
+            }
+
+            if (userGroupList.Count > 0)
+            {
+                foreach (var item in userGroupList)
+                {
+                    SignalRMessagePackage srmp_g = SignalRMessagePackageFactory.GetPTGTextPackage("", MainClient.CurrentUser.ID, item.Id, System.DateTime.Now);
+                    String json_srmp_g = JsonConvert.SerializeObject(srmp_g);
+                    LoginWin.SignalRProxy.InitPTP(json_srmp_g);
+                }
+            }
         }
 
 
