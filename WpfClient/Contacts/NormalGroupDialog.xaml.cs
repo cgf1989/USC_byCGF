@@ -91,7 +91,7 @@ namespace WpfClient.Contacts
 
             if (input.ToolTip.Equals("发送"))
             {
-                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage(InputNoticeTBox.Text.Trim(), MainClient.CurrentUser.ID, CurrentGroup.Id);
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage(InputNoticeTBox.Text.Trim(), MainClient.CurrentUser.ID, CurrentGroup.Id, System.DateTime.Now);
                 string json_srmp = JsonConvert.SerializeObject(srmp);
                 LoginWin.SignalRProxy.SendMessage(json_srmp);
 
@@ -362,10 +362,13 @@ namespace WpfClient.Contacts
             Win_NewUserToNormalGroup Win_nutg = new Win_NewUserToNormalGroup();
             Win_nutg.CurGroup = CurrentGroup;
             Win_nutg.ShowDialog();
-            if (Win_nutg.AddedUser.Members.Count > 0)
+            if (Win_nutg.AddedUser.Members != null)
             {
-                lbox_GroupMember.ItemsSource = null;
-                lbox_GroupMember.ItemsSource = Win_nutg.AddedUser.Members;
+                if (Win_nutg.AddedUser.Members.Count > 0)
+                {
+                    lbox_GroupMember.ItemsSource = null;
+                    lbox_GroupMember.ItemsSource = Win_nutg.AddedUser.Members;
+                }
             }
         }
 
@@ -493,7 +496,7 @@ namespace WpfClient.Contacts
                             //fs.Close();
 
                             //string context1 = Convert.ToBase64String(byData);              
-                            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(filePath, ofd.SafeFileName, MainClient.CurrentUser.ID, CurrentGroup.Id);
+                            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGImgPackage(filePath, ofd.SafeFileName, MainClient.CurrentUser.ID, CurrentGroup.Id,System.DateTime.Now);
                             srmp.SMType = SignalRMessageType.Img;
                             string json_srmp = JsonConvert.SerializeObject(srmp);
                             LoginWin.SignalRProxy.SendMessage(json_srmp);

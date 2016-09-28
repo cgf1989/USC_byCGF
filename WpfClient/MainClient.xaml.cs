@@ -32,6 +32,10 @@ namespace WpfClient
         /// 系统所有用户的集合
         /// </summary>
         public static List<UserDTO> SysUserCollection { set; get; }
+        /// <summary>
+        /// 系统当前用户所有普通群组的集合
+        /// </summary>
+        public static List<GroupDTO> SysUserGroupCollection { set; get; }
 
         
 
@@ -45,6 +49,7 @@ namespace WpfClient
                 tb_LoginTime.Text = System.DateTime.Now.ToString();
 
                 getAllUser();
+                getUserAllGroup();
             }
             catch { MessageBox.Show("用户信息获取失败"); }
         }
@@ -58,6 +63,9 @@ namespace WpfClient
             
         }
 
+        /// <summary>
+        /// 获取系统所有用户保存在内存
+        /// </summary>
         async void getAllUser()
         {
             List<UserDTO> userlist = new List<UserDTO>();
@@ -80,6 +88,33 @@ namespace WpfClient
             }
 
             SysUserCollection = userlist;
+        }
+
+        /// <summary>
+        /// 获取用户的所有群组存放在内存
+        /// </summary>
+        async void getUserAllGroup()
+        {
+            List<GroupDTO> usergrouplist = new List<GroupDTO>();
+
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:37768/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync("api/user/GetAllGroup?userId="+CurrentUser.ID);
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string ds = await response.Content.ReadAsStringAsync();
+                CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                if (result.Success)
+                {
+                    usergrouplist = JsonConvert.DeserializeObject<List<GroupDTO>>(result.Data);
+                }
+            }
+
+            SysUserGroupCollection = usergrouplist;
         }
     }
 }

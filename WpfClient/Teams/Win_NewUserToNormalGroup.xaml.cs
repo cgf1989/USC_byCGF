@@ -34,6 +34,7 @@ namespace WpfClient.Teams
         {
             InitializeComponent();
             CurGroup = new GroupDTO();
+            AddedUser = new GroupDTO();
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)

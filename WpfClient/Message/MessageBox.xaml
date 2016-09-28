@@ -103,7 +103,7 @@
         <Grid Grid.Row="1" Background="AliceBlue"  VerticalAlignment="Stretch" >
 
             <!--<Label HorizontalContentAlignment="Center" Content="还没有消息哟"/>-->
-            <ListView BorderBrush="Transparent"  Name="Lv_message" >
+            <ListView BorderBrush="Transparent"  Name="Lv_message" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListViewItem Style="{DynamicResource ListViewItemStyle1}" ToolTip="14:33" Name="小贾" Uid="1" Tag="您好">
                     <Image Source="/WpfClient;component/Images/profileIcon23.jpg"/>
                 </ListViewItem>

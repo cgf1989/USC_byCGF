@@ -255,6 +255,13 @@ namespace WpfClient.Teams
                 GroupDTO group = curTv.Header as GroupDTO;
                 lbName = group.Name;
 
+
+                //检查窗口是否已经打开
+                foreach (var item in NormalGroupDialogList)
+                {
+                    if (item.CurrentGroup.Id == group.Id)
+                        return;
+                }
                 //selectTreeViewParent(curTv);
 
 
@@ -270,7 +277,7 @@ namespace WpfClient.Teams
                 };
 
 
-                pd.Init(MainClient.CurrentUser.ActualName,group.Id.ToString());
+                pd.Init(MainClient.CurrentUser.ActualName, group.Id.ToString());
 
                 //System.Threading.Thread.Sleep(1000);
 
@@ -279,7 +286,7 @@ namespace WpfClient.Teams
 
                 System.Threading.Thread.Sleep(500);
 
-                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage("", MainClient.CurrentUser.ID, group.Id);
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage("", MainClient.CurrentUser.ID, group.Id, System.DateTime.Now);
                 String json_srmp = JsonConvert.SerializeObject(srmp);
                 LoginWin.SignalRProxy.InitPTP(json_srmp);
             }

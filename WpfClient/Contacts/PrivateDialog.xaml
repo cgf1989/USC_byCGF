@@ -6,31 +6,71 @@
         WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" Style="{DynamicResource WindowStyle1}" 
          Height="500" Width="500" Foreground="White">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50px"></RowDefinition>
-            <RowDefinition/>
-            <RowDefinition Height="30px"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Background="#9DBFE1" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50px"></ColumnDefinition>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="pack://application:,,,/Images/profileIcon23.jpg" VerticalAlignment="Center" Margin="5 5 5 5"></Image>
-            <Label Grid.Column="1" Name="TitleLabel" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50px"></RowDefinition>
+                <RowDefinition/>
+                <RowDefinition Height="130px"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Background="#9DBFE1" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50px"></ColumnDefinition>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="pack://application:,,,/Images/profileIcon23.jpg" VerticalAlignment="Center" Margin="5 5 5 5"></Image>
+                <Label Grid.Column="1" Name="TitleLabel" VerticalAlignment="Top" HorizontalAlignment="Left"></Label>
+            </Grid>
+            <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Name="MsgScroll">
+                <StackPanel  Name="MessageStackPanel" Background="WhiteSmoke" ></StackPanel>
+            </ScrollViewer>
+            <Grid Grid.Row="2" Background="#ebf2f9" Name="gd_Chat">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60"/>
+                </Grid.ColumnDefinitions>
+                <ToolBarPanel  Grid.Column="0" >
+                    <ToolBar Background="#ebf2f9" Style="{DynamicResource ToolBarStyle1}">
+
+                        <Button ToolTip="发送图片" Name="btn_sendImage" Click="btn_sendImage_Click">
+                            <Image Width="20" Height="20" Source="/WpfClient;component/Images/pic.png"/>
+                        </Button>
+
+                    </ToolBar>
+                </ToolBarPanel>
+                <ToolBarPanel Grid.Column="1">
+                    <ToggleButton Name="btn_HistoryMsg" ToolTip="消息记录" Background="#ebf2f9" BorderThickness="0" BorderBrush="Transparent" Click="btn_HistoryMsg_Click">
+                        <Image Width="20" Height="20" Margin="0,3,0,0" Source="/WpfClient;component/Images/clock.png"/>
+                    </ToggleButton>
+
+                    <!--<ToolBar Background="#ebf2f9" Style="{DynamicResource ToolBarStyle1}">
+                    <Image Width="20" Height="20" Source="/WpfClient;component/Images/clock.png"/>
+                </ToolBar>-->
+                </ToolBarPanel>
+                <TextBox TextWrapping="Wrap" Grid.Row="1" Height="80" Grid.ColumnSpan="2" Name="InputTBox" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" Width="{Binding Path=ActualWidth,ElementName=gd_Chat}"></TextBox>
+                <Button IsDefault="True" Grid.Row="2" Grid.Column="1"  Name="InputBtn" Width="50px" Content="发送" Height="25" HorizontalAlignment="Left" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}">
+                    <Button.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="文档" Click="MenuItem_Click"></MenuItem>
+                        </ContextMenu>
+                    </Button.ContextMenu>
+                </Button>
+            </Grid>
         </Grid>
-        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">       
-            <StackPanel  Name="MessageStackPanel" Background="WhiteSmoke"></StackPanel>
-        </ScrollViewer>        
-        <DockPanel Grid.Row="2" Background="#ebf2f9">
-            <TextBox TextWrapping="Wrap" Name="InputTBox" DockPanel.Dock="Left" Width="430px"></TextBox>
-            <Button IsDefault="True"   Name="InputBtn" Width="50px" Content="发送" Height="25" Foreground="White" Template="{DynamicResource ButtonControlTemplate1}">
-                <Button.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="文档"></MenuItem>
-                    </ContextMenu>
-                </Button.ContextMenu>
-            </Button>
-        </DockPanel>
+        <Grid Grid.Column="1" Visibility="Collapsed"  Name="grid_historyMsg">
+            <RichTextBox Name="rtb_historyMsg" IsReadOnly="True" >
+                <FlowDocument Name="fdoc_historyMsg" LineHeight="1">
+                    
+                </FlowDocument>
+            </RichTextBox>
+        </Grid>
     </Grid>
 </scr:MyMacClass>
