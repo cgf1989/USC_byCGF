@@ -42,13 +42,22 @@ namespace WpfClient.Contacts
             {
                 UserMessageImg.Source = img.Source;
                 UserMessageLable.Visibility = Visibility.Hidden;
+                UserFile.Visibility = Visibility.Hidden;
                 UserMessageImg.Visibility = Visibility.Visible;
             }
             else if (msgType == "Text")
             {
                 this.UserMessageLable.Text = message;
                 UserMessageImg.Visibility = Visibility.Hidden;
+                UserFile.Visibility = Visibility.Hidden;
                 UserMessageLable.Visibility = Visibility.Visible;
+            }
+            else if (msgType == "File")
+            {
+                tb_FileName.Text ="【文件】"+ message;
+                UserMessageLable.Visibility = Visibility.Hidden;
+                UserMessageImg.Visibility = Visibility.Hidden;
+                UserFile.Visibility = Visibility.Visible;
             }
         }
 

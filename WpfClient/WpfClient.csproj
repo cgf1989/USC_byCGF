@@ -223,8 +223,8 @@
     <Compile Include="Teams\InteractWindow.xaml.cs">
       <DependentUpon>InteractWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Teams\jioinTeam.xaml.cs">
-      <DependentUpon>jioinTeam.xaml</DependentUpon>
+    <Compile Include="Teams\joinTeam.xaml.cs">
+      <DependentUpon>joinTeam.xaml</DependentUpon>
     </Compile>
     <Compile Include="Teams\JoinWorkSpace.xaml.cs">
       <DependentUpon>JoinWorkSpace.xaml</DependentUpon>
@@ -425,7 +425,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Teams\jioinTeam.xaml">
+    <Page Include="Teams\joinTeam.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -571,6 +571,7 @@
     <Resource Include="Images\menu_btn_normal.png" />
     <Resource Include="Images\Pic.png" />
     <Resource Include="Images\clock.png" />
+    <Resource Include="Images\file.png" />
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />

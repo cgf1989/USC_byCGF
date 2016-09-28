@@ -50,6 +50,8 @@
 
             <Label Content="是否有效:" Grid.Column="2" HorizontalAlignment="Right"  Grid.Row="3" VerticalAlignment="Center" Height="26" />
             <CheckBox x:Name="isValidCheckBox" Content="" Grid.Column="3" HorizontalAlignment="Left" IsChecked="{Binding IsValid, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="3" VerticalAlignment="Center" />
+            <Button x:Name="btnCreateOrg" Content="创建组织" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Center" />
+
         </Grid>
         <TabControl Grid.Row="1" Background="#ebf2f9">
             <TabItem Header="部门和岗位">

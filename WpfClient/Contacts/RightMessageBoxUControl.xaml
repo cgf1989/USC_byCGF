@@ -33,8 +33,32 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Name="UserNameLable" FontSize="8" Foreground="Gray" MaxWidth="50" HorizontalAlignment="Right" >用户名</Label>
-            <TextBox Template="{StaticResource CornerTextBox}" Grid.Row="1" TextWrapping="Wrap" Name="UserMessageLable" IsEnabled="False" MaxWidth="200" HorizontalAlignment="Right" Margin="5 0 5 0"></TextBox>
-            <Image Grid.Row="1" Name="UserMessageImg" IsEnabled="False" MaxWidth="200" HorizontalAlignment="Right" Margin="5 0 5 0" MouseLeftButtonDown="UserMessageImg_MouseLeftButtonDown"></Image>
+            <TextBox Template="{StaticResource CornerTextBox}" Grid.Row="1" TextWrapping="Wrap" Name="UserMessageLable"  MaxWidth="200" HorizontalAlignment="Right" Margin="5 0 5 0"></TextBox>
+            <Image Grid.Row="1" Name="UserMessageImg"  MaxWidth="200" HorizontalAlignment="Right" Margin="5 0 5 0" MouseLeftButtonDown="UserMessageImg_MouseLeftButtonDown"></Image>
+            <StackPanel Grid.Row="1" Name="UserFile" Margin="5 0 5 0" HorizontalAlignment="Right">
+            <Grid  >
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.ColumnSpan="4" Foreground="Black" Name="tb_FileName"/>
+                <TextBlock Margin="2,0,0,0" Grid.Row="1" Grid.Column="1">
+                    <Hyperlink Name="hyLink_openFile" Click="hyLink_openFile_Click">打开</Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="2,0,0,0" Grid.Row="1" Grid.Column="2"  >
+                    <Hyperlink>评论</Hyperlink>
+                </TextBlock>
+                <TextBlock Margin="2,0,0,0" Grid.Row="1" Grid.Column="3" >
+                    <Hyperlink>转发</Hyperlink>
+                </TextBlock>
+            </Grid>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

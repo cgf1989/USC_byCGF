@@ -111,7 +111,7 @@ namespace WpfClient.Login
                                         this.Dispatcher.Invoke(() =>
                                         {
 
-                                            if (package.SMType == SignalRMessageType.StateMessage || package.SMType == SignalRMessageType.File) { return; }  //文件的显示没做好，暂时忽略
+                                            if (package.SMType == SignalRMessageType.StateMessage) { return; }
 
                                             if (package.SMType == SignalRMessageType.Img)
                                             {
@@ -192,7 +192,7 @@ namespace WpfClient.Login
 
                                                             groupMsgCount[package.ToUserId] += 1;
                                                         }
-                                                        else     //未有该信息发送者信息盒，新建
+                                                        else     //未有该信息发送者信息盒，新建,《《《《《《《《《此处可能也要下载图片到本地，9.28注》》》》》。
                                                         {
                                                             Image img = new Image();
                                                             BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
@@ -234,10 +234,10 @@ namespace WpfClient.Login
                                                             if (item.grid_historyMsg.Visibility == Visibility)
                                                             {
 
-                                                            HttpClient httpClient = new HttpClient();
-                                                            string picName = FileHelper.Encrept_byCgf(package.Title);
-                                                            string pathPic = package.Context.ToString();
-                                                            HttpResponseMessage responseMessage = httpClient.GetAsync("http://localhost:37768/api/User/DownloadFile?fileName=" + pathPic).Result;
+                                                                HttpClient httpClient = new HttpClient();
+                                                                string picName = FileHelper.Encrept_byCgf(package.Title);
+                                                                string pathPic = package.Context.ToString();
+                                                                HttpResponseMessage responseMessage = httpClient.GetAsync("http://localhost:37768/api/User/DownloadFile?fileName=" + pathPic).Result;
 
                                                                 if (responseMessage.IsSuccessStatusCode)
                                                                 {
@@ -258,7 +258,7 @@ namespace WpfClient.Login
                                                                     img.Source = myBitmapImage;
 
 
-                                                                    string userName=MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault().ActualName;
+                                                                    string userName = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault().ActualName;
                                                                     Paragraph p = new Paragraph();
                                                                     Run r = new Run(userName);
                                                                     p.Inlines.Add(r);
@@ -266,14 +266,14 @@ namespace WpfClient.Login
                                                                     item.fdoc_historyMsg.Blocks.Add(p);
 
 
-                                                                    p = new Paragraph();                                                                             
+                                                                    p = new Paragraph();
                                                                     p.Inlines.Add(img);
                                                                     item.fdoc_historyMsg.Blocks.Add(p);
 
 
                                                                 }
-                                                                
-                                                             
+
+
                                                             }
                                                             else
                                                             {
@@ -567,7 +567,130 @@ namespace WpfClient.Login
                                                     }
                                                 }
                                                 #endregion
+                                            }
+                                            else if (package.SMType == SignalRMessageType.File)
+                                            {
+                                                #region 点对点接收文件
+                                                if (package.SCType == SignalRCommunicationType.PersonToPerson)
+                                                {
+                                                    if (Contacts.Contacts.PrivateDialogList.Count > 0)
+                                                    {
+                                                        foreach (var item in Contacts.Contacts.PrivateDialogList)
+                                                        {
+                                                            if (item.grid_historyMsg.Visibility == Visibility)
+                                                            {                                                   
+                                                                //需要具体写历史记录页面的消息
+                                                                string userName = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault().ActualName;
+                                                                string myString = package.Context.ToString();
+                                                                //item.rtb_historyMsg.Document = new FlowDocument(new Paragraph(new Run(myString)));
+                                                                Paragraph p = new Paragraph();  // Paragraph 类似于 html 的 P 标签
+                                                                Run r = new Run(userName);      // Run 是一个 Inline 的标签
+                                                                p.Inlines.Add(r);
+                                                                p.Foreground = Brushes.Blue;
+                                                                item.fdoc_historyMsg.Blocks.Add(p);
 
+                                                                p = new Paragraph();  // Paragraph 类似于 html 的 P 标签
+                                                                r = new Run(myString);      // Run 是一个 Inline 的标签
+                                                                p.Inlines.Add(r);
+                                                                p.Foreground = Brushes.Black;
+                                                                item.fdoc_historyMsg.Blocks.Add(p);
+                                                            }
+                                                            else
+                                                            {
+                                                                HttpClient httpClient = new HttpClient();
+                                                                string picName = FileHelper.Encrept_byCgf(package.Title);                                                              
+                                                                string pathPic = package.Context.ToString();
+                                                                HttpResponseMessage responseMessage = httpClient.GetAsync("http://localhost:37768/api/User/DownloadFile?fileName=" + pathPic).Result;
+
+                                                                if (responseMessage.IsSuccessStatusCode)
+                                                                {
+                                                                    using (FileStream fs = File.Create(@"D:\MiniU_tempImg\" + picName))
+                                                                    {
+                                                                        Stream streamFromService = responseMessage.Content.ReadAsStreamAsync().Result;
+                                                                        streamFromService.CopyTo(fs);
+                                                                    }
+
+                                                                    //byte[] b = File.ReadAllBytes(@"D:\MiniU_tempImg\" + picName);
+
+                                                                    //BitmapImage myBitmapImage = new BitmapImage();
+                                                                    //myBitmapImage.BeginInit();
+                                                                    //myBitmapImage.StreamSource = new MemoryStream(b);
+                                                                    //myBitmapImage.EndInit();
+
+
+                                                                    if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
+                                                                    {
+                                                                        LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
+                                                                        leftMessageBoxUControl.Init(item.To, package.Context.ToString(), null, "File");
+                                                                        item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
+                                                                    }
+                                                                    else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
+                                                                    {
+                                                                        RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                                                        rightMessageBoxUControl.Init(item.Self, package.Context.ToString(), null, "File");
+                                                                        item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                                                                    }
+
+                                                                }
+
+                                                                
+
+                                                                item.MsgScroll.ScrollToBottom();
+                                                            }
+                                                        }
+                                                    }
+                                                    else     //接收消息加载到消息页面
+                                                    {
+                                                        if (package.State == false && MainClient.CurrentUser.ID.Equals(package.ToUserId))//只显示接收的，发送的没必要
+                                                        {
+                                                            //加载到界面
+
+
+
+                                                            if (userMsgBoxs.ContainsKey(package.FromUserId))   //已有信息盒，覆盖，更新计数
+                                                            {
+                                                                ListViewItem lvi = new ListViewItem();
+                                                                lvi = userMsgBoxs[package.FromUserId];
+
+                                                                lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
+                                                                lvi.ToolTip = "10:02";
+                                                                lvi.Tag = package.Context;
+
+                                                                userMsgCount[package.FromUserId] += 1;
+                                                            }
+                                                            else     //未有该信息发送者信息盒，新建
+                                                            {
+                                                                Image img = new Image();
+                                                                BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                                img.Source = bitImg;
+                                                                ListViewItem lvi = new ListViewItem();
+
+                                                                ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                                mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                                this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                                lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+
+
+
+                                                                UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
+                                                                lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
+                                                                lvi.Uid = "1";
+                                                                lvi.ToolTip = "10:02";
+                                                                lvi.Tag ="[文件]"+package.Context;
+                                                                lvi.TabIndex = package.FromUserId;
+                                                                lvi.Content = img;
+                                                                lvi.MouseDoubleClick += Lvi_MouseDoubleClick1;
+
+                                                                mb.Lv_message.Items.Add(lvi);
+                                                                mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+
+                                                                userMsgBoxs.Add(package.FromUserId, lvi);
+                                                                userMsgCount.Add(package.FromUserId, 1);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                                #endregion
                                             }
                                         }
                                         );
@@ -753,8 +876,7 @@ namespace WpfClient.Login
         /// <param name="e"></param>
         private void hpLink_findPassword_Click(object sender, RoutedEventArgs e)
         {
-            Window1 umw = new Window1();
-            //UserManageWin umw = new UserManageWin();
+            UserManageWin umw = new UserManageWin();
             umw.ShowDialog();
         }
     }

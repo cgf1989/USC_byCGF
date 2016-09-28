@@ -467,7 +467,7 @@ namespace WpfClient.Contacts
 
 
         /// <summary>
-        /// 历史信息
+        /// 历史信息界面
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -479,12 +479,7 @@ namespace WpfClient.Contacts
                 grid_historyMsg.Visibility = Visibility.Visible;
                 grid_historyMsg.Width = 300;
                 this.Width += 300;
-
-                //数据
-                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, ReplyId, System.DateTime.Now);
-                String json_srmp = JsonConvert.SerializeObject(srmp);
-                LoginWin.SignalRProxy.GetAllMessage(json_srmp,System.DateTime.Now);
-
+              
             }
             else if (btn_HistoryMsg.IsChecked == false)
             {
@@ -492,7 +487,108 @@ namespace WpfClient.Contacts
                 grid_historyMsg.Width = 0;
                 this.Width -= 300;
 
-                fdoc_historyMsg.Blocks.Clear();//清空内容
+                //fdoc_historyMsg.Blocks.Clear();//清空内容
+            }
+        }
+
+        /// <summary>
+        /// 选择聊天记录的日期
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dp_HistoryDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            fdoc_historyMsg.Blocks.Clear();//清空内容
+
+            if (dp_HistoryDate.Text != "")
+            {
+                //数据
+                SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, ReplyId, System.DateTime.Now);
+                String json_srmp = JsonConvert.SerializeObject(srmp);
+                LoginWin.SignalRProxy.GetAllMessage(json_srmp, (DateTime)dp_HistoryDate.SelectedDate);
+            }
+            else
+            {
+                MessageBox.Show("没选择日期");
+            }
+        }
+
+        /// <summary>
+        /// 发送文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_sendFile_Click(object sender, RoutedEventArgs e)
+        {
+            string filePath = "";
+            OpenFileDialog ofd = new OpenFileDialog();
+            //ofd.Filter = "图片文件|*.jpg;*.jpeg;*.bmp;*.ico;*.png";
+            if (ofd.ShowDialog() == true)
+            {
+                using (var client = new HttpClient())
+                using (var content = new MultipartFormDataContent())
+                {
+                    // Make sure to change API address  
+                    client.BaseAddress = new Uri("http://localhost:37768/");
+
+                    // Add first file content   
+                    byte[] b = File.ReadAllBytes(ofd.FileName);
+                    Console.WriteLine(b.Length);
+                    var fileContent1 = new ByteArrayContent(b);
+                    fileContent1.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                    {
+                        FileName = ofd.SafeFileName
+                    };
+
+                    content.Add(fileContent1);
+
+                    // Make a call to Web API  
+                    client.Timeout = new TimeSpan(1, 1, 1);
+                    var result = client.PostAsync("/api/User/UpLoadFile?fileName=" + ofd.SafeFileName, content).Result;
+                    result.EnsureSuccessStatusCode();
+                    if (result.IsSuccessStatusCode)
+                    {
+                        Task<string> ds = result.Content.ReadAsStringAsync();
+                        CustomMessage result1 = JsonConvert.DeserializeObject<CustomMessage>(ds.Result);
+                        if (result1.Success)
+                        {
+                            filePath = JsonConvert.DeserializeObject<String>(result1.Data);
+
+
+                            //FileStream fs = new FileStream(ofd.FileName, FileMode.Open);//可以是其他重载方法 
+                            //byte[] byData = new byte[fs.Length];
+                            //fs.Read(byData, 0, byData.Length);
+                            //fs.Close();
+
+                            //string context1 = Convert.ToBase64String(byData);              
+                            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPFilePackage(filePath, ofd.SafeFileName, MainClient.CurrentUser.ID, ReplyId, System.DateTime.Now);
+                            srmp.SMType = SignalRMessageType.File;
+                            string json_srmp = JsonConvert.SerializeObject(srmp);
+                            LoginWin.SignalRProxy.SendMessage(json_srmp);
+
+
+                            //用流的方式来读取图片不会占用图片，直接用uri的方式则会
+                            //BitmapImage myBitmapImage = new BitmapImage();
+                            //myBitmapImage.BeginInit();
+                            //myBitmapImage.StreamSource = new MemoryStream(b);
+                            //myBitmapImage.EndInit();
+
+                            //System.Windows.Controls.Image img = new System.Windows.Controls.Image();
+                            //img.Source = myBitmapImage;
+                            //if (img != null)
+                            //{
+                                RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
+                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, ofd.SafeFileName, null, "File");
+                                this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+                            //}
+                        }
+                        else
+                        {
+                            MessageBox.Show("文件上传失败");//上传失败
+                        }
+                    }
+
+                }
             }
         }
     }

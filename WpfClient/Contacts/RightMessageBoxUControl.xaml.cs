@@ -35,12 +35,21 @@ namespace WpfClient.Contacts
                 UserMessageImg.Source = img.Source;
                 UserMessageLable.Visibility = Visibility.Hidden;
                 UserMessageImg.Visibility = Visibility.Visible;
+                UserFile.Visibility = Visibility.Hidden;
             }
             else if (msgType == "Text")
             {
                 this.UserMessageLable.Text = message;
                 UserMessageImg.Visibility = Visibility.Hidden;
                 UserMessageLable.Visibility = Visibility.Visible;
+                UserFile.Visibility = Visibility.Hidden;
+            }
+            else if (msgType == "File")
+            {
+                tb_FileName.Text ="【文件】"+ message;
+                UserMessageLable.Visibility = Visibility.Hidden;
+                UserMessageImg.Visibility = Visibility.Hidden;
+                UserFile.Visibility = Visibility.Visible;
             }
         }
 
@@ -59,6 +68,17 @@ namespace WpfClient.Contacts
                 pb.ShowDialog();
             }
             
+        }
+
+        /// <summary>
+        /// 打开文件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void hyLink_openFile_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(@"D:\MiniU_tempImg\" + hyLink_openFile);
+            //System.Diagnostics.Process.Start("");
         }
     }
 }

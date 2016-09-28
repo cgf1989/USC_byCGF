@@ -64,7 +64,7 @@ namespace WpfClient.Teams
 
         private void mi_joinTeam_Click(object sender, RoutedEventArgs e)
         {
-            jioinTeam joinTeam = new jioinTeam();
+            joinTeam joinTeam = new joinTeam();
             joinTeam.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             joinTeam.ShowDialog();
         }

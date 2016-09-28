@@ -43,6 +43,9 @@
                         <Button ToolTip="发送图片" Name="btn_sendImage" Click="btn_sendImage_Click">
                             <Image Width="20" Height="20" Source="/WpfClient;component/Images/pic.png"/>
                         </Button>
+                        <Button ToolTip="发送文件" Name="btn_sendFile" Click="btn_sendFile_Click">
+                            <Image Width="20" Height="18" Source="/WpfClient;component/Images/file.png"/>
+                        </Button>
 
                     </ToolBar>
                 </ToolBarPanel>
@@ -66,9 +69,21 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="1" Visibility="Collapsed"  Name="grid_historyMsg">
-            <RichTextBox Name="rtb_historyMsg" IsReadOnly="True" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>                
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <DatePicker Name="dp_HistoryDate" SelectedDateChanged="dp_HistoryDate_SelectedDateChanged">
+                    <DatePicker.Resources>
+                        <Style TargetType="DatePickerTextBox">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </Style>
+                    </DatePicker.Resources>
+                </DatePicker>
+            </Grid>
+            <RichTextBox Grid.Row="1" Name="rtb_historyMsg" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <FlowDocument Name="fdoc_historyMsg" LineHeight="1">
-                    
                 </FlowDocument>
             </RichTextBox>
         </Grid>

@@ -27,7 +27,7 @@ namespace WpfClient.Teams
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
+            
             // 不要在设计时加载数据。
             // if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             // {
@@ -36,5 +36,8 @@ namespace WpfClient.Teams
             // 	myCollectionViewSource.Source = your data
             // }
         }
+
+  
+     
     }
 }
