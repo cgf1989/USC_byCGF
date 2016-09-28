@@ -83,6 +83,7 @@
     <EntityDeploy Include="DBPlaceFinal.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DBPlaceFinal.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EntityDeploy>
     <None Include="DBPlaceFinal.edmx.diagram">
       <DependentUpon>DBPlaceFinal.edmx</DependentUpon>

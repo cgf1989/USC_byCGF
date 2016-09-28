@@ -17,7 +17,6 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Post()
         {
-            this.Posts = new HashSet<Post>();
             this.Authorizations = new HashSet<Authorization>();
             this.Authorizations1 = new HashSet<Authorization>();
             this.DocReaders = new HashSet<DocReader>();
@@ -28,17 +27,19 @@ namespace BCP.Domain.Edmx
         public int ID { get; set; }
         public string PostName { get; set; }
         public string MarkerString { get; set; }
-        public bool IsValid { get; set; }
         public string Descript { get; set; }
         public Nullable<int> PostID { get; set; }
         public int OrganizationID { get; set; }
         public Nullable<int> EmployeeId { get; set; }
         public Nullable<int> PositionID { get; set; }
-        public long EventTime { get; set; }
+        public string IsDeleted { get; set; }
+        public string Notes { get; set; }
+        public string State { get; set; }
+        public int CreateUserId { get; set; }
+        public System.DateTime CreateTime { get; set; }
+        public int UpdateUserId { get; set; }
+        public System.DateTime UpdateTime { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Post> Posts { get; set; }
-        public virtual Post Post1 { get; set; }
         public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Authorization> Authorizations { get; set; }
@@ -51,6 +52,5 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<JobChange> JobChanges { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual Position Position { get; set; }
     }
 }

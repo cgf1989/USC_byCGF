@@ -11,12 +11,5 @@ namespace BCP.ViewModel
     /// </summary>
     public partial class EventTimeDTO
     {
-        public System.Int32 Id { get; set; }
-        public System.String TimePoint { get; set; }
-        public System.String SpacePoint { get; set; }
-        public System.String EventName { get; set; }
-        public System.String EventType { get; set; }
-        public System.String District { get; set; }
-        public Int32? LoginLogID { get; set; }
     }
 }

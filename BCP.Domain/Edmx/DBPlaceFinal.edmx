@@ -6,9 +6,9 @@
     <edmx:StorageModels>
     <Schema Namespace="BCP.Domain.Edmx.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="BCPDomainEdmxStoreContainer">
-    <EntitySet Name="Organizations" EntityType="BCP.Domain.Edmx.Store.Organizations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sys_Organization" EntityType="BCP.Domain.Edmx.Store.sys_Organization" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Organization_ContactTables" EntityType="BCP.Domain.Edmx.Store.Organization_ContactTables" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Positions" EntityType="BCP.Domain.Edmx.Store.Positions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sys_Position" EntityType="BCP.Domain.Edmx.Store.sys_Position" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="sys_User" EntityType="BCP.Domain.Edmx.Store.sys_User" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="User_ContactTable" EntityType="BCP.Domain.Edmx.Store.User_ContactTable" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="LoginLogs" EntityType="BCP.Domain.Edmx.Store.LoginLogs" store:Type="Tables" Schema="dbo" />
@@ -28,7 +28,7 @@
     <EntitySet Name="IPCodes" EntityType="BCP.Domain.Edmx.Store.IPCodes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizBasics" EntityType="BCP.Domain.Edmx.Store.OrganizBasics" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="PostRequires" EntityType="BCP.Domain.Edmx.Store.PostRequires" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Posts" EntityType="BCP.Domain.Edmx.Store.Posts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sys_Post" EntityType="BCP.Domain.Edmx.Store.sys_Post" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WorkSpaces" EntityType="BCP.Domain.Edmx.Store.WorkSpaces" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Subordinates" EntityType="BCP.Domain.Edmx.Store.Subordinates" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Specializeds" EntityType="BCP.Domain.Edmx.Store.Specializeds" store:Type="Tables" Schema="dbo" />
@@ -57,7 +57,7 @@
     <EntitySet Name="AssetMaintenances" EntityType="BCP.Domain.Edmx.Store.AssetMaintenances" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="AssetBaseTypes" EntityType="BCP.Domain.Edmx.Store.AssetBaseTypes" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OrganizationAssetTypes" EntityType="BCP.Domain.Edmx.Store.OrganizationAssetTypes" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Employees1" EntityType="BCP.Domain.Edmx.Store.Employees1" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sys_Employee" EntityType="BCP.Domain.Edmx.Store.sys_Employee" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="IndustrySolutions" EntityType="BCP.Domain.Edmx.Store.IndustrySolutions" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WorkModuls" EntityType="BCP.Domain.Edmx.Store.WorkModuls" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="WorkSpaceRoles" EntityType="BCP.Domain.Edmx.Store.WorkSpaceRoles" store:Type="Tables" Schema="dbo" />
@@ -78,12 +78,13 @@
     <EntitySet Name="OperationDetails" EntityType="BCP.Domain.Edmx.Store.OperationDetails" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OperationEvents" EntityType="BCP.Domain.Edmx.Store.OperationEvents" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="sys_CustomGroupUser" EntityType="BCP.Domain.Edmx.Store.sys_CustomGroupUser" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="sys_OrgManagers" EntityType="BCP.Domain.Edmx.Store.sys_OrgManagers" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="UserLoginLog" Association="BCP.Domain.Edmx.Store.UserLoginLog">
       <End Role="User" EntitySet="sys_User" />
       <End Role="LoginLog" EntitySet="LoginLogs" />
     </AssociationSet>
     <AssociationSet Name="OrganizationOrganizationOtherName" Association="BCP.Domain.Edmx.Store.OrganizationOrganizationOtherName">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="OrganizationOtherName" EntitySet="OrganizationOtherNames" />
     </AssociationSet>
     <AssociationSet Name="ProductStandardProductStandard" Association="BCP.Domain.Edmx.Store.ProductStandardProductStandard">
@@ -95,11 +96,11 @@
       <End Role="IndustryCode1" EntitySet="IndustryCodes" />
     </AssociationSet>
     <AssociationSet Name="OrganizationOrganizationTransition" Association="BCP.Domain.Edmx.Store.OrganizationOrganizationTransition">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="OrganizationTransition" EntitySet="OrganizationTransitions" />
     </AssociationSet>
     <AssociationSet Name="OrganizationOrganizationTransition1" Association="BCP.Domain.Edmx.Store.OrganizationOrganizationTransition1">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="OrganizationTransition" EntitySet="OrganizationTransitions" />
     </AssociationSet>
     <AssociationSet Name="UserUser_ContacTable" Association="BCP.Domain.Edmx.Store.UserUser_ContacTable">
@@ -107,8 +108,8 @@
       <End Role="User_ContacTable" EntitySet="User_ContactTable" />
     </AssociationSet>
     <AssociationSet Name="OrganizationOrganization" Association="BCP.Domain.Edmx.Store.OrganizationOrganization">
-      <End Role="Organization" EntitySet="Organizations" />
-      <End Role="Organization1" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
+      <End Role="Organization1" EntitySet="sys_Organization" />
     </AssociationSet>
     <AssociationSet Name="AdministrativecodeAdministrativecode" Association="BCP.Domain.Edmx.Store.AdministrativecodeAdministrativecode">
       <End Role="Administrativecode" EntitySet="Administrativecodes" />
@@ -179,11 +180,11 @@
       <End Role="OrganizBasic1" EntitySet="OrganizBasics" />
     </AssociationSet>
     <AssociationSet Name="OrganizationOrganizBasic" Association="BCP.Domain.Edmx.Store.OrganizationOrganizBasic">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="OrganizBasic" EntitySet="OrganizBasics" />
     </AssociationSet>
     <AssociationSet Name="OrganizationOrganizationEvent" Association="BCP.Domain.Edmx.Store.OrganizationOrganizationEvent">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="OrganizationEvent" EntitySet="OrganizationEvents" />
     </AssociationSet>
     <AssociationSet Name="IndustryCodeOrganizBasic" Association="BCP.Domain.Edmx.Store.IndustryCodeOrganizBasic">
@@ -197,10 +198,6 @@
     <AssociationSet Name="AdministrativecodeOrganizBasic" Association="BCP.Domain.Edmx.Store.AdministrativecodeOrganizBasic">
       <End Role="Administrativecode" EntitySet="Administrativecodes" />
       <End Role="OrganizBasic" EntitySet="OrganizBasics" />
-    </AssociationSet>
-    <AssociationSet Name="PositionPosition" Association="BCP.Domain.Edmx.Store.PositionPosition">
-      <End Role="Position" EntitySet="Positions" />
-      <End Role="Position1" EntitySet="Positions" />
     </AssociationSet>
     <AssociationSet Name="OrganizBasicOrganicInvestor1" Association="BCP.Domain.Edmx.Store.OrganizBasicOrganicInvestor1">
       <End Role="OrganizBasic" EntitySet="OrganizBasics" />
@@ -223,7 +220,7 @@
       <End Role="UserMessage" EntitySet="sys_UserMessage" />
     </AssociationSet>
     <AssociationSet Name="OrganizationCustomOrganizationType" Association="BCP.Domain.Edmx.Store.OrganizationCustomOrganizationType">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="CustomOrganizationType" EntitySet="OrganizationCustomTypes" />
     </AssociationSet>
     <AssociationSet Name="CustomCategoryCustomOrganizationType" Association="BCP.Domain.Edmx.Store.CustomCategoryCustomOrganizationType">
@@ -259,7 +256,7 @@
       <End Role="ProductEvent" EntitySet="ProductEvents" />
     </AssociationSet>
     <AssociationSet Name="OrganizationphysicalAsset" Association="BCP.Domain.Edmx.Store.OrganizationphysicalAsset">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="physicalAsset" EntitySet="physicalAssets" />
     </AssociationSet>
     <AssociationSet Name="ProductphysicalAsset" Association="BCP.Domain.Edmx.Store.ProductphysicalAsset">
@@ -267,7 +264,7 @@
       <End Role="physicalAsset" EntitySet="physicalAssets" />
     </AssociationSet>
     <AssociationSet Name="OrganizationphysicalAsset1" Association="BCP.Domain.Edmx.Store.OrganizationphysicalAsset1">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="physicalAsset" EntitySet="physicalAssets" />
     </AssociationSet>
     <AssociationSet Name="physicalAssetAssetUse" Association="BCP.Domain.Edmx.Store.physicalAssetAssetUse">
@@ -283,8 +280,8 @@
       <End Role="AssetType1" EntitySet="AssetBaseTypes" />
     </AssociationSet>
     <AssociationSet Name="OrganizationPosition" Association="BCP.Domain.Edmx.Store.OrganizationPosition">
-      <End Role="Organization" EntitySet="Organizations" />
-      <End Role="Position" EntitySet="Positions" />
+      <End Role="Organization" EntitySet="sys_Organization" />
+      <End Role="Position" EntitySet="sys_Position" />
     </AssociationSet>
     <AssociationSet Name="DllFileStreamDllFileStream" Association="BCP.Domain.Edmx.Store.DllFileStreamDllFileStream">
       <End Role="DllFileStream" EntitySet="DllFileStreams" />
@@ -300,23 +297,19 @@
     </AssociationSet>
     <AssociationSet Name="UserEmployee" Association="BCP.Domain.Edmx.Store.UserEmployee">
       <End Role="User" EntitySet="sys_User" />
-      <End Role="Employee" EntitySet="Employees1" />
+      <End Role="Employee" EntitySet="sys_Employee" />
     </AssociationSet>
     <AssociationSet Name="PostRequirePosition" Association="BCP.Domain.Edmx.Store.PostRequirePosition">
       <End Role="PostRequire" EntitySet="PostRequires" />
-      <End Role="Position" EntitySet="Positions" />
-    </AssociationSet>
-    <AssociationSet Name="PostPost" Association="BCP.Domain.Edmx.Store.PostPost">
-      <End Role="Post" EntitySet="Posts" />
-      <End Role="Post1" EntitySet="Posts" />
+      <End Role="Position" EntitySet="sys_Position" />
     </AssociationSet>
     <AssociationSet Name="IndustryCodeIndustrySolution" Association="BCP.Domain.Edmx.Store.IndustryCodeIndustrySolution">
       <End Role="IndustryCode" EntitySet="IndustryCodes" />
       <End Role="IndustrySolution" EntitySet="IndustrySolutions" />
     </AssociationSet>
     <AssociationSet Name="PositionEmployee" Association="BCP.Domain.Edmx.Store.PositionEmployee">
-      <End Role="Position" EntitySet="Positions" />
-      <End Role="Employee" EntitySet="Employees1" />
+      <End Role="Position" EntitySet="sys_Position" />
+      <End Role="Employee" EntitySet="sys_Employee" />
     </AssociationSet>
     <AssociationSet Name="OrganizBasicProduct" Association="BCP.Domain.Edmx.Store.OrganizBasicProduct">
       <End Role="OrganizBasic" EntitySet="OrganizBasics" />
@@ -331,16 +324,16 @@
       <End Role="WorkSpace" EntitySet="WorkSpaces" />
     </AssociationSet>
     <AssociationSet Name="OrganizationPost" Association="BCP.Domain.Edmx.Store.OrganizationPost">
-      <End Role="Organization" EntitySet="Organizations" />
-      <End Role="Post" EntitySet="Posts" />
+      <End Role="Organization" EntitySet="sys_Organization" />
+      <End Role="Post" EntitySet="sys_Post" />
     </AssociationSet>
     <AssociationSet Name="WorkSpaceWorkSpace" Association="BCP.Domain.Edmx.Store.WorkSpaceWorkSpace">
       <End Role="WorkSpace" EntitySet="WorkSpaces" />
       <End Role="WorkSpace1" EntitySet="WorkSpaces" />
     </AssociationSet>
     <AssociationSet Name="OrganizationEmployee" Association="BCP.Domain.Edmx.Store.OrganizationEmployee">
-      <End Role="Organization" EntitySet="Organizations" />
-      <End Role="Employee" EntitySet="Employees1" />
+      <End Role="Organization" EntitySet="sys_Organization" />
+      <End Role="Employee" EntitySet="sys_Employee" />
     </AssociationSet>
     <AssociationSet Name="IndustrySolutionDllFileStream" Association="BCP.Domain.Edmx.Store.IndustrySolutionDllFileStream">
       <End Role="IndustrySolution" EntitySet="IndustrySolutions" />
@@ -359,7 +352,7 @@
       <End Role="WorkSpaceRole" EntitySet="WorkSpaceRoles" />
     </AssociationSet>
     <AssociationSet Name="OrganizationWorkSpaceRole" Association="BCP.Domain.Edmx.Store.OrganizationWorkSpaceRole">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="WorkSpaceRole" EntitySet="WorkSpaceRoles" />
     </AssociationSet>
     <AssociationSet Name="WorkModulWorkSpaceRole" Association="BCP.Domain.Edmx.Store.WorkModulWorkSpaceRole">
@@ -367,15 +360,15 @@
       <End Role="WorkSpaceRole" EntitySet="WorkSpaceRoles" />
     </AssociationSet>
     <AssociationSet Name="PostAuthorization" Association="BCP.Domain.Edmx.Store.PostAuthorization">
-      <End Role="Post" EntitySet="Posts" />
+      <End Role="Post" EntitySet="sys_Post" />
       <End Role="Authorization" EntitySet="Authorizations" />
     </AssociationSet>
     <AssociationSet Name="OrganizationProduct" Association="BCP.Domain.Edmx.Store.OrganizationProduct">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="Product" EntitySet="Products" />
     </AssociationSet>
     <AssociationSet Name="PostAuthorization1" Association="BCP.Domain.Edmx.Store.PostAuthorization1">
-      <End Role="Post" EntitySet="Posts" />
+      <End Role="Post" EntitySet="sys_Post" />
       <End Role="Authorization" EntitySet="Authorizations" />
     </AssociationSet>
     <AssociationSet Name="WorkModulModulProperty" Association="BCP.Domain.Edmx.Store.WorkModulModulProperty">
@@ -411,7 +404,7 @@
       <End Role="DocType" EntitySet="DocTypes" />
     </AssociationSet>
     <AssociationSet Name="OrganizationDocReader" Association="BCP.Domain.Edmx.Store.OrganizationDocReader">
-      <End Role="Organization" EntitySet="Organizations" />
+      <End Role="Organization" EntitySet="sys_Organization" />
       <End Role="DocReader" EntitySet="DocReaders" />
     </AssociationSet>
     <AssociationSet Name="WorkSpaceDocReader" Association="BCP.Domain.Edmx.Store.WorkSpaceDocReader">
@@ -419,7 +412,7 @@
       <End Role="DocReader" EntitySet="DocReaders" />
     </AssociationSet>
     <AssociationSet Name="PostDocReader" Association="BCP.Domain.Edmx.Store.PostDocReader">
-      <End Role="Post" EntitySet="Posts" />
+      <End Role="Post" EntitySet="sys_Post" />
       <End Role="DocReader" EntitySet="DocReaders" />
     </AssociationSet>
     <AssociationSet Name="UserDocReader" Association="BCP.Domain.Edmx.Store.UserDocReader">
@@ -439,7 +432,7 @@
       <End Role="DocSender" EntitySet="DocSenders" />
     </AssociationSet>
     <AssociationSet Name="PostDocSender" Association="BCP.Domain.Edmx.Store.PostDocSender">
-      <End Role="Post" EntitySet="Posts" />
+      <End Role="Post" EntitySet="sys_Post" />
       <End Role="DocSender" EntitySet="DocSenders" />
     </AssociationSet>
     <AssociationSet Name="DocSenderDocComent" Association="BCP.Domain.Edmx.Store.DocSenderDocComent">
@@ -447,7 +440,7 @@
       <End Role="DocComent" EntitySet="DocComents" />
     </AssociationSet>
     <AssociationSet Name="PostJobChange" Association="BCP.Domain.Edmx.Store.PostJobChange">
-      <End Role="Post" EntitySet="Posts" />
+      <End Role="Post" EntitySet="sys_Post" />
       <End Role="JobChange" EntitySet="JobChanges" />
     </AssociationSet>
     <AssociationSet Name="WorkSpaceWorkSpaceType" Association="BCP.Domain.Edmx.Store.WorkSpaceWorkSpaceType">
@@ -539,12 +532,8 @@
       <End Role="GroupMember" EntitySet="sys_GroupMember" />
     </AssociationSet>
     <AssociationSet Name="EmployeePost" Association="BCP.Domain.Edmx.Store.EmployeePost">
-      <End Role="Employee" EntitySet="Employees1" />
-      <End Role="Post" EntitySet="Posts" />
-    </AssociationSet>
-    <AssociationSet Name="PositionPost" Association="BCP.Domain.Edmx.Store.PositionPost">
-      <End Role="Position" EntitySet="Positions" />
-      <End Role="Post" EntitySet="Posts" />
+      <End Role="Employee" EntitySet="sys_Employee" />
+      <End Role="Post" EntitySet="sys_Post" />
     </AssociationSet>
     <AssociationSet Name="GroupGroupMessager" Association="BCP.Domain.Edmx.Store.GroupGroupMessager">
       <End Role="Group" EntitySet="sys_Group" />
@@ -559,19 +548,26 @@
       <End Role="CustomGroupUser" EntitySet="sys_CustomGroupUser" />
     </AssociationSet>
   </EntityContainer>
-  <EntityType Name="Organizations">
+  <EntityType Name="sys_Organization">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="OrganizationCode" Type="nvarchar(max)" Nullable="true" />
     <Property Name="OrgaName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Certificates" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="EstablishmentDate" Type="datetime" Nullable="true" />
-    <Property Name="Parent" Type="int" Nullable="true" />
+    <Property Name="ParentId" Type="int" Nullable="true" />
     <Property Name="MarkerString" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="IsValid" Type="bit" Nullable="false" DefaultValue="true" />
     <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RootId" Type="int" Nullable="false" />
+    <Property Name="IsRoot" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateUserId" Type="int" Nullable="false" />
+    <Property Name="CreateTime" Type="datetime" Nullable="false" />
+    <Property Name="UpdateUserId" Type="int" Nullable="false" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Organization_ContactTables">
     <Key>
@@ -585,19 +581,25 @@
     <Property Name="IsValid" Type="bit" Nullable="false" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
-  <EntityType Name="Positions">
+  <EntityType Name="sys_Position">
     <Key>
-      <PropertyRef Name="ID" />
+      <PropertyRef Name="Id" />
     </Key>
-    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="IsValid" Type="bit" Nullable="false" />
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PositionType" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
     <Property Name="TaskNature" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PositionID" Type="int" Nullable="true" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="PostRequireID" Type="int" Nullable="true" />
-    <Property Name="PositionLevel" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PositionLevel" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateUserId" Type="int" Nullable="false" />
+    <Property Name="CreateTime" Type="datetime" Nullable="false" />
+    <Property Name="UpdateUserId" Type="int" Nullable="false" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="sys_User">
     <Key>
@@ -616,6 +618,7 @@
     <Property Name="CreateUserId" Type="int" Nullable="true" />
     <Property Name="UpdateTime" Type="datetime" Nullable="true" />
     <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="User_ContactTable">
     <Key>
@@ -696,6 +699,7 @@
     <Property Name="CreateUserId" Type="int" Nullable="true" />
     <Property Name="UpdateTime" Type="datetime" Nullable="true" />
     <Property Name="UpdateUserId" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="sys_GroupMember">
     <Key>
@@ -714,6 +718,7 @@
     <Property Name="CreateTime" Type="datetime" Nullable="true" />
     <Property Name="UpdateTiime" Type="datetime" Nullable="true" />
     <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="OrganizationOtherNames">
     <Key>
@@ -850,20 +855,25 @@
     <Property Name="SkillRequirement" Type="nvarchar(max)" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
-  <EntityType Name="Posts">
+  <EntityType Name="sys_Post">
     <Key>
       <PropertyRef Name="ID" />
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PostName" Type="nvarchar(max)" Nullable="false" />
     <Property Name="MarkerString" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="IsValid" Type="bit" Nullable="false" />
     <Property Name="Descript" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PostID" Type="int" Nullable="true" />
     <Property Name="OrganizationID" Type="int" Nullable="false" />
     <Property Name="EmployeeId" Type="int" Nullable="true" />
     <Property Name="PositionID" Type="int" Nullable="true" />
-    <Property Name="EventTime" Type="bigint" Nullable="false" />
+    <Property Name="IsDeleted" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateUserId" Type="int" Nullable="false" />
+    <Property Name="CreateTime" Type="datetime" Nullable="false" />
+    <Property Name="UpdateUserId" Type="int" Nullable="false" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="WorkSpaces">
     <Key>
@@ -1025,6 +1035,7 @@
     <Property Name="CrateUseId" Type="int" Nullable="true" />
     <Property Name="UpdateTime" Type="datetime" Nullable="true" />
     <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="sys_Group">
     <Key>
@@ -1042,6 +1053,7 @@
     <Property Name="CreateUserId" Type="int" Nullable="true" />
     <Property Name="UpdateTime" Type="datetime" Nullable="true" />
     <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="sys_CustomerGoup">
     <Key>
@@ -1054,6 +1066,7 @@
     <Property Name="CreateUserId" Type="int" Nullable="true" />
     <Property Name="UpdateTime" Type="datetime" Nullable="true" />
     <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
   </EntityType>
   <EntityType Name="DllFileStreams">
     <Key>
@@ -1209,18 +1222,25 @@
     <Property Name="AssetBaseTypeId" Type="int" Nullable="false" />
     <Property Name="EventTime" Type="bigint" Nullable="false" />
   </EntityType>
-  <EntityType Name="Employees1">
+  <EntityType Name="sys_Employee">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="StartTime" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="EndTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StartTime" Type="datetime" Nullable="false" />
+    <Property Name="EndTime" Type="datetime" Nullable="false" />
     <Property Name="EmpCode" Type="nvarchar(max)" Nullable="false" />
     <Property Name="UserID" Type="int" Nullable="false" />
-    <Property Name="Isvalid" Type="nvarchar(max)" Nullable="false" />
     <Property Name="PositionID" Type="int" Nullable="true" />
     <Property Name="OrganizationID" Type="int" Nullable="true" />
+    <Property Name="IsChief" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateUserId" Type="int" Nullable="false" />
+    <Property Name="CreateTime" Type="datetime" Nullable="false" />
+    <Property Name="UpdateUserId" Type="int" Nullable="false" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="IndustrySolutions">
     <Key>
@@ -1447,6 +1467,22 @@
     <Property Name="CreateUserId" Type="int" Nullable="true" />
     <Property Name="UpdateTime" Type="datetime" Nullable="true" />
     <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sys_OrgManagers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OrgId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsDeleted" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="State" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CrateUserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CreateTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UpdateUserId" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UpdateTime" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="UserLoginLog">
     <End Role="User" Type="BCP.Domain.Edmx.Store.sys_User" Multiplicity="0..1" />
@@ -1461,11 +1497,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationOrganizationOtherName">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
     <End Role="OrganizationOtherName" Type="BCP.Domain.Edmx.Store.OrganizationOtherNames" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="OrganizationOtherName">
         <PropertyRef Name="OrganizationID" />
@@ -1497,11 +1533,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationOrganizationTransition">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="0..1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="0..1" />
     <End Role="OrganizationTransition" Type="BCP.Domain.Edmx.Store.OrganizationTransitions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="OrganizationTransition">
         <PropertyRef Name="OldOrgan" />
@@ -1509,11 +1545,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationOrganizationTransition1">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="0..1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="0..1" />
     <End Role="OrganizationTransition" Type="BCP.Domain.Edmx.Store.OrganizationTransitions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="OrganizationTransition">
         <PropertyRef Name="NewOrgan" />
@@ -1533,14 +1569,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationOrganization">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="0..1" />
-    <End Role="Organization1" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="*" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="0..1" />
+    <End Role="Organization1" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Organization1">
-        <PropertyRef Name="Parent" />
+        <PropertyRef Name="ParentId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1749,11 +1785,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationOrganizBasic">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
     <End Role="OrganizBasic" Type="BCP.Domain.Edmx.Store.OrganizBasics" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="OrganizBasic">
         <PropertyRef Name="OrganizationID" />
@@ -1761,11 +1797,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationOrganizationEvent">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
     <End Role="OrganizationEvent" Type="BCP.Domain.Edmx.Store.OrganizationEvents" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="OrganizationEvent">
         <PropertyRef Name="OrganizationID" />
@@ -1805,18 +1841,6 @@
       </Principal>
       <Dependent Role="OrganizBasic">
         <PropertyRef Name="AdministrativecodeSacID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PositionPosition">
-    <End Role="Position" Type="BCP.Domain.Edmx.Store.Positions" Multiplicity="0..1" />
-    <End Role="Position1" Type="BCP.Domain.Edmx.Store.Positions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Position">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Position1">
-        <PropertyRef Name="PositionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1881,11 +1905,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationCustomOrganizationType">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
     <End Role="CustomOrganizationType" Type="BCP.Domain.Edmx.Store.OrganizationCustomTypes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="CustomOrganizationType">
         <PropertyRef Name="OrganizationID" />
@@ -1989,11 +2013,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationphysicalAsset">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
     <End Role="physicalAsset" Type="BCP.Domain.Edmx.Store.physicalAssets" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="physicalAsset">
         <PropertyRef Name="OrganizationID" />
@@ -2013,11 +2037,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationphysicalAsset1">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="0..1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="0..1" />
     <End Role="physicalAsset" Type="BCP.Domain.Edmx.Store.physicalAssets" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="physicalAsset">
         <PropertyRef Name="Supplier" />
@@ -2061,11 +2085,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationPosition">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="1" />
-    <End Role="Position" Type="BCP.Domain.Edmx.Store.Positions" Multiplicity="*" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
+    <End Role="Position" Type="BCP.Domain.Edmx.Store.sys_Position" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Position">
         <PropertyRef Name="OrganizationID" />
@@ -2110,7 +2134,7 @@
   </Association>
   <Association Name="UserEmployee">
     <End Role="User" Type="BCP.Domain.Edmx.Store.sys_User" Multiplicity="1" />
-    <End Role="Employee" Type="BCP.Domain.Edmx.Store.Employees1" Multiplicity="*" />
+    <End Role="Employee" Type="BCP.Domain.Edmx.Store.sys_Employee" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="User">
         <PropertyRef Name="ID" />
@@ -2122,25 +2146,13 @@
   </Association>
   <Association Name="PostRequirePosition">
     <End Role="PostRequire" Type="BCP.Domain.Edmx.Store.PostRequires" Multiplicity="0..1" />
-    <End Role="Position" Type="BCP.Domain.Edmx.Store.Positions" Multiplicity="*" />
+    <End Role="Position" Type="BCP.Domain.Edmx.Store.sys_Position" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PostRequire">
         <PropertyRef Name="ID" />
       </Principal>
       <Dependent Role="Position">
         <PropertyRef Name="PostRequireID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PostPost">
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="0..1" />
-    <End Role="Post1" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Post">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Post1">
-        <PropertyRef Name="PostID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2157,11 +2169,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PositionEmployee">
-    <End Role="Position" Type="BCP.Domain.Edmx.Store.Positions" Multiplicity="0..1" />
-    <End Role="Employee" Type="BCP.Domain.Edmx.Store.Employees1" Multiplicity="*" />
+    <End Role="Position" Type="BCP.Domain.Edmx.Store.sys_Position" Multiplicity="0..1" />
+    <End Role="Employee" Type="BCP.Domain.Edmx.Store.sys_Employee" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Position">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Employee">
         <PropertyRef Name="PositionID" />
@@ -2205,11 +2217,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationPost">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="1" />
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="*" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.sys_Post" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Post">
         <PropertyRef Name="OrganizationID" />
@@ -2229,11 +2241,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationEmployee">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="0..1" />
-    <End Role="Employee" Type="BCP.Domain.Edmx.Store.Employees1" Multiplicity="*" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="0..1" />
+    <End Role="Employee" Type="BCP.Domain.Edmx.Store.sys_Employee" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Employee">
         <PropertyRef Name="OrganizationID" />
@@ -2289,11 +2301,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationWorkSpaceRole">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
     <End Role="WorkSpaceRole" Type="BCP.Domain.Edmx.Store.WorkSpaceRoles" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="WorkSpaceRole">
         <PropertyRef Name="OrganizationID" />
@@ -2313,7 +2325,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PostAuthorization">
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="0..1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.sys_Post" Multiplicity="0..1" />
     <End Role="Authorization" Type="BCP.Domain.Edmx.Store.Authorizations" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Post">
@@ -2325,11 +2337,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationProduct">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="0..1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="0..1" />
     <End Role="Product" Type="BCP.Domain.Edmx.Store.Products" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Product">
         <PropertyRef Name="OrganizationID" />
@@ -2337,7 +2349,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PostAuthorization1">
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="0..1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.sys_Post" Multiplicity="0..1" />
     <End Role="Authorization" Type="BCP.Domain.Edmx.Store.Authorizations" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Post">
@@ -2445,11 +2457,11 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OrganizationDocReader">
-    <End Role="Organization" Type="BCP.Domain.Edmx.Store.Organizations" Multiplicity="0..1" />
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="0..1" />
     <End Role="DocReader" Type="BCP.Domain.Edmx.Store.DocReaders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Organization">
-        <PropertyRef Name="ID" />
+        <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="DocReader">
         <PropertyRef Name="OrganizationID" />
@@ -2469,7 +2481,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PostDocReader">
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="0..1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.sys_Post" Multiplicity="0..1" />
     <End Role="DocReader" Type="BCP.Domain.Edmx.Store.DocReaders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Post">
@@ -2529,7 +2541,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PostDocSender">
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="0..1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.sys_Post" Multiplicity="0..1" />
     <End Role="DocSender" Type="BCP.Domain.Edmx.Store.DocSenders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Post">
@@ -2553,7 +2565,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PostJobChange">
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="0..1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.sys_Post" Multiplicity="0..1" />
     <End Role="JobChange" Type="BCP.Domain.Edmx.Store.JobChanges" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Post">
@@ -2829,26 +2841,14 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="EmployeePost">
-    <End Role="Employee" Type="BCP.Domain.Edmx.Store.Employees1" Multiplicity="0..1" />
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="*" />
+    <End Role="Employee" Type="BCP.Domain.Edmx.Store.sys_Employee" Multiplicity="0..1" />
+    <End Role="Post" Type="BCP.Domain.Edmx.Store.sys_Post" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Employee">
         <PropertyRef Name="Id" />
       </Principal>
       <Dependent Role="Post">
         <PropertyRef Name="EmployeeId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PositionPost">
-    <End Role="Position" Type="BCP.Domain.Edmx.Store.Positions" Multiplicity="0..1" />
-    <End Role="Post" Type="BCP.Domain.Edmx.Store.Posts" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Position">
-        <PropertyRef Name="ID" />
-      </Principal>
-      <Dependent Role="Post">
-        <PropertyRef Name="PositionID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -2893,9 +2893,9 @@
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="BCP.Domain.Edmx" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="DataContext" annotation:LazyLoadingEnabled="true" cg:TypeAccess="Public">
-          <EntitySet Name="Organizations" EntityType="BCP.Domain.Edmx.Organization" />
+          <EntitySet Name="sys_Organization" EntityType="BCP.Domain.Edmx.Organization" />
           <EntitySet Name="Organization_ContactTables" EntityType="BCP.Domain.Edmx.Organization_ContacTable" />
-          <EntitySet Name="Positions" EntityType="BCP.Domain.Edmx.Position" />
+          <EntitySet Name="sys_Position" EntityType="BCP.Domain.Edmx.Position" />
           <EntitySet Name="sys_User" EntityType="BCP.Domain.Edmx.User" />
           <EntitySet Name="User_ContactTable" EntityType="BCP.Domain.Edmx.User_ContacTable" />
           <EntitySet Name="LoginLogs" EntityType="BCP.Domain.Edmx.LoginLog" />
@@ -2910,7 +2910,7 @@
           <EntitySet Name="sys_GroupMember" EntityType="BCP.Domain.Edmx.GroupMember" />
           <EntitySet Name="OrganizationOtherNames" EntityType="BCP.Domain.Edmx.OrganizationOtherName" />
           <AssociationSet Name="OrganizationOrganizationOtherName" Association="BCP.Domain.Edmx.OrganizationOrganizationOtherName">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="OrganizationOtherName" EntitySet="OrganizationOtherNames" />
           </AssociationSet>
           <EntitySet Name="Administrativecodes" EntityType="BCP.Domain.Edmx.Administrativecode" />
@@ -2930,11 +2930,11 @@
           <EntitySet Name="ZipCodes" EntityType="BCP.Domain.Edmx.ZipCode" />
           <EntitySet Name="IPCodes" EntityType="BCP.Domain.Edmx.IPCode" />
           <AssociationSet Name="OrganizationOrganizationTransition" Association="BCP.Domain.Edmx.OrganizationOrganizationTransition">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="OrganizationTransition" EntitySet="OrganizationTransitions" />
           </AssociationSet>
           <AssociationSet Name="OrganizationOrganizationTransition1" Association="BCP.Domain.Edmx.OrganizationOrganizationTransition1">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="OrganizationTransition" EntitySet="OrganizationTransitions" />
           </AssociationSet>
           <AssociationSet Name="UserUser_ContacTable" Association="BCP.Domain.Edmx.UserUser_ContacTable">
@@ -2943,11 +2943,11 @@
           </AssociationSet>
           <EntitySet Name="OrganizBasics" EntityType="BCP.Domain.Edmx.OrganizBasic" />
           <EntitySet Name="PostRequires" EntityType="BCP.Domain.Edmx.PostRequire" />
-          <EntitySet Name="Posts" EntityType="BCP.Domain.Edmx.Post" />
+          <EntitySet Name="sys_Post" EntityType="BCP.Domain.Edmx.Post" />
           <EntitySet Name="WorkSpaces" EntityType="BCP.Domain.Edmx.WorkSpace" />
           <AssociationSet Name="OrganizationOrganization" Association="BCP.Domain.Edmx.OrganizationOrganization">
-            <End Role="Organization" EntitySet="Organizations" />
-            <End Role="Organization1" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
+            <End Role="Organization1" EntitySet="sys_Organization" />
           </AssociationSet>
           <AssociationSet Name="AdministrativecodeAdministrativecode" Association="BCP.Domain.Edmx.AdministrativecodeAdministrativecode">
             <End Role="Administrativecode" EntitySet="Administrativecodes" />
@@ -3028,12 +3028,12 @@
             <End Role="OrganizBasic1" EntitySet="OrganizBasics" />
           </AssociationSet>
           <AssociationSet Name="OrganizationOrganizBasic" Association="BCP.Domain.Edmx.OrganizationOrganizBasic">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="OrganizBasic" EntitySet="OrganizBasics" />
           </AssociationSet>
           <EntitySet Name="OrganizationEvents" EntityType="BCP.Domain.Edmx.OrganizationEvent" />
           <AssociationSet Name="OrganizationOrganizationEvent" Association="BCP.Domain.Edmx.OrganizationOrganizationEvent">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="OrganizationEvent" EntitySet="OrganizationEvents" />
           </AssociationSet>
           <AssociationSet Name="IndustryCodeOrganizBasic" Association="BCP.Domain.Edmx.IndustryCodeOrganizBasic">
@@ -3047,10 +3047,6 @@
           <AssociationSet Name="AdministrativecodeOrganizBasic" Association="BCP.Domain.Edmx.AdministrativecodeOrganizBasic">
             <End Role="Administrativecode" EntitySet="Administrativecodes" />
             <End Role="OrganizBasic" EntitySet="OrganizBasics" />
-          </AssociationSet>
-          <AssociationSet Name="PositionPosition" Association="BCP.Domain.Edmx.PositionPosition">
-            <End Role="Position" EntitySet="Positions" />
-            <End Role="Position1" EntitySet="Positions" />
           </AssociationSet>
           <AssociationSet Name="OrganizBasicOrganicInvestor1" Association="BCP.Domain.Edmx.OrganizBasicOrganicInvestor1">
             <End Role="OrganizBasic" EntitySet="OrganizBasics" />
@@ -3079,7 +3075,7 @@
           <EntitySet Name="OrganizationCustomTypes" EntityType="BCP.Domain.Edmx.OrganizationCustomType" />
           <EntitySet Name="CustomCategories" EntityType="BCP.Domain.Edmx.CustomCategory" />
           <AssociationSet Name="OrganizationCustomOrganizationType" Association="BCP.Domain.Edmx.OrganizationCustomOrganizationType">
-            <End EntitySet="Organizations" Role="Organization" />
+            <End EntitySet="sys_Organization" Role="Organization" />
             <End EntitySet="OrganizationCustomTypes" Role="CustomOrganizationType" />
           </AssociationSet>
           <AssociationSet Name="CustomCategoryCustomOrganizationType" Association="BCP.Domain.Edmx.CustomCategoryCustomOrganizationType">
@@ -3121,7 +3117,7 @@
           </AssociationSet>
           <EntitySet Name="physicalAssets" EntityType="BCP.Domain.Edmx.physicalAsset" />
           <AssociationSet Name="OrganizationphysicalAsset" Association="BCP.Domain.Edmx.OrganizationphysicalAsset">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="physicalAsset" EntitySet="physicalAssets" />
           </AssociationSet>
           <AssociationSet Name="ProductphysicalAsset" Association="BCP.Domain.Edmx.ProductphysicalAsset">
@@ -3129,7 +3125,7 @@
             <End Role="physicalAsset" EntitySet="physicalAssets" />
           </AssociationSet>
           <AssociationSet Name="OrganizationphysicalAsset1" Association="BCP.Domain.Edmx.OrganizationphysicalAsset1">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="physicalAsset" EntitySet="physicalAssets" />
           </AssociationSet>
           <EntitySet Name="AssetUses" EntityType="BCP.Domain.Edmx.AssetUse" />
@@ -3148,8 +3144,8 @@
             <End Role="AssetType1" EntitySet="AssetBaseTypes" />
           </AssociationSet>
           <AssociationSet Name="OrganizationPosition" Association="BCP.Domain.Edmx.OrganizationPosition">
-            <End Role="Organization" EntitySet="Organizations" />
-            <End Role="Position" EntitySet="Positions" />
+            <End Role="Organization" EntitySet="sys_Organization" />
+            <End Role="Position" EntitySet="sys_Position" />
           </AssociationSet>
           <AssociationSet Name="DllFileStreamDllFileStream" Association="BCP.Domain.Edmx.DllFileStreamDllFileStream">
             <End Role="DllFileStream" EntitySet="DllFileStreams" />
@@ -3164,18 +3160,14 @@
             <End Role="AssetBaseType" EntitySet="AssetBaseTypes" />
             <End Role="OrganizationAssetType" EntitySet="OrganizationAssetTypes" />
           </AssociationSet>
-          <EntitySet Name="Employees1" EntityType="BCP.Domain.Edmx.Employee" />
+          <EntitySet Name="sys_Employee" EntityType="BCP.Domain.Edmx.Employee" />
           <AssociationSet Name="UserEmployee" Association="BCP.Domain.Edmx.UserEmployee">
             <End Role="User" EntitySet="sys_User" />
-            <End Role="Employee" EntitySet="Employees1" />
+            <End Role="Employee" EntitySet="sys_Employee" />
           </AssociationSet>
           <AssociationSet Name="PostRequirePosition" Association="BCP.Domain.Edmx.PostRequirePosition">
             <End Role="PostRequire" EntitySet="PostRequires" />
-            <End Role="Position" EntitySet="Positions" />
-          </AssociationSet>
-          <AssociationSet Name="PostPost" Association="BCP.Domain.Edmx.PostPost">
-            <End Role="Post" EntitySet="Posts" />
-            <End Role="Post1" EntitySet="Posts" />
+            <End Role="Position" EntitySet="sys_Position" />
           </AssociationSet>
           <EntitySet Name="IndustrySolutions" EntityType="BCP.Domain.Edmx.IndustrySolution" />
           <AssociationSet Name="IndustryCodeIndustrySolution" Association="BCP.Domain.Edmx.IndustryCodeIndustrySolution">
@@ -3184,8 +3176,8 @@
           </AssociationSet>
           <EntitySet Name="WorkModuls" EntityType="BCP.Domain.Edmx.WorkModul" />
           <AssociationSet Name="PositionEmployee" Association="BCP.Domain.Edmx.PositionEmployee">
-            <End Role="Position" EntitySet="Positions" />
-            <End Role="Employee" EntitySet="Employees1" />
+            <End Role="Position" EntitySet="sys_Position" />
+            <End Role="Employee" EntitySet="sys_Employee" />
           </AssociationSet>
           <AssociationSet Name="OrganizBasicProduct" Association="BCP.Domain.Edmx.OrganizBasicProduct">
             <End Role="OrganizBasic" EntitySet="OrganizBasics" />
@@ -3200,16 +3192,16 @@
             <End Role="WorkSpace" EntitySet="WorkSpaces" />
           </AssociationSet>
           <AssociationSet Name="OrganizationPost" Association="BCP.Domain.Edmx.OrganizationPost">
-            <End Role="Organization" EntitySet="Organizations" />
-            <End Role="Post" EntitySet="Posts" />
+            <End Role="Organization" EntitySet="sys_Organization" />
+            <End Role="Post" EntitySet="sys_Post" />
           </AssociationSet>
           <AssociationSet Name="WorkSpaceWorkSpace" Association="BCP.Domain.Edmx.WorkSpaceWorkSpace">
             <End Role="WorkSpace" EntitySet="WorkSpaces" />
             <End Role="WorkSpace1" EntitySet="WorkSpaces" />
           </AssociationSet>
           <AssociationSet Name="OrganizationEmployee" Association="BCP.Domain.Edmx.OrganizationEmployee">
-            <End Role="Organization" EntitySet="Organizations" />
-            <End Role="Employee" EntitySet="Employees1" />
+            <End Role="Organization" EntitySet="sys_Organization" />
+            <End Role="Employee" EntitySet="sys_Employee" />
           </AssociationSet>
           <AssociationSet Name="IndustrySolutionDllFileStream" Association="BCP.Domain.Edmx.IndustrySolutionDllFileStream">
             <End Role="IndustrySolution" EntitySet="IndustrySolutions" />
@@ -3229,7 +3221,7 @@
             <End Role="WorkSpaceRole" EntitySet="WorkSpaceRoles" />
           </AssociationSet>
           <AssociationSet Name="OrganizationWorkSpaceRole" Association="BCP.Domain.Edmx.OrganizationWorkSpaceRole">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="WorkSpaceRole" EntitySet="WorkSpaceRoles" />
           </AssociationSet>
           <AssociationSet Name="WorkModulWorkSpaceRole" Association="BCP.Domain.Edmx.WorkModulWorkSpaceRole">
@@ -3238,15 +3230,15 @@
           </AssociationSet>
           <EntitySet Name="Authorizations" EntityType="BCP.Domain.Edmx.Authorization" />
           <AssociationSet Name="PostAuthorization" Association="BCP.Domain.Edmx.PostAuthorization">
-            <End Role="Post" EntitySet="Posts" />
+            <End Role="Post" EntitySet="sys_Post" />
             <End Role="Authorization" EntitySet="Authorizations" />
           </AssociationSet>
           <AssociationSet Name="OrganizationProduct" Association="BCP.Domain.Edmx.OrganizationProduct">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="PostAuthorization1" Association="BCP.Domain.Edmx.PostAuthorization1">
-            <End Role="Post" EntitySet="Posts" />
+            <End Role="Post" EntitySet="sys_Post" />
             <End Role="Authorization" EntitySet="Authorizations" />
           </AssociationSet>
           <EntitySet Name="ModulProperties" EntityType="BCP.Domain.Edmx.ModulProperty" />
@@ -3286,7 +3278,7 @@
           </AssociationSet>
           <EntitySet Name="DocReaders" EntityType="BCP.Domain.Edmx.DocReader" />
           <AssociationSet Name="OrganizationDocReader" Association="BCP.Domain.Edmx.OrganizationDocReader">
-            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="Organization" EntitySet="sys_Organization" />
             <End Role="DocReader" EntitySet="DocReaders" />
           </AssociationSet>
           <AssociationSet Name="WorkSpaceDocReader" Association="BCP.Domain.Edmx.WorkSpaceDocReader">
@@ -3294,7 +3286,7 @@
             <End Role="DocReader" EntitySet="DocReaders" />
           </AssociationSet>
           <AssociationSet Name="PostDocReader" Association="BCP.Domain.Edmx.PostDocReader">
-            <End Role="Post" EntitySet="Posts" />
+            <End Role="Post" EntitySet="sys_Post" />
             <End Role="DocReader" EntitySet="DocReaders" />
           </AssociationSet>
           <AssociationSet Name="UserDocReader" Association="BCP.Domain.Edmx.UserDocReader">
@@ -3315,7 +3307,7 @@
             <End Role="DocSender" EntitySet="DocSenders" />
           </AssociationSet>
           <AssociationSet Name="PostDocSender" Association="BCP.Domain.Edmx.PostDocSender">
-            <End Role="Post" EntitySet="Posts" />
+            <End Role="Post" EntitySet="sys_Post" />
             <End Role="DocSender" EntitySet="DocSenders" />
           </AssociationSet>
           <EntitySet Name="DocComents" EntityType="BCP.Domain.Edmx.DocComent" />
@@ -3325,7 +3317,7 @@
           </AssociationSet>
           <EntitySet Name="JobChanges" EntityType="BCP.Domain.Edmx.JobChange" />
           <AssociationSet Name="PostJobChange" Association="BCP.Domain.Edmx.PostJobChange">
-            <End Role="Post" EntitySet="Posts" />
+            <End Role="Post" EntitySet="sys_Post" />
             <End Role="JobChange" EntitySet="JobChanges" />
           </AssociationSet>
           <EntitySet Name="WorkSpaceTypes" EntityType="BCP.Domain.Edmx.WorkSpaceType" />
@@ -3425,12 +3417,8 @@
             <End Role="GroupMember" EntitySet="sys_GroupMember" />
           </AssociationSet>
           <AssociationSet Name="EmployeePost" Association="BCP.Domain.Edmx.EmployeePost">
-            <End Role="Employee" EntitySet="Employees1" />
-            <End Role="Post" EntitySet="Posts" />
-          </AssociationSet>
-          <AssociationSet Name="PositionPost" Association="BCP.Domain.Edmx.PositionPost">
-            <End Role="Position" EntitySet="Positions" />
-            <End Role="Post" EntitySet="Posts" />
+            <End Role="Employee" EntitySet="sys_Employee" />
+            <End Role="Post" EntitySet="sys_Post" />
           </AssociationSet>
           <AssociationSet Name="GroupGroupMessager" Association="BCP.Domain.Edmx.GroupGroupMessager">
             <End Role="Group" EntitySet="sys_Group" />
@@ -3445,6 +3433,7 @@
             <End Role="CustomGroup" EntitySet="sys_CustomerGoup" />
             <End Role="CustomGroupUser" EntitySet="sys_CustomGroupUser" />
           </AssociationSet>
+          <EntitySet Name="sys_OrgManagers" EntityType="BCP.Domain.Edmx.OrgManager" />
           </EntityContainer>
         <EntityType Name="Organization">
           <Documentation>
@@ -3452,9 +3441,9 @@
             <LongDescription>以组织机构代码为主体的标识</LongDescription>
           </Documentation>
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="OrganizationCode" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" >
             <Documentation>
               <LongDescription>组织结构代码</LongDescription>
@@ -3467,23 +3456,13 @@
               <LongDescription>申请证书</LongDescription>
             </Documentation>
           </Property>
-          <Property Name="EstablishmentDate" Nullable="true" Precision="3" Type="DateTime">
-            <Documentation>
-              <LongDescription>成立日期</LongDescription>
-            </Documentation>
-          </Property>
           <NavigationProperty Name="OrganizationOtherNames" Relationship="BCP.Domain.Edmx.OrganizationOrganizationOtherName" FromRole="Organization" ToRole="OrganizationOtherName" />
           <NavigationProperty Name="OrganizationTransitions" Relationship="BCP.Domain.Edmx.OrganizationOrganizationTransition" FromRole="Organization" ToRole="OrganizationTransition" />
           <NavigationProperty Name="OrganizationTransitions1" Relationship="BCP.Domain.Edmx.OrganizationOrganizationTransition1" FromRole="Organization" ToRole="OrganizationTransition" />
-          <NavigationProperty Name="Organizations" Relationship="BCP.Domain.Edmx.OrganizationOrganization" FromRole="Organization" ToRole="Organization1" />
-          <NavigationProperty Name="Organization1" Relationship="BCP.Domain.Edmx.OrganizationOrganization" FromRole="Organization1" ToRole="Organization" />
-          <Property Type="Int32" Name="Parent" Nullable="true" />
+          <NavigationProperty Name="Parent" Relationship="BCP.Domain.Edmx.OrganizationOrganization" FromRole="Organization" ToRole="Organization1" />
+          <NavigationProperty Name="Organizations" Relationship="BCP.Domain.Edmx.OrganizationOrganization" FromRole="Organization1" ToRole="Organization" />
+          <Property Type="Int32" Name="ParentId" Nullable="true" />
           <Property Type="String" Name="MarkerString" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Boolean" Name="IsValid" Nullable="false" DefaultValue="True" >
-            <Documentation>
-              <LongDescription>组织是否注销</LongDescription>
-            </Documentation>
-          </Property>
           <NavigationProperty Name="OrganizBasics" Relationship="BCP.Domain.Edmx.OrganizationOrganizBasic" FromRole="Organization" ToRole="OrganizBasic" />
           <NavigationProperty Name="OrganizationEvents" Relationship="BCP.Domain.Edmx.OrganizationOrganizationEvent" FromRole="Organization" ToRole="OrganizationEvent" />
           <NavigationProperty Name="CustomOrganizationTypes" Relationship="BCP.Domain.Edmx.OrganizationCustomOrganizationType" FromRole="Organization" ToRole="CustomOrganizationType" />
@@ -3499,8 +3478,25 @@
               <LongDescription>组织类型</LongDescription>
             </Documentation>
           </Property>
+          <Property Type="Int32" Name="RootId" Nullable="false" >
+            <Documentation>
+              <LongDescription>根节点Id（用户查找根节点）</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Type="String" Name="IsRoot" Nullable="false" >
+            <Documentation>
+              <LongDescription>组织的起点</LongDescription>
+            </Documentation>
+          </Property>
           <NavigationProperty Name="Products" Relationship="BCP.Domain.Edmx.OrganizationProduct" FromRole="Organization" ToRole="Product" />
           <NavigationProperty Name="DocReaders" Relationship="BCP.Domain.Edmx.OrganizationDocReader" FromRole="Organization" ToRole="DocReader" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="String" Name="Notes" Nullable="false" />
+          <Property Type="String" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="CreateUserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="false" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="Organization_ContacTable">
           <Documentation>
@@ -3524,10 +3520,9 @@
             <LongDescription>职位表</LongDescription>
           </Documentation>
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Id" />
           </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Boolean" Name="IsValid" Nullable="false" />
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="PositionType" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false">
             <Documentation>
               <Summary>表示具体的工作，如管理、技术、其他</Summary>
@@ -3544,8 +3539,6 @@
               <LongDescription>工作性质</LongDescription>
             </Documentation>
           </Property>
-          <NavigationProperty Name="Positions" Relationship="BCP.Domain.Edmx.PositionPosition" FromRole="Position" ToRole="Position1" />
-          <NavigationProperty Name="Position1" Relationship="BCP.Domain.Edmx.PositionPosition" FromRole="Position1" ToRole="Position" />
           <Property Type="Int32" Name="PositionID" Nullable="true" >
             <Documentation>
               <LongDescription>汇报上级</LongDescription>
@@ -3555,13 +3548,19 @@
           <Property Type="Int32" Name="OrganizationID" Nullable="false" />
           <NavigationProperty Name="PostRequire" Relationship="BCP.Domain.Edmx.PostRequirePosition" FromRole="Position" ToRole="PostRequire" />
           <Property Name="PostRequireID" Type="Int32" Nullable="true" />
-          <Property Name="PositionLevel" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Name="PositionLevel" Type="Int32" Nullable="false" >
             <Documentation>
               <LongDescription>职位级别</LongDescription>
             </Documentation>
           </Property>
           <NavigationProperty Name="Employees" Relationship="BCP.Domain.Edmx.PositionEmployee" FromRole="Position" ToRole="Employee" />
-          <NavigationProperty Name="Posts" Relationship="BCP.Domain.Edmx.PositionPost" FromRole="Position" ToRole="Post" />
+          <Property Type="String" Name="IsDeleted" Nullable="false" />
+          <Property Type="String" Name="State" Nullable="false" />
+          <Property Type="String" Name="Notes" Nullable="false" />
+          <Property Type="Int32" Name="CreateUserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="false" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
           <Documentation>
@@ -3611,6 +3610,7 @@
           <Property Name="UpdateTime" Type="DateTime" Nullable="true" />
           <Property Name="UpdateUserId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="CustomGroupUsers" Relationship="BCP.Domain.Edmx.UserCustomGroupUser" FromRole="User" ToRole="CustomGroupUser" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           </EntityType>
         <EntityType Name="User_ContacTable">
           <Documentation>
@@ -3782,6 +3782,7 @@
           <Property Name="CreateUserId" Type="Int32" Nullable="true" />
           <Property Name="UpdateTime" Type="DateTime" Nullable="true" />
           <Property Name="UpdateUserId" Type="String" Nullable="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <EntityType Name="GroupMember">
           <Documentation>
@@ -3807,6 +3808,7 @@
           <Property Name="CreateTime" Type="DateTime" Nullable="true" />
           <Property Name="UpdateTiime" Type="DateTime" Nullable="true" />
           <Property Name="UpdateUserId" Type="Int32" Nullable="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <EntityType Name="OrganizationOtherName">
           <Documentation>
@@ -3825,7 +3827,7 @@
           <End Type="BCP.Domain.Edmx.OrganizationOtherName" Role="OrganizationOtherName" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OrganizationOtherName">
               <PropertyRef Name="OrganizationID" />
@@ -3992,7 +3994,7 @@
           <End Type="BCP.Domain.Edmx.OrganizationTransition" Role="OrganizationTransition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OrganizationTransition">
               <PropertyRef Name="OldOrgan" />
@@ -4004,7 +4006,7 @@
           <End Type="BCP.Domain.Edmx.OrganizationTransition" Role="OrganizationTransition" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OrganizationTransition">
               <PropertyRef Name="NewOrgan" />
@@ -4160,9 +4162,6 @@
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="PostName" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Type="String" Name="MarkerString" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
-          <Property Type="Boolean" Name="IsValid" Nullable="false" />
-          <NavigationProperty Name="Posts" Relationship="BCP.Domain.Edmx.PostPost" FromRole="Post" ToRole="Post1" />
-          <NavigationProperty Name="Post1" Relationship="BCP.Domain.Edmx.PostPost" FromRole="Post1" ToRole="Post" />
           <Property Type="String" Name="Descript" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="PostID" Type="Int32" Nullable="true" >
             <Documentation>
@@ -4178,9 +4177,14 @@
           <NavigationProperty Name="JobChanges" Relationship="BCP.Domain.Edmx.PostJobChange" FromRole="Post" ToRole="JobChange" />
           <NavigationProperty Name="Employee" Relationship="BCP.Domain.Edmx.EmployeePost" FromRole="Post" ToRole="Employee" />
           <Property Name="EmployeeId" Type="Int32" Nullable="true" />
-          <NavigationProperty Name="Position" Relationship="BCP.Domain.Edmx.PositionPost" FromRole="Post" ToRole="Position" />
           <Property Name="PositionID" Type="Int32" Nullable="true" />
-          <Property Name="EventTime" Type="Int64" Nullable="false" />
+          <Property Type="String" Name="IsDeleted" Nullable="false" />
+          <Property Type="String" Name="Notes" Nullable="false" />
+          <Property Type="String" Name="State" Nullable="false" />
+          <Property Type="Int32" Name="CreateUserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="false" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="WorkSpace">
           <Key>
@@ -4214,10 +4218,10 @@
           <End Type="BCP.Domain.Edmx.Organization" Role="Organization1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Organization1">
-              <PropertyRef Name="Parent" />
+              <PropertyRef Name="ParentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4631,7 +4635,7 @@
           <End Type="BCP.Domain.Edmx.OrganizBasic" Role="OrganizBasic" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OrganizBasic">
               <PropertyRef Name="OrganizationID" />
@@ -4661,7 +4665,7 @@
           <End Type="BCP.Domain.Edmx.OrganizationEvent" Role="OrganizationEvent" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="OrganizationEvent">
               <PropertyRef Name="OrganizationID" />
@@ -4701,18 +4705,6 @@
             </Principal>
             <Dependent Role="OrganizBasic">
               <PropertyRef Name="AdministrativecodeSacID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="PositionPosition">
-          <End Type="BCP.Domain.Edmx.Position" Role="Position" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.Position" Role="Position1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Position1">
-              <PropertyRef Name="PositionID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4762,6 +4754,7 @@
           <Property Name="CrateUseId" Type="Int32" Nullable="true" />
           <Property Name="UpdateTime" Type="DateTime" Nullable="true" />
           <Property Name="UpdateUserId" Type="Int32" Nullable="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
@@ -4782,6 +4775,7 @@
           <Property Name="CreateUserId" Type="Int32" Nullable="true" />
           <Property Name="UpdateTime" Type="DateTime" Nullable="true" />
           <Property Name="UpdateUserId" Type="Int32" Nullable="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <Association Name="UserGroupName">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="0..1" />
@@ -4808,6 +4802,7 @@
           <Property Name="CreateUserId" Nullable="true" Type="Int32" />
           <Property Name="UpdateTime" Type="DateTime" Nullable="true" />
           <Property Name="UpdateUserId" Type="Int32" Nullable="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <Association Name="UserCustomerGoup">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="0..1" />
@@ -4895,7 +4890,7 @@
           <End Type="BCP.Domain.Edmx.OrganizationCustomType" Multiplicity="*" Role="CustomOrganizationType" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="CustomOrganizationType">
               <PropertyRef Name="OrganizationID" />
@@ -5165,7 +5160,7 @@
           <End Type="BCP.Domain.Edmx.physicalAsset" Role="physicalAsset" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="physicalAsset">
               <PropertyRef Name="OrganizationID" />
@@ -5189,7 +5184,7 @@
           <End Type="BCP.Domain.Edmx.physicalAsset" Role="physicalAsset" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="physicalAsset">
               <PropertyRef Name="Supplier" />
@@ -5305,7 +5300,7 @@
           <End Type="BCP.Domain.Edmx.Position" Role="Position" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Position">
               <PropertyRef Name="OrganizationID" />
@@ -5376,12 +5371,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StartTime" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Name="StartTime" Type="DateTime" Nullable="false" >
             <Documentation>
               <LongDescription>入职时间</LongDescription>
             </Documentation>
           </Property>
-          <Property Name="EndTime" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" >
+          <Property Name="EndTime" Type="DateTime" Nullable="false" >
             <Documentation>
               <Summary>离职时间</Summary>
             </Documentation>
@@ -5393,12 +5388,19 @@
           </Property>
           <NavigationProperty Name="User" Relationship="BCP.Domain.Edmx.UserEmployee" FromRole="Employee" ToRole="User" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="Isvalid" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Position" Relationship="BCP.Domain.Edmx.PositionEmployee" FromRole="Employee" ToRole="Position" />
           <Property Name="PositionID" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Organization" Relationship="BCP.Domain.Edmx.OrganizationEmployee" FromRole="Employee" ToRole="Organization" />
           <Property Name="OrganizationID" Type="Int32" Nullable="true" />
           <NavigationProperty Name="Posts" Relationship="BCP.Domain.Edmx.EmployeePost" FromRole="Employee" ToRole="Post" />
+          <Property Type="String" Name="IsChief" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="String" Name="State" Nullable="false" />
+          <Property Type="String" Name="Notes" Nullable="false" />
+          <Property Type="Int32" Name="CreateUserId" Nullable="false" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="false" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="false" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="false" />
         </EntityType>
         <Association Name="UserEmployee">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="1" />
@@ -5421,21 +5423,6 @@
             </Principal>
             <Dependent Role="Position">
               <PropertyRef Name="PostRequireID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="PostPost">
-          <Documentation>
-            <LongDescription>岗位之间的关系</LongDescription>
-          </Documentation>
-          <End Type="BCP.Domain.Edmx.Post" Role="Post" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.Post" Role="Post1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Post">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post1">
-              <PropertyRef Name="PostID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5496,7 +5483,7 @@
           <End Type="BCP.Domain.Edmx.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Position">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="PositionID" />
@@ -5544,7 +5531,7 @@
           <End Type="BCP.Domain.Edmx.Post" Role="Post" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Post">
               <PropertyRef Name="OrganizationID" />
@@ -5568,7 +5555,7 @@
           <End Type="BCP.Domain.Edmx.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="OrganizationID" />
@@ -5653,7 +5640,7 @@
           <End Type="BCP.Domain.Edmx.WorkSpaceRole" Role="WorkSpaceRole" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="WorkSpaceRole">
               <PropertyRef Name="OrganizationID" />
@@ -5720,7 +5707,7 @@
           <End Type="BCP.Domain.Edmx.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="OrganizationID" />
@@ -5931,7 +5918,7 @@
           <End Type="BCP.Domain.Edmx.DocReader" Role="DocReader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Organization">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="DocReader">
               <PropertyRef Name="OrganizationID" />
@@ -6503,18 +6490,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="PositionPost">
-          <End Type="BCP.Domain.Edmx.Position" Role="Position" Multiplicity="0..1" />
-          <End Type="BCP.Domain.Edmx.Post" Role="Post" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Position">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Post">
-              <PropertyRef Name="PositionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="GroupGroupMessager">
           <End Type="BCP.Domain.Edmx.Group" Role="Group" Multiplicity="0..1" />
           <End Type="BCP.Domain.Edmx.GroupMessager" Role="GroupMessager" Multiplicity="*" />
@@ -6541,6 +6516,7 @@
           <Property Name="CreateUserId" Type="Int32" Nullable="true" />
           <Property Name="UpdateTime" Type="DateTime" Nullable="true" />
           <Property Name="UpdateUserId" Type="Int32" Nullable="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
         </EntityType>
         <Association Name="UserCustomGroupUser">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="0..1" />
@@ -6566,24 +6542,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="OrgManager">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Type="String" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="OrgId" Nullable="false" />
+          <Property Type="String" Name="IsDeleted" Nullable="false" />
+          <Property Type="String" Name="Notes" Nullable="false" />
+          <Property Type="String" Name="State" Nullable="false" />
+          <Property Type="String" Name="CrateUserId" Nullable="false" />
+          <Property Type="String" Name="CreateTime" Nullable="false" />
+          <Property Type="String" Name="UpdateUserId" Nullable="false" />
+          <Property Type="String" Name="UpdateTime" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="BCPDomainEdmxStoreContainer" CdmEntityContainer="DataContext">
-    <EntitySetMapping Name="Organizations">
+    <EntitySetMapping Name="sys_Organization">
       <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.Organization)">
-        <MappingFragment StoreEntitySet="Organizations">
-          <ScalarProperty Name="ID" ColumnName="ID" />
+        <MappingFragment StoreEntitySet="sys_Organization">
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="OrganizationCode" ColumnName="OrganizationCode" />
           <ScalarProperty Name="OrgaName" ColumnName="OrgaName" />
           <ScalarProperty Name="Certificates" ColumnName="Certificates" />
-          <ScalarProperty Name="EstablishmentDate" ColumnName="EstablishmentDate" />
-          <ScalarProperty Name="Parent" ColumnName="Parent" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
           <ScalarProperty Name="MarkerString" ColumnName="MarkerString" />
-          <ScalarProperty Name="IsValid" ColumnName="IsValid" />
           <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="RootId" ColumnName="RootId" />
+          <ScalarProperty Name="IsRoot" ColumnName="IsRoot" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6600,11 +6598,10 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Positions">
+    <EntitySetMapping Name="sys_Position">
       <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.Position)">
-        <MappingFragment StoreEntitySet="Positions">
-          <ScalarProperty Name="ID" ColumnName="ID" />
-          <ScalarProperty Name="IsValid" ColumnName="IsValid" />
+        <MappingFragment StoreEntitySet="sys_Position">
+          <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="PositionType" ColumnName="PositionType" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="TaskNature" ColumnName="TaskNature" />
@@ -6612,6 +6609,13 @@
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="PostRequireID" ColumnName="PostRequireID" />
           <ScalarProperty Name="PositionLevel" ColumnName="PositionLevel" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6631,6 +6635,7 @@
           <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
           <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
           <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6717,6 +6722,7 @@
           <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
           <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
           <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6736,6 +6742,7 @@
           <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
           <ScalarProperty Name="UpdateTiime" ColumnName="UpdateTiime" />
           <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -6885,19 +6892,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Posts">
+    <EntitySetMapping Name="sys_Post">
       <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.Post)">
-        <MappingFragment StoreEntitySet="Posts">
+        <MappingFragment StoreEntitySet="sys_Post">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="PostName" ColumnName="PostName" />
           <ScalarProperty Name="MarkerString" ColumnName="MarkerString" />
-          <ScalarProperty Name="IsValid" ColumnName="IsValid" />
           <ScalarProperty Name="Descript" ColumnName="Descript" />
           <ScalarProperty Name="PostID" ColumnName="PostID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
           <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
           <ScalarProperty Name="PositionID" ColumnName="PositionID" />
-          <ScalarProperty Name="EventTime" ColumnName="EventTime" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7072,6 +7084,7 @@
           <ScalarProperty Name="CrateUseId" ColumnName="CrateUseId" />
           <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
           <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7090,6 +7103,7 @@
           <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
           <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
           <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7103,6 +7117,7 @@
           <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
           <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
           <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7273,17 +7288,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Employees1">
+    <EntitySetMapping Name="sys_Employee">
       <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.Employee)">
-        <MappingFragment StoreEntitySet="Employees1">
+        <MappingFragment StoreEntitySet="sys_Employee">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="StartTime" ColumnName="StartTime" />
           <ScalarProperty Name="EndTime" ColumnName="EndTime" />
           <ScalarProperty Name="EmpCode" ColumnName="EmpCode" />
           <ScalarProperty Name="UserID" ColumnName="UserID" />
-          <ScalarProperty Name="Isvalid" ColumnName="Isvalid" />
           <ScalarProperty Name="PositionID" ColumnName="PositionID" />
           <ScalarProperty Name="OrganizationID" ColumnName="OrganizationID" />
+          <ScalarProperty Name="IsChief" ColumnName="IsChief" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -7530,6 +7552,23 @@
           <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
           <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
           <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sys_OrgManagers">
+      <EntityTypeMapping TypeName="IsTypeOf(BCP.Domain.Edmx.OrgManager)">
+        <MappingFragment StoreEntitySet="sys_OrgManagers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="OrgId" ColumnName="OrgId" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="CrateUserId" ColumnName="CrateUserId" />
+          <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+          <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
+          <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

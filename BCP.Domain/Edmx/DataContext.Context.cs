@@ -25,9 +25,9 @@ namespace BCP.Domain.Edmx
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Organization> Organizations { get; set; }
+        public virtual DbSet<Organization> sys_Organization { get; set; }
         public virtual DbSet<Organization_ContacTable> Organization_ContactTables { get; set; }
-        public virtual DbSet<Position> Positions { get; set; }
+        public virtual DbSet<Position> sys_Position { get; set; }
         public virtual DbSet<User> sys_User { get; set; }
         public virtual DbSet<User_ContacTable> User_ContactTable { get; set; }
         public virtual DbSet<LoginLog> LoginLogs { get; set; }
@@ -47,7 +47,7 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<IPCode> IPCodes { get; set; }
         public virtual DbSet<OrganizBasic> OrganizBasics { get; set; }
         public virtual DbSet<PostRequire> PostRequires { get; set; }
-        public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<Post> sys_Post { get; set; }
         public virtual DbSet<WorkSpace> WorkSpaces { get; set; }
         public virtual DbSet<Subordinate> Subordinates { get; set; }
         public virtual DbSet<Specialized> Specializeds { get; set; }
@@ -76,7 +76,7 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<AssetMaintenance> AssetMaintenances { get; set; }
         public virtual DbSet<AssetBaseType> AssetBaseTypes { get; set; }
         public virtual DbSet<OrganizationAssetType> OrganizationAssetTypes { get; set; }
-        public virtual DbSet<Employee> Employees1 { get; set; }
+        public virtual DbSet<Employee> sys_Employee { get; set; }
         public virtual DbSet<IndustrySolution> IndustrySolutions { get; set; }
         public virtual DbSet<WorkModul> WorkModuls { get; set; }
         public virtual DbSet<WorkSpaceRole> WorkSpaceRoles { get; set; }
@@ -97,5 +97,6 @@ namespace BCP.Domain.Edmx
         public virtual DbSet<OperationDetail> OperationDetails { get; set; }
         public virtual DbSet<OperationEvent> OperationEvents { get; set; }
         public virtual DbSet<CustomGroupUser> sys_CustomGroupUser { get; set; }
+        public virtual DbSet<OrgManager> sys_OrgManagers { get; set; }
     }
 }

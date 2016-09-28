@@ -207,6 +207,9 @@
     <Compile Include="Edmx\OrgaRegisterDocment.cs">
       <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Edmx\OrgManager.cs">
+      <DependentUpon>DataContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Edmx\physicalAsset.cs">
       <DependentUpon>DataContext.tt</DependentUpon>
     </Compile>
@@ -298,10 +301,13 @@
     <Compile Include="Implementation\Repository\Base\Repository.cs" />
     <Compile Include="Implementation\Repository\BussnessVerRepository.CS" />
     <Compile Include="Implementation\Repository\CustomCategoryRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomerGoupRepository.CS" />
+    <Compile Include="Implementation\Repository\CustomGeographicTypeRepository.CS" />
     <Compile Include="Implementation\Repository\CustomGroupRepository.CS" />
     <Compile Include="Implementation\Repository\CustomGroupUserRepository.CS" />
     <Compile Include="Implementation\Repository\CustomTabDataRepository.CS" />
     <Compile Include="Implementation\Repository\CustomTableRepository.CS" />
+    <Compile Include="Implementation\Repository\DesktopGeoManageRepository.CS" />
     <Compile Include="Implementation\Repository\DllFileStreamRepository.CS" />
     <Compile Include="Implementation\Repository\DocCheckStateRepository.CS" />
     <Compile Include="Implementation\Repository\DocComentRepository.CS" />
@@ -314,14 +320,17 @@
     <Compile Include="Implementation\Repository\DocumentManageRepository.CS" />
     <Compile Include="Implementation\Repository\DocumentTypeRepository.CS" />
     <Compile Include="Implementation\Repository\EmployeeRepository.CS" />
+    <Compile Include="Implementation\Repository\EventTimeRepository.CS" />
     <Compile Include="Implementation\Repository\GroupMemberRepository.CS" />
     <Compile Include="Implementation\Repository\GroupMessagerRepository.CS" />
+    <Compile Include="Implementation\Repository\GroupNameRepository.CS" />
     <Compile Include="Implementation\Repository\GroupRepository.CS" />
     <Compile Include="Implementation\Repository\IndustryCodeRepository.CS" />
     <Compile Include="Implementation\Repository\IndustrySolutionRepository.CS" />
     <Compile Include="Implementation\Repository\IPCodeRepository.CS" />
     <Compile Include="Implementation\Repository\JobChangeRepository.CS" />
     <Compile Include="Implementation\Repository\LoginLogRepository.CS" />
+    <Compile Include="Implementation\Repository\MessageGroupMessagerRepository.CS" />
     <Compile Include="Implementation\Repository\ModulPropertyRepository.CS" />
     <Compile Include="Implementation\Repository\OperationDetailRepository.CS" />
     <Compile Include="Implementation\Repository\OperationEventRepository.CS" />
@@ -336,6 +345,7 @@
     <Compile Include="Implementation\Repository\Organization_TypeRepository.CS" />
     <Compile Include="Implementation\Repository\OrganizBasicRepository.CS" />
     <Compile Include="Implementation\Repository\OrgaRegisterDocmentRepository.CS" />
+    <Compile Include="Implementation\Repository\OrgManagerRepository.CS" />
     <Compile Include="Implementation\Repository\physicalAssetRepository.CS" />
     <Compile Include="Implementation\Repository\PositionRepository.CS" />
     <Compile Include="Implementation\Repository\PostRepository.CS" />
@@ -350,6 +360,7 @@
     <Compile Include="Implementation\Repository\SecurityinfoRepository.CS" />
     <Compile Include="Implementation\Repository\SpecializedRepository.CS" />
     <Compile Include="Implementation\Repository\SubordinateRepository.CS" />
+    <Compile Include="Implementation\Repository\UserGroupRepository.CS" />
     <Compile Include="Implementation\Repository\UserMessageRepository.CS" />
     <Compile Include="Implementation\Repository\UserRelateTableRepository.CS" />
     <Compile Include="Implementation\Repository\UserRelateTypeRepository.CS" />
@@ -372,10 +383,13 @@
     <Compile Include="Interface\Repostiory\IAuthorizationRepository.CS" />
     <Compile Include="Interface\Repostiory\IBussnessVerRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomCategoryRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomerGoupRepository.CS" />
+    <Compile Include="Interface\Repostiory\ICustomGeographicTypeRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomGroupRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomGroupUserRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomTabDataRepository.CS" />
     <Compile Include="Interface\Repostiory\ICustomTableRepository.CS" />
+    <Compile Include="Interface\Repostiory\IDesktopGeoManageRepository.CS" />
     <Compile Include="Interface\Repostiory\IDllFileStreamRepository.CS" />
     <Compile Include="Interface\Repostiory\IDocCheckStateRepository.CS" />
     <Compile Include="Interface\Repostiory\IDocComentRepository.CS" />
@@ -388,14 +402,17 @@
     <Compile Include="Interface\Repostiory\IDocumentManageRepository.CS" />
     <Compile Include="Interface\Repostiory\IDocumentTypeRepository.CS" />
     <Compile Include="Interface\Repostiory\IEmployeeRepository.CS" />
+    <Compile Include="Interface\Repostiory\IEventTimeRepository.CS" />
     <Compile Include="Interface\Repostiory\IGroupMemberRepository.CS" />
     <Compile Include="Interface\Repostiory\IGroupMessagerRepository.CS" />
+    <Compile Include="Interface\Repostiory\IGroupNameRepository.CS" />
     <Compile Include="Interface\Repostiory\IGroupRepository.CS" />
     <Compile Include="Interface\Repostiory\IIndustryCodeRepository.CS" />
     <Compile Include="Interface\Repostiory\IIndustrySolutionRepository.CS" />
     <Compile Include="Interface\Repostiory\IIPCodeRepository.CS" />
     <Compile Include="Interface\Repostiory\IJobChangeRepository.CS" />
     <Compile Include="Interface\Repostiory\ILoginLogRepository.CS" />
+    <Compile Include="Interface\Repostiory\IMessageGroupMessagerRepository.CS" />
     <Compile Include="Interface\Repostiory\IModulPropertyRepository.CS" />
     <Compile Include="Interface\Repostiory\IOperationDetailRepository.CS" />
     <Compile Include="Interface\Repostiory\IOperationEventRepository.CS" />
@@ -410,6 +427,7 @@
     <Compile Include="Interface\Repostiory\IOrganization_TypeRepository.CS" />
     <Compile Include="Interface\Repostiory\IOrganizBasicRepository.CS" />
     <Compile Include="Interface\Repostiory\IOrgaRegisterDocmentRepository.CS" />
+    <Compile Include="Interface\Repostiory\IOrgManagerRepository.CS" />
     <Compile Include="Interface\Repostiory\IphysicalAssetRepository.CS" />
     <Compile Include="Interface\Repostiory\IPositionRepository.CS" />
     <Compile Include="Interface\Repostiory\IPostRepository.CS" />
@@ -424,6 +442,7 @@
     <Compile Include="Interface\Repostiory\ISecurityinfoRepository.CS" />
     <Compile Include="Interface\Repostiory\ISpecializedRepository.CS" />
     <Compile Include="Interface\Repostiory\ISubordinateRepository.CS" />
+    <Compile Include="Interface\Repostiory\IUserGroupRepository.CS" />
     <Compile Include="Interface\Repostiory\IUserMessageRepository.CS" />
     <Compile Include="Interface\Repostiory\IUserRelateTableRepository.CS" />
     <Compile Include="Interface\Repostiory\IUserRelateTypeRepository.CS" />
@@ -450,10 +469,13 @@
     <Compile Include="Model\Authorization.CS" />
     <Compile Include="Model\BussnessVer.CS" />
     <Compile Include="Model\CustomCategory.CS" />
+    <Compile Include="Model\CustomerGoup.CS" />
+    <Compile Include="Model\CustomGeographicType.CS" />
     <Compile Include="Model\CustomGroup.CS" />
     <Compile Include="Model\CustomGroupUser.CS" />
     <Compile Include="Model\CustomTabData.CS" />
     <Compile Include="Model\CustomTable.CS" />
+    <Compile Include="Model\DesktopGeoManage.CS" />
     <Compile Include="Model\DllFileStream.CS" />
     <Compile Include="Model\DocCheckState.CS" />
     <Compile Include="Model\DocComent.CS" />
@@ -466,14 +488,17 @@
     <Compile Include="Model\DocumentManage.CS" />
     <Compile Include="Model\DocumentType.CS" />
     <Compile Include="Model\Employee.CS" />
+    <Compile Include="Model\EventTime.CS" />
     <Compile Include="Model\Group.CS" />
     <Compile Include="Model\GroupMember.CS" />
     <Compile Include="Model\GroupMessager.CS" />
+    <Compile Include="Model\GroupName.CS" />
     <Compile Include="Model\IndustryCode.CS" />
     <Compile Include="Model\IndustrySolution.CS" />
     <Compile Include="Model\IPCode.CS" />
     <Compile Include="Model\JobChange.CS" />
     <Compile Include="Model\LoginLog.CS" />
+    <Compile Include="Model\MessageGroupMessager.CS" />
     <Compile Include="Model\ModulProperty.CS" />
     <Compile Include="Model\OperationDetail.CS" />
     <Compile Include="Model\OperationEvent.CS" />
@@ -488,6 +513,7 @@
     <Compile Include="Model\Organization_Type.CS" />
     <Compile Include="Model\OrganizBasic.CS" />
     <Compile Include="Model\OrgaRegisterDocment.CS" />
+    <Compile Include="Model\OrgManager.CS" />
     <Compile Include="Model\physicalAsset.CS" />
     <Compile Include="Model\Position.CS" />
     <Compile Include="Model\Post.CS" />
@@ -503,6 +529,7 @@
     <Compile Include="Model\Specialized.CS" />
     <Compile Include="Model\Subordinate.CS" />
     <Compile Include="Model\User.CS" />
+    <Compile Include="Model\UserGroup.CS" />
     <Compile Include="Model\UserMessage.CS" />
     <Compile Include="Model\UserRelateTable.CS" />
     <Compile Include="Model\UserRelateType.CS" />

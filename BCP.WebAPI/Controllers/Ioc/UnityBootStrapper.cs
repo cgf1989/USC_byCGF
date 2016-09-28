@@ -66,6 +66,7 @@ namespace BCP.WebAPI.Controllers
             UnityContainer.RegisterType<IOrganization_TypeRepository, Organization_TypeRepository>();
             UnityContainer.RegisterType<IOrganizBasicRepository, OrganizBasicRepository>();
             UnityContainer.RegisterType<IOrgaRegisterDocmentRepository, OrgaRegisterDocmentRepository>();
+            UnityContainer.RegisterType<IOrgManagerRepository, OrgManagerRepository>();
             UnityContainer.RegisterType<IphysicalAssetRepository, physicalAssetRepository>();
             UnityContainer.RegisterType<IPositionRepository, PositionRepository>();
             UnityContainer.RegisterType<IPostRepository, PostRepository>();
@@ -93,6 +94,13 @@ namespace BCP.WebAPI.Controllers
             UnityContainer.RegisterType<IWorkSpaceTypeRepository, WorkSpaceTypeRepository>();
             UnityContainer.RegisterType<IworkTaskRepository, workTaskRepository>();
             UnityContainer.RegisterType<IZipCodeRepository, ZipCodeRepository>();
+            UnityContainer.RegisterType<ICustomerGoupRepository, CustomerGoupRepository>();
+            UnityContainer.RegisterType<ICustomGeographicTypeRepository, CustomGeographicTypeRepository>();
+            UnityContainer.RegisterType<IDesktopGeoManageRepository, DesktopGeoManageRepository>();
+            UnityContainer.RegisterType<IEventTimeRepository, EventTimeRepository>();
+            UnityContainer.RegisterType<IGroupNameRepository, GroupNameRepository>();
+            UnityContainer.RegisterType<IMessageGroupMessagerRepository, MessageGroupMessagerRepository>();
+            UnityContainer.RegisterType<IUserGroupRepository, UserGroupRepository>();
             UnityContainer.RegisterType<IUserService, UserService>();
         }
     }

@@ -21,5 +21,6 @@ namespace BCP.ViewModel
         public Int32? CrateUseId { get; set; }
         public DateTime? UpdateTime { get; set; }
         public Int32? UpdateUserId { get; set; }
+        public System.Boolean IsDeleted { get; set; }
     }
 }

@@ -14,12 +14,17 @@ namespace BCP.ViewModel
         public System.Int32 ID { get; set; }
         public System.String PostName { get; set; }
         public System.String MarkerString { get; set; }
-        public System.Boolean IsValid { get; set; }
         public System.String Descript { get; set; }
         public Int32? PostID { get; set; }
         public System.Int32 OrganizationID { get; set; }
         public Int32? EmployeeId { get; set; }
         public Int32? PositionID { get; set; }
-        public System.Int64 EventTime { get; set; }
+        public System.String IsDeleted { get; set; }
+        public System.String Notes { get; set; }
+        public System.String State { get; set; }
+        public System.Int32 CreateUserId { get; set; }
+        public System.DateTime CreateTime { get; set; }
+        public System.Int32 UpdateUserId { get; set; }
+        public System.DateTime UpdateTime { get; set; }
     }
 }

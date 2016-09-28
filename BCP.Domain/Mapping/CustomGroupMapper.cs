@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BCP.Domain
 {
-    public static  class CustomerGroupMapper
+    public static class CustomerGroupMapper
     {
-        public static IEnumerable<CustomGroupDTO> ConvertToCustomGroupDTO(this IEnumerable<CustomGroup> customgroups,ICustomGroupUserRepository customGroupUserRepository)
+        public static IEnumerable<CustomGroupDTO> ConvertToCustomGroupDTO(this IEnumerable<CustomGroup> customgroups, ICustomGroupUserRepository customGroupUserRepository)
         {
-            List<CustomGroupDTO> list=new List<CustomGroupDTO>();
+            List<CustomGroupDTO> list = new List<CustomGroupDTO>();
             if (customgroups == null || customgroups.Count() <= 0) return list;
             foreach (var node in customgroups)
             {

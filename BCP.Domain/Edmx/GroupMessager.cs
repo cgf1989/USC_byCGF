@@ -24,6 +24,7 @@ namespace BCP.Domain.Edmx
         public Nullable<int> CrateUseId { get; set; }
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public Nullable<int> UpdateUserId { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual GroupMember GroupMember { get; set; }
         public virtual Group Group { get; set; }

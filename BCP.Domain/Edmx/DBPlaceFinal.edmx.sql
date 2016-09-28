@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/24/2016 10:35:05
+-- Date Created: 09/28/2016 09:33:14
 -- Generated from EDMX file: E:\Work_hy\共性平台\BasePlace\BCP.Domain\Edmx\DBPlaceFinal.edmx
 -- --------------------------------------------------
 
@@ -603,17 +603,24 @@ GO
 -- Creating all tables
 -- --------------------------------------------------
 
--- Creating table 'Organizations'
-CREATE TABLE [dbo].[Organizations] (
-    [ID] int IDENTITY(1,1) NOT NULL,
+-- Creating table 'sys_Organization'
+CREATE TABLE [dbo].[sys_Organization] (
+    [Id] int IDENTITY(1,1) NOT NULL,
     [OrganizationCode] nvarchar(max)  NULL,
     [OrgaName] nvarchar(max)  NOT NULL,
     [Certificates] nvarchar(max)  NULL,
-    [EstablishmentDate] datetime  NULL,
-    [Parent] int  NULL,
+    [ParentId] int  NULL,
     [MarkerString] nvarchar(max)  NULL,
-    [IsValid] bit  NOT NULL,
-    [Type] nvarchar(max)  NOT NULL
+    [Type] nvarchar(max)  NOT NULL,
+    [RootId] int  NOT NULL,
+    [IsRoot] nvarchar(max)  NOT NULL,
+    [IsDeleted] bit  NOT NULL,
+    [Notes] nvarchar(max)  NOT NULL,
+    [State] nvarchar(max)  NOT NULL,
+    [CreateUserId] int  NOT NULL,
+    [CreateTime] datetime  NOT NULL,
+    [UpdateUserId] int  NOT NULL,
+    [UpdateTime] datetime  NOT NULL
 );
 GO
 
@@ -629,17 +636,23 @@ CREATE TABLE [dbo].[Organization_ContactTables] (
 );
 GO
 
--- Creating table 'Positions'
-CREATE TABLE [dbo].[Positions] (
-    [ID] int IDENTITY(1,1) NOT NULL,
-    [IsValid] bit  NOT NULL,
+-- Creating table 'sys_Position'
+CREATE TABLE [dbo].[sys_Position] (
+    [Id] int IDENTITY(1,1) NOT NULL,
     [PositionType] nvarchar(max)  NULL,
     [Name] nvarchar(max)  NULL,
     [TaskNature] nvarchar(max)  NULL,
     [PositionID] int  NULL,
     [OrganizationID] int  NOT NULL,
     [PostRequireID] int  NULL,
-    [PositionLevel] nvarchar(max)  NOT NULL
+    [PositionLevel] int  NOT NULL,
+    [IsDeleted] nvarchar(max)  NOT NULL,
+    [State] nvarchar(max)  NOT NULL,
+    [Notes] nvarchar(max)  NOT NULL,
+    [CreateUserId] int  NOT NULL,
+    [CreateTime] datetime  NOT NULL,
+    [UpdateUserId] int  NOT NULL,
+    [UpdateTime] datetime  NOT NULL
 );
 GO
 
@@ -657,7 +670,8 @@ CREATE TABLE [dbo].[sys_User] (
     [CreateTime] datetime  NULL,
     [CreateUserId] int  NULL,
     [UpdateTime] datetime  NULL,
-    [UpdateUserId] int  NULL
+    [UpdateUserId] int  NULL,
+    [IsDeleted] bit  NOT NULL
 );
 GO
 
@@ -737,7 +751,8 @@ CREATE TABLE [dbo].[sys_UserMessage] (
     [CreateTime] datetime  NULL,
     [CreateUserId] int  NULL,
     [UpdateTime] datetime  NULL,
-    [UpdateUserId] nvarchar(max)  NULL
+    [UpdateUserId] nvarchar(max)  NULL,
+    [IsDeleted] bit  NOT NULL
 );
 GO
 
@@ -755,7 +770,8 @@ CREATE TABLE [dbo].[sys_GroupMember] (
     [CreateUserId] int  NULL,
     [CreateTime] datetime  NULL,
     [UpdateTiime] datetime  NULL,
-    [UpdateUserId] int  NULL
+    [UpdateUserId] int  NULL,
+    [IsDeleted] bit  NOT NULL
 );
 GO
 
@@ -894,18 +910,23 @@ CREATE TABLE [dbo].[PostRequires] (
 );
 GO
 
--- Creating table 'Posts'
-CREATE TABLE [dbo].[Posts] (
+-- Creating table 'sys_Post'
+CREATE TABLE [dbo].[sys_Post] (
     [ID] int IDENTITY(1,1) NOT NULL,
     [PostName] nvarchar(max)  NOT NULL,
     [MarkerString] nvarchar(max)  NULL,
-    [IsValid] bit  NOT NULL,
     [Descript] nvarchar(max)  NULL,
     [PostID] int  NULL,
     [OrganizationID] int  NOT NULL,
     [EmployeeId] int  NULL,
     [PositionID] int  NULL,
-    [EventTime] bigint  NOT NULL
+    [IsDeleted] nvarchar(max)  NOT NULL,
+    [Notes] nvarchar(max)  NOT NULL,
+    [State] nvarchar(max)  NOT NULL,
+    [CreateUserId] int  NOT NULL,
+    [CreateTime] datetime  NOT NULL,
+    [UpdateUserId] int  NOT NULL,
+    [UpdateTime] datetime  NOT NULL
 );
 GO
 
@@ -1066,7 +1087,8 @@ CREATE TABLE [dbo].[sys_GroupMessager] (
     [CrateTime] datetime  NULL,
     [CrateUseId] int  NULL,
     [UpdateTime] datetime  NULL,
-    [UpdateUserId] int  NULL
+    [UpdateUserId] int  NULL,
+    [IsDeleted] bit  NOT NULL
 );
 GO
 
@@ -1083,7 +1105,8 @@ CREATE TABLE [dbo].[sys_Group] (
     [CreatTime] datetime  NULL,
     [CreateUserId] int  NULL,
     [UpdateTime] datetime  NULL,
-    [UpdateUserId] int  NULL
+    [UpdateUserId] int  NULL,
+    [IsDeleted] bit  NOT NULL
 );
 GO
 
@@ -1095,7 +1118,8 @@ CREATE TABLE [dbo].[sys_CustomerGoup] (
     [CreatTime] datetime  NULL,
     [CreateUserId] int  NULL,
     [UpdateTime] datetime  NULL,
-    [UpdateUserId] int  NULL
+    [UpdateUserId] int  NULL,
+    [IsDeleted] bit  NOT NULL
 );
 GO
 
@@ -1253,16 +1277,23 @@ CREATE TABLE [dbo].[OrganizationAssetTypes] (
 );
 GO
 
--- Creating table 'Employees1'
-CREATE TABLE [dbo].[Employees1] (
+-- Creating table 'sys_Employee'
+CREATE TABLE [dbo].[sys_Employee] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [StartTime] nvarchar(max)  NOT NULL,
-    [EndTime] nvarchar(max)  NOT NULL,
+    [StartTime] datetime  NOT NULL,
+    [EndTime] datetime  NOT NULL,
     [EmpCode] nvarchar(max)  NOT NULL,
     [UserID] int  NOT NULL,
-    [Isvalid] nvarchar(max)  NOT NULL,
     [PositionID] int  NULL,
-    [OrganizationID] int  NULL
+    [OrganizationID] int  NULL,
+    [IsChief] nvarchar(max)  NOT NULL,
+    [IsDeleted] bit  NOT NULL,
+    [State] nvarchar(max)  NOT NULL,
+    [Notes] nvarchar(max)  NOT NULL,
+    [CreateUserId] int  NOT NULL,
+    [CreateTime] datetime  NOT NULL,
+    [UpdateUserId] int  NOT NULL,
+    [UpdateTime] datetime  NOT NULL
 );
 GO
 
@@ -1488,7 +1519,23 @@ CREATE TABLE [dbo].[sys_CustomGroupUser] (
     [CreateTime] datetime  NULL,
     [CreateUserId] int  NULL,
     [UpdateTime] datetime  NULL,
-    [UpdateUserId] int  NULL
+    [UpdateUserId] int  NULL,
+    [IsDeleted] bit  NOT NULL
+);
+GO
+
+-- Creating table 'sys_OrgManagers'
+CREATE TABLE [dbo].[sys_OrgManagers] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [UserId] nvarchar(max)  NOT NULL,
+    [OrgId] nvarchar(max)  NOT NULL,
+    [IsDeleted] nvarchar(max)  NOT NULL,
+    [Notes] nvarchar(max)  NOT NULL,
+    [State] nvarchar(max)  NOT NULL,
+    [CrateUserId] nvarchar(max)  NOT NULL,
+    [CreateTime] nvarchar(max)  NOT NULL,
+    [UpdateUserId] nvarchar(max)  NOT NULL,
+    [UpdateTime] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -1496,10 +1543,10 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [ID] in table 'Organizations'
-ALTER TABLE [dbo].[Organizations]
-ADD CONSTRAINT [PK_Organizations]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
+-- Creating primary key on [Id] in table 'sys_Organization'
+ALTER TABLE [dbo].[sys_Organization]
+ADD CONSTRAINT [PK_sys_Organization]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- Creating primary key on [ID] in table 'Organization_ContactTables'
@@ -1508,10 +1555,10 @@ ADD CONSTRAINT [PK_Organization_ContactTables]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'Positions'
-ALTER TABLE [dbo].[Positions]
-ADD CONSTRAINT [PK_Positions]
-    PRIMARY KEY CLUSTERED ([ID] ASC);
+-- Creating primary key on [Id] in table 'sys_Position'
+ALTER TABLE [dbo].[sys_Position]
+ADD CONSTRAINT [PK_sys_Position]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- Creating primary key on [ID] in table 'sys_User'
@@ -1628,9 +1675,9 @@ ADD CONSTRAINT [PK_PostRequires]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
--- Creating primary key on [ID] in table 'Posts'
-ALTER TABLE [dbo].[Posts]
-ADD CONSTRAINT [PK_Posts]
+-- Creating primary key on [ID] in table 'sys_Post'
+ALTER TABLE [dbo].[sys_Post]
+ADD CONSTRAINT [PK_sys_Post]
     PRIMARY KEY CLUSTERED ([ID] ASC);
 GO
 
@@ -1802,9 +1849,9 @@ ADD CONSTRAINT [PK_OrganizationAssetTypes]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Employees1'
-ALTER TABLE [dbo].[Employees1]
-ADD CONSTRAINT [PK_Employees1]
+-- Creating primary key on [Id] in table 'sys_Employee'
+ALTER TABLE [dbo].[sys_Employee]
+ADD CONSTRAINT [PK_sys_Employee]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -1928,6 +1975,12 @@ ADD CONSTRAINT [PK_sys_CustomGroupUser]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
+-- Creating primary key on [Id] in table 'sys_OrgManagers'
+ALTER TABLE [dbo].[sys_OrgManagers]
+ADD CONSTRAINT [PK_sys_OrgManagers]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
 -- --------------------------------------------------
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
@@ -1951,8 +2004,8 @@ GO
 ALTER TABLE [dbo].[OrganizationOtherNames]
 ADD CONSTRAINT [FK_OrganizationOrganizationOtherName]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -1996,8 +2049,8 @@ GO
 ALTER TABLE [dbo].[OrganizationTransitions]
 ADD CONSTRAINT [FK_OrganizationOrganizationTransition]
     FOREIGN KEY ([OldOrgan])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -2011,8 +2064,8 @@ GO
 ALTER TABLE [dbo].[OrganizationTransitions]
 ADD CONSTRAINT [FK_OrganizationOrganizationTransition1]
     FOREIGN KEY ([NewOrgan])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -2037,19 +2090,19 @@ ON [dbo].[User_ContactTable]
     ([UserID]);
 GO
 
--- Creating foreign key on [Parent] in table 'Organizations'
-ALTER TABLE [dbo].[Organizations]
+-- Creating foreign key on [ParentId] in table 'sys_Organization'
+ALTER TABLE [dbo].[sys_Organization]
 ADD CONSTRAINT [FK_OrganizationOrganization]
-    FOREIGN KEY ([Parent])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    FOREIGN KEY ([ParentId])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OrganizationOrganization'
 CREATE INDEX [IX_FK_OrganizationOrganization]
-ON [dbo].[Organizations]
-    ([Parent]);
+ON [dbo].[sys_Organization]
+    ([ParentId]);
 GO
 
 -- Creating foreign key on [Parent] in table 'Administrativecodes'
@@ -2311,8 +2364,8 @@ GO
 ALTER TABLE [dbo].[OrganizBasics]
 ADD CONSTRAINT [FK_OrganizationOrganizBasic]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -2326,8 +2379,8 @@ GO
 ALTER TABLE [dbo].[OrganizationEvents]
 ADD CONSTRAINT [FK_OrganizationOrganizationEvent]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -2380,21 +2433,6 @@ GO
 CREATE INDEX [IX_FK_AdministrativecodeOrganizBasic]
 ON [dbo].[OrganizBasics]
     ([AdministrativecodeSacID]);
-GO
-
--- Creating foreign key on [PositionID] in table 'Positions'
-ALTER TABLE [dbo].[Positions]
-ADD CONSTRAINT [FK_PositionPosition]
-    FOREIGN KEY ([PositionID])
-    REFERENCES [dbo].[Positions]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PositionPosition'
-CREATE INDEX [IX_FK_PositionPosition]
-ON [dbo].[Positions]
-    ([PositionID]);
 GO
 
 -- Creating foreign key on [Investor] in table 'OrganicInvestors'
@@ -2476,8 +2514,8 @@ GO
 ALTER TABLE [dbo].[OrganizationCustomTypes]
 ADD CONSTRAINT [FK_OrganizationCustomOrganizationType]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -2611,8 +2649,8 @@ GO
 ALTER TABLE [dbo].[physicalAssets]
 ADD CONSTRAINT [FK_OrganizationphysicalAsset]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -2641,8 +2679,8 @@ GO
 ALTER TABLE [dbo].[physicalAssets]
 ADD CONSTRAINT [FK_OrganizationphysicalAsset1]
     FOREIGN KEY ([Supplier])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -2697,18 +2735,18 @@ ON [dbo].[AssetBaseTypes]
     ([AssetTypeId]);
 GO
 
--- Creating foreign key on [OrganizationID] in table 'Positions'
-ALTER TABLE [dbo].[Positions]
+-- Creating foreign key on [OrganizationID] in table 'sys_Position'
+ALTER TABLE [dbo].[sys_Position]
 ADD CONSTRAINT [FK_OrganizationPosition]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OrganizationPosition'
 CREATE INDEX [IX_FK_OrganizationPosition]
-ON [dbo].[Positions]
+ON [dbo].[sys_Position]
     ([OrganizationID]);
 GO
 
@@ -2757,8 +2795,8 @@ ON [dbo].[OrganizationAssetTypes]
     ([AssetBaseTypeId]);
 GO
 
--- Creating foreign key on [UserID] in table 'Employees1'
-ALTER TABLE [dbo].[Employees1]
+-- Creating foreign key on [UserID] in table 'sys_Employee'
+ALTER TABLE [dbo].[sys_Employee]
 ADD CONSTRAINT [FK_UserEmployee]
     FOREIGN KEY ([UserID])
     REFERENCES [dbo].[sys_User]
@@ -2768,12 +2806,12 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_UserEmployee'
 CREATE INDEX [IX_FK_UserEmployee]
-ON [dbo].[Employees1]
+ON [dbo].[sys_Employee]
     ([UserID]);
 GO
 
--- Creating foreign key on [PostRequireID] in table 'Positions'
-ALTER TABLE [dbo].[Positions]
+-- Creating foreign key on [PostRequireID] in table 'sys_Position'
+ALTER TABLE [dbo].[sys_Position]
 ADD CONSTRAINT [FK_PostRequirePosition]
     FOREIGN KEY ([PostRequireID])
     REFERENCES [dbo].[PostRequires]
@@ -2783,23 +2821,8 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_PostRequirePosition'
 CREATE INDEX [IX_FK_PostRequirePosition]
-ON [dbo].[Positions]
+ON [dbo].[sys_Position]
     ([PostRequireID]);
-GO
-
--- Creating foreign key on [PostID] in table 'Posts'
-ALTER TABLE [dbo].[Posts]
-ADD CONSTRAINT [FK_PostPost]
-    FOREIGN KEY ([PostID])
-    REFERENCES [dbo].[Posts]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PostPost'
-CREATE INDEX [IX_FK_PostPost]
-ON [dbo].[Posts]
-    ([PostID]);
 GO
 
 -- Creating foreign key on [IndustryCodeID] in table 'IndustrySolutions'
@@ -2817,18 +2840,18 @@ ON [dbo].[IndustrySolutions]
     ([IndustryCodeID]);
 GO
 
--- Creating foreign key on [PositionID] in table 'Employees1'
-ALTER TABLE [dbo].[Employees1]
+-- Creating foreign key on [PositionID] in table 'sys_Employee'
+ALTER TABLE [dbo].[sys_Employee]
 ADD CONSTRAINT [FK_PositionEmployee]
     FOREIGN KEY ([PositionID])
-    REFERENCES [dbo].[Positions]
-        ([ID])
+    REFERENCES [dbo].[sys_Position]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_PositionEmployee'
 CREATE INDEX [IX_FK_PositionEmployee]
-ON [dbo].[Employees1]
+ON [dbo].[sys_Employee]
     ([PositionID]);
 GO
 
@@ -2877,18 +2900,18 @@ ON [dbo].[WorkSpaces]
     ([IndustrySolutionId]);
 GO
 
--- Creating foreign key on [OrganizationID] in table 'Posts'
-ALTER TABLE [dbo].[Posts]
+-- Creating foreign key on [OrganizationID] in table 'sys_Post'
+ALTER TABLE [dbo].[sys_Post]
 ADD CONSTRAINT [FK_OrganizationPost]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OrganizationPost'
 CREATE INDEX [IX_FK_OrganizationPost]
-ON [dbo].[Posts]
+ON [dbo].[sys_Post]
     ([OrganizationID]);
 GO
 
@@ -2907,18 +2930,18 @@ ON [dbo].[WorkSpaces]
     ([WorkSpaceID]);
 GO
 
--- Creating foreign key on [OrganizationID] in table 'Employees1'
-ALTER TABLE [dbo].[Employees1]
+-- Creating foreign key on [OrganizationID] in table 'sys_Employee'
+ALTER TABLE [dbo].[sys_Employee]
 ADD CONSTRAINT [FK_OrganizationEmployee]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OrganizationEmployee'
 CREATE INDEX [IX_FK_OrganizationEmployee]
-ON [dbo].[Employees1]
+ON [dbo].[sys_Employee]
     ([OrganizationID]);
 GO
 
@@ -2986,8 +3009,8 @@ GO
 ALTER TABLE [dbo].[WorkSpaceRoles]
 ADD CONSTRAINT [FK_OrganizationWorkSpaceRole]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -3016,7 +3039,7 @@ GO
 ALTER TABLE [dbo].[Authorizations]
 ADD CONSTRAINT [FK_PostAuthorization]
     FOREIGN KEY ([PostID])
-    REFERENCES [dbo].[Posts]
+    REFERENCES [dbo].[sys_Post]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3031,8 +3054,8 @@ GO
 ALTER TABLE [dbo].[Products]
 ADD CONSTRAINT [FK_OrganizationProduct]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -3046,7 +3069,7 @@ GO
 ALTER TABLE [dbo].[Authorizations]
 ADD CONSTRAINT [FK_PostAuthorization1]
     FOREIGN KEY ([PostID1])
-    REFERENCES [dbo].[Posts]
+    REFERENCES [dbo].[sys_Post]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3181,8 +3204,8 @@ GO
 ALTER TABLE [dbo].[DocReaders]
 ADD CONSTRAINT [FK_OrganizationDocReader]
     FOREIGN KEY ([OrganizationID])
-    REFERENCES [dbo].[Organizations]
-        ([ID])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
@@ -3211,7 +3234,7 @@ GO
 ALTER TABLE [dbo].[DocReaders]
 ADD CONSTRAINT [FK_PostDocReader]
     FOREIGN KEY ([PostID])
-    REFERENCES [dbo].[Posts]
+    REFERENCES [dbo].[sys_Post]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3286,7 +3309,7 @@ GO
 ALTER TABLE [dbo].[DocSenders]
 ADD CONSTRAINT [FK_PostDocSender]
     FOREIGN KEY ([PostID])
-    REFERENCES [dbo].[Posts]
+    REFERENCES [dbo].[sys_Post]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3316,7 +3339,7 @@ GO
 ALTER TABLE [dbo].[JobChanges]
 ADD CONSTRAINT [FK_PostJobChange]
     FOREIGN KEY ([PostID])
-    REFERENCES [dbo].[Posts]
+    REFERENCES [dbo].[sys_Post]
         ([ID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -3657,34 +3680,19 @@ ON [dbo].[sys_GroupMember]
     ([GroupId]);
 GO
 
--- Creating foreign key on [EmployeeId] in table 'Posts'
-ALTER TABLE [dbo].[Posts]
+-- Creating foreign key on [EmployeeId] in table 'sys_Post'
+ALTER TABLE [dbo].[sys_Post]
 ADD CONSTRAINT [FK_EmployeePost]
     FOREIGN KEY ([EmployeeId])
-    REFERENCES [dbo].[Employees1]
+    REFERENCES [dbo].[sys_Employee]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EmployeePost'
 CREATE INDEX [IX_FK_EmployeePost]
-ON [dbo].[Posts]
+ON [dbo].[sys_Post]
     ([EmployeeId]);
-GO
-
--- Creating foreign key on [PositionID] in table 'Posts'
-ALTER TABLE [dbo].[Posts]
-ADD CONSTRAINT [FK_PositionPost]
-    FOREIGN KEY ([PositionID])
-    REFERENCES [dbo].[Positions]
-        ([ID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PositionPost'
-CREATE INDEX [IX_FK_PositionPost]
-ON [dbo].[Posts]
-    ([PositionID]);
 GO
 
 -- Creating foreign key on [GroupId] in table 'sys_GroupMessager'

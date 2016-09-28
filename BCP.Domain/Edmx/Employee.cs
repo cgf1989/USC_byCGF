@@ -21,13 +21,20 @@ namespace BCP.Domain.Edmx
         }
     
         public int Id { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
+        public System.DateTime StartTime { get; set; }
+        public System.DateTime EndTime { get; set; }
         public string EmpCode { get; set; }
         public int UserID { get; set; }
-        public string Isvalid { get; set; }
         public Nullable<int> PositionID { get; set; }
         public Nullable<int> OrganizationID { get; set; }
+        public string IsChief { get; set; }
+        public bool IsDeleted { get; set; }
+        public string State { get; set; }
+        public string Notes { get; set; }
+        public int CreateUserId { get; set; }
+        public System.DateTime CreateTime { get; set; }
+        public int UpdateUserId { get; set; }
+        public System.DateTime UpdateTime { get; set; }
     
         public virtual User User { get; set; }
         public virtual Position Position { get; set; }

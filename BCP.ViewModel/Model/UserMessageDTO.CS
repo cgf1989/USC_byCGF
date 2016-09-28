@@ -22,5 +22,6 @@ namespace BCP.ViewModel
         public Int32? CreateUserId { get; set; }
         public DateTime? UpdateTime { get; set; }
         public System.String UpdateUserId { get; set; }
+        public System.Boolean IsDeleted { get; set; }
     }
 }

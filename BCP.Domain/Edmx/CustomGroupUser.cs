@@ -22,6 +22,7 @@ namespace BCP.Domain.Edmx
         public Nullable<int> CreateUserId { get; set; }
         public Nullable<System.DateTime> UpdateTime { get; set; }
         public Nullable<int> UpdateUserId { get; set; }
+        public bool IsDeleted { get; set; }
     
         public virtual User User { get; set; }
         public virtual CustomGroup CustomGroup { get; set; }

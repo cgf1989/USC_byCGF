@@ -4,10 +4,10 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="a65c7466a75f443fb651e6b5e6da3781" Name="MainDigram" ZoomLevel="54" >
+      <Diagram DiagramId="a65c7466a75f443fb651e6b5e6da3781" Name="MainDigram" ZoomLevel="62" >
         <EntityTypeShape EntityType="BCP.Domain.Edmx.Organization" Width="9" PointX="32.875" PointY="21.75" FillColor="128, 64, 0" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.Organization_ContacTable" Width="2.25" PointX="5.25" PointY="18.375" />
-        <EntityTypeShape EntityType="BCP.Domain.Edmx.Position" Width="3.125" PointX="37.375" PointY="28.75" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Position" Width="3.125" PointX="37.5" PointY="29.5" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.User" Width="2.25" PointX="64.625" PointY="25.75" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.User_ContacTable" Width="2" PointX="68.75" PointY="21.375" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.LoginLog" Width="2" PointX="59.5" PointY="29.875" />
@@ -33,7 +33,7 @@
         <AssociationConnector Association="BCP.Domain.Edmx.UserUser_ContacTable" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizBasic" Width="5.75" PointX="11.5" PointY="11.25" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.PostRequire" PointX="49.25" PointY="25" Width="2.125" />
-        <EntityTypeShape EntityType="BCP.Domain.Edmx.Post" Width="3.875" PointX="32.5" PointY="35.375" FillColor="Teal" IsExpanded="true" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Post" Width="3.875" PointX="32.625" PointY="34.75" FillColor="Teal" IsExpanded="true" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.WorkSpace" Width="3.625" PointX="26.125" PointY="34" FillColor="Red" />
         <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrganization" />
         <AssociationConnector Association="BCP.Domain.Edmx.AdministrativecodeAdministrativecode" />
@@ -72,7 +72,6 @@
         <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicOrganization_ContacTable" />
         <AssociationConnector Association="BCP.Domain.Edmx.AdministrativecodeOrganizBasic" ManuallyRouted="false" >
         </AssociationConnector>
-        <AssociationConnector Association="BCP.Domain.Edmx.PositionPosition" />
         <AssociationConnector Association="BCP.Domain.Edmx.OrganizBasicOrganicInvestor1" />
         <AssociationConnector Association="BCP.Domain.Edmx.UserMessageGroup" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.GroupMessager" Width="2.25" PointX="72.625" PointY="28.25" />
@@ -113,10 +112,9 @@
         <EntityTypeShape EntityType="BCP.Domain.Edmx.OrganizationAssetType" Width="2.125" PointX="37.25" PointY="12" />
         <AssociationConnector Association="BCP.Domain.Edmx.physicalAssetOrganizationAssetType" />
         <AssociationConnector Association="BCP.Domain.Edmx.AssetBaseTypeOrganizationAssetType" />
-        <EntityTypeShape EntityType="BCP.Domain.Edmx.Employee" Width="5.25" PointX="45" PointY="36.25" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.Employee" Width="5.25" PointX="45" PointY="35.5" />
         <AssociationConnector Association="BCP.Domain.Edmx.UserEmployee" />
         <AssociationConnector Association="BCP.Domain.Edmx.PostRequirePosition" />
-        <AssociationConnector Association="BCP.Domain.Edmx.PostPost" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.IndustrySolution" Width="2.375" PointX="7.625" PointY="23.375" />
         <AssociationConnector Association="BCP.Domain.Edmx.IndustryCodeIndustrySolution" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.WorkModul" Width="2.5" PointX="3.5" PointY="28.25" />
@@ -192,12 +190,12 @@
         <AssociationConnector Association="BCP.Domain.Edmx.GroupMemberGroupMessager" />
         <AssociationConnector Association="BCP.Domain.Edmx.GroupGroupMember" />
         <AssociationConnector Association="BCP.Domain.Edmx.EmployeePost" />
-        <AssociationConnector Association="BCP.Domain.Edmx.PositionPost" />
         <AssociationConnector Association="BCP.Domain.Edmx.GroupGroupMessager" />
         <AssociationConnector Association="BCP.Domain.Edmx.WorkModulWorkSpace" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.CustomGroupUser" Width="2" PointX="67.625" PointY="31.375" />
         <AssociationConnector Association="BCP.Domain.Edmx.UserCustomGroupUser" />
         <AssociationConnector Association="BCP.Domain.Edmx.CustomGroupCustomGroupUser" />
+        <EntityTypeShape EntityType="BCP.Domain.Edmx.OrgManager" Width="1.5" PointX="44.125" PointY="24.75" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

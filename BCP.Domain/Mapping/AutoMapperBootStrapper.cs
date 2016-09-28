@@ -201,6 +201,10 @@ namespace BCP.Domain.Mapping
             Mapper.CreateMap<OrgaRegisterDocmentDTO, OrgaRegisterDocment>();
 
 //
+            Mapper.CreateMap<OrgManager, OrgManagerDTO>();
+            Mapper.CreateMap<OrgManagerDTO, OrgManager>();
+
+//
             Mapper.CreateMap<physicalAsset, physicalAssetDTO>();
             Mapper.CreateMap<physicalAssetDTO, physicalAsset>();
 
@@ -307,6 +311,34 @@ namespace BCP.Domain.Mapping
 //
             Mapper.CreateMap<ZipCode, ZipCodeDTO>();
             Mapper.CreateMap<ZipCodeDTO, ZipCode>();
+
+//
+            Mapper.CreateMap<CustomerGoup, CustomerGoupDTO>();
+            Mapper.CreateMap<CustomerGoupDTO, CustomerGoup>();
+
+//
+            Mapper.CreateMap<CustomGeographicType, CustomGeographicTypeDTO>();
+            Mapper.CreateMap<CustomGeographicTypeDTO, CustomGeographicType>();
+
+//
+            Mapper.CreateMap<DesktopGeoManage, DesktopGeoManageDTO>();
+            Mapper.CreateMap<DesktopGeoManageDTO, DesktopGeoManage>();
+
+//
+            Mapper.CreateMap<EventTime, EventTimeDTO>();
+            Mapper.CreateMap<EventTimeDTO, EventTime>();
+
+//
+            Mapper.CreateMap<GroupName, GroupNameDTO>();
+            Mapper.CreateMap<GroupNameDTO, GroupName>();
+
+//
+            Mapper.CreateMap<MessageGroupMessager, MessageGroupMessagerDTO>();
+            Mapper.CreateMap<MessageGroupMessagerDTO, MessageGroupMessager>();
+
+//
+            Mapper.CreateMap<UserGroup, UserGroupDTO>();
+            Mapper.CreateMap<UserGroupDTO, UserGroup>();
 
         }
     }

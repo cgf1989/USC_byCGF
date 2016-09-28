@@ -17,11 +17,10 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Organization()
         {
-            this.IsValid = true;
             this.OrganizationOtherNames = new HashSet<OrganizationOtherName>();
             this.OrganizationTransitions = new HashSet<OrganizationTransition>();
             this.OrganizationTransitions1 = new HashSet<OrganizationTransition>();
-            this.Organizations = new HashSet<Organization>();
+            this.Parent = new HashSet<Organization>();
             this.OrganizBasics = new HashSet<OrganizBasic>();
             this.OrganizationEvents = new HashSet<OrganizationEvent>();
             this.CustomOrganizationTypes = new HashSet<OrganizationCustomType>();
@@ -35,15 +34,22 @@ namespace BCP.Domain.Edmx
             this.DocReaders = new HashSet<DocReader>();
         }
     
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string OrganizationCode { get; set; }
         public string OrgaName { get; set; }
         public string Certificates { get; set; }
-        public Nullable<System.DateTime> EstablishmentDate { get; set; }
-        public Nullable<int> Parent { get; set; }
+        public Nullable<int> ParentId { get; set; }
         public string MarkerString { get; set; }
-        public bool IsValid { get; set; }
         public string Type { get; set; }
+        public int RootId { get; set; }
+        public string IsRoot { get; set; }
+        public bool IsDeleted { get; set; }
+        public string Notes { get; set; }
+        public string State { get; set; }
+        public int CreateUserId { get; set; }
+        public System.DateTime CreateTime { get; set; }
+        public int UpdateUserId { get; set; }
+        public System.DateTime UpdateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationOtherName> OrganizationOtherNames { get; set; }
@@ -52,8 +58,8 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationTransition> OrganizationTransitions1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Organization> Organizations { get; set; }
-        public virtual Organization Organization1 { get; set; }
+        public virtual ICollection<Organization> Parent { get; set; }
+        public virtual Organization Organizations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizBasic> OrganizBasics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

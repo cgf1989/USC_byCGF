@@ -1,15 +1,16 @@
+using BCP.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BCP.ViewModel
+namespace BCP.Domain.Edmx
 {
     /// <summary>
-    /// CustomerGoup DTO
+    /// OrgManager 实体类
     /// </summary>
-    public partial class CustomerGoupDTO
+    public partial class OrgManager:EntityBase
     {
     }
 }

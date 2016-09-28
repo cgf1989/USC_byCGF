@@ -17,29 +17,28 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Position()
         {
-            this.Positions = new HashSet<Position>();
             this.Employees = new HashSet<Employee>();
-            this.Posts = new HashSet<Post>();
         }
     
-        public int ID { get; set; }
-        public bool IsValid { get; set; }
+        public int Id { get; set; }
         public string PositionType { get; set; }
         public string Name { get; set; }
         public string TaskNature { get; set; }
         public Nullable<int> PositionID { get; set; }
         public int OrganizationID { get; set; }
         public Nullable<int> PostRequireID { get; set; }
-        public string PositionLevel { get; set; }
+        public int PositionLevel { get; set; }
+        public string IsDeleted { get; set; }
+        public string State { get; set; }
+        public string Notes { get; set; }
+        public int CreateUserId { get; set; }
+        public System.DateTime CreateTime { get; set; }
+        public int UpdateUserId { get; set; }
+        public System.DateTime UpdateTime { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Position> Positions { get; set; }
-        public virtual Position Position1 { get; set; }
         public virtual Organization Organization { get; set; }
         public virtual PostRequire PostRequire { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Post> Posts { get; set; }
     }
 }

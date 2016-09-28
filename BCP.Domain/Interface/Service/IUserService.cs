@@ -178,7 +178,7 @@ namespace BCP.Domain.Service
         /// <param name="groupId"></param>
         /// <param name="userId">登录用户，用于验证权限</param>
         /// <returns></returns>
-        bool AddUserToGroup(int memberUserId, int groupId, int userId,int referenceUserId);
+        bool AddUserToGroup(int memberUserId, int groupId, int userId, int referenceUserId);
 
         /// <summary>
         /// 移除用户
