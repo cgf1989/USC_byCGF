@@ -79,6 +79,10 @@ namespace BCP.WebAPI.Tests.Controllers
                 orgController.OrgService = orgService;
                 userController.UserService = userService;
                 AutoMapperBootStrapper.Start();
+                //
+
+
+
             }
             catch (Exception ex)
             { }
