@@ -82,6 +82,11 @@ namespace WpfClient.Contacts
             }
         }
 
+        /// <summary>
+        /// 发送文本
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void InputNoticeBtn_Click(object sender, RoutedEventArgs e)
         {
             if (input.Content.Equals("+"))      //防止点击"+"直接发送消息了
@@ -97,11 +102,11 @@ namespace WpfClient.Contacts
 
 
                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, InputNoticeTBox.Text.Trim(), null, "Text");
+                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, InputNoticeTBox.Text.Trim(), null, "Text", System.DateTime.Now.ToString());
                 this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
 
 
-
+                MsgScroll.ScrollToBottom();
             }
             else
             {
@@ -513,9 +518,11 @@ namespace WpfClient.Contacts
                             if (img != null)
                             {
                                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image", System.DateTime.Now.ToString());
                                 this.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
                             }
+
+                            MsgScroll.ScrollToBottom();
                         }
                         else
                         {

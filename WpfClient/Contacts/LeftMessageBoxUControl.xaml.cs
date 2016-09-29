@@ -1,4 +1,5 @@
-﻿using BCP.ViewModel;
+﻿using BCP.Common.Helper;
+using BCP.ViewModel;
 using SignalCore;
 using System;
 using System.Collections.Generic;
@@ -35,9 +36,10 @@ namespace WpfClient.Contacts
         //    this.UserNameLable.Content = userName;
         //    this.UserMessageLable.Text = message;
         //}
-        public void Init(String userName, String message, Image img, string msgType)
+        public void Init(String userName, String message, Image img, string msgType,string sendedTime)
         {
             this.UserNameLable.Content = userName;
+            this.lbl_msgSendedTime.Content = sendedTime;
             if (msgType == "Image")
             {
                 UserMessageImg.Source = img.Source;
@@ -54,7 +56,9 @@ namespace WpfClient.Contacts
             }
             else if (msgType == "File")
             {
-                tb_FileName.Text ="【文件】"+ message;
+                string fileName = FileHelper.UnEncrept_byCgf(message);
+                tb_FileName.Text ="【文件】"+ fileName;
+                tb_FileName.Tag = message;
                 UserMessageLable.Visibility = Visibility.Hidden;
                 UserMessageImg.Visibility = Visibility.Hidden;
                 UserFile.Visibility = Visibility.Visible;
@@ -77,6 +81,10 @@ namespace WpfClient.Contacts
             }
         }
 
-      
+        private void hyLink_openFile_Click(object sender, RoutedEventArgs e)
+        {
+            string filePath = tb_FileName.Tag.ToString();
+            System.Diagnostics.Process.Start(@"D:\MiniU_tempImg\" + filePath);
+        }
     }
 }

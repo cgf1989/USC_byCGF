@@ -110,7 +110,7 @@ namespace WpfClient.Login
 
                                         this.Dispatcher.Invoke(() =>
                                         {
-
+                                            string msgTime=convertTimeFormat(package.SenderTime);
                                             if (package.SMType == SignalRMessageType.StateMessage) { return; }
 
                                             if (package.SMType == SignalRMessageType.Img)
@@ -156,7 +156,7 @@ namespace WpfClient.Login
                                                                     if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.CurrentGroup.Id)
                                                                     {
                                                                         RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                                                        rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                                                        rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image", package.SenderTime.ToString());
                                                                         item.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
                                                                     }
                                                                     else
@@ -164,7 +164,7 @@ namespace WpfClient.Login
                                                                         string actualName = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault().ActualName;
                                                                         //string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
                                                                         LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                                        leftMessageBoxUControl.Init(actualName, "", img, "Image");
+                                                                        leftMessageBoxUControl.Init(actualName, "", img, "Image", package.SenderTime.ToString());
                                                                         item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
                                                                     }
                                                                 }
@@ -187,7 +187,7 @@ namespace WpfClient.Login
                                                             lvi = groupMsgBoxs[package.ToUserId];
 
                                                             lvi.Uid = (groupMsgCount[package.ToUserId] + 1).ToString();
-                                                            lvi.ToolTip = "10:02";
+                                                            lvi.ToolTip = msgTime;
                                                             lvi.Tag = userInfo.ActualName + ":[图片]";
 
                                                             groupMsgCount[package.ToUserId] += 1;
@@ -208,7 +208,7 @@ namespace WpfClient.Login
 
                                                             lvi.Name = "_" + userGroup.Name; // 纯数字会出错所以加了下划线开头
                                                             lvi.Uid = "1";
-                                                            lvi.ToolTip = "10:02";
+                                                            lvi.ToolTip = msgTime;
                                                             lvi.Tag = userInfo.ActualName + ":[图片]";
                                                             lvi.Content = img;
                                                             lvi.TabIndex = package.ToUserId;//跟点对点不同
@@ -260,7 +260,7 @@ namespace WpfClient.Login
 
                                                                     string userName = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault().ActualName;
                                                                     Paragraph p = new Paragraph();
-                                                                    Run r = new Run(userName);
+                                                                    Run r = new Run(userName+"   "+package.SenderTime);
                                                                     p.Inlines.Add(r);
                                                                     p.Foreground = Brushes.Blue;
                                                                     item.fdoc_historyMsg.Blocks.Add(p);
@@ -308,13 +308,13 @@ namespace WpfClient.Login
                                                                         if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
                                                                         {
                                                                             LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                                            leftMessageBoxUControl.Init(item.To, "", img, "Image");
+                                                                            leftMessageBoxUControl.Init(item.To, "", img, "Image", package.SenderTime.ToString());
                                                                             item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
                                                                         }
                                                                         else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
                                                                         {
                                                                             RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                                                            rightMessageBoxUControl.Init(item.Self, "", img, "Image");
+                                                                            rightMessageBoxUControl.Init(item.Self, "", img, "Image", package.SenderTime.ToString());
                                                                             item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                                                                         }
                                                                     }
@@ -341,7 +341,7 @@ namespace WpfClient.Login
                                                                 lvi = userMsgBoxs[package.FromUserId];
 
                                                                 lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
-                                                                lvi.ToolTip = "10:02";
+                                                                lvi.ToolTip = msgTime;
                                                                 lvi.Tag = "[图片]";
 
                                                                 userMsgCount[package.FromUserId] += 1;
@@ -363,7 +363,7 @@ namespace WpfClient.Login
                                                                 UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
                                                                 lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
                                                                 lvi.Uid = "1";
-                                                                lvi.ToolTip = "10:02";
+                                                                lvi.ToolTip = msgTime;
                                                                 lvi.Tag = "[图片]";
                                                                 lvi.Content = img;
                                                                 lvi.TabIndex = package.FromUserId;
@@ -404,7 +404,7 @@ namespace WpfClient.Login
                                                                 string myString = package.Context.ToString();
                                                                 //item.rtb_historyMsg.Document = new FlowDocument(new Paragraph(new Run(myString)));
                                                                 Paragraph p = new Paragraph();  // Paragraph 类似于 html 的 P 标签
-                                                                Run r = new Run(userName);      // Run 是一个 Inline 的标签
+                                                                Run r = new Run(userName + "   " + package.SenderTime);      // Run 是一个 Inline 的标签
                                                                 p.Inlines.Add(r);
                                                                 p.Foreground = Brushes.Blue;
                                                                 item.fdoc_historyMsg.Blocks.Add(p);
@@ -421,13 +421,13 @@ namespace WpfClient.Login
                                                                 if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
                                                                 {
                                                                     LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                                    leftMessageBoxUControl.Init(item.To, package.Context.ToString(), null, "Text");
+                                                                    leftMessageBoxUControl.Init(item.To, package.Context.ToString(), null, "Text", package.SenderTime.ToString());
                                                                     item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
                                                                 }
                                                                 else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
                                                                 {
                                                                     RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                                                    rightMessageBoxUControl.Init(item.Self, package.Context.ToString(), null, "Text");
+                                                                    rightMessageBoxUControl.Init(item.Self, package.Context.ToString(), null, "Text",package.SenderTime.ToString());
                                                                     item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                                                                 }
 
@@ -449,7 +449,7 @@ namespace WpfClient.Login
                                                                 lvi = userMsgBoxs[package.FromUserId];
 
                                                                 lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
-                                                                lvi.ToolTip = "10:02";
+                                                                lvi.ToolTip = msgTime;
                                                                 lvi.Tag = package.Context;
 
                                                                 userMsgCount[package.FromUserId] += 1;
@@ -471,7 +471,7 @@ namespace WpfClient.Login
                                                                 UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
                                                                 lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
                                                                 lvi.Uid = "1";
-                                                                lvi.ToolTip = "10:02";
+                                                                lvi.ToolTip = msgTime;
                                                                 lvi.Tag = package.Context;
                                                                 lvi.TabIndex = package.FromUserId;
                                                                 lvi.Content = img;
@@ -501,7 +501,7 @@ namespace WpfClient.Login
                                                             if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.CurrentGroup.Id)
                                                             {
                                                                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString(), null, "Text");
+                                                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, package.Context.ToString(), null, "Text",package.SenderTime.ToString());
                                                                 item.NoticeStackPanel.Children.Add(rightMessageBoxUControl);
                                                             }
                                                             else
@@ -509,7 +509,7 @@ namespace WpfClient.Login
                                                                 string actualName = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault().ActualName;
                                                                 //string actualName = item.groupMembers.Where(l => l.UserId == package.FromUserId).FirstOrDefault().Name;
                                                                 LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                                leftMessageBoxUControl.Init(actualName, package.Context.ToString(), null, "Text");
+                                                                leftMessageBoxUControl.Init(actualName, package.Context.ToString(), null, "Text", package.SenderTime.ToString());
                                                                 item.NoticeStackPanel.Children.Add(leftMessageBoxUControl);
                                                             }
 
@@ -530,7 +530,7 @@ namespace WpfClient.Login
                                                             lvi = groupMsgBoxs[package.ToUserId];
 
                                                             lvi.Uid = (groupMsgCount[package.ToUserId] + 1).ToString();
-                                                            lvi.ToolTip = "10:02";
+                                                            lvi.ToolTip = msgTime;
                                                             lvi.Tag = userInfo.ActualName + ":" + package.Context;
 
                                                             groupMsgCount[package.ToUserId] += 1;
@@ -551,7 +551,7 @@ namespace WpfClient.Login
 
                                                             lvi.Name = "_" + userGroup.Name; // 纯数字会出错所以加了下划线开头
                                                             lvi.Uid = "1";
-                                                            lvi.ToolTip = "10:02";
+                                                            lvi.ToolTip = msgTime;
                                                             lvi.Tag = userInfo.ActualName + ":" + package.Context;
                                                             lvi.Content = img;
                                                             lvi.TabIndex = package.ToUserId;
@@ -581,10 +581,10 @@ namespace WpfClient.Login
                                                             {                                                   
                                                                 //需要具体写历史记录页面的消息
                                                                 string userName = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault().ActualName;
-                                                                string myString = package.Context.ToString();
+                                                                string myString = "【文件】"+FileHelper.UnEncrept_byCgf(package.Context.ToString());
                                                                 //item.rtb_historyMsg.Document = new FlowDocument(new Paragraph(new Run(myString)));
                                                                 Paragraph p = new Paragraph();  // Paragraph 类似于 html 的 P 标签
-                                                                Run r = new Run(userName);      // Run 是一个 Inline 的标签
+                                                                Run r = new Run(userName + "   " + package.SenderTime);      // Run 是一个 Inline 的标签
                                                                 p.Inlines.Add(r);
                                                                 p.Foreground = Brushes.Blue;
                                                                 item.fdoc_historyMsg.Blocks.Add(p);
@@ -621,13 +621,13 @@ namespace WpfClient.Login
                                                                     if (MainClient.CurrentUser.ID.Equals(package.ToUserId) && package.FromUserId == item.ReplyId)
                                                                     {
                                                                         LeftMessageBoxUControl leftMessageBoxUControl = new LeftMessageBoxUControl();
-                                                                        leftMessageBoxUControl.Init(item.To, package.Context.ToString(), null, "File");
+                                                                        leftMessageBoxUControl.Init(item.To, picName, null, "File",package.SenderTime.ToString());
                                                                         item.MessageStackPanel.Children.Add(leftMessageBoxUControl);
                                                                     }
                                                                     else if (MainClient.CurrentUser.ID.Equals(package.FromUserId) && package.ToUserId == item.ReplyId)
                                                                     {
                                                                         RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                                                        rightMessageBoxUControl.Init(item.Self, package.Context.ToString(), null, "File");
+                                                                        rightMessageBoxUControl.Init(item.Self, picName, null, "File",package.SenderTime.ToString());
                                                                         item.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                                                                     }
 
@@ -653,8 +653,8 @@ namespace WpfClient.Login
                                                                 lvi = userMsgBoxs[package.FromUserId];
 
                                                                 lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
-                                                                lvi.ToolTip = "10:02";
-                                                                lvi.Tag = package.Context;
+                                                                lvi.ToolTip = msgTime;
+                                                                lvi.Tag ="【文件】"+ package.Title;
 
                                                                 userMsgCount[package.FromUserId] += 1;
                                                             }
@@ -675,8 +675,8 @@ namespace WpfClient.Login
                                                                 UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
                                                                 lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
                                                                 lvi.Uid = "1";
-                                                                lvi.ToolTip = "10:02";
-                                                                lvi.Tag ="[文件]"+package.Context;
+                                                                lvi.ToolTip = msgTime;
+                                                                lvi.Tag = "【文件】" + package.Title;
                                                                 lvi.TabIndex = package.FromUserId;
                                                                 lvi.Content = img;
                                                                 lvi.MouseDoubleClick += Lvi_MouseDoubleClick1;
@@ -878,6 +878,27 @@ namespace WpfClient.Login
         {
             UserManageWin umw = new UserManageWin();
             umw.ShowDialog();
+        }
+
+        /// <summary>
+        /// 模仿QQ设置未收消息的时间格式
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        string convertTimeFormat(DateTime dt)
+        {
+            if (dt.Date.Equals(System.DateTime.Now.Date)) //同一天
+            {
+                return dt.ToShortTimeString();
+            }
+            else if (dt.Date.Equals(System.DateTime.Now.Date.AddDays(-1))) //昨天
+            {
+                return "昨天";
+            }
+            else  //其余情况
+            {
+                return dt.Date.ToString("M-d");
+            }
         }
     }
 
