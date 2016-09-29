@@ -44,7 +44,19 @@ namespace BCP.Common.Helper
 
             String first = fileName.Substring(0, fileName.LastIndexOf('.'));
             String last = fileName.Substring(fileName.LastIndexOf('.') + 1);
-            return first + DateTime.Now.ToString("yyyyMMddHHmmssffff") + "." + last;
+            return first +"_"+ DateTime.Now.ToString("yyyyMMddHHmmssffff") + "." + last;
+        }
+
+        /// <summary>
+        /// 恢复原文件名
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static String UnEncrept_byCgf(String fileName)
+        {
+            String first = fileName.Substring(0, fileName.LastIndexOf('_'));
+            String last = fileName.Substring(fileName.LastIndexOf('.') + 1); ;
+            return first + "." + last;
         }
     }
 }

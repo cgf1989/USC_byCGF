@@ -1,4 +1,5 @@
-﻿using BCP.ViewModel;
+﻿using BCP.Common.Helper;
+using BCP.ViewModel;
 using SignalCore;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,10 @@ namespace WpfClient.Contacts
             InitializeComponent();
         }
 
-        public void Init(String userName, String message, Image img, string msgType)
+        public void Init(String userName, String message, Image img, string msgType,string sendedTime)
         {
             this.UserNameLable.Content = userName;
+            this.lbl_msgSendedTime.Content = sendedTime;
             if (msgType == "Image")
             {
                 UserMessageImg.Source = img.Source;
@@ -46,29 +48,22 @@ namespace WpfClient.Contacts
             }
             else if (msgType == "File")
             {
-                tb_FileName.Text ="【文件】"+ message;
+                string fileName = FileHelper.UnEncrept_byCgf(message);
+                tb_FileName.Text = "【文件】" + fileName;
+                tb_FileName.Tag = message;
                 UserMessageLable.Visibility = Visibility.Hidden;
                 UserMessageImg.Visibility = Visibility.Hidden;
                 UserFile.Visibility = Visibility.Visible;
             }
         }
 
-        public void Init(String userName, UserMessageDTO record)
-        {
-            this.UserNameLable.Content = userName;
-            this.UserMessageLable.Text = record == null ? "" : record.Content;
-        }
+        //public void Init(String userName, UserMessageDTO record)
+        //{
+        //    this.UserNameLable.Content = userName;
+        //    this.UserMessageLable.Text = record == null ? "" : record.Content;
+        //}
 
-        private void UserMessageImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ClickCount == 2)
-            {
-                PictureBrower pb = new PictureBrower();
-                pb.PicSource = (BitmapImage)UserMessageImg.Source;
-                pb.ShowDialog();
-            }
-            
-        }
+ 
 
         /// <summary>
         /// 打开文件
@@ -77,8 +72,30 @@ namespace WpfClient.Contacts
         /// <param name="e"></param>
         private void hyLink_openFile_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(@"D:\MiniU_tempImg\" + hyLink_openFile);
-            //System.Diagnostics.Process.Start("");
+            //有可能会因为刚发出去的，没下载到设置路径所以获取不到，重新打开窗口自动下载就可以
+            try
+            {
+                string filePath = tb_FileName.Tag.ToString();
+                System.Diagnostics.Process.Start(@"D:\MiniU_tempImg\" + filePath);
+            }
+            catch (Exception ex)
+            { MessageBox.Show("请重新打开窗口"); }
+        }
+
+
+        /// <summary>
+        /// 双击图片
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void UserMessageImg_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2)
+            {
+                PictureBrower pb = new PictureBrower();
+                pb.PicSource = (BitmapImage)UserMessageImg.Source;
+                pb.ShowDialog();
+            }
         }
     }
 }

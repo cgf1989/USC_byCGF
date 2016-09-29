@@ -1,4 +1,5 @@
-﻿using BCP.ViewModel;
+﻿using BCP.Common.Helper;
+using BCP.ViewModel;
 using BCP.WebAPI.SignalR;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -146,7 +147,7 @@ namespace WpfClient.Contacts
                                 if (img != null)
                                 {
                                     RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                    rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                    rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image", System.DateTime.Now.ToString());
                                     this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                                 }
                             }
@@ -249,6 +250,11 @@ namespace WpfClient.Contacts
             //}
         }
 
+        /// <summary>
+        /// 发送文本
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void InputBtn_Click(object sender, RoutedEventArgs e)
         {
             String message = this.InputTBox.Text.Trim();
@@ -261,8 +267,10 @@ namespace WpfClient.Contacts
 
 
                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                rightMessageBoxUControl.Init(Self, new UserMessageDTO() { Content = message });
+                rightMessageBoxUControl.Init(Self, message,null,"Text",System.DateTime.Now.ToString());
                 this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
+
+                MsgScroll.ScrollToBottom();
 
             }
             catch (Exception ex)
@@ -451,9 +459,11 @@ namespace WpfClient.Contacts
                             if (img != null)
                             {
                                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image");
+                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, "", img, "Image", System.DateTime.Now.ToString());
                                 this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                             }
+
+                            MsgScroll.ScrollToBottom();
                         }
                         else
                         {
@@ -577,10 +587,13 @@ namespace WpfClient.Contacts
                             //img.Source = myBitmapImage;
                             //if (img != null)
                             //{
+                            string fileName = FileHelper.Encrept_byCgf(ofd.SafeFileName); //为了跟接收统一，因此都用这格式
                                 RightMessageBoxUControl rightMessageBoxUControl = new RightMessageBoxUControl();
-                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, ofd.SafeFileName, null, "File");
+                                rightMessageBoxUControl.Init(MainClient.CurrentUser.ActualName, fileName, null, "File",System.DateTime.Now.ToString());
                                 this.MessageStackPanel.Children.Add(rightMessageBoxUControl);
                             //}
+
+                            MsgScroll.ScrollToBottom();
                         }
                         else
                         {
