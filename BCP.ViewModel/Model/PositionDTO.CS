@@ -22,9 +22,9 @@ namespace BCP.ViewModel
         public System.String IsDeleted { get; set; }
         public System.String State { get; set; }
         public System.String Notes { get; set; }
-        public System.Int32 CreateUserId { get; set; }
-        public System.DateTime CreateTime { get; set; }
-        public System.Int32 UpdateUserId { get; set; }
-        public System.DateTime UpdateTime { get; set; }
+        public Int32? CreateUserId { get; set; }
+        public DateTime? CreateTime { get; set; }
+        public Int32? UpdateUserId { get; set; }
+        public DateTime? UpdateTime { get; set; }
     }
 }

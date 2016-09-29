@@ -20,7 +20,7 @@ namespace BCP.Domain.Edmx
             this.OrganizationOtherNames = new HashSet<OrganizationOtherName>();
             this.OrganizationTransitions = new HashSet<OrganizationTransition>();
             this.OrganizationTransitions1 = new HashSet<OrganizationTransition>();
-            this.Parent = new HashSet<Organization>();
+            this.Organizations = new HashSet<Organization>();
             this.OrganizBasics = new HashSet<OrganizBasic>();
             this.OrganizationEvents = new HashSet<OrganizationEvent>();
             this.CustomOrganizationTypes = new HashSet<OrganizationCustomType>();
@@ -32,6 +32,7 @@ namespace BCP.Domain.Edmx
             this.WorkSpaceRoles = new HashSet<WorkSpaceRole>();
             this.Products = new HashSet<Product>();
             this.DocReaders = new HashSet<DocReader>();
+            this.OrgManagers = new HashSet<OrgManager>();
         }
     
         public int Id { get; set; }
@@ -41,15 +42,15 @@ namespace BCP.Domain.Edmx
         public Nullable<int> ParentId { get; set; }
         public string MarkerString { get; set; }
         public string Type { get; set; }
-        public int RootId { get; set; }
-        public string IsRoot { get; set; }
+        public Nullable<int> RootId { get; set; }
+        public bool IsRoot { get; set; }
         public bool IsDeleted { get; set; }
         public string Notes { get; set; }
         public string State { get; set; }
-        public int CreateUserId { get; set; }
-        public System.DateTime CreateTime { get; set; }
-        public int UpdateUserId { get; set; }
-        public System.DateTime UpdateTime { get; set; }
+        public Nullable<int> CreateUserId { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationOtherName> OrganizationOtherNames { get; set; }
@@ -58,8 +59,8 @@ namespace BCP.Domain.Edmx
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizationTransition> OrganizationTransitions1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Organization> Parent { get; set; }
-        public virtual Organization Organizations { get; set; }
+        public virtual ICollection<Organization> Organizations { get; set; }
+        public virtual Organization Parent { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrganizBasic> OrganizBasics { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -82,5 +83,7 @@ namespace BCP.Domain.Edmx
         public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DocReader> DocReaders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<OrgManager> OrgManagers { get; set; }
     }
 }

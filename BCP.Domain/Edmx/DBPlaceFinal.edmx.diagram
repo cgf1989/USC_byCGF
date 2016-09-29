@@ -196,6 +196,7 @@
         <AssociationConnector Association="BCP.Domain.Edmx.UserCustomGroupUser" />
         <AssociationConnector Association="BCP.Domain.Edmx.CustomGroupCustomGroupUser" />
         <EntityTypeShape EntityType="BCP.Domain.Edmx.OrgManager" Width="1.5" PointX="44.125" PointY="24.75" />
+        <AssociationConnector Association="BCP.Domain.Edmx.OrganizationOrgManager" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

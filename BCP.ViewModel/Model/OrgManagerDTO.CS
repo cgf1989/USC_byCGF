@@ -12,14 +12,14 @@ namespace BCP.ViewModel
     public partial class OrgManagerDTO
     {
         public System.Int32 Id { get; set; }
-        public System.String UserId { get; set; }
-        public System.String OrgId { get; set; }
-        public System.String IsDeleted { get; set; }
+        public System.Int32 UserId { get; set; }
+        public System.Boolean IsDeleted { get; set; }
         public System.String Notes { get; set; }
         public System.String State { get; set; }
-        public System.String CrateUserId { get; set; }
-        public System.String CreateTime { get; set; }
-        public System.String UpdateUserId { get; set; }
-        public System.String UpdateTime { get; set; }
+        public Int32? CrateUserId { get; set; }
+        public DateTime? CreateTime { get; set; }
+        public Int32? UpdateUserId { get; set; }
+        public DateTime? UpdateTime { get; set; }
+        public System.Int32 OrganizationId { get; set; }
     }
 }

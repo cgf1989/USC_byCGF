@@ -1,6 +1,6 @@
 ﻿using BCP.Common;
 using BCP.Domain.Edmx;
-using BCP.Domain.Service;
+using BCP.Domain;
 using BCP.ViewModel;
 using System;
 using System.Collections.Generic;

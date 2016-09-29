@@ -547,6 +547,10 @@
       <End Role="CustomGroup" EntitySet="sys_CustomerGoup" />
       <End Role="CustomGroupUser" EntitySet="sys_CustomGroupUser" />
     </AssociationSet>
+    <AssociationSet Name="OrganizationOrgManager" Association="BCP.Domain.Edmx.Store.OrganizationOrgManager">
+      <End Role="Organization" EntitySet="sys_Organization" />
+      <End Role="OrgManager" EntitySet="sys_OrgManagers" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="sys_Organization">
     <Key>
@@ -559,15 +563,15 @@
     <Property Name="ParentId" Type="int" Nullable="true" />
     <Property Name="MarkerString" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="RootId" Type="int" Nullable="false" />
-    <Property Name="IsRoot" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="RootId" Type="int" Nullable="true" />
+    <Property Name="IsRoot" Type="bit" Nullable="false" />
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CreateUserId" Type="int" Nullable="false" />
-    <Property Name="CreateTime" Type="datetime" Nullable="false" />
-    <Property Name="UpdateUserId" Type="int" Nullable="false" />
-    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+    <Property Name="CreateUserId" Type="int" Nullable="true" />
+    <Property Name="CreateTime" Type="datetime" Nullable="true" />
+    <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="Organization_ContactTables">
     <Key>
@@ -596,10 +600,10 @@
     <Property Name="IsDeleted" Type="nvarchar(max)" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CreateUserId" Type="int" Nullable="false" />
-    <Property Name="CreateTime" Type="datetime" Nullable="false" />
-    <Property Name="UpdateUserId" Type="int" Nullable="false" />
-    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+    <Property Name="CreateUserId" Type="int" Nullable="true" />
+    <Property Name="CreateTime" Type="datetime" Nullable="true" />
+    <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="sys_User">
     <Key>
@@ -870,10 +874,10 @@
     <Property Name="IsDeleted" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CreateUserId" Type="int" Nullable="false" />
-    <Property Name="CreateTime" Type="datetime" Nullable="false" />
-    <Property Name="UpdateUserId" Type="int" Nullable="false" />
-    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+    <Property Name="CreateUserId" Type="int" Nullable="true" />
+    <Property Name="CreateTime" Type="datetime" Nullable="true" />
+    <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="WorkSpaces">
     <Key>
@@ -1237,10 +1241,10 @@
     <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CreateUserId" Type="int" Nullable="false" />
-    <Property Name="CreateTime" Type="datetime" Nullable="false" />
-    <Property Name="UpdateUserId" Type="int" Nullable="false" />
-    <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+    <Property Name="CreateUserId" Type="int" Nullable="true" />
+    <Property Name="CreateTime" Type="datetime" Nullable="true" />
+    <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="true" />
   </EntityType>
   <EntityType Name="IndustrySolutions">
     <Key>
@@ -1474,15 +1478,15 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="UserId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="OrgId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="IsDeleted" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
     <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
     <Property Name="State" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CrateUserId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="CreateTime" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UpdateUserId" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="UpdateTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CrateUserId" Type="int" Nullable="true" />
+    <Property Name="CreateTime" Type="datetime" Nullable="true" />
+    <Property Name="UpdateUserId" Type="int" Nullable="true" />
+    <Property Name="UpdateTime" Type="datetime" Nullable="true" />
+    <Property Name="OrganizationId" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="UserLoginLog">
     <End Role="User" Type="BCP.Domain.Edmx.Store.sys_User" Multiplicity="0..1" />
@@ -2888,6 +2892,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="OrganizationOrgManager">
+    <End Role="Organization" Type="BCP.Domain.Edmx.Store.sys_Organization" Multiplicity="1" />
+    <End Role="OrgManager" Type="BCP.Domain.Edmx.Store.sys_OrgManagers" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Organization">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="OrgManager">
+        <PropertyRef Name="OrganizationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -3434,6 +3450,10 @@
             <End Role="CustomGroupUser" EntitySet="sys_CustomGroupUser" />
           </AssociationSet>
           <EntitySet Name="sys_OrgManagers" EntityType="BCP.Domain.Edmx.OrgManager" />
+          <AssociationSet Name="OrganizationOrgManager" Association="BCP.Domain.Edmx.OrganizationOrgManager">
+            <End Role="Organization" EntitySet="sys_Organization" />
+            <End Role="OrgManager" EntitySet="sys_OrgManagers" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Organization">
           <Documentation>
@@ -3459,8 +3479,8 @@
           <NavigationProperty Name="OrganizationOtherNames" Relationship="BCP.Domain.Edmx.OrganizationOrganizationOtherName" FromRole="Organization" ToRole="OrganizationOtherName" />
           <NavigationProperty Name="OrganizationTransitions" Relationship="BCP.Domain.Edmx.OrganizationOrganizationTransition" FromRole="Organization" ToRole="OrganizationTransition" />
           <NavigationProperty Name="OrganizationTransitions1" Relationship="BCP.Domain.Edmx.OrganizationOrganizationTransition1" FromRole="Organization" ToRole="OrganizationTransition" />
-          <NavigationProperty Name="Parent" Relationship="BCP.Domain.Edmx.OrganizationOrganization" FromRole="Organization" ToRole="Organization1" />
-          <NavigationProperty Name="Organizations" Relationship="BCP.Domain.Edmx.OrganizationOrganization" FromRole="Organization1" ToRole="Organization" />
+          <NavigationProperty Name="Organizations" Relationship="BCP.Domain.Edmx.OrganizationOrganization" FromRole="Organization" ToRole="Organization1" />
+          <NavigationProperty Name="Parent" Relationship="BCP.Domain.Edmx.OrganizationOrganization" FromRole="Organization1" ToRole="Organization" />
           <Property Type="Int32" Name="ParentId" Nullable="true" />
           <Property Type="String" Name="MarkerString" Nullable="true" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="OrganizBasics" Relationship="BCP.Domain.Edmx.OrganizationOrganizBasic" FromRole="Organization" ToRole="OrganizBasic" />
@@ -3478,12 +3498,12 @@
               <LongDescription>组织类型</LongDescription>
             </Documentation>
           </Property>
-          <Property Type="Int32" Name="RootId" Nullable="false" >
+          <Property Type="Int32" Name="RootId" Nullable="true" >
             <Documentation>
               <LongDescription>根节点Id（用户查找根节点）</LongDescription>
             </Documentation>
           </Property>
-          <Property Type="String" Name="IsRoot" Nullable="false" >
+          <Property Type="Boolean" Name="IsRoot" Nullable="false" >
             <Documentation>
               <LongDescription>组织的起点</LongDescription>
             </Documentation>
@@ -3493,10 +3513,11 @@
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="String" Name="Notes" Nullable="false" />
           <Property Type="String" Name="State" Nullable="false" />
-          <Property Type="Int32" Name="CreateUserId" Nullable="false" />
-          <Property Type="DateTime" Name="CreateTime" Nullable="false" />
-          <Property Type="Int32" Name="UpdateUserId" Nullable="false" />
-          <Property Type="DateTime" Name="UpdateTime" Nullable="false" />
+          <Property Type="Int32" Name="CreateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="true" />
+          <NavigationProperty Name="OrgManagers" Relationship="BCP.Domain.Edmx.OrganizationOrgManager" FromRole="Organization" ToRole="OrgManager" />
         </EntityType>
         <EntityType Name="Organization_ContacTable">
           <Documentation>
@@ -3557,10 +3578,10 @@
           <Property Type="String" Name="IsDeleted" Nullable="false" />
           <Property Type="String" Name="State" Nullable="false" />
           <Property Type="String" Name="Notes" Nullable="false" />
-          <Property Type="Int32" Name="CreateUserId" Nullable="false" />
-          <Property Type="DateTime" Name="CreateTime" Nullable="false" />
-          <Property Type="Int32" Name="UpdateUserId" Nullable="false" />
-          <Property Type="DateTime" Name="UpdateTime" Nullable="false" />
+          <Property Type="Int32" Name="CreateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="true" />
         </EntityType>
         <EntityType Name="User">
           <Documentation>
@@ -4181,10 +4202,10 @@
           <Property Type="String" Name="IsDeleted" Nullable="false" />
           <Property Type="String" Name="Notes" Nullable="false" />
           <Property Type="String" Name="State" Nullable="false" />
-          <Property Type="Int32" Name="CreateUserId" Nullable="false" />
-          <Property Type="DateTime" Name="CreateTime" Nullable="false" />
-          <Property Type="Int32" Name="UpdateUserId" Nullable="false" />
-          <Property Type="DateTime" Name="UpdateTime" Nullable="false" />
+          <Property Type="Int32" Name="CreateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="true" />
         </EntityType>
         <EntityType Name="WorkSpace">
           <Key>
@@ -5397,10 +5418,10 @@
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="String" Name="State" Nullable="false" />
           <Property Type="String" Name="Notes" Nullable="false" />
-          <Property Type="Int32" Name="CreateUserId" Nullable="false" />
-          <Property Type="DateTime" Name="CreateTime" Nullable="false" />
-          <Property Type="Int32" Name="UpdateUserId" Nullable="false" />
-          <Property Type="DateTime" Name="UpdateTime" Nullable="false" />
+          <Property Type="Int32" Name="CreateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="true" />
         </EntityType>
         <Association Name="UserEmployee">
           <End Type="BCP.Domain.Edmx.User" Role="User" Multiplicity="1" />
@@ -6547,16 +6568,29 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
-          <Property Type="String" Name="UserId" Nullable="false" />
-          <Property Type="String" Name="OrgId" Nullable="false" />
-          <Property Type="String" Name="IsDeleted" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="String" Name="Notes" Nullable="false" />
           <Property Type="String" Name="State" Nullable="false" />
-          <Property Type="String" Name="CrateUserId" Nullable="false" />
-          <Property Type="String" Name="CreateTime" Nullable="false" />
-          <Property Type="String" Name="UpdateUserId" Nullable="false" />
-          <Property Type="String" Name="UpdateTime" Nullable="false" />
+          <Property Type="Int32" Name="CrateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="CreateTime" Nullable="true" />
+          <Property Type="Int32" Name="UpdateUserId" Nullable="true" />
+          <Property Type="DateTime" Name="UpdateTime" Nullable="true" />
+          <NavigationProperty Name="Organization" Relationship="BCP.Domain.Edmx.OrganizationOrgManager" FromRole="OrgManager" ToRole="Organization" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
         </EntityType>
+        <Association Name="OrganizationOrgManager">
+          <End Type="BCP.Domain.Edmx.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="BCP.Domain.Edmx.OrgManager" Role="OrgManager" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="OrgManager">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7561,7 +7595,6 @@
         <MappingFragment StoreEntitySet="sys_OrgManagers">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId" ColumnName="UserId" />
-          <ScalarProperty Name="OrgId" ColumnName="OrgId" />
           <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
           <ScalarProperty Name="Notes" ColumnName="Notes" />
           <ScalarProperty Name="State" ColumnName="State" />
@@ -7569,6 +7602,7 @@
           <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
           <ScalarProperty Name="UpdateUserId" ColumnName="UpdateUserId" />
           <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+          <ScalarProperty Name="OrganizationId" ColumnName="OrganizationId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -1,6 +1,6 @@
 using BCP.Domain;
 using BCP.Common;
-using BCP.Domain.Service;
+using BCP.Domain;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.InterceptionExtension;
 using System;
@@ -102,6 +102,7 @@ namespace BCP.WebAPI.Controllers
             UnityContainer.RegisterType<IMessageGroupMessagerRepository, MessageGroupMessagerRepository>();
             UnityContainer.RegisterType<IUserGroupRepository, UserGroupRepository>();
             UnityContainer.RegisterType<IUserService, UserService>();
+            UnityContainer.RegisterType<IOrgService, OrgService>();
         }
     }
 }

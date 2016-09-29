@@ -1,4 +1,4 @@
-﻿using BCP.Domain.Service;
+﻿using BCP.Domain;
 using BCP.ViewModel;
 using BCP.WebAPI.Controllers;
 using Microsoft.AspNet.SignalR;

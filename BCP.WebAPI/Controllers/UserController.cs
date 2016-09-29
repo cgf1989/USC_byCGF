@@ -1,4 +1,4 @@
-﻿using BCP.Domain.Service;
+﻿using BCP.Domain;
 using BCP.ViewModel;
 using Microsoft.Practices.Unity;
 using System;

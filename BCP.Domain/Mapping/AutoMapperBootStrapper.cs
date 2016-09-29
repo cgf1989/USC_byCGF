@@ -3,7 +3,6 @@ using BCP.Domain.Edmx;
 using System.Collections.Generic;
 using BCP.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;

@@ -3,24 +3,20 @@ using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using BCP.WebAPI.Controllers;
-using Newtonsoft.Json;
-using BCP.ViewModel;
-using System.Net.Http;
 using Microsoft.Practices.Unity;
-using BCP.Domain.Service;
 using BCP.Domain.Mapping;
 using BCP.Domain;
+using BCP.ViewModel;
 
 namespace BCP.WebAPI.Tests.Controllers
 {
     /// <summary>
-    /// UserTest 的摘要说明
+    /// OrgControllerTest 的摘要说明
     /// </summary>
     [TestClass]
-    public class UserTest
+    public class OrgControllerTest
     {
-
-        public UserTest()
+        public OrgControllerTest()
         {
             //
             //TODO: 在此处添加构造函数逻辑
@@ -72,20 +68,20 @@ namespace BCP.WebAPI.Tests.Controllers
         #endregion
 
         [TestMethod]
-        public void FileUpLoad()
+        public void TestOrgRegister()
         {
             try
             {
+                OrgController orgController = new OrgController();
                 UserController userController = new UserController();
-                userController.UserService = (IUserService)UnityBootStrapper.UnityContainer.Resolve(typeof(IUserService));
+                IOrgService orgService = (IOrgService)UnityBootStrapper.UnityContainer.Resolve(typeof(IOrgService));
+                IUserService userService = (IUserService)UnityBootStrapper.UnityContainer.Resolve(typeof(IUserService));
+                orgController.OrgService = orgService;
+                userController.UserService = userService;
                 AutoMapperBootStrapper.Start();
-                
-                var message = userController.UserService.GetPTGMessage(2, 2);
-                var list = userController.UserService.GetAllCommunitcatedUserByUserId(2);
             }
             catch (Exception ex)
             { }
-
         }
     }
 }

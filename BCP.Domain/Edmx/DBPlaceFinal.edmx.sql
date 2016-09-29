@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/28/2016 09:33:14
+-- Date Created: 09/29/2016 15:16:50
 -- Generated from EDMX file: E:\Work_hy\共性平台\BasePlace\BCP.Domain\Edmx\DBPlaceFinal.edmx
 -- --------------------------------------------------
 
@@ -39,7 +39,7 @@ IF OBJECT_ID(N'[dbo].[FK_UserUser_ContacTable]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[User_ContactTable] DROP CONSTRAINT [FK_UserUser_ContacTable];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrganizationOrganization]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Organizations] DROP CONSTRAINT [FK_OrganizationOrganization];
+    ALTER TABLE [dbo].[sys_Organization] DROP CONSTRAINT [FK_OrganizationOrganization];
 GO
 IF OBJECT_ID(N'[dbo].[FK_AdministrativecodeAdministrativecode]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Administrativecodes] DROP CONSTRAINT [FK_AdministrativecodeAdministrativecode];
@@ -107,9 +107,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_AdministrativecodeOrganizBasic]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OrganizBasics] DROP CONSTRAINT [FK_AdministrativecodeOrganizBasic];
 GO
-IF OBJECT_ID(N'[dbo].[FK_PositionPosition]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Positions] DROP CONSTRAINT [FK_PositionPosition];
-GO
 IF OBJECT_ID(N'[dbo].[FK_OrganizBasicOrganicInvestor1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OrganicInvestors] DROP CONSTRAINT [FK_OrganizBasicOrganicInvestor1];
 GO
@@ -171,7 +168,7 @@ IF OBJECT_ID(N'[dbo].[FK_AssetTypeAssetType]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[AssetBaseTypes] DROP CONSTRAINT [FK_AssetTypeAssetType];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrganizationPosition]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Positions] DROP CONSTRAINT [FK_OrganizationPosition];
+    ALTER TABLE [dbo].[sys_Position] DROP CONSTRAINT [FK_OrganizationPosition];
 GO
 IF OBJECT_ID(N'[dbo].[FK_DllFileStreamDllFileStream]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DllFileStreams] DROP CONSTRAINT [FK_DllFileStreamDllFileStream];
@@ -183,19 +180,16 @@ IF OBJECT_ID(N'[dbo].[FK_AssetBaseTypeOrganizationAssetType]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OrganizationAssetTypes] DROP CONSTRAINT [FK_AssetBaseTypeOrganizationAssetType];
 GO
 IF OBJECT_ID(N'[dbo].[FK_UserEmployee]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Employees1] DROP CONSTRAINT [FK_UserEmployee];
+    ALTER TABLE [dbo].[sys_Employee] DROP CONSTRAINT [FK_UserEmployee];
 GO
 IF OBJECT_ID(N'[dbo].[FK_PostRequirePosition]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Positions] DROP CONSTRAINT [FK_PostRequirePosition];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PostPost]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_PostPost];
+    ALTER TABLE [dbo].[sys_Position] DROP CONSTRAINT [FK_PostRequirePosition];
 GO
 IF OBJECT_ID(N'[dbo].[FK_IndustryCodeIndustrySolution]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[IndustrySolutions] DROP CONSTRAINT [FK_IndustryCodeIndustrySolution];
 GO
 IF OBJECT_ID(N'[dbo].[FK_PositionEmployee]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Employees1] DROP CONSTRAINT [FK_PositionEmployee];
+    ALTER TABLE [dbo].[sys_Employee] DROP CONSTRAINT [FK_PositionEmployee];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrganizBasicProduct]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Products] DROP CONSTRAINT [FK_OrganizBasicProduct];
@@ -207,13 +201,13 @@ IF OBJECT_ID(N'[dbo].[FK_IndustrySolutionWorkSpace]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[WorkSpaces] DROP CONSTRAINT [FK_IndustrySolutionWorkSpace];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrganizationPost]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_OrganizationPost];
+    ALTER TABLE [dbo].[sys_Post] DROP CONSTRAINT [FK_OrganizationPost];
 GO
 IF OBJECT_ID(N'[dbo].[FK_WorkSpaceWorkSpace]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[WorkSpaces] DROP CONSTRAINT [FK_WorkSpaceWorkSpace];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OrganizationEmployee]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Employees1] DROP CONSTRAINT [FK_OrganizationEmployee];
+    ALTER TABLE [dbo].[sys_Employee] DROP CONSTRAINT [FK_OrganizationEmployee];
 GO
 IF OBJECT_ID(N'[dbo].[FK_IndustrySolutionDllFileStream]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[DllFileStreams] DROP CONSTRAINT [FK_IndustrySolutionDllFileStream];
@@ -363,10 +357,7 @@ IF OBJECT_ID(N'[dbo].[FK_GroupGroupMember]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[sys_GroupMember] DROP CONSTRAINT [FK_GroupGroupMember];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EmployeePost]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_EmployeePost];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PositionPost]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Posts] DROP CONSTRAINT [FK_PositionPost];
+    ALTER TABLE [dbo].[sys_Post] DROP CONSTRAINT [FK_EmployeePost];
 GO
 IF OBJECT_ID(N'[dbo].[FK_GroupGroupMessager]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[sys_GroupMessager] DROP CONSTRAINT [FK_GroupGroupMessager];
@@ -377,19 +368,22 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_CustomGroupCustomGroupUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[sys_CustomGroupUser] DROP CONSTRAINT [FK_CustomGroupCustomGroupUser];
 GO
+IF OBJECT_ID(N'[dbo].[FK_OrganizationOrgManager]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[sys_OrgManagers] DROP CONSTRAINT [FK_OrganizationOrgManager];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[Organizations]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Organizations];
+IF OBJECT_ID(N'[dbo].[sys_Organization]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_Organization];
 GO
 IF OBJECT_ID(N'[dbo].[Organization_ContactTables]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Organization_ContactTables];
 GO
-IF OBJECT_ID(N'[dbo].[Positions]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Positions];
+IF OBJECT_ID(N'[dbo].[sys_Position]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_Position];
 GO
 IF OBJECT_ID(N'[dbo].[sys_User]', 'U') IS NOT NULL
     DROP TABLE [dbo].[sys_User];
@@ -448,8 +442,8 @@ GO
 IF OBJECT_ID(N'[dbo].[PostRequires]', 'U') IS NOT NULL
     DROP TABLE [dbo].[PostRequires];
 GO
-IF OBJECT_ID(N'[dbo].[Posts]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Posts];
+IF OBJECT_ID(N'[dbo].[sys_Post]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_Post];
 GO
 IF OBJECT_ID(N'[dbo].[WorkSpaces]', 'U') IS NOT NULL
     DROP TABLE [dbo].[WorkSpaces];
@@ -535,8 +529,8 @@ GO
 IF OBJECT_ID(N'[dbo].[OrganizationAssetTypes]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OrganizationAssetTypes];
 GO
-IF OBJECT_ID(N'[dbo].[Employees1]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Employees1];
+IF OBJECT_ID(N'[dbo].[sys_Employee]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_Employee];
 GO
 IF OBJECT_ID(N'[dbo].[IndustrySolutions]', 'U') IS NOT NULL
     DROP TABLE [dbo].[IndustrySolutions];
@@ -598,6 +592,9 @@ GO
 IF OBJECT_ID(N'[dbo].[sys_CustomGroupUser]', 'U') IS NOT NULL
     DROP TABLE [dbo].[sys_CustomGroupUser];
 GO
+IF OBJECT_ID(N'[dbo].[sys_OrgManagers]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[sys_OrgManagers];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -612,15 +609,15 @@ CREATE TABLE [dbo].[sys_Organization] (
     [ParentId] int  NULL,
     [MarkerString] nvarchar(max)  NULL,
     [Type] nvarchar(max)  NOT NULL,
-    [RootId] int  NOT NULL,
-    [IsRoot] nvarchar(max)  NOT NULL,
+    [RootId] int  NULL,
+    [IsRoot] bit  NOT NULL,
     [IsDeleted] bit  NOT NULL,
     [Notes] nvarchar(max)  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
-    [CreateUserId] int  NOT NULL,
-    [CreateTime] datetime  NOT NULL,
-    [UpdateUserId] int  NOT NULL,
-    [UpdateTime] datetime  NOT NULL
+    [CreateUserId] int  NULL,
+    [CreateTime] datetime  NULL,
+    [UpdateUserId] int  NULL,
+    [UpdateTime] datetime  NULL
 );
 GO
 
@@ -649,10 +646,10 @@ CREATE TABLE [dbo].[sys_Position] (
     [IsDeleted] nvarchar(max)  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
     [Notes] nvarchar(max)  NOT NULL,
-    [CreateUserId] int  NOT NULL,
-    [CreateTime] datetime  NOT NULL,
-    [UpdateUserId] int  NOT NULL,
-    [UpdateTime] datetime  NOT NULL
+    [CreateUserId] int  NULL,
+    [CreateTime] datetime  NULL,
+    [UpdateUserId] int  NULL,
+    [UpdateTime] datetime  NULL
 );
 GO
 
@@ -923,10 +920,10 @@ CREATE TABLE [dbo].[sys_Post] (
     [IsDeleted] nvarchar(max)  NOT NULL,
     [Notes] nvarchar(max)  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
-    [CreateUserId] int  NOT NULL,
-    [CreateTime] datetime  NOT NULL,
-    [UpdateUserId] int  NOT NULL,
-    [UpdateTime] datetime  NOT NULL
+    [CreateUserId] int  NULL,
+    [CreateTime] datetime  NULL,
+    [UpdateUserId] int  NULL,
+    [UpdateTime] datetime  NULL
 );
 GO
 
@@ -1290,10 +1287,10 @@ CREATE TABLE [dbo].[sys_Employee] (
     [IsDeleted] bit  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
     [Notes] nvarchar(max)  NOT NULL,
-    [CreateUserId] int  NOT NULL,
-    [CreateTime] datetime  NOT NULL,
-    [UpdateUserId] int  NOT NULL,
-    [UpdateTime] datetime  NOT NULL
+    [CreateUserId] int  NULL,
+    [CreateTime] datetime  NULL,
+    [UpdateUserId] int  NULL,
+    [UpdateTime] datetime  NULL
 );
 GO
 
@@ -1527,15 +1524,15 @@ GO
 -- Creating table 'sys_OrgManagers'
 CREATE TABLE [dbo].[sys_OrgManagers] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [UserId] nvarchar(max)  NOT NULL,
-    [OrgId] nvarchar(max)  NOT NULL,
-    [IsDeleted] nvarchar(max)  NOT NULL,
+    [UserId] int  NOT NULL,
+    [IsDeleted] bit  NOT NULL,
     [Notes] nvarchar(max)  NOT NULL,
     [State] nvarchar(max)  NOT NULL,
-    [CrateUserId] nvarchar(max)  NOT NULL,
-    [CreateTime] nvarchar(max)  NOT NULL,
-    [UpdateUserId] nvarchar(max)  NOT NULL,
-    [UpdateTime] nvarchar(max)  NOT NULL
+    [CrateUserId] int  NULL,
+    [CreateTime] datetime  NULL,
+    [UpdateUserId] int  NULL,
+    [UpdateTime] datetime  NULL,
+    [OrganizationId] int  NOT NULL
 );
 GO
 
@@ -3738,6 +3735,21 @@ GO
 CREATE INDEX [IX_FK_CustomGroupCustomGroupUser]
 ON [dbo].[sys_CustomGroupUser]
     ([GroupId]);
+GO
+
+-- Creating foreign key on [OrganizationId] in table 'sys_OrgManagers'
+ALTER TABLE [dbo].[sys_OrgManagers]
+ADD CONSTRAINT [FK_OrganizationOrgManager]
+    FOREIGN KEY ([OrganizationId])
+    REFERENCES [dbo].[sys_Organization]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_OrganizationOrgManager'
+CREATE INDEX [IX_FK_OrganizationOrgManager]
+ON [dbo].[sys_OrgManagers]
+    ([OrganizationId]);
 GO
 
 -- --------------------------------------------------

@@ -35,10 +35,10 @@ namespace BCP.Domain.Edmx
         public string IsDeleted { get; set; }
         public string Notes { get; set; }
         public string State { get; set; }
-        public int CreateUserId { get; set; }
-        public System.DateTime CreateTime { get; set; }
-        public int UpdateUserId { get; set; }
-        public System.DateTime UpdateTime { get; set; }
+        public Nullable<int> CreateUserId { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
     
         public virtual Organization Organization { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

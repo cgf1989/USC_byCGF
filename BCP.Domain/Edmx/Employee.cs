@@ -31,10 +31,10 @@ namespace BCP.Domain.Edmx
         public bool IsDeleted { get; set; }
         public string State { get; set; }
         public string Notes { get; set; }
-        public int CreateUserId { get; set; }
-        public System.DateTime CreateTime { get; set; }
-        public int UpdateUserId { get; set; }
-        public System.DateTime UpdateTime { get; set; }
+        public Nullable<int> CreateUserId { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
     
         public virtual User User { get; set; }
         public virtual Position Position { get; set; }

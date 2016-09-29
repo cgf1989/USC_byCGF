@@ -374,6 +374,7 @@
     <Compile Include="Implementation\Repository\WorkSpaceTypeRepository.CS" />
     <Compile Include="Implementation\Repository\workTaskRepository.CS" />
     <Compile Include="Implementation\Repository\ZipCodeRepository.CS" />
+    <Compile Include="Implementation\Service\OrgService.cs" />
     <Compile Include="Implementation\Service\Serivce.cs" />
     <Compile Include="Implementation\Service\UserService.cs" />
     <Compile Include="Interface\Repostiory\IAdministrativecodeRepository.CS" />
@@ -456,6 +457,7 @@
     <Compile Include="Interface\Repostiory\IWorkSpaceTypeRepository.CS" />
     <Compile Include="Interface\Repostiory\IworkTaskRepository.CS" />
     <Compile Include="Interface\Repostiory\IZipCodeRepository.CS" />
+    <Compile Include="Interface\Service\IOrgService.cs" />
     <Compile Include="Interface\Service\IUserService.cs" />
     <Compile Include="Mapping\AutoMapperBootStrapper.cs" />
     <Compile Include="Mapping\CustomGroupMapper.cs" />

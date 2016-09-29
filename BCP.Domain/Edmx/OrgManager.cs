@@ -15,14 +15,16 @@ namespace BCP.Domain.Edmx
     public partial class OrgManager
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public string OrgId { get; set; }
-        public string IsDeleted { get; set; }
+        public int UserId { get; set; }
+        public bool IsDeleted { get; set; }
         public string Notes { get; set; }
         public string State { get; set; }
-        public string CrateUserId { get; set; }
-        public string CreateTime { get; set; }
-        public string UpdateUserId { get; set; }
-        public string UpdateTime { get; set; }
+        public Nullable<int> CrateUserId { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
+        public Nullable<int> UpdateUserId { get; set; }
+        public Nullable<System.DateTime> UpdateTime { get; set; }
+        public int OrganizationId { get; set; }
+    
+        public virtual Organization Organization { get; set; }
     }
 }
