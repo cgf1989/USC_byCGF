@@ -224,6 +224,15 @@ namespace BCP.Domain
 
             customGroup.IsDeleted = true;
             _customGroupRepository.Save(customGroup);
+
+            var list = _customGroupUserRepository.GetAll()
+                .Where(it => it.GroupId == groupId).ToList();
+            foreach (var item in list)
+            {
+                item.IsDeleted = false;
+                _customGroupUserRepository.Save(item);
+            }
+
             _unitOfWork.Commit();
             return true;
         }
@@ -309,7 +318,7 @@ namespace BCP.Domain
             if (user == null || group == null||user.IsDeleted||group.IsDeleted) throw new Exception("用户或者分组不存在");
 
             //检测用户是否已经分组
-            if (_customGroupUserRepository.GetAll().Where(it => it.IsDeleted == false).Where(it => it.UserId == userId && it.CustomGroup.CreateUserId == group.CreateUserId).FirstOrDefault() != null)
+            if (_customGroupUserRepository.GetAll().Where(it => it.IsDeleted == false).Where(it => it.UserId == userId && it.CustomGroup.CreateUserId == group.CreateUserId&&it.CustomGroup.IsDeleted==false).FirstOrDefault() != null)
                 throw new Exception("该用户已分组");
 
             //添加分组

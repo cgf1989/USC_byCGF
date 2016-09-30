@@ -150,7 +150,7 @@ namespace BCP.Domain
         public bool RemoveOrg(int orgId, int loginId)
         {
             Organization org = _organizationRepository.GetAll()
-                .Where(it => it.IsDeleted == true && it.Id == orgId).FirstOrDefault();
+                .Where(it => it.IsDeleted == false && it.Id == orgId).FirstOrDefault();
 
             OrgManager loginUser = _orgManagerRepository.GetAll()
                 .Where(it => it.IsDeleted == false && it.UserId == loginId)
@@ -168,6 +168,18 @@ namespace BCP.Domain
                     item.IsDeleted = true;
                     _organizationRepository.Save(item);
                 }
+
+                //清理管理表
+
+                var list2 = _orgManagerRepository.GetAll()
+                    .Where(it => it.IsDeleted == false && it.OrganizationId == org.Id)
+                    .ToList();
+                foreach (var item in list2)
+                {
+                    item.IsDeleted = true;
+                    _orgManagerRepository.Save(item);
+                }
+
                 //清理其他数据
 
                 _unitOfWork.Commit();
@@ -181,6 +193,8 @@ namespace BCP.Domain
                 //清除节点
                 org.IsDeleted = true;
                 _organizationRepository.Save(org);
+
+                //清除管理表 非根节点不需清理管理表
 
                 //清除相关数据
 

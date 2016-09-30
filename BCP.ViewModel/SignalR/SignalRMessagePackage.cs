@@ -237,15 +237,21 @@ namespace BCP.WebAPI.SignalR
         {
             if (node.MessageType == (int)SignalRMessageType.Text)
             {
-                return SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, (int)node.FromUserId, (int)node.ToUserId, node.CreateTime == null ? DateTime.Now : (DateTime)node.CreateTime);
+                SignalRMessagePackage srm= SignalRMessagePackageFactory.GetPTPTextPackage(node.Content, (int)node.FromUserId, (int)node.ToUserId, node.CreateTime == null ? DateTime.Now : (DateTime)node.CreateTime);
+                srm.State = node.State>0;
+                return srm;
             }
             else if (node.MessageType == (int)SignalRMessageType.File)
             {
-                return SignalRMessagePackageFactory.GetPTPFilePackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId, node.CreateTime == null ? DateTime.Now : (DateTime)node.CreateTime);
+                SignalRMessagePackage srm = SignalRMessagePackageFactory.GetPTPFilePackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId, node.CreateTime == null ? DateTime.Now : (DateTime)node.CreateTime);
+                srm.State = node.State > 0;
+                return srm;
             }
             else if (node.MessageType == (int)SignalRMessageType.Img)
             {
-                return SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId, node.CreateTime == null ? DateTime.Now : (DateTime)node.CreateTime);
+                SignalRMessagePackage srm = SignalRMessagePackageFactory.GetPTPImgPackage(node.Content, FileHelper.Decrept(node.Content), (int)node.FromUserId, (int)node.ToUserId, node.CreateTime == null ? DateTime.Now : (DateTime)node.CreateTime);
+                srm.State = node.State > 0;
+                return srm;
             }
             else
             {
