@@ -199,6 +199,9 @@
     <Compile Include="Teams\RemoveNormalGroup.xaml.cs">
       <DependentUpon>RemoveNormalGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Teams\WinForCreateDepartment.xaml.cs">
+      <DependentUpon>WinForCreateDepartment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Teams\Win_NewUserToNormalGroup.xaml.cs">
       <DependentUpon>Win_NewUserToNormalGroup.xaml</DependentUpon>
     </Compile>
@@ -392,6 +395,10 @@
     <Page Include="Teams\RemoveNormalGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Teams\WinForCreateDepartment.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Teams\Win_NewUserToNormalGroup.xaml">
       <SubType>Designer</SubType>

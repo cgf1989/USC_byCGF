@@ -1,6 +1,10 @@
-﻿using System;
+﻿using BCP.ViewModel;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,14 +24,20 @@ namespace WpfClient.Teams
     /// </summary>
     public partial class CreatOrganizaiton : MyMacClass
     {
+        /// <summary>
+        /// 组织ID，顶级的
+        /// </summary>
+        public int OrgRootID { set; get; }
+
         public CreatOrganizaiton()
         {
             InitializeComponent();
+            establishmentDateDatePicker.SelectedDate = System.DateTime.Now;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            
+           
             // 不要在设计时加载数据。
             // if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             // {
@@ -37,7 +47,43 @@ namespace WpfClient.Teams
             // }
         }
 
-  
-     
+        /// <summary>
+        /// 创建组织
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btnCreateOrg_Click(object sender, RoutedEventArgs e)
+        {
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://localhost:37768/");
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            HttpResponseMessage response = await client.GetAsync("api/Org/RegisterOrg?certificates=certificates&userId="+MainClient.CurrentUser.ID + "&isRoot=true&markerString=markerString&notes=备注&orgaName="+ orgaNameTextBox.Text + "&parentId=0&type="+ typeTextBox.Text + "&orgCode="+ organizationCodeTextBox.Text);
+            response.EnsureSuccessStatusCode();
+            if (response.IsSuccessStatusCode)
+            {
+                string ds = await response.Content.ReadAsStringAsync();
+                CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                if (result.Success)
+                {
+                    MessageBox.Show("创建成功");
+                    this.Close();
+                    //newContactId = SelectedUser.ID;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 新建部门 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_CreateDepartment_Click(object sender, RoutedEventArgs e)
+        {
+            WinForCreateDepartment win4createDep = new WinForCreateDepartment();
+            win4createDep.OrgRootID = this.OrgRootID;
+            win4createDep.ShowDialog();
+        }
     }
 }

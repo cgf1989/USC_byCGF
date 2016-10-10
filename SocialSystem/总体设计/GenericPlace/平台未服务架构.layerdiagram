@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="c3604707-f268-4eaf-b37a-16c2febb144d" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="b41c9a44-9383-43d2-b5c6-ce9dc015ad58" name="系统功能">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="1d7a62c6-7d7c-4465-a42f-037bf698dce5" direction="Forward">
+          <layerMoniker Id="2fa8f653-0e42-410b-ae02-735db907532e" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="17d23b6d-b5f8-412e-afab-4fffd4c30f61" name="功能模块" />
+      </childLayers>
+    </layer>
+    <layer Id="2fa8f653-0e42-410b-ae02-735db907532e" name="协作关系">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="cdbbf4ab-6ee6-461f-bdc7-52ea1e80b72f" direction="Forward">
+          <layerMoniker Id="944b6bfe-4227-4527-8ce7-4100a1b0dd18" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="6feffd77-2040-47fb-8c10-50832562f3c4" direction="Forward">
+          <layerMoniker Id="1379295d-3461-44b4-8de4-51d70b45f6e7" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="2215ab06-2adb-4eae-b2e4-ead7fbb362b5" name="权限关系">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="d3f1f59f-6ad0-4b2a-97eb-2bd0360c7d0a" direction="Forward">
+          <layerMoniker Id="1379295d-3461-44b4-8de4-51d70b45f6e7" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="876b8ce2-1c1a-492a-8331-d47adf1fc9e4" direction="Forward">
+          <layerMoniker Id="17d23b6d-b5f8-412e-afab-4fffd4c30f61" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="d920e4b8-0ec2-4ae3-91b0-6c89b87c7ae5" name="工作空间">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="98625f3e-a728-4134-88b7-2167df443b5a" direction="Forward">
+          <layerMoniker Id="2fa8f653-0e42-410b-ae02-735db907532e" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="4da419e6-e94c-4e37-af12-649a54060e51" name="&#xD;&#xA;&#xD;&#xA;时间&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;&#xD;&#xA;地理信息（空间）" />
+    <layer Id="593a3456-5ad1-4c18-97f4-406218c9a074" name="自然人库" />
+    <layer Id="9f17ea7b-dc49-494c-80e5-687f63ea5e82" name="&#xD;&#xA;法人库" />
+    <layer Id="7f4b61f9-4814-45b6-858a-de2bdea77a3c" name="生成资料库">
+      <childLayers>
+        <layer Id="8304d659-0133-4448-9305-0bef107f9a97" name="证照资料库" />
+        <layer Id="a5d1943b-796a-43f8-a20d-4edfe5f1f9bd" name="专项主题信息库" />
+      </childLayers>
+    </layer>
+    <layer Id="d73b476a-49da-42c9-a28f-960e005aed8d" name="自然资源库" />
+    <layer Id="d99df49f-4757-484c-85dc-77461c79737f" name="Layer1">
+      <childLayers>
+        <layer Id="8624ba7f-51d8-47ac-be20-9887288c2316" name="组织">
+          <childLayers>
+            <layer Id="825da322-3f03-4e61-b40c-6afc1e82167c" name="雇员">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="4074cc3d-9e1a-4224-886e-8292f78471a5" direction="Forward">
+                  <layerMoniker Id="944b6bfe-4227-4527-8ce7-4100a1b0dd18" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+            </layer>
+            <layer Id="1379295d-3461-44b4-8de4-51d70b45f6e7" name="对外角色">
+              <dependencyToLayers>
+                <dependencyFromLayerToLayer Id="9fa2c31b-2f54-4803-afe7-7d9c0e0aeb7b" direction="Forward">
+                  <layerMoniker Id="825da322-3f03-4e61-b40c-6afc1e82167c" />
+                </dependencyFromLayerToLayer>
+              </dependencyToLayers>
+            </layer>
+          </childLayers>
+        </layer>
+        <layer Id="944b6bfe-4227-4527-8ce7-4100a1b0dd18" name="人" />
+      </childLayers>
+    </layer>
+  </layers>
+</layerModel>

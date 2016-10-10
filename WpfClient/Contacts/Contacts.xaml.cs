@@ -106,7 +106,7 @@ namespace WpfClient.Contacts
 
                     AddNewContactWin anc_win = new AddNewContactWin();
                     anc_win.userGroupList = userGroups;
-                    anc_win.ShowDialog();
+                    anc_win.ShowDialog();//这里最好做个判断，如果没有插入数据库成功，则提示添加失败，不走下面流程。
 
                     //将人员加到界面的用户分组
                     foreach (Expander item in tv_Contacts.Children)

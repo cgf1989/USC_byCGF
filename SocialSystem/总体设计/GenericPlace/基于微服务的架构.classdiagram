@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm10="http://schemas.microsoft.com/dsltools/UseCaseModel" xmlns:dm11="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ComponentDesigner" dslVersion="1.0.0.0" Id="73b7d525-b65d-405b-a49b-01875b0c327a" name="UMLClassDiagram1" linkedPackageId="5438a13c-0386-4181-8f39-9ce136b12709" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="33dc2952-61ad-4380-9c5b-dfa8900a8857">
+      <profileInstance Id="29b000cf-6771-4509-b5fc-5c43c5a5f4d8" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="668cac01-00eb-4c07-a6a0-774b27357484">
+      <profileInstance Id="8e6f0ea1-dd01-4483-ab9a-c8b8bfad890a" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="0cf1c9e3-1cc3-4209-a6a7-27f0a0607c2d" name="组织接口" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="344b9b53-ee75-4576-91ca-5cd82853ee97" />
+        <targetEnds>
+          <association Id="0e33fc28-fad5-49a6-bd18-9374a4e0374e" isDerived="false" sourceEndRoleName="组织接口" targetEndRoleName="组织" isLeaf="false" isAbstract="false">
+            <classMoniker Id="baa0d11b-55f9-4070-90d5-be72e0ab5ac4" LastKnownName="组织" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="efbcee4c-2689-4843-b955-928cf2bd46ad" name="组织接口" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="09d13ed0-2e6d-4543-a047-b94351877450" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="087a17f3-18f0-4514-b58f-e3767152a65f" name="组织" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="cae490a6-3913-4cf8-8635-349eb5820d1c" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="ad90a043-e772-4021-b174-0e2ef395d7ea" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="bf5ad736-1f58-4aa8-b99f-3aeb2402c157" name="人" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="204a711a-40cb-467e-84db-365d53d74a60" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="5fc82773-498e-4fbc-b0cb-d5de139013b6" name="业务系统" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="2f081e0a-fdbd-48c7-9699-6d10564840bc" />
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="7218d63e-1187-49e4-a7ee-8c4c25255ba0" name="工作空间" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="2376ab95-5f6a-4e2b-aa98-16db49ec2cd0" />
+        <targetEnds>
+          <association Id="dd6e60b9-ad55-4da8-80a4-cda60891ce5d" isDerived="false" sourceEndRoleName="工作空间" targetEndRoleName="协作表" isLeaf="false" isAbstract="false">
+            <classMoniker Id="556effa8-c65b-4902-b048-399cbb18ac63" LastKnownName="协作表" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="7a167fbb-d47e-401c-ad01-d8085a85c6a0" name="工作空间" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="e350b97d-4afb-4775-aa6d-9ed2d6740ad3" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="bb569186-0271-4e36-85fd-bdba74ad5f29" name="协作表" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="bdaf09f6-215a-4e32-a928-ef2cbfee1943" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="90aa3b98-5ff6-47c5-9208-5b7552eed6bf" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="556effa8-c65b-4902-b048-399cbb18ac63" name="协作表" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="889ca6be-305d-40e0-b641-aaab9674cf68" />
+        <suppliersInternal>
+          <dependency Id="72e5a390-cb38-40de-9682-df338321d258">
+            <classMoniker Id="bf5ad736-1f58-4aa8-b99f-3aeb2402c157" LastKnownName="人" />
+            <elementDefinition Id="ad73d812-7129-4855-ab2a-360b2663ea39" />
+          </dependency>
+        </suppliersInternal>
+        <targetEnds>
+          <association Id="5c90853a-aa21-45a8-816d-3c8b13d1389c" isDerived="false" sourceEndRoleName="协作表" targetEndRoleName="组织" isLeaf="false" isAbstract="false">
+            <classMoniker Id="0cf1c9e3-1cc3-4209-a6a7-27f0a0607c2d" LastKnownName="组织接口" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="37679adf-43b8-480c-83b2-a93dcafcb09b" name="协作表" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="c8b67451-f988-4208-897b-2e218e61b828" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f197a2bf-866a-474f-9d48-cf805bccc71a" name="组织" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="86f63b65-2963-4c3b-8d82-1a92a4839094" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="fb2fd2e8-38cb-40c9-9140-feab50fabdf1" />
+          </association>
+          <association Id="e69dcfaa-7b36-4786-86ba-d4c926f6144d" isDerived="false" sourceEndRoleName="协作表" targetEndRoleName="业务系统" isLeaf="false" isAbstract="false">
+            <classMoniker Id="5fc82773-498e-4fbc-b0cb-d5de139013b6" LastKnownName="业务系统" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="76d06b95-fcc7-4dae-91ad-2ab0fe61eacc" name="协作表" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="2c748f0e-c96a-4fa7-9a3f-c32339b52e4b" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="3c1f63f4-d6c7-4b73-addc-a30ae9394753" name="业务系统" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="67a47ef6-b2f1-4098-818b-d345a953faf8" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="31fcba26-e6f2-4dba-9c64-47af461c194e" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="2db13a65-0d32-47e7-a340-8e32f556fc28" name="功能集" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="b9f5e0da-c042-4100-b71f-5ed2e4d2c02a" />
+        <targetEnds>
+          <association Id="4b06ef69-0655-48f7-b112-8c58b6178fe9" isDerived="false" sourceEndRoleName="功能集" targetEndRoleName="业务系统" isLeaf="false" isAbstract="false">
+            <classMoniker Id="5fc82773-498e-4fbc-b0cb-d5de139013b6" LastKnownName="业务系统" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="093c0d51-7c6e-4475-b972-f93ada483143" name="功能集" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="d10a5efb-824d-4e3d-8fb6-5a5dae5607bd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="aa1a44b3-5141-44fa-a80f-e8ea3fee779f" name="业务系统" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="444db816-a623-4246-bd4a-32a217d7f5e2" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="23460287-107e-41fe-88eb-e3de5ac4e7ac" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="0e6c374f-e6e3-4e78-b923-d0cb1708bd45" name="权限表" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="1c47db5f-1b05-408f-9636-ea140c60f72a" />
+        <suppliersInternal>
+          <dependency Id="ae10610c-3bb2-461e-ab97-8e0e08559ff6">
+            <classMoniker Id="0cf1c9e3-1cc3-4209-a6a7-27f0a0607c2d" LastKnownName="组织接口" />
+            <elementDefinition Id="60e984a7-5d05-4eba-92c6-80f8c7623511" />
+          </dependency>
+          <dependency Id="7c87d920-2dba-4098-9214-650c98032bca">
+            <classMoniker Id="bf5ad736-1f58-4aa8-b99f-3aeb2402c157" LastKnownName="人" />
+            <elementDefinition Id="35072dec-733c-4ef2-a480-ed89f5a066ea" />
+          </dependency>
+        </suppliersInternal>
+        <targetEnds>
+          <association Id="51756e5b-e11d-4b67-aa61-2b99d9068d46" isDerived="false" sourceEndRoleName="权限表" targetEndRoleName="功能集" isLeaf="false" isAbstract="false">
+            <classMoniker Id="2db13a65-0d32-47e7-a340-8e32f556fc28" LastKnownName="功能集" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="33c178c2-5c91-4645-a61e-91c3a34109c0" name="权限表" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="cfb1f18e-f712-47b0-a0e5-7affd5ffc23f" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="33452b0e-415e-424c-93e5-0ee3eeb576fc" name="功能集" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="bd22b601-380e-482c-88a5-53477ba6f0c9" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="4bc06a63-f37a-47d6-ab63-385a2f39a398" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="baa0d11b-55f9-4070-90d5-be72e0ab5ac4" name="组织" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="c50d5524-aeb6-4df2-a933-68f3e91ff272" />
+        <targetEnds>
+          <association Id="0aa73669-f836-4e05-846f-1d6f9275cd4b" isDerived="false" sourceEndRoleName="组织" targetEndRoleName="人" isLeaf="false" isAbstract="false">
+            <classMoniker Id="bf5ad736-1f58-4aa8-b99f-3aeb2402c157" LastKnownName="人" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="f61ad033-4245-4bfb-9af7-e50177d8daa2" name="组织" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="fba4c8ef-f08c-46fd-824e-77f8a4f87b61" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="fb5bd472-911d-4ddf-9f78-225d63d2c41e" name="人" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="b3487ba6-e28b-43aa-a7d4-afac6cdf5247" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="75afde69-94da-4996-9082-853bbb61a144" />
+          </association>
+        </targetEnds>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="5438a13c-0386-4181-8f39-9ce136b12709" name="SocialSystem">
+    <elementDefinition Id="d913d8dc-9f90-4e0f-a17d-95bc38ccdb4c" />
+  </package>
+</logicalClassDesignerModel>

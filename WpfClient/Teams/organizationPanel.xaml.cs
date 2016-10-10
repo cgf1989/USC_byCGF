@@ -292,5 +292,92 @@ namespace WpfClient.Teams
             }
 
         }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                //加载组织
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:37768/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Org/GetAllOrgRoots?");
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string ds = await response.Content.ReadAsStringAsync();
+                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                    if (result.Success)
+                    {
+                        List<OrganizationDTO> OrgCollection = new List<OrganizationDTO>();
+                        OrgCollection = JsonConvert.DeserializeObject<List<OrganizationDTO>>(result.Data);
+
+                        tv_OrgWorkSpace.Items.Clear();
+                        foreach (var item in OrgCollection)
+                        {
+                            tv_OrgWorkSpace.Items.Add(item);
+                            tv_OrgWorkSpace.DisplayMemberPath = "OrgaName";
+                            //MessageBox.Show(item.OrgaName);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                MessageBox.Show("组织信息加载出错");
+            }
+        }
+
+
+        /// <summary>
+        /// 创建部门
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mi_CreateDepartment_Click(object sender, RoutedEventArgs e)
+        {
+
+            var curOrgInfo = tv_main.SelectedItem as OrganizationDTO;
+            if (curOrgInfo != null)
+            {
+                CreatOrganizaiton win_createOrg = new CreatOrganizaiton();
+                win_createOrg.btnCreateOrg.IsEnabled = false;
+                win_createOrg.Title = "创建部门";
+                win_createOrg.orgaNameTextBox.Text = curOrgInfo.OrgaName;
+                win_createOrg.orgaNameTextBox.IsEnabled = false;
+                win_createOrg.organizationCodeTextBox.Text = curOrgInfo.OrganizationCode;
+                win_createOrg.organizationCodeTextBox.IsEnabled = false;
+                win_createOrg.typeTextBox.Text = curOrgInfo.Type;
+                win_createOrg.typeTextBox.IsEnabled = false;
+                win_createOrg.establishmentDateDatePicker.SelectedDate = (System.DateTime)curOrgInfo.CreateTime;
+                win_createOrg.establishmentDateDatePicker.IsEnabled = false;
+                win_createOrg.OrgRootID = curOrgInfo.Id;
+                win_createOrg.ShowDialog();
+            }
+
+        }
+
+
+        #region 树的右键用的
+        private void TreeViewItem_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var treeViewItem = VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject) as TreeViewItem;
+            if (treeViewItem != null)
+            {
+                treeViewItem.Focus();
+                e.Handled = true;
+            }
+        }
+
+        static DependencyObject VisualUpwardSearch<T>(DependencyObject source)
+        {
+            while (source != null && source.GetType() != typeof(T))
+                source = VisualTreeHelper.GetParent(source);
+
+            return source;
+        }
+        #endregion
     }
 }

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
     <Control.ToolTip>
         <ToolTip Visibility="Hidden"/>
     </Control.ToolTip>
@@ -41,8 +41,13 @@
         </Grid>
 
 
-        <TreeView  Grid.Row="1" Background="#ebf2f9">
-            <TreeViewItem >
+        <TreeView  Grid.Row="1" Background="#ebf2f9" Name="tv_main">
+            <TreeView.ItemContainerStyle>  <!--这一小节还是挺重要的,包括里面涉及的事件，不加入该小节，则右键树不会选中右键的节点-->
+                <Style  TargetType="{x:Type TreeViewItem}">
+                    <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
+                </Style>
+            </TreeView.ItemContainerStyle>
+            <TreeViewItem Name="tv_OrgWorkSpace">
                 <TreeViewItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -54,11 +59,16 @@
                 <TreeViewItem.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="创建组织结构"/>
-
-                    </ContextMenu>
+                        <MenuItem Header="创建部门" Name="mi_CreateDepartment" Click="mi_CreateDepartment_Click"/>
+                    </ContextMenu> 
                 </TreeViewItem.ContextMenu>
                 <TreeViewItem Name="tv_publicDialog" Header="图之灵计算机技术有限公司" MouseDoubleClick="tv_publicDialog_MouseDoubleClick"/>
                 <TreeViewItem Header="云浮高速公司（3）" IsExpanded="False">
+                    <TreeViewItem.ContextMenu>
+                        <ContextMenu>
+                        <MenuItem Header="创建部门" Name="mi_CreateDepartment1" Click="mi_CreateDepartment_Click"/>
+                        </ContextMenu>
+                    </TreeViewItem.ContextMenu>
                     <TreeViewItem Header="财务部" MouseDoubleClick="tv_publicDialog_MouseDoubleClick"/>
                     <TreeViewItem Header="技术部" MouseDoubleClick="tv_publicDialog_MouseDoubleClick">
                         <TreeViewItem Header="软件工程师（李莹）" MouseDoubleClick="tv_publicDialog_MouseDoubleClick"/>

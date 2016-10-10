@@ -13,7 +13,7 @@
             <RowDefinition Height="135" />
             <RowDefinition Height="373*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+        <Grid Grid.Row="0" HorizontalAlignment="Stretch" >
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -29,18 +29,18 @@
 
             </Grid.RowDefinitions>
             <Label Content="组织名称:" Grid.Column="0" HorizontalAlignment="Right"  Grid.Row="0" VerticalAlignment="Center" Height="26"  />
-            <TextBox x:Name="orgaNameTextBox" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="0" Text="{Binding OrgaName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="220" Height="26" />
+            <TextBox x:Name="orgaNameTextBox" Grid.Column="1" HorizontalAlignment="Left"  Grid.Row="0"  VerticalAlignment="Center" Width="220" Height="26" />
             <Label Content="组织类型:" Grid.Column="2" HorizontalAlignment="Right"  Grid.Row="0" VerticalAlignment="Center" Height="26"  />
-            <TextBox x:Name="typeTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="26" Grid.Row="0" Text="{Binding Type, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="220"/>
+            <TextBox x:Name="typeTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="26" Grid.Row="0"  VerticalAlignment="Center" Width="220"/>
 
             <Label Content="组织代码:" Grid.Column="0" HorizontalAlignment="Right"  Grid.Row="1" VerticalAlignment="Center" Height="26" />
-            <TextBox x:Name="organizationCodeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="26" Grid.Row="1" Text="{Binding OrganizationCode, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="220"/>
+            <TextBox x:Name="organizationCodeTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="26" Grid.Row="1"  VerticalAlignment="Center" Width="220"/>
 
             <Label Content="工商登记号:" Grid.Column="2" HorizontalAlignment="Right"  Grid.Row="1" VerticalAlignment="Center" Height="26" />
             <TextBox x:Name="certificatesTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="24"  Grid.Row="1" Text="{Binding Certificates, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="220" />
 
             <Label Content="创立日期:" Grid.Column="0" HorizontalAlignment="Right"  Grid.Row="3" VerticalAlignment="Center" Height="26" />
-            <DatePicker x:Name="establishmentDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" SelectedDate="{Binding EstablishmentDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Height="24" Width="120"/>
+            <DatePicker x:Name="establishmentDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3"  VerticalAlignment="Center" Height="24" Width="120"/>
             <Label Content="上级组织:" Grid.Column="2" HorizontalAlignment="Right" Grid.Row="2" VerticalAlignment="Center" Height="26" />
             <TextBox Margin="0,0,10,0" x:Name="parentTextBox" Grid.Column="3" HorizontalAlignment="Left" Height="26" Grid.Row="2" Text="{Binding Parent, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="220" />
 
@@ -50,7 +50,7 @@
 
             <Label Content="是否有效:" Grid.Column="2" HorizontalAlignment="Right"  Grid.Row="3" VerticalAlignment="Center" Height="26" />
             <CheckBox x:Name="isValidCheckBox" Content="" Grid.Column="3" HorizontalAlignment="Left" IsChecked="{Binding IsValid, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Row="3" VerticalAlignment="Center" />
-            <Button x:Name="btnCreateOrg" Content="创建组织" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Center" />
+            <Button x:Name="btnCreateOrg" Content="创建组织" Grid.Column="3" HorizontalAlignment="Right" Grid.Row="3" VerticalAlignment="Center" Click="btnCreateOrg_Click"/>
 
         </Grid>
         <TabControl Grid.Row="1" Background="#ebf2f9">
@@ -62,7 +62,7 @@
                     </Grid.RowDefinitions>
                     <ToolBarPanel  Grid.Row="0" >
                         <ToolBar >
-                            <Button  Content="建部门"/>
+                            <Button  Content="建部门" Name="btn_CreateDepartment" Click="btn_CreateDepartment_Click"/>
                             <Button  Content="改部门" />
                             <Separator />
                             <Button Content="建岗位"/>
