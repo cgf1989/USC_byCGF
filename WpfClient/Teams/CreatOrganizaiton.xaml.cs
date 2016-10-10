@@ -37,7 +37,10 @@ namespace WpfClient.Teams
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-           
+            if (OrgRootID != null)
+            {
+                LoadDepartment();
+            }
             // 不要在设计时加载数据。
             // if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(this))
             // {
@@ -59,7 +62,7 @@ namespace WpfClient.Teams
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await client.GetAsync("api/Org/RegisterOrg?certificates=certificates&userId="+MainClient.CurrentUser.ID + "&isRoot=true&markerString=markerString&notes=备注&orgaName="+ orgaNameTextBox.Text + "&parentId=0&type="+ typeTextBox.Text + "&orgCode="+ organizationCodeTextBox.Text);
+            HttpResponseMessage response = await client.GetAsync("api/Org/RegisterOrg?certificates=certificates&userId=" + MainClient.CurrentUser.ID + "&isRoot=true&markerString=markerString&notes=备注&orgaName=" + orgaNameTextBox.Text + "&parentId=0&type=" + typeTextBox.Text + "&orgCode=" + organizationCodeTextBox.Text);
             response.EnsureSuccessStatusCode();
             if (response.IsSuccessStatusCode)
             {
@@ -84,6 +87,51 @@ namespace WpfClient.Teams
             WinForCreateDepartment win4createDep = new WinForCreateDepartment();
             win4createDep.OrgRootID = this.OrgRootID;
             win4createDep.ShowDialog();
+
+            //刷新
+            if (win4createDep.IsSucess == true)
+            {
+                LoadDepartment();
+            }
+        }
+
+
+        /// <summary>
+        /// 加载部门信息
+        /// </summary>
+        async void LoadDepartment()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:37768/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Org/GetOrgChildren?orgId=" + OrgRootID);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string ds = await response.Content.ReadAsStringAsync();
+                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                    if (result.Success)
+                    {
+                        lbox_Department.Items.Clear();
+                        List<OrganizationDTO> depList = new List<OrganizationDTO>();
+                        depList = JsonConvert.DeserializeObject<List<OrganizationDTO>>(result.Data);
+                        foreach (var item in depList)
+                        {
+                            ListBoxItem lbi = new ListBoxItem();
+                            lbi.Content = item.OrgaName;
+                            lbi.Tag = item.Id;
+                            lbox_Department.Items.Add(lbi);
+                        }
+
+                    }
+                }
+            }
+            catch
+            { MessageBox.Show("加载部门出错"); }
         }
     }
 }

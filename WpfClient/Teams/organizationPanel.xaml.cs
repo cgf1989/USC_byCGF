@@ -379,5 +379,37 @@ namespace WpfClient.Teams
             return source;
         }
         #endregion
+
+
+        /// <summary>
+        /// 移除组织
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void mi_RemoveOrg_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("是否移除该组织", "注意", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                var curOrgInfo = tv_main.SelectedItem as OrganizationDTO;
+
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:37768/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Org/RemoveOrg?orgId=" + curOrgInfo.Id + "&loginId=" + MainClient.CurrentUser.ID);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string ds = await response.Content.ReadAsStringAsync();
+                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);
+                    if (result.Success)
+                    {
+                        //从界面移除
+                        tv_OrgWorkSpace.Items.Remove(tv_main.SelectedItem);
+                    }
+                }
+            }
+        }
     }
 }

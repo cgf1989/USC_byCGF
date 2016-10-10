@@ -21,13 +21,18 @@ namespace WpfClient.Teams
     /// <summary>
     /// WinForCreateDepartment.xaml 的交互逻辑
     /// </summary>
-    public partial class WinForCreateDepartment : Window
+    public partial class WinForCreateDepartment : MyMacClass_noneMaxBtn
     {
         public int OrgRootID { set; get; }
+        /// <summary>
+        /// 标识是否创建成功
+        /// </summary>
+        public bool IsSucess { set; get; }
 
         public WinForCreateDepartment()
         {
             InitializeComponent();
+            IsSucess = false;
         }
 
         private async void btn_CreateDep_Click(object sender, RoutedEventArgs e)
@@ -45,6 +50,7 @@ namespace WpfClient.Teams
                 if (result.Success)
                 {
                     MessageBox.Show("创建成功");
+                    IsSucess = true;
                     this.Close();
                     //newContactId = SelectedUser.ID;
                 }
