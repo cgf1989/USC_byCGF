@@ -81,6 +81,13 @@ namespace BCP.WebAPI.Tests.Controllers
                 AutoMapperBootStrapper.Start();
                 //
 
+                var list = orgService.GetAllOrgRoot();
+                if (list.Count > 0)
+                {
+                    orgService.RemoveOrg(list[0].Id,1);
+                }
+
+                var list2 = orgService.GetAllOrgRoot();
 
 
             }
