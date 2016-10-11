@@ -63,7 +63,7 @@
                     <ToolBarPanel  Grid.Row="0" >
                         <ToolBar >
                             <Button  Content="建部门" Name="btn_CreateDepartment" Click="btn_CreateDepartment_Click"/>
-                            <Button  Content="改部门" />
+                            <Button  Content="改部门" Name="btn_EditDepartment" Click="btn_EditDepartment_Click"/>
                             <Separator />
                             <Button Content="建岗位"/>
                             <Button Content="改岗位"/>

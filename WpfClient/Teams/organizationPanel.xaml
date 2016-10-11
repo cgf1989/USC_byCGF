@@ -60,7 +60,7 @@
                     <ContextMenu>
                         <MenuItem Header="创建组织结构"/>
                         <MenuItem Header="移除组织" Name="mi_RemoveOrg" Click="mi_RemoveOrg_Click"/>
-                        <MenuItem Header="创建部门" Name="mi_CreateDepartment" Click="mi_CreateDepartment_Click"/>
+                        <MenuItem Header="创建/编辑部门" Name="mi_CreateDepartment" Click="mi_CreateDepartment_Click"/>
                     </ContextMenu> 
                 </TreeViewItem.ContextMenu>
                 <TreeViewItem Name="tv_publicDialog" Header="图之灵计算机技术有限公司" MouseDoubleClick="tv_publicDialog_MouseDoubleClick"/>

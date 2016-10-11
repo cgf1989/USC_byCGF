@@ -133,5 +133,42 @@ namespace WpfClient.Teams
             catch
             { MessageBox.Show("加载部门出错"); }
         }
+
+        /// <summary>
+        /// 改部门，目前暂时为移除部门
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void btn_EditDepartment_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbox_Department.SelectedItem == null)
+            {
+                MessageBox.Show("未选择要移除的部门");
+                return;
+            }
+
+            var curDepInfo = lbox_Department.SelectedItem as ListBoxItem;
+            if (MessageBox.Show("是否移除部门-"+curDepInfo.Content, "注意", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {                
+
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://localhost:37768/");
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync("api/Org/RemoveOrg?orgId=" + curDepInfo.Tag + "&loginId=" + MainClient.CurrentUser.ID);
+                response.EnsureSuccessStatusCode();
+                if (response.IsSuccessStatusCode)
+                {
+                    string ds = await response.Content.ReadAsStringAsync();
+                    CustomMessage result = JsonConvert.DeserializeObject<CustomMessage>(ds);//{"Success":false,"Message":"非叶子节点、根节点","Type":null,"Data":"null","IsGeneric":false}
+                    if (result.Success)
+                    {
+                        //从界面移除
+                        lbox_Department.Items.Remove(lbox_Department.SelectedItem);
+                    }
+                }
+            }
+        }
     }
 }
