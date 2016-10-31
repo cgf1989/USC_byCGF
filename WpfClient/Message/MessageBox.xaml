@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded" >
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded"  >
     <UserControl.Resources>
         <Style x:Key="ListViewItemStyle1" TargetType="{x:Type ListViewItem}">
             <Setter Property="Background" Value="Transparent"/>
@@ -82,7 +82,7 @@
                     <MenuItem.Header >
                         <Image Margin="-8,-2,-2,-2" Source="/WpfClient;component/Images/time.png"></Image>
                     </MenuItem.Header>
-                    <MenuItem Header="最近七日" Template="{DynamicResource MenuItemControlTemplate1}"/>
+                    <MenuItem Name="mi_Last7day" Header="最近七日" Click="mi_Last7day_Click" Template="{DynamicResource MenuItemControlTemplate1}"/>
                     <MenuItem Header="最近一个月" Template="{DynamicResource MenuItemControlTemplate1}"/>
                     <MenuItem Header="自定义日期" Template="{DynamicResource MenuItemControlTemplate1}"/>
                 </MenuItem>
@@ -103,7 +103,22 @@
         <Grid Grid.Row="1" Background="AliceBlue"  VerticalAlignment="Stretch" >
 
             <!--<Label HorizontalContentAlignment="Center" Content="还没有消息哟"/>-->
-            <ListView BorderBrush="Transparent"  Name="Lv_message" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListView BorderBrush="Transparent"  Name="Lv_message" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+                <ListView.Resources>
+                    <!-- Foreground for Selected ListViewItem -->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}"  Color="Red"/>
+
+                    <!-- Background for Selected ListViewItem -->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"   Color="#F7EAB0"/>
+
+                    <Style TargetType="{x:Type ListViewItem}">
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" Value="#F6EEC6"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
                 <ListViewItem Style="{DynamicResource ListViewItemStyle1}" ToolTip="14:33" Name="小贾" Uid="1" Tag="您好">
                     <Image Source="/WpfClient;component/Images/profileIcon23.jpg"/>
                 </ListViewItem>
@@ -111,7 +126,7 @@
                     <Image Source="../Images/广东交通集团.jpg"/>
                 </ListViewItem>
                 <ListViewItem Style="{DynamicResource ListViewItemStyle1}" ToolTip="9:13" Name="征地管理系统" Uid="1" Tag="您有一条新消息">
-                    <Image Source="/WpfClient;component/Images/earth.ico"/>
+                    <Image Source="/WpfClient;component/Images/earth.ico"/> 
                 </ListViewItem>
             </ListView>
 

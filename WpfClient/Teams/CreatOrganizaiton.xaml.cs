@@ -28,11 +28,16 @@ namespace WpfClient.Teams
         /// 组织ID，顶级的
         /// </summary>
         public int OrgRootID { set; get; }
+        /// <summary>
+        /// 组织是否创建成功
+        /// </summary>
+        public bool IsOrgCreatSuccess { set; get; }
 
         public CreatOrganizaiton()
         {
             InitializeComponent();
             establishmentDateDatePicker.SelectedDate = System.DateTime.Now;
+            IsOrgCreatSuccess = false;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -71,6 +76,7 @@ namespace WpfClient.Teams
                 if (result.Success)
                 {
                     MessageBox.Show("创建成功");
+                    IsOrgCreatSuccess = true;
                     this.Close();
                     //newContactId = SelectedUser.ID;
                 }

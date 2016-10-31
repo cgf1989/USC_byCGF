@@ -134,6 +134,9 @@
     <Compile Include="Contacts\NormalGroupDialog.xaml.cs">
       <DependentUpon>NormalGroupDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Contacts\OrgChatDialog.xaml.cs">
+      <DependentUpon>OrgChatDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contacts\PictureBrower.xaml.cs">
       <DependentUpon>PictureBrower.xaml</DependentUpon>
     </Compile>
@@ -170,6 +173,12 @@
     </Compile>
     <Compile Include="Message\MessageBox.xaml.cs">
       <DependentUpon>MessageBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Message\UnReadMsgBox.xaml.cs">
+      <DependentUpon>UnReadMsgBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Message\WinListViewTest.xaml.cs">
+      <DependentUpon>WinListViewTest.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resource\MyMacClass.cs" />
     <Compile Include="Resource\MyMacClass_noneMaxBtn.cs" />
@@ -292,6 +301,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Contacts\OrgChatDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Contacts\PictureBrower.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -351,6 +364,14 @@
     <Page Include="Message\MessageBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Message\UnReadMsgBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Message\WinListViewTest.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resource\ControlStyle.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -579,6 +600,10 @@
     <Resource Include="Images\Pic.png" />
     <Resource Include="Images\clock.png" />
     <Resource Include="Images\file.png" />
+    <Resource Include="Images\Img_Header\userGroup.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\MiniU.ico" />
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\jquery-1.6.4.min.js" />

@@ -34,6 +34,9 @@ namespace WpfClient.Contacts
             LoadUserGroup();
             LoadGroupWihtoutUsers(); //分组改动时要重新加载，如添加分组，删除分组时
 
+
+           MessageTab.MessageBox.IsMsgWinOpen = false; //设置未读信息窗口打开判断为否，以便聊天框打开之后点击未读消息页面，消息重复出在聊天框里
+
         }
 
 
@@ -201,7 +204,7 @@ namespace WpfClient.Contacts
                 LoginWin.SignalRProxy.MarkMessage(json_srmp);//标记已读
             }
             catch (Exception ex)
-            { MessageBox.Show(ex.ToString()); }
+            { MessageBox.Show("点对点聊天框打开出错\n"+ex.ToString()); }
      
 
         }

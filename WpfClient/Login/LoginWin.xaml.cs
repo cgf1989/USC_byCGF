@@ -41,7 +41,7 @@ namespace WpfClient.Login
         /// <summary>
         /// 存放不同用户信息的字典
         /// </summary>
-        public static Dictionary<int, ListViewItem> userMsgBoxs = new Dictionary<int, ListViewItem>();
+        public static Dictionary<int, Message.UnReadMsgBox> userMsgBoxs = new Dictionary<int, Message.UnReadMsgBox>();
         /// <summary>
         /// 存放某一用户的信息数量
         /// </summary>
@@ -50,7 +50,7 @@ namespace WpfClient.Login
         /// <summary>
         /// 存放不同群的消息字典
         /// </summary>
-        public static Dictionary<int, ListViewItem> groupMsgBoxs = new Dictionary<int, ListViewItem>();
+        public static Dictionary<int, Message.UnReadMsgBox> groupMsgBoxs = new Dictionary<int, Message.UnReadMsgBox>();
         /// <summary>
         /// 存放某一群的信息数量
         /// </summary>
@@ -118,7 +118,7 @@ namespace WpfClient.Login
                                                 #region 点对群接收图片信息
                                                 if (package.SCType == SignalRCommunicationType.PersonToGroup)
                                                 {
-                                                    if (Teams.organizationPanel.NormalGroupDialogList.Count > 0)
+                                                    if (Teams.organizationPanel.NormalGroupDialogList.Count > 0 && MessageTab.MessageBox.IsMsgWinOpen==false)
                                                     {
 
                                                         foreach (var item in Teams.organizationPanel.NormalGroupDialogList)
@@ -181,52 +181,96 @@ namespace WpfClient.Login
                                                         //加载到界面
                                                         UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
 
+
+                                                        #region 旧代码，用ListViewItem模板处理的，有瑕疵,于161028屏蔽
+                                                        //if (groupMsgBoxs.ContainsKey(package.ToUserId))   //已有信息盒，覆盖，更新计数
+                                                        //{
+                                                        //    ListViewItem lvi = new ListViewItem();
+                                                        //    lvi = groupMsgBoxs[package.ToUserId];
+
+                                                        //    lvi.Uid = (groupMsgCount[package.ToUserId] + 1).ToString();
+                                                        //    lvi.ToolTip = msgTime;
+                                                        //    lvi.Tag = userInfo.ActualName + ":[图片]";
+
+                                                        //    groupMsgCount[package.ToUserId] += 1;
+                                                        //}
+                                                        //else     //未有该信息发送者信息盒，新建,《《《《《《《《《此处可能也要下载图片到本地，9.28注》》》》》。
+                                                        //{
+                                                        //    Image img = new Image();
+                                                        //    BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/userGroup.png", UriKind.Relative));
+                                                        //    img.Source = bitImg;
+                                                        //    ListViewItem lvi = new ListViewItem();
+
+                                                        //    ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                        //    mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                        //    this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                        //    lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+
+                                                        //    GroupDTO userGroup = MainClient.SysUserGroupCollection.Where(l => l.Id == package.ToUserId).FirstOrDefault();
+
+                                                        //    lvi.Name = "_" + userGroup.Name; // 纯数字会出错所以加了下划线开头
+                                                        //    lvi.Uid = "1";
+                                                        //    lvi.ToolTip = msgTime;
+                                                        //    lvi.Tag = userInfo.ActualName + ":[图片]";
+                                                        //    lvi.Content = img;
+                                                        //    lvi.TabIndex = package.ToUserId;//跟点对点不同
+                                                        //    lvi.MouseDoubleClick += Lvi_MouseDoubleClick;
+
+                                                        //    mb.Lv_message.Items.Add(lvi);
+                                                        //    mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+
+                                                        //    groupMsgBoxs.Add(package.ToUserId, lvi);
+                                                        //    groupMsgCount.Add(package.ToUserId, 1);
+                                                        //}
+                                                        #endregion
                                                         if (groupMsgBoxs.ContainsKey(package.ToUserId))   //已有信息盒，覆盖，更新计数
                                                         {
-                                                            ListViewItem lvi = new ListViewItem();
-                                                            lvi = groupMsgBoxs[package.ToUserId];
+                                                            Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
+                                                            urmb = groupMsgBoxs[package.ToUserId];
 
-                                                            lvi.Uid = (groupMsgCount[package.ToUserId] + 1).ToString();
-                                                            lvi.ToolTip = msgTime;
-                                                            lvi.Tag = userInfo.ActualName + ":[图片]";
+                                                            urmb.tb_UnReadMsgCount.Text = (groupMsgCount[package.ToUserId] + 1).ToString();
+                                                            urmb.tb_Time.Text = msgTime;
+                                                            urmb.tb_MsgContent.Text = userInfo.ActualName + ":[图片]";
 
                                                             groupMsgCount[package.ToUserId] += 1;
                                                         }
                                                         else     //未有该信息发送者信息盒，新建,《《《《《《《《《此处可能也要下载图片到本地，9.28注》》》》》。
                                                         {
-                                                            Image img = new Image();
-                                                            BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
-                                                            img.Source = bitImg;
-                                                            ListViewItem lvi = new ListViewItem();
+                                                            //Image img = new Image();
+                                                            BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/userGroup.png", UriKind.Relative));
+                                                            //img.Source = bitImg;
+                                                            Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
 
-                                                            ResourceDictionary mWindowResouce = new ResourceDictionary();
-                                                            mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
-                                                            this.Resources.MergedDictionaries.Add(mWindowResouce);
-                                                            lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+                                                            //ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                            //mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                            //this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                            //lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
 
                                                             GroupDTO userGroup = MainClient.SysUserGroupCollection.Where(l => l.Id == package.ToUserId).FirstOrDefault();
 
-                                                            lvi.Name = "_" + userGroup.Name; // 纯数字会出错所以加了下划线开头
-                                                            lvi.Uid = "1";
-                                                            lvi.ToolTip = msgTime;
-                                                            lvi.Tag = userInfo.ActualName + ":[图片]";
-                                                            lvi.Content = img;
-                                                            lvi.TabIndex = package.ToUserId;//跟点对点不同
-                                                            lvi.MouseDoubleClick += Lvi_MouseDoubleClick;
+                                                            urmb.tb_UserName.Text =  userGroup.Name;                 //群名/用户名                                              
+                                                            urmb.tb_Time.Text = msgTime;                             //发送时间
+                                                            urmb.tb_MsgContent.Text = userInfo.ActualName + ":[图片]";  //消息内容
+                                                            urmb.Img_Header.Source = bitImg;                                 //头像
+                                                            urmb.tb_UnReadMsgCount.Text = "1";                     //未读信息条数
+                                                            urmb.TabIndex = package.ToUserId;//跟点对点不同 ,可以在UnReadMsgBox控件类里多加个属性替换自带的TabIndex                                                           
+                                                            urmb.MouseDoubleClick+=Urmb_MouseDoubleClick ;
 
-                                                            mb.Lv_message.Items.Add(lvi);
-                                                            mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+                                                            mb.Lv_message.Items.Add(urmb);
+                                                            mb.Lv_message.ScrollIntoView(urmb);//滚动条滚动到最后一条
 
-                                                            groupMsgBoxs.Add(package.ToUserId, lvi);
+                                                            groupMsgBoxs.Add(package.ToUserId, urmb);
                                                             groupMsgCount.Add(package.ToUserId, 1);
                                                         }
+
+
                                                     }
                                                 }
                                                 #endregion
                                                 #region 点对点接收图片信息 (界面未完善，16.9.14注)
                                                 else if (package.SCType == SignalRCommunicationType.PersonToPerson)
                                                 {
-                                                    if (Contacts.Contacts.PrivateDialogList.Count > 0)
+                                                    if (Contacts.Contacts.PrivateDialogList.Count > 0 && MessageTab.MessageBox.IsMsgWinOpen == false)
                                                     {
 
                                                         foreach (var item in Contacts.Contacts.PrivateDialogList)
@@ -334,45 +378,87 @@ namespace WpfClient.Login
                                                         {
                                                             //加载到界面
 
+                                                            #region 161028屏蔽，用新的自定义控件
+                                                            //if (userMsgBoxs.ContainsKey(package.FromUserId))   //已有信息盒，覆盖，更新计数
+                                                            //{
+                                                            //    ListViewItem lvi = new ListViewItem();
+                                                            //    lvi = userMsgBoxs[package.FromUserId];
+
+                                                            //    lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
+                                                            //    lvi.ToolTip = msgTime;
+                                                            //    lvi.Tag = "[图片]";
+
+                                                            //    userMsgCount[package.FromUserId] += 1;
+                                                            //}
+                                                            //else     //未有该信息发送者信息盒，新建
+                                                            //{
+                                                            //    Image img = new Image();
+                                                            //    BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                            //    img.Source = bitImg;
+                                                            //    ListViewItem lvi = new ListViewItem();
+
+                                                            //    ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                            //    mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                            //    this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                            //    lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+
+
+
+                                                            //    UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
+                                                            //    lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
+                                                            //    lvi.Uid = "1";
+                                                            //    lvi.ToolTip = msgTime;
+                                                            //    lvi.Tag = "[图片]";
+                                                            //    lvi.Content = img;
+                                                            //    lvi.TabIndex = package.FromUserId;
+                                                            //    lvi.MouseDoubleClick += Lvi_MouseDoubleClick1;
+
+                                                            //    mb.Lv_message.Items.Add(lvi);
+                                                            //    mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+
+                                                            //    userMsgBoxs.Add(package.FromUserId, lvi);
+                                                            //    userMsgCount.Add(package.FromUserId, 1);
+                                                            //}
+                                                            #endregion
 
                                                             if (userMsgBoxs.ContainsKey(package.FromUserId))   //已有信息盒，覆盖，更新计数
                                                             {
-                                                                ListViewItem lvi = new ListViewItem();
-                                                                lvi = userMsgBoxs[package.FromUserId];
+                                                                Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
+                                                                urmb= userMsgBoxs[package.FromUserId];
 
-                                                                lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
-                                                                lvi.ToolTip = msgTime;
-                                                                lvi.Tag = "[图片]";
+                                                                urmb.tb_UnReadMsgCount.Text = (userMsgCount[package.FromUserId] + 1).ToString();
+                                                                urmb.tb_Time.Text = msgTime;
+                                                                urmb.tb_MsgContent.Text = "[图片]";
 
                                                                 userMsgCount[package.FromUserId] += 1;
                                                             }
                                                             else     //未有该信息发送者信息盒，新建
                                                             {
-                                                                Image img = new Image();
-                                                                BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
-                                                                img.Source = bitImg;
-                                                                ListViewItem lvi = new ListViewItem();
+                                                                //Image img = new Image();
+                                                                BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                                //img.Source = bitImg;
+                                                                Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
 
-                                                                ResourceDictionary mWindowResouce = new ResourceDictionary();
-                                                                mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
-                                                                this.Resources.MergedDictionaries.Add(mWindowResouce);
-                                                                lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+                                                                //ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                                //mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                                //this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                                //lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
 
 
 
                                                                 UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
-                                                                lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
-                                                                lvi.Uid = "1";
-                                                                lvi.ToolTip = msgTime;
-                                                                lvi.Tag = "[图片]";
-                                                                lvi.Content = img;
-                                                                lvi.TabIndex = package.FromUserId;
-                                                                lvi.MouseDoubleClick += Lvi_MouseDoubleClick1;
+                                                                urmb.tb_UserName.Text = userInfo.ActualName; // 纯数字会出错所以加了下划线开头
+                                                                urmb.tb_UnReadMsgCount.Text = "1";
+                                                                urmb.tb_Time.Text = msgTime;
+                                                                urmb.tb_MsgContent.Text = "[图片]";
+                                                                urmb.Img_Header.Source = bitImg;
+                                                                urmb.TabIndex = package.FromUserId;
+                                                                urmb.MouseDoubleClick += Urmb_MouseDoubleClick1;
 
-                                                                mb.Lv_message.Items.Add(lvi);
-                                                                mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+                                                                mb.Lv_message.Items.Add(urmb);
+                                                                mb.Lv_message.ScrollIntoView(urmb);//滚动条滚动到最后一条
 
-                                                                userMsgBoxs.Add(package.FromUserId, lvi);
+                                                                userMsgBoxs.Add(package.FromUserId, urmb);
                                                                 userMsgCount.Add(package.FromUserId, 1);
                                                             }
                                                         }
@@ -385,7 +471,7 @@ namespace WpfClient.Login
                                                 #region 点对点接收文本信息
                                                 if (package.SCType == SignalRCommunicationType.PersonToPerson)
                                                 {
-                                                    if (Contacts.Contacts.PrivateDialogList.Count > 0)
+                                                    if (Contacts.Contacts.PrivateDialogList.Count > 0 && MessageTab.MessageBox.IsMsgWinOpen == false)
                                                     {
                                                         foreach (var item in Contacts.Contacts.PrivateDialogList)
                                                         {
@@ -442,45 +528,89 @@ namespace WpfClient.Login
                                                             //加载到界面
 
 
+                                                            #region 161028屏蔽
+                                                            //if (userMsgBoxs.ContainsKey(package.FromUserId))   //已有信息盒，覆盖，更新计数
+                                                            //{
+                                                            //    ListViewItem lvi = new ListViewItem();
+                                                            //    lvi = userMsgBoxs[package.FromUserId];
+
+                                                            //    lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
+                                                            //    lvi.ToolTip = msgTime;
+                                                            //    lvi.Tag = package.Context;
+
+                                                            //    userMsgCount[package.FromUserId] += 1;
+                                                            //}
+                                                            //else     //未有该信息发送者信息盒，新建
+                                                            //{
+                                                            //    Image img = new Image();
+                                                            //    BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                            //    img.Source = bitImg;
+                                                            //    ListViewItem lvi = new ListViewItem();
+
+                                                            //    ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                            //    mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                            //    this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                            //    lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+
+
+
+                                                            //    UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
+                                                            //    lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
+                                                            //    lvi.Uid = "1";
+                                                            //    lvi.ToolTip = msgTime;
+                                                            //    lvi.Tag = package.Context;
+                                                            //    lvi.TabIndex = package.FromUserId;
+                                                            //    lvi.Content = img;
+                                                            //    lvi.MouseDoubleClick += Lvi_MouseDoubleClick1;
+
+                                                            //    mb.Lv_message.Items.Add(lvi);
+                                                            //    mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+
+                                                            //    userMsgBoxs.Add(package.FromUserId, lvi);
+                                                            //    userMsgCount.Add(package.FromUserId, 1);
+                                                            //}
+                                                            #endregion
+
 
                                                             if (userMsgBoxs.ContainsKey(package.FromUserId))   //已有信息盒，覆盖，更新计数
                                                             {
-                                                                ListViewItem lvi = new ListViewItem();
-                                                                lvi = userMsgBoxs[package.FromUserId];
+                                                                Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
+                                                                urmb = userMsgBoxs[package.FromUserId];
 
-                                                                lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
-                                                                lvi.ToolTip = msgTime;
-                                                                lvi.Tag = package.Context;
+                                                                urmb.tb_UnReadMsgCount.Text = (userMsgCount[package.FromUserId] + 1).ToString();
+                                                                urmb.tb_Time.Text = msgTime;
+                                                                urmb.tb_MsgContent.Text = package.Context.ToString();
 
                                                                 userMsgCount[package.FromUserId] += 1;
                                                             }
                                                             else     //未有该信息发送者信息盒，新建
                                                             {
-                                                                Image img = new Image();
-                                                                BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
-                                                                img.Source = bitImg;
-                                                                ListViewItem lvi = new ListViewItem();
+                                                                //Image img = new Image();
+                                                                BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                                //img.Source = bitImg;
+                                                                //ListViewItem lvi = new ListViewItem();
+                                                                Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
 
-                                                                ResourceDictionary mWindowResouce = new ResourceDictionary();
-                                                                mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
-                                                                this.Resources.MergedDictionaries.Add(mWindowResouce);
-                                                                lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+                                                                //ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                                //mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                                //this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                                //lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
 
 
 
                                                                 UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
-                                                                lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
-                                                                lvi.Uid = "1";
-                                                                lvi.ToolTip = msgTime;
-                                                                lvi.Tag = package.Context;
-                                                                lvi.TabIndex = package.FromUserId;
-                                                                lvi.Content = img;
-                                                                lvi.MouseDoubleClick += Lvi_MouseDoubleClick1;
+                                                                urmb.tb_UserName.Text =  userInfo.ActualName; // 纯数字会出错所以加了下划线开头
+                                                                urmb.tb_UnReadMsgCount.Text = "1";
+                                                                urmb.tb_Time.Text = msgTime;
+                                                                urmb.tb_MsgContent.Text = package.Context.ToString();
+                                                                urmb.TabIndex = package.FromUserId;
+                                                                urmb.Img_Header.Source = bitImg;
+                                                                urmb.MouseDoubleClick+=Urmb_MouseDoubleClick1;
 
-                                                                mb.Lv_message.Items.Add(lvi);
-                                                                mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+                                                                mb.Lv_message.Items.Add(urmb);
+                                                                mb.Lv_message.ScrollIntoView(urmb);//滚动条滚动到最后一条
 
-                                                                userMsgBoxs.Add(package.FromUserId, lvi);
+                                                                userMsgBoxs.Add(package.FromUserId, urmb);
                                                                 userMsgCount.Add(package.FromUserId, 1);
                                                             }
                                                         }
@@ -488,10 +618,10 @@ namespace WpfClient.Login
                                                 }
                                                 #endregion
                                                 #region 点对群接收文本信息
-                                                else if (package.SCType == SignalRCommunicationType.PersonToGroup)
+                                                else if (package.SCType == SignalRCommunicationType.PersonToGroup )
                                                 {
 
-                                                    if (Teams.organizationPanel.NormalGroupDialogList.Count > 0)
+                                                    if (Teams.organizationPanel.NormalGroupDialogList.Count > 0 && MessageTab.MessageBox.IsMsgWinOpen == false)
                                                     {
 
 
@@ -524,56 +654,98 @@ namespace WpfClient.Login
                                                         //加载到界面
                                                         UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
 
+                                                        #region 旧ListViewItem 161028屏蔽
+                                                        //if (groupMsgBoxs.ContainsKey(package.ToUserId))   //已有信息盒，覆盖，更新计数
+                                                        //{
+                                                        //    ListViewItem lvi = new ListViewItem();
+                                                        //    lvi = groupMsgBoxs[package.ToUserId];
+
+                                                        //    lvi.Uid = (groupMsgCount[package.ToUserId] + 1).ToString();
+                                                        //    lvi.ToolTip = msgTime;
+                                                        //    lvi.Tag = userInfo.ActualName + ":" + package.Context;
+
+                                                        //    groupMsgCount[package.ToUserId] += 1;
+                                                        //}
+                                                        //else if (package.State == false)    //未有该信息发送者信息盒，新建
+                                                        //{
+                                                        //    Image img = new Image();
+                                                        //    BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/userGroup.png", UriKind.Relative));
+                                                        //    img.Source = bitImg;
+                                                        //    ListViewItem lvi = new ListViewItem();
+
+                                                        //    ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                        //    mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                        //    this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                        //    lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+
+                                                        //    GroupDTO userGroup = MainClient.SysUserGroupCollection.Where(l => l.Id == package.ToUserId).FirstOrDefault();
+
+                                                        //    lvi.Name = "_" + userGroup.Name; // 纯数字会出错所以加了下划线开头
+                                                        //    lvi.Uid = "1";
+                                                        //    lvi.ToolTip = msgTime;
+                                                        //    lvi.Tag = userInfo.ActualName + ":" + package.Context;
+                                                        //    lvi.Content = img;
+                                                        //    lvi.TabIndex = package.ToUserId;
+                                                        //    lvi.MouseDoubleClick += Lvi_MouseDoubleClick;
+
+
+                                                        //    mb.Lv_message.Items.Add(lvi);
+                                                        //    mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+
+                                                        //    groupMsgBoxs.Add(package.ToUserId, lvi);
+                                                        //    groupMsgCount.Add(package.ToUserId, 1);
+                                                        //}
+                                                        #endregion
                                                         if (groupMsgBoxs.ContainsKey(package.ToUserId))   //已有信息盒，覆盖，更新计数
                                                         {
-                                                            ListViewItem lvi = new ListViewItem();
-                                                            lvi = groupMsgBoxs[package.ToUserId];
+                                                            Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
+                                                            urmb= groupMsgBoxs[package.ToUserId];
 
-                                                            lvi.Uid = (groupMsgCount[package.ToUserId] + 1).ToString();
-                                                            lvi.ToolTip = msgTime;
-                                                            lvi.Tag = userInfo.ActualName + ":" + package.Context;
+                                                            urmb.tb_UnReadMsgCount.Text = (groupMsgCount[package.ToUserId] + 1).ToString();
+                                                            urmb.tb_Time.Text = msgTime;
+                                                            urmb.tb_MsgContent.Text = userInfo.ActualName + ":" + package.Context;
 
                                                             groupMsgCount[package.ToUserId] += 1;
                                                         }
                                                         else if (package.State == false)    //未有该信息发送者信息盒，新建
                                                         {
-                                                            Image img = new Image();
-                                                            BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
-                                                            img.Source = bitImg;
-                                                            ListViewItem lvi = new ListViewItem();
+                                                            //Image img = new Image();
+                                                            BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/userGroup.png", UriKind.Relative));
+                                                            //img.Source = bitImg;
+                                                            Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
 
-                                                            ResourceDictionary mWindowResouce = new ResourceDictionary();
-                                                            mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
-                                                            this.Resources.MergedDictionaries.Add(mWindowResouce);
-                                                            lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+                                                            //ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                            //mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                            //this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                            //lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
 
                                                             GroupDTO userGroup = MainClient.SysUserGroupCollection.Where(l => l.Id == package.ToUserId).FirstOrDefault();
 
-                                                            lvi.Name = "_" + userGroup.Name; // 纯数字会出错所以加了下划线开头
-                                                            lvi.Uid = "1";
-                                                            lvi.ToolTip = msgTime;
-                                                            lvi.Tag = userInfo.ActualName + ":" + package.Context;
-                                                            lvi.Content = img;
-                                                            lvi.TabIndex = package.ToUserId;
-                                                            lvi.MouseDoubleClick += Lvi_MouseDoubleClick;
+                                                            urmb.tb_UserName.Text = userGroup.Name; // 纯数字会出错所以加了下划线开头
+                                                            urmb.tb_UnReadMsgCount.Text = "1";
+                                                            urmb.tb_Time.Text = msgTime;
+                                                            urmb.tb_MsgContent.Text= userInfo.ActualName + ":" + package.Context;
+                                                            urmb.Img_Header.Source = bitImg;
+                                                            urmb.TabIndex = package.ToUserId;
+                                                            urmb.MouseDoubleClick += Urmb_MouseDoubleClick; ;
+                                                           
+                                                            mb.Lv_message.Items.Add(urmb);
+                                                            mb.Lv_message.ScrollIntoView(urmb);//滚动条滚动到最后一条
 
-
-                                                            mb.Lv_message.Items.Add(lvi);
-                                                            mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
-
-                                                            groupMsgBoxs.Add(package.ToUserId, lvi);
+                                                            groupMsgBoxs.Add(package.ToUserId, urmb);
                                                             groupMsgCount.Add(package.ToUserId, 1);
                                                         }
                                                     }
                                                 }
                                                 #endregion
+
                                             }
                                             else if (package.SMType == SignalRMessageType.File)
                                             {
                                                 #region 点对点接收文件
-                                                if (package.SCType == SignalRCommunicationType.PersonToPerson)
+                                                if (package.SCType == SignalRCommunicationType.PersonToPerson )
                                                 {
-                                                    if (Contacts.Contacts.PrivateDialogList.Count > 0)
+                                                    if (Contacts.Contacts.PrivateDialogList.Count > 0 && MessageTab.MessageBox.IsMsgWinOpen == false) 
                                                     {
                                                         foreach (var item in Contacts.Contacts.PrivateDialogList)
                                                         {
@@ -646,47 +818,91 @@ namespace WpfClient.Login
                                                             //加载到界面
 
 
+                                                            #region 161028 屏蔽
+                                                            //if (userMsgBoxs.ContainsKey(package.FromUserId))   //已有信息盒，覆盖，更新计数
+                                                            //{
+                                                            //    ListViewItem lvi = new ListViewItem();
+                                                            //    lvi = userMsgBoxs[package.FromUserId];
+
+                                                            //    lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
+                                                            //    lvi.ToolTip = msgTime;
+                                                            //    lvi.Tag ="【文件】"+ package.Title;
+
+                                                            //    userMsgCount[package.FromUserId] += 1;
+                                                            //}
+                                                            //else     //未有该信息发送者信息盒，新建
+                                                            //{
+                                                            //    Image img = new Image();
+                                                            //    BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                            //    img.Source = bitImg;
+                                                            //    ListViewItem lvi = new ListViewItem();
+
+                                                            //    ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                            //    mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                            //    this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                            //    lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+
+
+
+                                                            //    UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
+                                                            //    lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
+                                                            //    lvi.Uid = "1";
+                                                            //    lvi.ToolTip = msgTime;
+                                                            //    lvi.Tag = "【文件】" + package.Title;
+                                                            //    lvi.TabIndex = package.FromUserId;
+                                                            //    lvi.Content = img;
+                                                            //    lvi.MouseDoubleClick += Lvi_MouseDoubleClick1;
+
+                                                            //    mb.Lv_message.Items.Add(lvi);
+                                                            //    mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+
+                                                            //    userMsgBoxs.Add(package.FromUserId, lvi);
+                                                            //    userMsgCount.Add(package.FromUserId, 1);
+                                                            //}
+                                                            #endregion
+
 
                                                             if (userMsgBoxs.ContainsKey(package.FromUserId))   //已有信息盒，覆盖，更新计数
                                                             {
-                                                                ListViewItem lvi = new ListViewItem();
-                                                                lvi = userMsgBoxs[package.FromUserId];
+                                                                Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
+                                                                urmb = userMsgBoxs[package.FromUserId];
 
-                                                                lvi.Uid = (userMsgCount[package.FromUserId] + 1).ToString();
-                                                                lvi.ToolTip = msgTime;
-                                                                lvi.Tag ="【文件】"+ package.Title;
+                                                                urmb.tb_UnReadMsgCount.Text = (userMsgCount[package.FromUserId] + 1).ToString();
+                                                                urmb.tb_Time.Text = msgTime;
+                                                                urmb.tb_MsgContent.Text = "【文件】" + package.Title;
 
                                                                 userMsgCount[package.FromUserId] += 1;
                                                             }
                                                             else     //未有该信息发送者信息盒，新建
                                                             {
-                                                                Image img = new Image();
-                                                                BitmapImage bitImg = new BitmapImage(new Uri("WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
-                                                                img.Source = bitImg;
-                                                                ListViewItem lvi = new ListViewItem();
+                                                                //Image img = new Image();
+                                                                BitmapImage bitImg = new BitmapImage(new Uri("/WpfClient;component/Images/Img_Header/unKnowHeaderImg.jpg", UriKind.Relative));
+                                                                //img.Source = bitImg;
+                                                                Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
 
-                                                                ResourceDictionary mWindowResouce = new ResourceDictionary();
-                                                                mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
-                                                                this.Resources.MergedDictionaries.Add(mWindowResouce);
-                                                                lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
+                                                                //ResourceDictionary mWindowResouce = new ResourceDictionary();
+                                                                //mWindowResouce.Source = new Uri("WpfClient;component/Resource/ControlStyle.xaml", UriKind.Relative);
+                                                                //this.Resources.MergedDictionaries.Add(mWindowResouce);
+                                                                //lvi.Style = (Style)mWindowResouce["MessagePanelListViewItemStyle"];
 
 
 
                                                                 UserDTO userInfo = MainClient.SysUserCollection.Where(l => l.ID == package.FromUserId).FirstOrDefault();
-                                                                lvi.Name = "_" + userInfo.ActualName; // 纯数字会出错所以加了下划线开头
-                                                                lvi.Uid = "1";
-                                                                lvi.ToolTip = msgTime;
-                                                                lvi.Tag = "【文件】" + package.Title;
-                                                                lvi.TabIndex = package.FromUserId;
-                                                                lvi.Content = img;
-                                                                lvi.MouseDoubleClick += Lvi_MouseDoubleClick1;
+                                                                urmb.tb_UserName.Text =userInfo.ActualName; // 纯数字会出错所以加了下划线开头
+                                                                urmb.tb_UnReadMsgCount.Text = "1";
+                                                                urmb.tb_Time.Text = msgTime;
+                                                                urmb.tb_MsgContent.Text = "【文件】" + package.Title;
+                                                                urmb.TabIndex = package.FromUserId;
+                                                                urmb.Img_Header.Source = bitImg;
+                                                                urmb.MouseDoubleClick += Urmb_MouseDoubleClick1;
 
-                                                                mb.Lv_message.Items.Add(lvi);
-                                                                mb.Lv_message.ScrollIntoView(lvi);//滚动条滚动到最后一条
+                                                                mb.Lv_message.Items.Add(urmb);
+                                                                mb.Lv_message.ScrollIntoView(urmb);//滚动条滚动到最后一条
 
-                                                                userMsgBoxs.Add(package.FromUserId, lvi);
+                                                                userMsgBoxs.Add(package.FromUserId, urmb);
                                                                 userMsgCount.Add(package.FromUserId, 1);
                                                             }
+
                                                         }
                                                     }
                                                 }
@@ -761,6 +977,101 @@ namespace WpfClient.Login
 
         }
 
+
+        /// <summary>
+        /// 点对点的信息盒双击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Urmb_MouseDoubleClick1(object sender, MouseButtonEventArgs e)
+        {
+            Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
+            urmb = sender as Message.UnReadMsgBox;
+
+
+            //检查窗口是否已经打开
+            foreach (var item in Contacts.Contacts.PrivateDialogList)
+            {
+                if (item.ReplyId == urmb.TabIndex)
+                    return;//群的有focus，这里没有，试试区别
+            }
+
+            PrivateDialog pd1 = new PrivateDialog();
+            Contacts.Contacts.PrivateDialogList.Add(pd1);
+            pd1.To = urmb.tb_UserName.Text;
+            pd1.Self = MainClient.CurrentUser.UserName;
+            pd1.ReplyId = urmb.TabIndex;
+
+
+            pd1.Closed += (sen, er) =>
+            {
+                Contacts.Contacts.PrivateDialogList.Remove(pd1);
+            };
+
+            pd1.Init();
+            System.Threading.Thread.Sleep(1000);
+
+            pd1.Show();
+
+
+            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTPTextPackage("", MainClient.CurrentUser.ID, pd1.ReplyId, System.DateTime.Now);
+            String json_srmp = JsonConvert.SerializeObject(srmp);
+            LoginWin.SignalRProxy.InitPTP(json_srmp);//InitPTP里面已经有获取数据，不过只获取未读数据
+            LoginWin.SignalRProxy.MarkMessage(json_srmp);//标记已读
+        }
+
+
+
+        /// <summary>
+        /// 主页消息盒子双击事件，打开聊天框（点对群） 161028更新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Urmb_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            //ListViewItem lvi = new ListViewItem();
+            //lvi = sender as ListViewItem;
+            Message.UnReadMsgBox urmb = new Message.UnReadMsgBox();
+            urmb = sender as Message.UnReadMsgBox;
+
+            //检查窗口是否已经打开
+            foreach (var item in Teams.organizationPanel.NormalGroupDialogList)
+            {
+                if (item.CurrentGroup.Id == urmb.TabIndex)
+                {
+                    item.Focus();
+                    return;
+                }
+
+            }
+
+            NormalGroupDialog pd = new NormalGroupDialog();
+            Teams.organizationPanel.NormalGroupDialogList.Add(pd);
+
+
+            //pd.TitleLable = lvi.Name.Substring(1);
+            pd.TitleLable = urmb.tb_UserName.Text;
+            GroupDTO userGroup = MainClient.SysUserGroupCollection.Where(l => l.Id == urmb.TabIndex).FirstOrDefault();
+            pd.CurrentGroup = userGroup;
+            pd.Closed += (sen, er) =>
+            {
+                Teams.organizationPanel.NormalGroupDialogList.Remove(pd);
+            };
+
+
+            //pd.Init(MainClient.CurrentUser.ActualName, group.Id.ToString());
+
+
+            pd.Show();
+
+            System.Threading.Thread.Sleep(500);
+
+            SignalRMessagePackage srmp = SignalRMessagePackageFactory.GetPTGTextPackage("", MainClient.CurrentUser.ID, userGroup.Id, System.DateTime.Now);
+            String json_srmp = JsonConvert.SerializeObject(srmp);
+            LoginWin.SignalRProxy.InitPTP(json_srmp);
+        }
+
         /// <summary>
         /// 点对点的信息盒双击事件
         /// </summary>
@@ -803,7 +1114,7 @@ namespace WpfClient.Login
         }
 
         /// <summary>
-        /// 主页消息盒子双击事件，打开聊天框（点对群）
+        /// 主页消息盒子双击事件，打开聊天框（点对群） 161028前用
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -812,6 +1123,7 @@ namespace WpfClient.Login
 
             ListViewItem lvi = new ListViewItem();
             lvi = sender as ListViewItem;
+
 
             //检查窗口是否已经打开
             foreach (var item in Teams.organizationPanel.NormalGroupDialogList)
@@ -864,7 +1176,8 @@ namespace WpfClient.Login
         /// <param name="e"></param>
         private void hpLink_registAccount_Click(object sender, RoutedEventArgs e)
         {
-            RegistWin rgWin = new RegistWin();
+            Message.WinListViewTest rgWin = new Message.WinListViewTest();
+            //RegistWin rgWin = new RegistWin();
             rgWin.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             rgWin.ShowDialog();
         }

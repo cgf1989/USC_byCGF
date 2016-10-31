@@ -110,7 +110,7 @@ namespace WpfClient.Contacts
                 }
             }
             catch (Exception ex)
-            { MessageBox.Show(ex.ToString()); }
+            { MessageBox.Show("用户组下拉框选择出错"); }
         }
 
 

@@ -31,10 +31,17 @@ namespace WpfClient.MessageTab
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 判断未读信息页面是否打开着
+        /// </summary>
+        public static bool IsMsgWinOpen = false;
+
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
+                IsMsgWinOpen = true;
+
                 Lv_message.Items.Clear();
                 LoginWin.userMsgBoxs.Clear();
                 LoginWin.userMsgCount.Clear();
@@ -63,14 +70,15 @@ namespace WpfClient.MessageTab
                 List<GroupDTO> userGroupList=MainClient.SysUserGroupCollection;
                 //获取聊天信息
                 ConnectServer(userIdList,userGroupList);
-           
 
-                
+
+                //IsMsgWinOpen = false;
 
             }
             catch (Exception ex)
             {
-                System.Windows.Forms.MessageBox.Show("消息加载失败");
+                //IsMsgWinOpen = false;
+                System.Windows.Forms.MessageBox.Show("消息加载失败");                
             }
         }
 
@@ -100,8 +108,20 @@ namespace WpfClient.MessageTab
                     LoginWin.SignalRProxy.InitPTP(json_srmp_g);
                 }
             }
+
+
         }
 
 
+        /// <summary>
+        /// 最后7天的按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mi_Last7day_Click(object sender, RoutedEventArgs e)
+        {
+           
+
+        }
     }
 }

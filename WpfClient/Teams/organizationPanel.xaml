@@ -47,7 +47,7 @@
                     <EventSetter Event="TreeViewItem.PreviewMouseRightButtonDown" Handler="TreeViewItem_PreviewMouseRightButtonDown"/>
                 </Style>
             </TreeView.ItemContainerStyle>
-            <TreeViewItem Name="tv_OrgWorkSpace">
+            <TreeViewItem Name="tv_OrgWorkSpace" >
                 <TreeViewItem.HeaderTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">

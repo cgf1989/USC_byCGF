@@ -33,6 +33,7 @@ namespace WpfClient.Teams
 
             NormalGroupDialogList = new List<NormalGroupDialog>();
             LoadNormalGroup();
+            LoadOrgSpace();
         }
 
         private void TreeViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -46,6 +47,12 @@ namespace WpfClient.Teams
             CreatOrganizaiton createOrg = new CreatOrganizaiton();
             createOrg.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             createOrg.ShowDialog();
+
+            if(createOrg.IsOrgCreatSuccess==true)
+            {
+                //刷新界面
+                LoadOrgSpace();
+            }
         }
 
         private void mi_createWorkspace_Click(object sender, RoutedEventArgs e)
@@ -219,7 +226,7 @@ namespace WpfClient.Teams
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("普通群组加载出错"+ex.Message);
             }
         }
 
@@ -295,6 +302,14 @@ namespace WpfClient.Teams
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            MessageTab.MessageBox.IsMsgWinOpen = false; //设置未读信息窗口打开判断为否，以便聊天框打开之后点击未读消息页面，消息重复出在聊天框里
+        }
+
+        /// <summary>
+        /// 加载组织空间
+        /// </summary>
+        public async void LoadOrgSpace()
+        {
             try
             {
                 //加载组织
@@ -315,11 +330,18 @@ namespace WpfClient.Teams
                         OrgCollection = JsonConvert.DeserializeObject<List<OrganizationDTO>>(result.Data);
 
                         tv_OrgWorkSpace.Items.Clear();
+
+                        //tv_OrgWorkSpace.ItemsSource = OrgCollection;
+                        //tv_OrgWorkSpace.DisplayMemberPath = "OrgaName";
+
                         foreach (var item in OrgCollection)
                         {
-                            tv_OrgWorkSpace.Items.Add(item);
-                            tv_OrgWorkSpace.DisplayMemberPath = "OrgaName";
-                            //MessageBox.Show(item.OrgaName);
+                            TreeViewItem tvi = new TreeViewItem();
+                            tvi.Header = item.OrgaName;
+                            tvi.Tag = item;
+                            tvi.MouseDoubleClick += tvi_OrgWorkSpace_MouseDoubleClick;
+                            tv_OrgWorkSpace.Items.Add(tvi);
+
                         }
                     }
                 }
@@ -327,6 +349,36 @@ namespace WpfClient.Teams
             catch
             {
                 MessageBox.Show("组织信息加载出错");
+            }
+        }
+
+        /// <summary>
+        /// 组织空间双击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tvi_OrgWorkSpace_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if ((e.Source as TreeViewItem).IsSelected)   //加这个判断防止父节点递归传递事件
+            {
+
+                TreeViewItem curTv = sender as TreeViewItem;
+                lbName = curTv.Header.ToString();
+                selectTreeViewParent(curTv);
+
+
+                Contacts.OrgChatDialog pd = new Contacts.OrgChatDialog();
+                //pd.lb_Title.Content = lbName;
+                pd.TitleLable = lbName;
+                Contacts.SignalRProxy s = new Contacts.SignalRProxy();
+                pd.Closed += (sen, er) =>
+                {
+                    //s.Logout(MainClient.currentUser.UserName);
+                    s.Dispose();
+                };
+
+                System.Threading.Thread.Sleep(1000);
+                pd.Show();
             }
         }
 
@@ -390,8 +442,8 @@ namespace WpfClient.Teams
         {
             if (MessageBox.Show("是否移除该组织", "注意", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                var curOrgInfo = tv_main.SelectedItem as OrganizationDTO;
-
+                var tv_curOrgInfo = tv_main.SelectedItem as TreeViewItem;
+                var curOrgInfo = tv_curOrgInfo.Tag as OrganizationDTO;
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("http://localhost:37768/");
                 client.DefaultRequestHeaders.Accept.Clear();

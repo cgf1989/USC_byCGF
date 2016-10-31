@@ -1,0 +1,81 @@
+﻿<scr:MyMacClass x:Class="WpfClient.Contacts.OrgChatDialog"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStyle="None" Background="{x:Null}" AllowsTransparency="True" 
+        xmlns:scr="clr-namespace:WpfClient"
+        xmlns:teamInput="clr-namespace:WpfClient.Teams.Control" Style="{DynamicResource WindowStyle1}"
+         Width="320">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition/>
+            <RowDefinition Height="auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Name="PublicTitle">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label x:Name="lb_Title" />
+
+        </Grid>
+
+        <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel  Name="NoticeStackPanel" Background="WhiteSmoke"></StackPanel>
+        </ScrollViewer>
+        <Expander Visibility="Hidden" Name="Expander_Range" FlowDirection="RightToLeft" Grid.RowSpan="2" Margin="10,20,0,0"   MinHeight="100" Header="所有内容" Width="auto" HorizontalAlignment="Left" VerticalAlignment="Top" >
+            <TreeView FlowDirection="LeftToRight" Width="auto" Name="TreeView_range">
+                <TreeViewItem Header="所有内容" Selected="Tvi_Range_Selected"/>
+                <TreeViewItem Name="Tvi_Range" Header="黄蜂岗高架一桥" Selected="Tvi_Range_Selected">
+                    <TreeViewItem Header="1#桩基"/>
+                    <TreeViewItem Header="2#桩基"/>
+                    <TreeViewItem Header="3#桩基"/>
+                    <TreeViewItem Header="4#桩基"/>
+                </TreeViewItem>
+                <TreeViewItem Name="Tvi_Range1" Header="黄蜂岗高架二桥" Selected="Tvi_Range_Selected">
+                    <TreeViewItem Header="1#立柱"/>
+                    <TreeViewItem Header="2#立柱"/>
+                    <TreeViewItem Header="3#立柱"/>
+                    <TreeViewItem Header="4#立柱"/>
+                </TreeViewItem>
+                <TreeViewItem Name="Tvi_Range2" Header="高塱高架桥" Selected="Tvi_Range_Selected">
+                    <TreeViewItem Header="1#桩基"/>
+                    <TreeViewItem Header="2#桩基"/>
+                    <TreeViewItem Header="3#桩基"/>
+                    <TreeViewItem Header="4#桩基"/>
+                </TreeViewItem>
+            </TreeView>
+        </Expander>
+        <DockPanel Grid.Row="2">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <WrapPanel Grid.Row="0" >
+                    <TextBox x:Name="InputNoticeTBox" Width="260" Margin="3,3,0,0" TextChanged="TextBox_TextChanged"/>
+                    <Button Name="input" Height="30" Width="30" Margin="5,5,2,2" FontSize="18" Content="+" Click="input_Click" ToolTip="发送"/>
+                    <!--<Button Name="InputNoticeBtn" Width="40" Content="发布" />-->
+                </WrapPanel>
+                <WrapPanel x:Name="wrap1" Grid.Row="1" Visibility="Collapsed">
+                    <Button Width="50" Height="50" Content="文件" Margin="5" x:Name="docButton" Click="docButton_Click"/>
+                    <Button Width="50" Height="50" Content="视频" Margin="5" x:Name="videoButton" Click="videoButton_Click"/>
+                    <Button Width="50" Height="50" Content="语音" Margin="5"/>
+                    <Button Width="50" Height="50" Content="影像" Margin="5"/>
+                    <Button Width="50" Height="50" Content="图片" Margin="5"/>
+                </WrapPanel>
+                <WrapPanel x:Name="wrap2" Grid.Row="2" Visibility="Collapsed">
+                    <Button Width="50" Height="50" Content="任务" Margin="5" x:Name="taskButton" Click="taskButton_Click"/>
+                    <Button Width="50" Height="50" Content="名片" Margin="5"/>
+                    <Button Width="50" Height="50" Content="收藏" Margin="5"/>
+                    <Button Width="50" Height="50" Content="位置" Margin="5"/>
+                    <Button Width="50" Height="50" Content="动画" Margin="5"/>
+                </WrapPanel>
+            </Grid>
+            <!--<TextBox Name="InputNoticeTBox" DockPanel.Dock="Left" Width="430"></TextBox>
+            <Button Name="InputNoticeBtn" DockPanel.Dock="Right" Width="50" HorizontalAlignment="Right">发布</Button>-->
+        </DockPanel>
+    </Grid>
+</scr:MyMacClass>

@@ -67,7 +67,7 @@ namespace WpfClient.Contacts
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("删除自定义分组出错");
             }
         }
 
